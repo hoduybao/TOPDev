@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .pack-layout {
+        @apply max-w-[1369px] mx-auto;
+    }
+
+    .pack-border-b-primary-400 {
+        @apply border-0 border-b-[1px] border-solid border-primary-400;
+    }
+
+    .pack-border-t-primary-400 {
+        @apply border-0 border-t-[1px] border-solid border-primary-400;
+    }
+}

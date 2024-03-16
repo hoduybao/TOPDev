@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './pack.scss';
+
+body {
+  margin: 0;
+}
