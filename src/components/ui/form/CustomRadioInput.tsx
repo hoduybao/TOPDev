@@ -1,4 +1,4 @@
-import { OptionItems } from '@/utils/types/option.type';
+import { OptionItems } from '@/+core/utilities/types/option.type';
 import { Form, FormItemProps, Radio, RadioChangeEvent } from 'antd';
 import './CustomRadioInput.scss';
 
@@ -40,7 +40,7 @@ export const CustomRadioInput = <T extends object>({
         onChange={onChange}
       >
         {values.map((value) => (
-          <Radio key={value.label} value={value.value}>
+          <Radio key={value.value} value={value.value}>
             {value.label}
           </Radio>
         ))}

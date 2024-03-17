@@ -1,4 +1,4 @@
-import { OptionItems } from '@/utils/types/option.type';
+import { OptionItems } from '@/+core/utilities/types/option.type';
 import { Form, Select } from 'antd';
 import React from 'react';
 

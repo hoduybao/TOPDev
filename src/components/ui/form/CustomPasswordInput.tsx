@@ -47,7 +47,7 @@ const CustomPasswordInput: React.FC<CustomPasswordInputProps> = ({
           )
         }
         suffix={<LockOutlined className='site-form-item-icon' />}
-        visibilityToggle
+        visibilityToggle={showPassword}
       />
     </Form.Item>
   );

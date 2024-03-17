@@ -29,7 +29,7 @@ export const CustomEditorInput = <T extends object>({
         //   console.log('e', e.target.getContent());
         //   onChange && onChange(e.target.getContent());
         // }}
-        onEditorChange={(e, editor) => {
+        onEditorChange={(e) => {
           onChange && onChange(e);
         }}
         init={{
