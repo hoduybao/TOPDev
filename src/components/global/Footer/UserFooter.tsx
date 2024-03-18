@@ -30,7 +30,7 @@ const SubSession = ({ children }: { children: React.ReactNode }) => {
 const UserFooter = () => {
   return (
     <div className='w-full px-4 py-16 bg-userFooter flex justify-center items-center'>
-      <div className='grid grid-cols-12 w-full'>
+      <div className='grid grid-cols-12 max-w-[80rem]'>
         <MainSession>
           <div className='mb-2'>
             <img src='/assets/icons/td-logo.png' alt='logo' />
