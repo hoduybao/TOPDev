@@ -1,6 +1,7 @@
 import JobDescription from '../../components/ui/description/JobDescription';
 import CompanyCard from '../../components/ui/card/CompanyCard';
 import React from 'react';
+import CompanyDescription from '../../components/ui/description/CompanyDescription';
 
 const JobPage = () => {
   return (
@@ -11,6 +12,7 @@ const JobPage = () => {
           <div className='col-span-8'>
             <CompanyCard />
             <JobDescription />
+            <CompanyDescription />
           </div>
 
           {/* submit session */}

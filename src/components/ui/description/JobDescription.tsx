@@ -74,7 +74,7 @@ const JobDescription = () => {
         </ul>
       </DetailSession>
       <DetailSession hideBottomLine>
-        <DetailHeader title='Nice to have' />
+        <DetailHeader title='Phúc lợi dành cho bạn' />
         <div className='px-4'>
           {jobData.welfare.map((item, index) => (
             <div className='list-disc'>{item}</div>
