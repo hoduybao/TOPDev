@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const HeaderMenuItem = ({ content, url = '/' }: { content: string; url: string }) => {
   return (
-    <div className='font-semibold sm:text-xs md:text-base sm:hidden md:block'>
+    <div className='font-semibold sm:text-xs md:text-base hidden sm:hidden md:block'>
       <Link to={url}>{content}</Link>
     </div>
   );
@@ -36,7 +36,7 @@ const HoverBackground = ({
   return (
     <div
       className={`
-    ${hideInMobile && 'sm:hidden md:block'}
+    ${hideInMobile && 'hidden sm:hidden md:block'}
     rounded-lg hover:bg-iconHover hover:cursor-pointer lg:p-4 md:p-2`}
     >
       {children}
@@ -60,13 +60,13 @@ const UserHeader = () => {
           <HoverBackground hideInMobile>
             <img className='h-[24px]' src='/assets/icons/notification.svg' alt='notification' />
           </HoverBackground>
-          <HoverBackground>
+          <HoverBackground hideInMobile>
             <div className='flex gap-4 items-center justify-center'>
               <img className='h-[24px]' src='/assets/icons/avatar.svg' alt='notification' />
               <div className='text-lg md:text-base font-semibold'>Hung Ngo</div>
             </div>
           </HoverBackground>
-          <div className='p-4 flex items-center gap-4 md:p-2 md:gap-2'>
+          <div className='p-2 flex items-center gap-4 md:p-2 md:gap-2'>
             <LanguageItem name='EN' />|
             <LanguageItem name='VI' isChosen />
           </div>

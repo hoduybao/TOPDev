@@ -8,7 +8,7 @@ const CompanyCard = () => {
         {/* image */}
         <div className='col-span-2'>
           <img
-            className='w-[112px]'
+            className='min-w-[70px]'
             src={
               'https://salt.topdev.vn/gyOxnd9RZhh1hvvbO1wIEYrAUo0QdX1vZR91B4bECwk/fit/384/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDIzLzA0LzE3L1RvcERldi1Hc1pIOEhQMmpRMVBDR2FGLTE2ODE3MDEyMjcuanBn'
             }
