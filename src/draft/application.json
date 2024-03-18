@@ -1,0 +1,11 @@
+{
+  "id": "application1",
+  "jobId": "job1",
+  "name": "Nguyen Van A",
+  "cvUrl": "",
+  "email": "123@gmail.com",
+  "phone": "123456789",
+  "status": "new",
+  "rating": 3,
+  "note": "this is note 1"
+}
