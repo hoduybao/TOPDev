@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, Modal } from 'antd';
+import { Modal } from 'antd';
 import companyData from '../../../draft/company.json';
 import jobData from '../../../draft/job.json';
-import formData from '../../../draft/application.json';
+// import formData from '../../../draft/application.json';
 import UserSubmitButton from '../button/UserSubmitButton';
 
 const JobSubmitModal = () => {
@@ -24,10 +24,10 @@ const JobSubmitModal = () => {
   const labelCss = 'col-span-2 font-semibold';
   const inputCss = 'col-span-10 border rounded py-2 border-black-500';
   return (
-    <div className='w-full mb-2'>
+    <div className='mb-2'>
       <UserSubmitButton name='Ứng tuyển ngay' onClick={showModal} isFilled />
       <Modal
-        width={'50%'}
+        width='60%'
         title={
           <div className='text-xl'>
             Bạn đang ứng tuyển
