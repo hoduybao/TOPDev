@@ -2,20 +2,8 @@ import JobDescription from '../../components/ui/description/JobDescription';
 import CompanyCard from '../../components/ui/card/CompanyCard';
 import ShortDetail from '../../components/ui/description/ShortDetail';
 import CompanyDescription from '../../components/ui/description/CompanyDescription';
-
-const SubmitButton = ({ name, isFilled = false }: { name: string; isFilled?: boolean }) => {
-  return (
-    <div className='w-full mb-2'>
-      <button
-        className={`
-        ${isFilled ? 'bg-orange-600 text-white-900' : 'text-orange-600 border border-orange-600'}
-        w-full text-base font-bold p-4 rounded`}
-      >
-        {name}
-      </button>
-    </div>
-  );
-};
+import JobSubmitModal from '../../components/ui/modal/JobSubmitModal';
+import UserSubmitButton from '../../components/ui/button/UserSubmitButton';
 
 const JobPage = () => {
   return (
@@ -31,10 +19,12 @@ const JobPage = () => {
 
           {/* submit session */}
           <div className='col-span-4'>
-            <SubmitButton name='Ứng tuyển ngay' isFilled />
-            <SubmitButton name='Tạo CV để ứng tuyển' />
+            <JobSubmitModal />
+            <UserSubmitButton name='Tạo CV để ứng tuyển' onClick={() => {}} />
             <ShortDetail />
           </div>
+
+          {/* submit modal */}
         </div>
       </div>
     </div>
