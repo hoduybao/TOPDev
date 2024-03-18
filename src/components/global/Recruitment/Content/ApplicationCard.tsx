@@ -3,7 +3,18 @@ import { Button, Card, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import { StarOutlined, MoreOutlined, MailOutlined } from '@ant-design/icons';
 
-const ApplicationCard = () => {
+import { JobType } from '@/+core/utilities/types/recruitment.type';
+import { Link } from 'react-router-dom';
+
+interface PropType {
+  job: JobType;
+  newestAmount: number;
+  recentAmount: number;
+}
+
+const ApplicationCard = (props: PropType) => {
+  const { job, newestAmount, recentAmount } = props;
+
   const items: MenuProps['items'] = [
     {
       key: '1',
@@ -20,29 +31,33 @@ const ApplicationCard = () => {
   ];
 
   return (
-    <Card className='w-[100%] sm:w-[500px] hover:cursor-pointer'>
+    <Card className='w-[100%] sm:w-[500px]'>
       <div className='w-[100%] flex items-start'>
         <StarOutlined className='text-yellow-500 text-[20px]' />
         <div className='w-[100%] px-2'>
-          <p className='font-semibold'>Front-end developer</p>
+          <p className='font-semibold'>{job?.title}</p>
           <div className='flex items-center gap-2'>
             <MailOutlined />
-            <p>company.abc@gmail.com</p>
+            <p>{job?.companyId}</p>
           </div>
         </div>
-        <Dropdown menu={{ items }} placement='bottomRight'>
+        <Dropdown menu={{ items }} trigger={['click']} placement='bottomRight'>
           <div>
             <MoreOutlined className='text-[18px] font-bold hover:cursor-pointer' />
           </div>
         </Dropdown>
       </div>
       <div className='pt-5 pb-10 flex justify-between items-center'>
-        <Button type='primary' danger>
-          3 Ứng viên mới
-        </Button>
+        <Link to='/recruitment/process'>
+          <Button type='primary' danger>
+            {newestAmount} Ứng viên mới
+          </Button>
+        </Link>
         <div>
-          <p className='text-red-500 font-bold hover:text-red-400'>1 Để tuyển dụng</p>
-          <p>1 Ứng viên</p>
+          <p className='text-red-500 font-bold hover:text-red-400 hover:cursor-pointer'>
+            {recentAmount} Để tuyển dụng
+          </p>
+          <p>{recentAmount} Ứng viên</p>
         </div>
       </div>
     </Card>
