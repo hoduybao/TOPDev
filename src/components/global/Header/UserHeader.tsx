@@ -46,7 +46,7 @@ const HoverBackground = ({
 
 const UserHeader = () => {
   return (
-    <div className='w-full bg-white-700 shadow-md px-3'>
+    <div className='w-full bg-white-900 shadow-md px-3'>
       <div className='flex justify-between items-center h-[5.25rem]'>
         <HeaderMenu>
           <img src='/assets/icons/td-logo.png' alt='logo' />

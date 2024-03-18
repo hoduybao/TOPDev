@@ -1,6 +1,7 @@
 import React from 'react';
 import companyData from '../../../draft/company.json';
 import jobData from '../../../draft/job.json';
+import DetailSession, { DetailHeader } from './Session';
 
 const JobItem = ({ name, isSelect = false }: { name: string; isSelect?: boolean }) => {
   return (
@@ -21,25 +22,6 @@ const JobTags = () => {
       <JobItem name='Giới thiệu về công ty' />
     </div>
   );
-};
-
-const DetailSession = ({
-  children,
-  hideBottomLine = false,
-}: {
-  children: React.ReactNode;
-  hideBottomLine?: boolean;
-}) => {
-  return (
-    <div className='px-4 py-2'>
-      <div>{children}</div>
-      {!hideBottomLine && <div className='mt-4 border-b-2 border-gray-200'></div>}
-    </div>
-  );
-};
-
-const DetailHeader = ({ title }: { title: string }) => {
-  return <div className='text-base font-bold mb-2'>{title}</div>;
 };
 
 const JobDescription = () => {

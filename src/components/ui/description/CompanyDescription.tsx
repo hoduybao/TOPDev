@@ -1,15 +1,6 @@
-import React from 'react';
 import companyData from '../../../draft/company.json';
-import { join } from 'path';
 import { Link } from 'react-router-dom';
-
-const DetailSession = ({ children }: { children: React.ReactNode }) => {
-  return <div className='px-4 py-2'>{children}</div>;
-};
-
-const DetailHeader = ({ title }: { title: string }) => {
-  return <div className='text-base font-bold mb-2'>{title}</div>;
-};
+import DetailSession, { DetailHeader } from './Session';
 
 const ListItem = ({ title, data, size }: { title: string; data?: string[]; size?: string }) => {
   return (
@@ -23,12 +14,12 @@ const ListItem = ({ title, data, size }: { title: string; data?: string[]; size?
 const CompanyDescription = () => {
   return (
     <div className='mt-4 bg-white-900 rounded'>
-      <DetailSession>
+      <DetailSession hideBottomLine>
         <DetailHeader title='Công ty' />
         <div className='uppercase opacity-80 text-base font-bold'>{companyData.name}</div>
       </DetailSession>
 
-      <DetailSession>
+      <DetailSession hideBottomLine>
         <div className='grid grid-cols-12'>
           <ListItem title='Ngành nghề' data={companyData.fields} />
           <ListItem title='Quy mô công ty' size={companyData.size} />
@@ -36,11 +27,11 @@ const CompanyDescription = () => {
         </div>
       </DetailSession>
 
-      <DetailSession>
+      <DetailSession hideBottomLine>
         <DetailHeader title='Về chúng tôi' />
         <div>{companyData.about.join('. ')}</div>
       </DetailSession>
-      <DetailSession>
+      <DetailSession hideBottomLine>
         <DetailHeader title='INTRODUCTION' />
         <div className='truncate w-full relative flex items-center'>
           {companyData.introduction.join('. ')}
@@ -52,14 +43,14 @@ const CompanyDescription = () => {
           </Link>
         </div>
       </DetailSession>
-      <DetailSession>
+      <DetailSession hideBottomLine>
         <div className='grid grid-cols-12 justify-center'>
           {companyData.imgs.map((item) => {
             return <img src={item} alt='company' className='col-span-4' />;
           })}
         </div>
       </DetailSession>
-      <DetailSession>
+      <DetailSession hideBottomLine>
         <div className='flex justify-center'>
           <Link
             className='text-base font-bold bg-white-900 px-4 text-orange-600 underline'
