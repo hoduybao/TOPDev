@@ -33,4 +33,5 @@ export default {
   },
   userFooter: '#DBDBDB',
   iconHover: '#DBDBDB',
+  mainBackground: '#F5F5F5',
 };
