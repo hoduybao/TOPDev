@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const HeaderMenuItem = ({ content, url = '/' }: { content: string; url: string }) => {
   return (
-    <div className='font-semibold text-base'>
+    <div className='font-semibold sm:text-xs md:text-base sm:hidden md:block'>
       <Link to={url}>{content}</Link>
     </div>
   );
@@ -17,15 +17,31 @@ const HeaderMenu = ({
   children: React.ReactNode;
   addGap?: boolean;
 }) => {
-  return <div className={`${addGap && 'gap-12'} flex items-center`}>{children}</div>;
+  return <div className={`${addGap && 'lg:gap-12 md:gap-4'} flex items-center`}>{children}</div>;
 };
 
 const LanguageItem = ({ name, isChosen = false }: { name: string; isChosen?: boolean }) => {
-  return <div className={`${isChosen && 'opacity-50'} font-semibold text-lg`}>{name}</div>;
+  return (
+    <div className={`${isChosen && 'opacity-50'} font-semibold text-lg md:text-base`}>{name}</div>
+  );
 };
 
-const HoverBackground = ({ children }: { children: React.ReactNode }) => {
-  return <div className='rounded-lg hover:bg-iconHover hover:cursor-pointer p-4'>{children}</div>;
+const HoverBackground = ({
+  children,
+  hideInMobile = false,
+}: {
+  children: React.ReactNode;
+  hideInMobile?: boolean;
+}) => {
+  return (
+    <div
+      className={`
+    ${hideInMobile && 'sm:hidden md:block'}
+    rounded-lg hover:bg-iconHover hover:cursor-pointer lg:p-4 md:p-2`}
+    >
+      {children}
+    </div>
+  );
 };
 
 const UserHeader = () => {
@@ -41,16 +57,16 @@ const UserHeader = () => {
         </HeaderMenu>
 
         <HeaderMenu addGap={false}>
-          <HoverBackground>
+          <HoverBackground hideInMobile>
             <img className='h-[24px]' src='/assets/icons/notification.svg' alt='notification' />
           </HoverBackground>
           <HoverBackground>
             <div className='flex gap-4 items-center justify-center'>
               <img className='h-[24px]' src='/assets/icons/avatar.svg' alt='notification' />
-              <div className='text-lg font-semibold'>Hung Ngo</div>
+              <div className='text-lg md:text-base font-semibold'>Hung Ngo</div>
             </div>
           </HoverBackground>
-          <div className='p-4 flex items-center gap-4'>
+          <div className='p-4 flex items-center gap-4 md:p-2 md:gap-2'>
             <LanguageItem name='EN' />|
             <LanguageItem name='VI' isChosen />
           </div>
