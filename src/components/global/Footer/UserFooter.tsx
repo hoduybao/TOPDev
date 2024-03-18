@@ -18,19 +18,19 @@ const Menu = ({ children }: { children: React.ReactNode }) => {
 };
 
 const MainSession = ({ children }: { children: React.ReactNode }) => {
-  return <div className='xl:col-span-4 sm:col-span-12 col-span-12 mb-2'>{children}</div>;
+  return <div className='col-span-12 xl:col-span-4 sm:col-span-12 mb-2'>{children}</div>;
 };
 
 const SubSession = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className='xl:col-span-2 lg:col-span-6 sm:col-span-12 col-span-12 mb-2'>{children}</div>
+    <div className='col-span-12 xl:col-span-2 lg:col-span-6 sm:col-span-12 mb-2'>{children}</div>
   );
 };
 
 const UserFooter = () => {
   return (
     <div className='w-full px-4 py-16 bg-userFooter flex justify-center items-center'>
-      <div className='grid grid-cols-12 w-full md:max-w-[37.5rem]'>
+      <div className='grid grid-cols-12 w-full'>
         <MainSession>
           <div className='mb-2'>
             <img src='/assets/icons/td-logo.png' alt='logo' />
