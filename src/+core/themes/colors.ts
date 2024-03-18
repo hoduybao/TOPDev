@@ -32,4 +32,5 @@ export default {
     500: '#2D3748',
   },
   userFooter: '#DBDBDB',
+  iconHover: '#DBDBDB',
 };

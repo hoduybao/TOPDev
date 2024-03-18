@@ -92,3 +92,16 @@ export const FooterMenu = {
   },
   copyRight: 'Copyright © CÔNG TY CỔ PHẦN APPLANCER / ĐKKD: 031 303 2338 - Cấp ngày: 27/11/2014',
 };
+
+export const HeaderMenuConstant = {
+  jobs: {
+    title: 'Việc làm IT',
+    menu: [],
+  },
+  company: 'Công ty IT',
+  tools: {
+    title: 'Công cụ',
+    menu: [],
+  },
+  blog: 'Blog IT',
+};
