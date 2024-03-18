@@ -1,0 +1,34 @@
+{
+  "id": "job1",
+  "companyId": "company1",
+  "title": "Software Developer (C++/Qt Framework)",
+  "salary": "0",
+  "responsibilities": [
+    "As part of the team, you will develop and maintain cross-platform applications (Windows and Android) using Qt framework for Restaurant Solution (POS systems, tablet order, etc).",
+    "Collaborate with the team to understand project requirements and translate them into technical solutions.",
+    "Conduct testing and debugging of Qt applications to ensure optimal performance and reliability."
+  ],
+  "skills": [
+    "Experience in C++ software development, with a strong emphasis on Qt and QML.",
+    "Experience in OOP (Object Oriented Programming)."
+  ],
+  "extends": [
+    "Experience working with RESTful APIs for data exchange between client and server applications.",
+    "Familiarity with SQLite database management system, including database design, querying, and integration within Qt/QML applications."
+  ],
+  "welfare": [
+    "Salary is paid according to employee capacity",
+    "Salary adjustment 1-2 times a year (KPI)"
+  ],
+  "experienceYearsMin": "0",
+  "experienceYearsMax": "0",
+  "level": "all",
+  "type": "office",
+  "typeContract": "fulltime",
+  "techs": ["C++", "Software Engineer"],
+  "interviewProcess": [
+    "Vòng 1: PV qua điện thoại",
+    "Vòng 2: PV trực tiếp với Tech Lead (Bài test tùy vị trí)",
+    "Vòng 3: Deal lương"
+  ]
+}
