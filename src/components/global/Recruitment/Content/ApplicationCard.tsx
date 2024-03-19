@@ -54,9 +54,11 @@ const ApplicationCard = (props: PropType) => {
           </Button>
         </Link>
         <div>
-          <p className='text-red-500 font-bold hover:text-red-400 hover:cursor-pointer'>
-            {recentAmount} Để tuyển dụng
-          </p>
+          <Link to='/recruitment/process'>
+            <p className='text-red-500 font-bold hover:text-red-400 hover:cursor-pointer'>
+              {recentAmount} Để tuyển dụng
+            </p>
+          </Link>
           <p>{recentAmount} Ứng viên</p>
         </div>
       </div>

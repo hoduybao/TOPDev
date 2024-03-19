@@ -15,7 +15,7 @@ const Header = () => {
         <div className='flex gap-3 items-center'>
           <Link to={`/recruitment`}>
             <div className='w-[80px] hover:cursor-pointer'>
-              <img className='w-[100%]' src='./assets/logo/td-logo.png' alt='td-logo' />
+              <img className='w-[100%]' src='../assets/logo/td-logo.png' alt='td-logo' />
             </div>
           </Link>
           <ul className='hidden md:flex list-none'>
