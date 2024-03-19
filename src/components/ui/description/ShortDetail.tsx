@@ -1,5 +1,8 @@
-import jobData from '../../../draft/job.json';
+import { useParams } from 'react-router-dom';
+// import jobData from '../../../draft/job.json';
 import DetailSession, { DetailHeader } from './Session';
+import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
+import Loading from '../loading/Loading';
 
 const ListTechs = ({ data }: { data: string[] }) => {
   return (
@@ -12,6 +15,13 @@ const ListTechs = ({ data }: { data: string[] }) => {
 };
 
 const ShortDetail = () => {
+  const { jobId } = useParams<{ jobId: string }>();
+  const { data: jobResponse, error, isLoading } = useGetJobByIdQuery(jobId);
+
+  if (isLoading) return <Loading />;
+
+  const { data: jobData } = jobResponse;
+
   return (
     <div className='rounded bg-white-900'>
       <DetailSession>

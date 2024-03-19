@@ -1,7 +1,19 @@
+import { useNavigate, useParams } from 'react-router-dom';
 import companyData from '../../../draft/company.json';
-import jobData from '../../../draft/job.json';
+// import jobData from '../../../draft/job.json';
+import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
+import Loading from '../loading/Loading';
+import { NotFoundPage } from '../../../pages/not-found-page/NotFoundPage';
 
 const CompanyCard = () => {
+  const { jobId } = useParams<{ jobId: string }>();
+  const { data: jobResponse, error, isLoading } = useGetJobByIdQuery(jobId);
+  const navigate = useNavigate();
+
+  if (isLoading) return <Loading />;
+  if (!jobResponse || error) navigate('/not-found');
+
+  const { data: jobData } = jobResponse;
   return (
     <div className='bg-white-900 p-4 rounded'>
       <div className='grid grid-cols-12 p-2 gap-8'>

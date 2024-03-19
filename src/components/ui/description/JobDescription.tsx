@@ -1,7 +1,9 @@
-import React from 'react';
 import companyData from '../../../draft/company.json';
-import jobData from '../../../draft/job.json';
+// import jobData from '../../../draft/job.json';
 import DetailSession, { DetailHeader } from './Session';
+import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
+import { useParams } from 'react-router-dom';
+import Loading from '../loading/Loading';
 
 const JobItem = ({ name, isSelect = false }: { name: string; isSelect?: boolean }) => {
   return (
@@ -25,6 +27,12 @@ const JobTags = () => {
 };
 
 const JobDescription = () => {
+  const { jobId } = useParams<{ jobId: string }>();
+  const { data: jobResponse, error, isLoading } = useGetJobByIdQuery(jobId);
+  if (isLoading) return <Loading />;
+
+  const { data: jobData } = jobResponse;
+
   return (
     <div className='mt-4 bg-white-900 rounded'>
       <JobTags />

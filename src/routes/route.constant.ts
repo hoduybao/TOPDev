@@ -1,6 +1,6 @@
 export const MY_ROUTE = {
   HOME: '',
-  JOB: 'job',
+  JOB: 'job/:jobId',
 };
 
 export const DEFAULT_ROUTE = MY_ROUTE.HOME;

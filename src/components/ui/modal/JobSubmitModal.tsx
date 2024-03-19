@@ -1,9 +1,12 @@
 import React from 'react';
 import { Modal } from 'antd';
 import companyData from '../../../draft/company.json';
-import jobData from '../../../draft/job.json';
+// import jobData from '../../../draft/job.json';
 // import formData from '../../../draft/application.json';
 import UserSubmitButton from '../button/UserSubmitButton';
+import { useParams } from 'react-router-dom';
+import Loading from '../loading/Loading';
+import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
 
 const JobSubmitModal = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -23,6 +26,13 @@ const JobSubmitModal = () => {
 
   const labelCss = 'col-span-2 font-semibold';
   const inputCss = 'col-span-10 border rounded py-2 border-black-500';
+
+  const { jobId } = useParams<{ jobId: string }>();
+  const { data: jobResponse, error, isLoading } = useGetJobByIdQuery(jobId);
+  if (isLoading) return <Loading />;
+
+  const { data: jobData } = jobResponse;
+
   return (
     <div className='mb-2'>
       <UserSubmitButton name='Ứng tuyển ngay' onClick={showModal} isFilled />
