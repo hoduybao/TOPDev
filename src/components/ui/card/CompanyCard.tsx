@@ -3,7 +3,6 @@ import companyData from '../../../draft/company.json';
 // import jobData from '../../../draft/job.json';
 import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
 import Loading from '../loading/Loading';
-import { NotFoundPage } from '../../../pages/not-found-page/NotFoundPage';
 
 const CompanyCard = () => {
   const { jobId } = useParams<{ jobId: string }>();
