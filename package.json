@@ -14,6 +14,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.0.8",
+    "@dnd-kit/sortable": "^7.0.2",
     "@reduxjs/toolkit": "^2.2.1",
     "@tinymce/tinymce-react": "^4.3.2",
     "antd": "5.10.1",

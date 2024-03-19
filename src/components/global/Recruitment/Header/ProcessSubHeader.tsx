@@ -4,10 +4,17 @@ import type { MenuProps } from 'antd';
 import type { SearchProps } from 'antd/es/input/Search';
 
 import { UploadOutlined, SettingOutlined, CaretDownOutlined } from '@ant-design/icons';
-import AddRecruitmentBtn from '../Content/AddRecruitmentBtn';
 
-const ProcessSubHeader = () => {
-  const { Search } = Input;
+import AddApplicantBtn from '../Content/AddApplicantBtn';
+
+const { Search } = Input;
+
+interface PropType {
+  createNewDetailApplication: (title: string, name: string, phone: string, email: string) => void;
+}
+
+const ProcessSubHeader = (props: PropType) => {
+  const { createNewDetailApplication } = props;
 
   const actionsItems: MenuProps['items'] = [
     {
@@ -49,7 +56,7 @@ const ProcessSubHeader = () => {
   return (
     <div className='bg-white px-4 pt-2.5 pb-4 border-b border-gray-300 flex items-center justify-between'>
       <div className='flex items-center gap-3'>
-        <AddRecruitmentBtn />
+        <AddApplicantBtn createNewDetailApplication={createNewDetailApplication} />
         <p className='text-[16px]'>Ứng viên</p>
         <Dropdown menu={{ items: actionsItems }} trigger={['click']}>
           <div>
