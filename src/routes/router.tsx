@@ -8,6 +8,7 @@ import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import MainPage from '../pages/recruitment/MainPage';
 import AdminMainPage from '../pages/admin/MainPage';
 import ProcessPage from '../pages/recruitment/ProcessPage';
+import DetailPage from '../pages/recruitment/DetailPage';
 import { MY_ROUTE } from './route.constant';
 
 export const router = createBrowserRouter([
@@ -25,6 +26,11 @@ export const router = createBrowserRouter([
     path: '/recruitment/process',
     element: <RecruitmentProcessLayout />,
     children: [{ path: MY_ROUTE.RECRUITMENT_PROCESS, element: <ProcessPage /> }],
+  },
+  {
+    path: '/recruitment/process/detail-application/:id',
+    element: <RecruitmentProcessLayout />,
+    children: [{ path: MY_ROUTE.RECRUITMENT_DETAIL, element: <DetailPage /> }],
   },
   {
     path: '/admin',
