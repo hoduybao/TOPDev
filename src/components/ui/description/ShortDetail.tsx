@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 // import jobData from '../../../draft/job.json';
 import DetailSession, { DetailHeader } from './Session';
 import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
-import Loading from '../loading/Loading';
+import { Spin } from 'antd';
 
 const ListTechs = ({ data }: { data: string[] }) => {
   return (
@@ -16,46 +16,46 @@ const ListTechs = ({ data }: { data: string[] }) => {
 
 const ShortDetail = () => {
   const { jobId } = useParams<{ jobId: string }>();
-  const { data: jobResponse, error, isLoading } = useGetJobByIdQuery(jobId);
-
-  if (isLoading) return <Loading />;
-
-  const { data: jobData } = jobResponse;
+  const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
 
   return (
-    <div className='rounded bg-white-900'>
-      <DetailSession>
-        <div className='text-lg opacity-50 font-bold'>Thông tin chung</div>
-      </DetailSession>
-      <DetailSession hideBottomLine>
-        <DetailHeader title='Năm kinh nghiệm tối thiểu' />
-        <div className='opacity-80'>Tất cả kinh nhiệm</div>
-      </DetailSession>
-      <DetailSession hideBottomLine>
-        <DetailHeader title='Cấp bậc' />
-        <div className='opacity-80 capitalize'>{jobData.level}</div>
-      </DetailSession>
-      <DetailSession hideBottomLine>
-        <DetailHeader title='Loại hình' />
-        <div className='opacity-80 capitalize'>{jobData.type}</div>
-      </DetailSession>
-      <DetailSession hideBottomLine>
-        <DetailHeader title='Loại hợp đồng' />
-        <div className='opacity-80 capitalize'>{jobData.typeContract}</div>
-      </DetailSession>
-      <DetailSession hideBottomLine>
-        <DetailHeader title='Các công nghệ sử dụng' />
-        <ListTechs data={jobData.techs} />
-      </DetailSession>
-      <DetailSession hideBottomLine>
-        <DetailHeader title='Quy trình phỏng vấn' />
-        <ul className='px-4'>
-          {jobData.interviewProcess.map((item, index) => (
-            <li className='list-disc'>{item}</li>
-          ))}
-        </ul>
-      </DetailSession>
-    </div>
+    <Spin spinning={isLoading}>
+      {jobResponse && (
+        <div className='rounded bg-white-900'>
+          <DetailSession>
+            <div className='text-lg opacity-50 font-bold'>Thông tin chung</div>
+          </DetailSession>
+          <DetailSession hideBottomLine>
+            <DetailHeader title='Năm kinh nghiệm tối thiểu' />
+            <div className='opacity-80'>Tất cả kinh nhiệm</div>
+          </DetailSession>
+          <DetailSession hideBottomLine>
+            <DetailHeader title='Cấp bậc' />
+            <div className='opacity-80 capitalize'>{jobResponse.data.level}</div>
+          </DetailSession>
+          <DetailSession hideBottomLine>
+            <DetailHeader title='Loại hình' />
+            <div className='opacity-80 capitalize'>{jobResponse.data.type}</div>
+          </DetailSession>
+          <DetailSession hideBottomLine>
+            <DetailHeader title='Loại hợp đồng' />
+            <div className='opacity-80 capitalize'>{jobResponse.data.typeContract}</div>
+          </DetailSession>
+          <DetailSession hideBottomLine>
+            <DetailHeader title='Các công nghệ sử dụng' />
+            <ListTechs data={jobResponse.data.techs} />
+          </DetailSession>
+          <DetailSession hideBottomLine>
+            <DetailHeader title='Quy trình phỏng vấn' />
+            <ul className='px-4'>
+              {jobResponse.data.interviewProcess.map((item, index) => (
+                <li className='list-disc'>{item}</li>
+              ))}
+            </ul>
+          </DetailSession>
+        </div>
+      )}
+    </Spin>
   );
 };
 

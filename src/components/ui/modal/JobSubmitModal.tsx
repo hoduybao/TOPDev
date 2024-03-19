@@ -1,12 +1,12 @@
 import React from 'react';
-import { Modal } from 'antd';
-import companyData from '../../../draft/company.json';
+import { Modal, Spin } from 'antd';
+// import companyData from '../../../draft/company.json';
 // import jobData from '../../../draft/job.json';
 // import formData from '../../../draft/application.json';
 import UserSubmitButton from '../button/UserSubmitButton';
 import { useParams } from 'react-router-dom';
-import Loading from '../loading/Loading';
 import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
+import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
 
 const JobSubmitModal = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -27,68 +27,70 @@ const JobSubmitModal = () => {
   const labelCss = 'col-span-2 font-semibold';
   const inputCss = 'col-span-10 border rounded py-2 border-black-500';
 
-  const { jobId } = useParams<{ jobId: string }>();
-  const { data: jobResponse, error, isLoading } = useGetJobByIdQuery(jobId);
-  if (isLoading) return <Loading />;
-
-  const { data: jobData } = jobResponse;
+  const { jobId, companyId } = useParams<{ jobId: string; companyId: string }>();
+  const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
+  const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
 
   return (
-    <div className='mb-2'>
-      <UserSubmitButton name='Ứng tuyển ngay' onClick={showModal} isFilled />
-      <Modal
-        width='60%'
-        title={
-          <div className='text-xl'>
-            Bạn đang ứng tuyển
-            <span className='text-orange-600'> {jobData.title} </span>
-            tại {companyData.name}
-          </div>
-        }
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={[
-          <div className='flex justify-end gap-2 '>
-            <UserSubmitButton isFullWidth={false} name='Hủy' onClick={handleCancel} />
-            <UserSubmitButton isFullWidth={false} name='Nộp CV' onClick={() => {}} isFilled />
-          </div>,
-        ]}
-      >
-        <form action=''>
-          <FormRow>
-            <label className={labelCss} htmlFor='name'>
-              Họ và tên
-            </label>
-            <input className={inputCss} type='text' id='name' />
-          </FormRow>
-          <FormRow>
-            <label className={labelCss} htmlFor='email'>
-              Email
-            </label>
-            <input className={inputCss} type='text' id='email' />
-          </FormRow>
-          <FormRow>
-            <label className={labelCss} htmlFor='phone'>
-              Số điện thoại
-            </label>
-            <input className={inputCss} type='text' id='phone' />
-          </FormRow>
-          <FormRow>
-            <label className={labelCss} htmlFor='cv'>
-              CV của bạn
-            </label>
-            <input className='col-span-10 ' type='file' id='cv' />
-          </FormRow>
-          <FormRow>
-            <label className={labelCss} htmlFor='intro'>
-              Đoạn giới thiêụ bản thân
-            </label>
-            <textarea id='intro' className='col-span-10 border rounded py-2 border-black-500' />
-          </FormRow>
-        </form>
-      </Modal>
-    </div>
+    <Spin spinning={isLoading || isLoadingCompany}>
+      {jobResponse && companyResponse && (
+        <div className='mb-2'>
+          <UserSubmitButton name='Ứng tuyển ngay' onClick={showModal} isFilled />
+          <Modal
+            width='60%'
+            title={
+              <div className='text-xl'>
+                Bạn đang ứng tuyển
+                <span className='text-orange-600'> {jobResponse.data.title} </span>
+                tại {companyResponse.data.name}
+              </div>
+            }
+            open={isModalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+            footer={[
+              <div className='flex justify-end gap-2 '>
+                <UserSubmitButton isFullWidth={false} name='Hủy' onClick={handleCancel} />
+                <UserSubmitButton isFullWidth={false} name='Nộp CV' onClick={() => {}} isFilled />
+              </div>,
+            ]}
+          >
+            <form action=''>
+              <FormRow>
+                <label className={labelCss} htmlFor='name'>
+                  Họ và tên
+                </label>
+                <input className={inputCss} type='text' id='name' />
+              </FormRow>
+              <FormRow>
+                <label className={labelCss} htmlFor='email'>
+                  Email
+                </label>
+                <input className={inputCss} type='text' id='email' />
+              </FormRow>
+              <FormRow>
+                <label className={labelCss} htmlFor='phone'>
+                  Số điện thoại
+                </label>
+                <input className={inputCss} type='text' id='phone' />
+              </FormRow>
+              <FormRow>
+                <label className={labelCss} htmlFor='cv'>
+                  CV của bạn
+                </label>
+                <input className='col-span-10 ' type='file' id='cv' />
+              </FormRow>
+              <FormRow>
+                <label className={labelCss} htmlFor='intro'>
+                  Đoạn giới thiêụ bản thân
+                </label>
+                <textarea id='intro' className='col-span-10 border rounded py-2 border-black-500' />
+              </FormRow>
+            </form>
+          </Modal>
+        </div>
+      )}
+    </Spin>
   );
 };
 
