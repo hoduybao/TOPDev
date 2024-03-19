@@ -74,9 +74,6 @@ const JobSubmitModal = () => {
                   const file = e.target.files && e.target.files[0];
                   const handleImageUpload = async () => {
                     try {
-                      if (!file || !file.name) {
-                        return;
-                      }
                       const fileName = new Date().getTime() + '-' + file.name;
 
                       const storage = getStorage(firebaseApp);
