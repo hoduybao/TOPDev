@@ -36,9 +36,11 @@ const JobSubmitModal = () => {
       description: resp && resp.message, // An error occurred.
     });
     setIsModalOpen(false);
+    form.resetFields();
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+    form.resetFields();
   };
 
   return (

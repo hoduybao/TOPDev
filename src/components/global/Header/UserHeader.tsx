@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const HeaderMenuItem = ({ content, url = '/' }: { content: string; url: string }) => {
   return (
-    <div className='font-semibold sm:text-xs md:text-base hidden sm:hidden md:block'>
+    <div className='font-semibold sm:text-xs lg:text-base hidden sm:hidden md:block'>
       <Link to={url}>{content}</Link>
     </div>
   );
