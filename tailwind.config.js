@@ -4,7 +4,13 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      colors,
+      colors: {
+        'primary-red': '#dd3f24',
+        'secondary-red': '#c43820',
+        'primary-gray': '#262a36',
+        'secondary-gray': '#1b1d26',
+        'secondary-white': '#f9fafb',
+      },
     },
   },
   plugins: [],
