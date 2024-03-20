@@ -33,7 +33,7 @@ const JobSubmitModal = () => {
     const resp = await addNewApplication(value).unwrap();
     notification.success({
       message: 'Success!',
-      description: resp && resp.message, // An error occurred.
+      description: resp && resp.message,
     });
     setIsModalOpen(false);
     form.resetFields();

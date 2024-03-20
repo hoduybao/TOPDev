@@ -16,7 +16,15 @@ const jobApi = commonApi.enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB] }).inje
         method: 'GET',
       }),
     }),
+    createJob: build.mutation<any, any>({
+      query: (data) => ({
+        url: '/jobservice/create',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: [TAG_TYPES.JOB],
+    }),
   }),
 });
 
-export const { useGetJobsQuery, useGetJobByIdQuery } = jobApi;
+export const { useGetJobsQuery, useGetJobByIdQuery, useCreateJobMutation } = jobApi;
