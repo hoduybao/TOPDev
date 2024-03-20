@@ -4,9 +4,10 @@ import { commonApi } from '../../common.api';
 const jobApi = commonApi.enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB] }).injectEndpoints({
   endpoints: (build) => ({
     getJobs: build.query<any, any>({
-      query: () => ({
+      query: (params: { allType?: boolean }) => ({
         url: '/jobservice/jobs',
         method: 'GET',
+        params: params,
       }),
       providesTags: [TAG_TYPES.JOB],
     }),

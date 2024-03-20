@@ -1,4 +1,4 @@
-import { Table, Space, Button, Input } from 'antd';
+import { Table, Space, Button, Input, Spin } from 'antd';
 import type { TableColumnsType } from 'antd';
 import type { SearchProps } from 'antd/es/input/Search';
 import { v4 as uuidv4 } from 'uuid';
@@ -6,7 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 import { JobType } from '@/+core/utilities/types/recruitment.type';
-import JobMockData from '../../../../draft/job.json';
+// import JobMockData from '../../../../draft/job.json';
+import { useGetJobsQuery } from '../../../../+core/redux/apis/common/job/job.api';
 
 const { Search } = Input;
 
@@ -37,11 +38,16 @@ const columns: TableColumnsType<DataType> = [
     dataIndex: 'typeContract',
   },
   {
+    title: 'Status',
+    dataIndex: 'status',
+  },
+  {
     title: 'Action',
     key: 'action',
     render: (_, record) => (
       <Space size='middle'>
-        <Button icon={<CheckOutlined />}>Approve {record.id}</Button>
+        {/* <Button icon={<CheckOutlined />}>Approve {record.id}</Button> */}
+        <Button icon={<CheckOutlined />}>Approve</Button>
         <Button type='primary' icon={<CloseOutlined />} danger>
           Ignore
         </Button>
@@ -51,12 +57,13 @@ const columns: TableColumnsType<DataType> = [
 ];
 
 const PendingTab = () => {
-  const data: DataType[] = [
-    {
-      key: uuidv4(),
-      ...JobMockData,
-    },
-  ];
+  const { data: response, isLoading } = useGetJobsQuery({ allType: true });
+  // const data: DataType[] = [
+  //   {
+  //     key: uuidv4(),
+  //     ...JobMockData,
+  //   },
+  // ];
 
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
@@ -88,13 +95,20 @@ const PendingTab = () => {
         </div>
       </div>
       <div className='w-full'>
-        <Table
-          rowSelection={{
-            ...rowSelection,
-          }}
-          columns={columns}
-          dataSource={data}
-        />
+        <Spin spinning={isLoading}>
+          {response && (
+            <Table
+              rowSelection={{
+                ...rowSelection,
+              }}
+              columns={columns}
+              dataSource={response.data.map((item: any) => ({
+                ...item,
+                key: uuidv4(),
+              }))}
+            />
+          )}
+        </Spin>
       </div>
     </div>
   );

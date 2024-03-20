@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Modal, notification, Spin, Upload } from 'antd';
+import { Form, Modal, notification, Spin } from 'antd';
 // import companyData from '../../../draft/company.json';
 // import jobData from '../../../draft/job.json';
 // import formData from '../../../draft/application.json';
@@ -16,7 +16,7 @@ const JobSubmitModal = () => {
   const { jobId, companyId } = useParams<{ jobId: string; companyId: string }>();
   const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
   const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
-  const [addNewApplication, response] = useCreateApplicationMutation();
+  const [addNewApplication] = useCreateApplicationMutation();
 
   const [form] = Form.useForm();
 
