@@ -4,14 +4,12 @@ const UserSubmitButton = ({
   isFullWidth = true,
   onClick,
   isSmall = false,
-  htmlType,
 }: {
   name: string;
   isFilled?: boolean;
   isFullWidth?: boolean;
   isSmall?: boolean;
   onClick?: (values?: any) => void;
-  htmlType?: string;
 }) => {
   return (
     <div className={`${isFullWidth && 'w-full'} mb-2`}>

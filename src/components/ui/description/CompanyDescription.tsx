@@ -53,7 +53,7 @@ const CompanyDescription = () => {
           </DetailSession>
           <DetailSession hideBottomLine>
             <div className='grid grid-cols-12 justify-center'>
-              {companyData.data.imgs.map((item) => {
+              {companyData.data.imgs.map((item: any) => {
                 return <img src={item} alt='company' className='col-span-4' />;
               })}
             </div>

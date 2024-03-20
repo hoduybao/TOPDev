@@ -22,7 +22,7 @@ const ProcessPage = () => {
   const { jobId } = useParams<{ jobId: string }>();
   const { data: response, isLoading } = useGetApplicationsByJobIdQuery(jobId);
 
-  const [applications, setApplications] = useState<KanbanApplicationType[]>();
+  const [applications, setApplications] = useState<KanbanApplicationType[]>([]);
 
   const createNewDetailApplication = (
     title: string,

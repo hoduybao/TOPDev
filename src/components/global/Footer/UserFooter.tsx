@@ -41,7 +41,7 @@ const UserFooter = () => {
         <SubSession>
           <MenuHeader title={FooterMenu.topdevAbout.title} />
           <Menu>
-            {FooterMenu.topdevAbout.menu.map((item, index) => (
+            {FooterMenu.topdevAbout.menu.map((item: { name: string; url: string }, index) => (
               <MenuItem key={index} name={item.name} url={item.url} />
             ))}
           </Menu>
@@ -50,7 +50,7 @@ const UserFooter = () => {
         <SubSession>
           <MenuHeader title={FooterMenu.candidate.title} />
           <Menu>
-            {FooterMenu.candidate.menu.map((item, index) => (
+            {FooterMenu.candidate.menu.map((item: { name: string; url: string }, index) => (
               <MenuItem key={index} name={item.name} url={item.url} />
             ))}
           </Menu>
@@ -59,7 +59,7 @@ const UserFooter = () => {
         <SubSession>
           <MenuHeader title={FooterMenu.recuitment.title} />
           <Menu>
-            {FooterMenu.recuitment.menu.map((item, index) => (
+            {FooterMenu.recuitment.menu.map((item: { name: string; url: string }, index) => (
               <MenuItem key={index} name={item.name} url={item.url} />
             ))}
           </Menu>

@@ -4,7 +4,7 @@ import { useGetJobsQuery } from '../../+core/redux/apis/common/job/job.api';
 import { Spin } from 'antd';
 
 const MainPage = () => {
-  const { data: response, isLoading } = useGetJobsQuery();
+  const { data: response, isLoading } = useGetJobsQuery({ allType: false });
 
   return (
     <div className='flex flex-col'>

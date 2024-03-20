@@ -44,7 +44,8 @@ const columns: TableColumnsType<DataType> = [
   {
     title: 'Action',
     key: 'action',
-    render: (_, record) => (
+    // render: (_, record) => (
+    render: (_) => (
       <Space size='middle'>
         {/* <Button icon={<CheckOutlined />}>Approve {record.id}</Button> */}
         <Button icon={<CheckOutlined />}>Approve</Button>
