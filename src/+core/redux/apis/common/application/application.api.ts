@@ -30,6 +30,13 @@ const applicationApi = commonApi
           params: { jobId },
         }),
       }),
+      getApplicationsByUserId: build.query<any, any>({
+        query: (userId: string) => ({
+          url: `/applicationservice/applications`,
+          method: 'GET',
+          params: { userId },
+        }),
+      }),
       getApplicationById: build.query<any, any>({
         query: (id: string) => ({
           url: `/applicationservice/application/${id}`,
@@ -51,4 +58,5 @@ export const {
   useGetApplicationsByJobIdQuery,
   useGetApplicationByIdQuery,
   useUpdateApplicationStatusMutation,
+  useGetApplicationsByUserIdQuery,
 } = applicationApi;

@@ -12,6 +12,7 @@ import DetailPage from '../pages/recruitment/DetailPage';
 import { MY_ROUTE } from './route.constant';
 import JobPage from '../pages/job/JobPage';
 import UserLayout from '../components/global/layout/UserLayout';
+import AppliedJobs from '../pages/job/AppliedJobs';
 
 export const router = createBrowserRouter([
   {
@@ -40,9 +41,12 @@ export const router = createBrowserRouter([
     children: [{ path: MY_ROUTE.ADMIN, element: <AdminMainPage /> }],
   },
   {
-    path: '/',
+    path: '/jobs',
     element: <UserLayout />,
-    children: [{ path: MY_ROUTE.JOB, element: <JobPage /> }],
+    children: [
+      { path: MY_ROUTE.JOB, element: <JobPage /> },
+      { path: MY_ROUTE.APPLIEDJOB, element: <AppliedJobs /> },
+    ],
   },
   { path: '/*', element: <NotFoundPage /> },
 ]);

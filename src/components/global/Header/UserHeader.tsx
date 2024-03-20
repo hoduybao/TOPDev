@@ -37,7 +37,7 @@ const HoverBackground = ({
     <div
       className={`
     ${hideInMobile && 'hidden sm:hidden md:block'}
-    rounded-lg hover:bg-iconHover hover:cursor-pointer lg:p-4 md:p-2`}
+    rounded-lg hover:bg-iconHover hover:cursor-pointer lg:p-4 md:p-2 relative group`}
     >
       {children}
     </div>
@@ -64,6 +64,11 @@ const UserHeader = () => {
             <div className='flex gap-4 items-center justify-center'>
               <img className='h-[24px]' src='/assets/icons/avatar.svg' alt='notification' />
               <div className='text-lg md:text-base font-semibold'>Hung Ngo</div>
+            </div>
+            <div className='absolute bottom-[-48px] right-0 z-10 hidden group-hover:block bg-iconHover rounded-lg rounded-tr-none'>
+              <HoverBackground>
+                <Link to={'/jobs/applied'}>Việc đã ứng tuyển</Link>
+              </HoverBackground>
             </div>
           </HoverBackground>
           <div className='p-2 flex items-center gap-4 md:p-2 md:gap-2'>
