@@ -19,6 +19,7 @@ import ColumnContainer from './ColumnContainer';
 import ApplicationCard from './ApplicationCard';
 
 import { KanbanColumn, Id, KanbanApplicationType } from '@/+core/utilities/types/recruitment.type';
+import { useUpdateApplicationStatusMutation } from '../../../../../+core/redux/apis/common/application/application.api';
 
 const defaultCols: KanbanColumn[] = [
   {
@@ -26,16 +27,17 @@ const defaultCols: KanbanColumn[] = [
     title: 'Mới',
   },
   {
-    id: 'expertise',
-    title: 'Thẩm định',
-  },
-  {
     id: 'interview',
     title: 'Phỏng vấn',
   },
   {
-    id: 'contract',
-    title: 'Đề xuất hợp đồng',
+    id: 'offer',
+    title: 'Gửi Offer',
+  },
+
+  {
+    id: 'rejected',
+    title: 'Từ chối',
   },
 ];
 
@@ -46,6 +48,7 @@ interface PropType {
 
 const KanbanBoard = (props: PropType) => {
   const { applications, setApplications } = props;
+  const [updateApplicationStatus] = useUpdateApplicationStatusMutation();
 
   const [columns, setColumns] = useState<KanbanColumn[]>(defaultCols);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]); // Use for dnd-kit
@@ -150,7 +153,7 @@ const KanbanBoard = (props: PropType) => {
     });
   };
 
-  const onDragOver = (event: DragOverEvent) => {
+  const onDragOver = async (event: DragOverEvent) => {
     const { active, over } = event;
     if (!over) return;
 
@@ -184,8 +187,17 @@ const KanbanBoard = (props: PropType) => {
 
     // Dropping a Application over a column
     if (isActiveApplication && isOverAColumn) {
+      const resp = await updateApplicationStatus({
+        id: activeId,
+        status: overId,
+      }).unwrap();
+      console.log('resp>>', resp);
+
       setApplications((applications) => {
         const activeIndex = applications.findIndex((a) => a.id === activeId);
+        console.log('activeId>>', activeId);
+        console.log('applications>>', applications);
+        console.log('activeIndex>>', activeIndex);
 
         applications[activeIndex].columnId = overId;
         // console.log('DROPPING APPLICATION OVER COLUMN', { activeIndex });

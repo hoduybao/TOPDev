@@ -1,3 +1,4 @@
+import { update } from 'firebase/database';
 import { TAG_TYPES } from '../../../../../+core/constants/api.tagTypes';
 import { commonApi } from '../../common.api';
 
@@ -35,6 +36,13 @@ const applicationApi = commonApi
           method: 'GET',
         }),
       }),
+      updateApplicationStatus: build.mutation<any, any>({
+        query: (params: { id: string; status: string }) => ({
+          url: `/applicationservice/applications/${params.id}/status`,
+          method: 'PUT',
+          body: { status: params.status },
+        }),
+      }),
     }),
   });
 
@@ -42,4 +50,5 @@ export const {
   useCreateApplicationMutation,
   useGetApplicationsByJobIdQuery,
   useGetApplicationByIdQuery,
+  useUpdateApplicationStatusMutation,
 } = applicationApi;

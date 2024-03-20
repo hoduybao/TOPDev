@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { KanbanApplicationType } from '@/+core/utilities/types/recruitment.type';
@@ -21,6 +21,19 @@ import { Spin } from 'antd';
 const ProcessPage = () => {
   const { jobId } = useParams<{ jobId: string }>();
   const { data: response, isLoading } = useGetApplicationsByJobIdQuery(jobId);
+
+  React.useEffect(() => {
+    response &&
+      setApplications(
+        response.map((item: KanbanApplicationType) => {
+          const newData = {
+            ...item,
+            columnId: item.status,
+          };
+          return newData;
+        }),
+      );
+  }, [response]);
 
   const [applications, setApplications] = useState<KanbanApplicationType[]>([]);
 
@@ -50,15 +63,7 @@ const ProcessPage = () => {
       <ProcessSubHeader createNewDetailApplication={createNewDetailApplication} />
 
       <Spin spinning={isLoading}>
-        {response && (
-          <KanbanBoard
-            applications={response.map((item: KanbanApplicationType) => ({
-              ...item,
-              columnId: 'new',
-            }))}
-            setApplications={setApplications}
-          />
-        )}
+        {response && <KanbanBoard applications={applications} setApplications={setApplications} />}
       </Spin>
     </div>
   );
