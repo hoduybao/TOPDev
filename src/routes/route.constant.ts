@@ -4,6 +4,7 @@ export const MY_ROUTE = {
   RECRUITMENT_PROCESS: '/recruitment/process',
   RECRUITMENT_DETAIL: '/recruitment/process/detail-application/:id',
   ADMIN: '/admin',
+  JOB: 'jobs/:companyId/:jobId',
 };
 
 export const DEFAULT_ROUTE = MY_ROUTE.HOME;
