@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Modal, Spin, Upload } from 'antd';
+import { Button, Form, Modal, notification, Spin, Upload } from 'antd';
 // import companyData from '../../../draft/company.json';
 // import jobData from '../../../draft/job.json';
 // import formData from '../../../draft/application.json';
@@ -10,11 +10,13 @@ import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company
 import { CustomTextInput } from '../form/CustomTextInput';
 import firebaseApp from '../../../config/firebase';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
+import { useCreateApplicationMutation } from '../../..//+core/redux/apis/common/application/application.api';
 
 const JobSubmitModal = () => {
   const { jobId, companyId } = useParams<{ jobId: string; companyId: string }>();
   const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
   const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
+  const [addNewApplication, response] = useCreateApplicationMutation();
 
   const [form] = Form.useForm();
 
@@ -25,17 +27,20 @@ const JobSubmitModal = () => {
     setIsModalOpen(true);
   };
   const handleOk = async () => {
-    console.log(form.getFieldsValue());
-
-    // setIsModalOpen(false);
+    let value = form.getFieldsValue();
+    value.jobId = jobId;
+    value.userId = 'user1'; // TODO: get user id from redux
+    const resp = await addNewApplication(value).unwrap();
+    notification.success({
+      message: 'Success!',
+      description: resp && resp.message, // An error occurred.
+    });
+    setIsModalOpen(false);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
-  const onSubmitForm = (values: any) => {
-    console.log(values);
-  };
   return (
     <Spin spinning={isLoading || isLoadingCompany}>
       {jobResponse && companyResponse && (
@@ -60,11 +65,11 @@ const JobSubmitModal = () => {
               </div>,
             ]}
           >
-            <Form form={form} name='applicationForm' onFinish={onSubmitForm}>
+            <Form form={form} name='applicationForm'>
               <CustomTextInput label='Họ và tên' name='name' />
               <CustomTextInput label='Email' name='email' />
               <CustomTextInput label='Số điện thoại' name='phone' />
-              <CustomTextInput label='Đoạn giới thiêụ bản thân' name='intro' />
+              <CustomTextInput label='Đoạn giới thiêụ bản thân' name='note' />
               <input
                 name='cv'
                 onChange={async (e) => {
