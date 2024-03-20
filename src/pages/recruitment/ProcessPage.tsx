@@ -7,6 +7,9 @@ import ProcessSubHeader from '../../components/global/Recruitment/Header/Process
 import KanbanBoard from '../../components/global/Recruitment/Content/ProcessKanban/KanbanBoard';
 
 import MockApplicationData from '../../draft/application.json';
+import { useParams } from 'react-router-dom';
+import { useGetApplicationsByJobIdQuery } from '../../+core/redux/apis/common/application/application.api';
+import { Spin } from 'antd';
 
 const defaultApplicationsData: KanbanApplicationType[] = [
   {
@@ -16,6 +19,9 @@ const defaultApplicationsData: KanbanApplicationType[] = [
 ];
 
 const ProcessPage = () => {
+  const { jobId } = useParams<{ jobId: string }>();
+  const { data: response, isLoading } = useGetApplicationsByJobIdQuery(jobId);
+
   const [applications, setApplications] =
     useState<KanbanApplicationType[]>(defaultApplicationsData);
 
@@ -25,6 +31,7 @@ const ProcessPage = () => {
     phone: string,
     email: string,
   ) => {
+    // todo: call api to add new application
     const newApplication: KanbanApplicationType = {
       id: uuidv4(),
       jobId: uuidv4(),
@@ -42,7 +49,18 @@ const ProcessPage = () => {
   return (
     <div className='flex flex-col'>
       <ProcessSubHeader createNewDetailApplication={createNewDetailApplication} />
-      <KanbanBoard applications={applications} setApplications={setApplications} />
+
+      <Spin spinning={isLoading}>
+        {response && (
+          <KanbanBoard
+            applications={response.map((item: any) => ({
+              ...item,
+              columnId: 'new',
+            }))}
+            setApplications={setApplications}
+          />
+        )}
+      </Spin>
     </div>
   );
 };

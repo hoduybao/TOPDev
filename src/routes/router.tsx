@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
     children: [{ path: MY_ROUTE.RECRUITMENT_PROCESS, element: <ProcessPage /> }],
   },
   {
-    path: '/recruitment/process/detail-application/:id',
+    path: '/recruitment/process/:jobId/:id',
     element: <RecruitmentProcessLayout />,
     children: [{ path: MY_ROUTE.RECRUITMENT_DETAIL, element: <DetailPage /> }],
   },

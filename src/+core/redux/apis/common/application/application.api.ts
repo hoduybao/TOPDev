@@ -22,7 +22,24 @@ const applicationApi = commonApi
           body: values,
         }),
       }),
+      getApplicationsByJobId: build.query<any, any>({
+        query: (jobId: string) => ({
+          url: `/applicationservice/applications`,
+          method: 'GET',
+          params: { jobId },
+        }),
+      }),
+      getApplicationById: build.query<any, any>({
+        query: (id: string) => ({
+          url: `/applicationservice/application/${id}`,
+          method: 'GET',
+        }),
+      }),
     }),
   });
 
-export const { useCreateApplicationMutation } = applicationApi;
+export const {
+  useCreateApplicationMutation,
+  useGetApplicationsByJobIdQuery,
+  useGetApplicationByIdQuery,
+} = applicationApi;

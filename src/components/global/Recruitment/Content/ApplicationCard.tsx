@@ -48,13 +48,13 @@ const ApplicationCard = (props: PropType) => {
         </Dropdown>
       </div>
       <div className='pt-5 pb-10 flex justify-between items-center'>
-        <Link to='/recruitment/process'>
+        <Link to={`/recruitment/process/${job.id}`}>
           <Button type='primary' danger>
             {newestAmount} Ứng viên mới
           </Button>
         </Link>
         <div>
-          <Link to='/recruitment/process'>
+          <Link to={`/recruitment/process/${job.id}`}>
             <p className='text-red-500 font-bold hover:text-red-400 hover:cursor-pointer'>
               {recentAmount} Để tuyển dụng
             </p>

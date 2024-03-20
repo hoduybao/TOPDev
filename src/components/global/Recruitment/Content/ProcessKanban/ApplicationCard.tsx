@@ -21,7 +21,9 @@ const ApplicationCard = (props: PropType) => {
     {
       key: 'detail',
       label: (
-        <Link to={`/recruitment/process/detail-application/${application?.id}`}>Xem chi tiết</Link>
+        <Link to={`/recruitment/process/${application.jobId}/${application?.id}`}>
+          Xem chi tiết
+        </Link>
       ),
     },
     {
