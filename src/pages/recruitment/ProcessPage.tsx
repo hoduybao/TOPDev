@@ -6,24 +6,23 @@ import { KanbanApplicationType } from '@/+core/utilities/types/recruitment.type'
 import ProcessSubHeader from '../../components/global/Recruitment/Header/ProcessSubHeader';
 import KanbanBoard from '../../components/global/Recruitment/Content/ProcessKanban/KanbanBoard';
 
-import MockApplicationData from '../../draft/application.json';
+// import MockApplicationData from '../../draft/application.json';
 import { useParams } from 'react-router-dom';
 import { useGetApplicationsByJobIdQuery } from '../../+core/redux/apis/common/application/application.api';
 import { Spin } from 'antd';
 
-const defaultApplicationsData: KanbanApplicationType[] = [
-  {
-    columnId: 'new',
-    ...MockApplicationData,
-  },
-];
+// const defaultApplicationsData: KanbanApplicationType[] = [
+//   {
+//     columnId: 'new',
+//     ...MockApplicationData,
+//   },
+// ];
 
 const ProcessPage = () => {
   const { jobId } = useParams<{ jobId: string }>();
   const { data: response, isLoading } = useGetApplicationsByJobIdQuery(jobId);
 
-  const [applications, setApplications] =
-    useState<KanbanApplicationType[]>(defaultApplicationsData);
+  const [applications, setApplications] = useState<KanbanApplicationType[]>();
 
   const createNewDetailApplication = (
     title: string,
