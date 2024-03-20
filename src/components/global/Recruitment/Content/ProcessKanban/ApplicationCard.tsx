@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Rate, Dropdown } from 'antd';
@@ -7,7 +8,6 @@ import type { MenuProps } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
 
 import { Id, KanbanApplicationType } from '@/+core/utilities/types/recruitment.type';
-import { Link } from 'react-router-dom';
 
 interface PropType {
   application: KanbanApplicationType;
@@ -35,6 +35,23 @@ const ApplicationCard = (props: PropType) => {
 
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [rateValue, setRateValue] = useState<number>(application.rating ? application.rating : 0);
+  const [showOption, setShowOption] = useState<boolean>(false);
+
+  const handleClickEvent = (event: any) => {
+    if (event.target instanceof SVGElement) {
+      console.log('Click choose btn');
+      setShowOption(true);
+    } else {
+      setShowOption(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickEvent, true);
+    return () => {
+      document.removeEventListener('click', handleClickEvent, true);
+    };
+  }, []);
 
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
     id: application.id,
@@ -102,7 +119,7 @@ const ApplicationCard = (props: PropType) => {
       {mouseIsOver && (
         <div className='absolute right-2 top-2 p-2 rounded opacity-60 hover:opacity-100 hover:cursor-pointer'>
           <Dropdown
-            // open={true}
+            open={showOption}
             menu={{
               items: cardItems,
               onClick: handleChooseOption,

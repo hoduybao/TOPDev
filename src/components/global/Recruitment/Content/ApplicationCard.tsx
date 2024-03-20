@@ -1,10 +1,10 @@
-import { Button, Card, Dropdown } from 'antd';
+import { Button, Card, Dropdown, Rate } from 'antd';
+import { Link } from 'react-router-dom';
 
 import type { MenuProps } from 'antd';
-import { StarOutlined, MoreOutlined, MailOutlined } from '@ant-design/icons';
+import { MoreOutlined, MailOutlined } from '@ant-design/icons';
 
 import { JobType } from '@/+core/utilities/types/recruitment.type';
-import { Link } from 'react-router-dom';
 
 interface PropType {
   job: JobType;
@@ -33,7 +33,7 @@ const ApplicationCard = (props: PropType) => {
   return (
     <Card className='w-[100%] sm:w-[500px]'>
       <div className='w-[100%] flex items-start'>
-        <StarOutlined className='text-yellow-500 text-[20px]' />
+        <Rate count={1} defaultValue={1} />
         <div className='w-[100%] px-2'>
           <p className='font-semibold'>{job?.title}</p>
           <div className='flex items-center gap-2'>
