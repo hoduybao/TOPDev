@@ -7,7 +7,12 @@ import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 import { JobType } from '@/+core/utilities/types/recruitment.type';
 // import JobMockData from '../../../../draft/job.json';
-import { useGetJobsQuery } from '../../../../+core/redux/apis/common/job/job.api';
+import {
+  useGetJobsQuery,
+  useUpdateJobStatusMutation,
+} from '../../../../+core/redux/apis/common/job/job.api';
+import { Link } from 'react-router-dom';
+import { log } from 'console';
 
 const { Search } = Input;
 
@@ -15,57 +20,83 @@ interface DataType extends JobType {
   key: React.Key;
 }
 
-const columns: TableColumnsType<DataType> = [
-  {
-    title: 'ID',
-    dataIndex: 'id',
-  },
-  {
-    title: 'Title',
-    dataIndex: 'title',
-    render: (text: string) => <p>{text}</p>,
-  },
-  {
-    title: 'Company ID',
-    dataIndex: 'companyId',
-  },
-  {
-    title: 'Job type',
-    dataIndex: 'type',
-  },
-  {
-    title: 'Contact type',
-    dataIndex: 'typeContract',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    // render: (_, record) => (
-    render: (_) => (
-      <Space size='middle'>
-        {/* <Button icon={<CheckOutlined />}>Approve {record.id}</Button> */}
-        <Button icon={<CheckOutlined />}>Approve</Button>
-        <Button type='primary' icon={<CloseOutlined />} danger>
-          Ignore
-        </Button>
-      </Space>
-    ),
-  },
-];
-
 const PendingTab = () => {
   // admin get all jobs
   const { data: response, isLoading } = useGetJobsQuery({ allType: true });
+  const [updateJobStatus] = useUpdateJobStatusMutation();
   // const data: DataType[] = [
   //   {
   //     key: uuidv4(),
   //     ...JobMockData,
   //   },
   // ];
+
+  const columns: TableColumnsType<DataType> = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+    },
+    {
+      title: 'Title',
+      dataIndex: 'title',
+      render: (text: string) => <p>{text}</p>,
+    },
+    {
+      title: 'Company ID',
+      dataIndex: 'companyId',
+    },
+    {
+      title: 'Job type',
+      dataIndex: 'type',
+    },
+    {
+      title: 'Contact type',
+      dataIndex: 'typeContract',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+    },
+    {
+      title: 'Publish Url',
+      key: 'url',
+      render: (_, record: DataType) => {
+        if (record.status === 'approved') {
+          return <Link to={`/jobs/${record.companyId}/${record.id}`}>Go to page</Link>;
+        }
+        return <div>Not published yet</div>;
+      },
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+        <Space size='middle'>
+          <Button
+            onClick={async () => {
+              console.log({ jobId: record.id, status: 'approved' });
+              const resp = await updateJobStatus({ jobId: record.id, status: 'approved' });
+              console.log(resp);
+            }}
+            icon={<CheckOutlined />}
+          >
+            Approve
+          </Button>
+          <Button
+            onClick={async () => {
+              const resp = await updateJobStatus({ jobId: record.id, status: 'rejected' });
+              console.log(resp);
+            }}
+            type='primary'
+            icon={<CloseOutlined />}
+            danger
+          >
+            Ignore
+          </Button>
+        </Space>
+      ),
+    },
+  ];
 
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {

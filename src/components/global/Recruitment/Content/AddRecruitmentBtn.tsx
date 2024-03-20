@@ -127,7 +127,11 @@ const AddRecruitmentBtn = () => {
             ></Select>
           </Form.Item>
 
-          <Form.Item<FieldType> label='Nice to have' name='extends'>
+          <Form.Item<FieldType>
+            label='Nice to have'
+            name='extends'
+            rules={[{ required: true, message: 'Please input nice to have!' }]}
+          >
             <Select
               mode='tags'
               style={{ width: '100%' }}

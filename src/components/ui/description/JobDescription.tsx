@@ -44,7 +44,9 @@ const JobDescription = () => {
             <DetailHeader title='Trách nhiệm công việc' />
             <ul className='px-4'>
               {jobResponse.data.responsibilities.map((item: string) => (
-                <li className='list-disc'>{item}</li>
+                <li key={item} className='list-disc'>
+                  {item}
+                </li>
               ))}
             </ul>
           </DetailSession>
@@ -52,7 +54,9 @@ const JobDescription = () => {
             <DetailHeader title='Kỹ năng chuyên môn' />
             <ul className='px-4'>
               {jobResponse.data.skills.map((item: string) => (
-                <li className='list-disc'>{item}</li>
+                <li key={item} className='list-disc'>
+                  {item}
+                </li>
               ))}
             </ul>
           </DetailSession>
@@ -60,7 +64,9 @@ const JobDescription = () => {
             <DetailHeader title='Nice to have' />
             <ul className='px-4'>
               {jobResponse.data.extends.map((item: string) => (
-                <li className='list-disc'>{item}</li>
+                <li key={item} className='list-disc'>
+                  {item}
+                </li>
               ))}
             </ul>
           </DetailSession>
@@ -68,7 +74,9 @@ const JobDescription = () => {
             <DetailHeader title='Phúc lợi dành cho bạn' />
             <div className='px-4'>
               {jobResponse.data.welfare.map((item: string) => (
-                <div className='list-disc'>{item}</div>
+                <div key={item} className='list-disc'>
+                  {item}
+                </div>
               ))}
             </div>
           </DetailSession>

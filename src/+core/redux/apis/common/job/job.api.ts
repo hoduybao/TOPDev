@@ -25,7 +25,20 @@ const jobApi = commonApi.enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB] }).inje
       }),
       invalidatesTags: [TAG_TYPES.JOB],
     }),
+    updateJobStatus: build.mutation<any, any>({
+      query: (params: { jobId: string; status: string }) => ({
+        url: `/jobservice/${params.jobId}/status`,
+        method: 'PUT',
+        body: { status: params.status },
+      }),
+      invalidatesTags: [TAG_TYPES.JOB],
+    }),
   }),
 });
 
-export const { useGetJobsQuery, useGetJobByIdQuery, useCreateJobMutation } = jobApi;
+export const {
+  useGetJobsQuery,
+  useGetJobByIdQuery,
+  useCreateJobMutation,
+  useUpdateJobStatusMutation,
+} = jobApi;

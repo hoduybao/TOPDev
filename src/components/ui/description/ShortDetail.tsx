@@ -8,7 +8,11 @@ const ListTechs = ({ data }: { data: string[] }) => {
   return (
     <div className='flex gap-2'>
       {data.map((item) => {
-        return <div className='text-blue-500 px-2 bg-blue-200 rounded'>{item}</div>;
+        return (
+          <div key={item} className='text-blue-500 px-2 bg-blue-200 rounded'>
+            {item}
+          </div>
+        );
       })}
     </div>
   );
@@ -49,7 +53,9 @@ const ShortDetail = () => {
             <DetailHeader title='Quy trình phỏng vấn' />
             <ul className='px-4'>
               {jobResponse.data.interviewProcess.map((item: string) => (
-                <li className='list-disc'>{item}</li>
+                <li key={item} className='list-disc'>
+                  {item}
+                </li>
               ))}
             </ul>
           </DetailSession>

@@ -14,6 +14,7 @@ export interface JobType {
   typeContract?: string;
   techs?: string[];
   interviewProcess?: string[];
+  status?: string;
 }
 
 export interface ApplicationType {
