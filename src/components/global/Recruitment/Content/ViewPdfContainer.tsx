@@ -8,6 +8,7 @@ import { useGetApplicationByIdQuery } from '../../../../+core/redux/apis/common/
 import { Spin } from 'antd';
 
 // https://react-pdf-viewer.dev
+// cors handler with firebase: https://stackoverflow.com/questions/47768136/cors-on-firebase-storage
 
 const ViewPdfContainer = () => {
   const { id } = useParams<{ id: string }>();
