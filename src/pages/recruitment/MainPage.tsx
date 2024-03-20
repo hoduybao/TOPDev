@@ -4,7 +4,8 @@ import { useGetJobsQuery } from '../../+core/redux/apis/common/job/job.api';
 import { Spin } from 'antd';
 
 const MainPage = () => {
-  const { data: response, isLoading } = useGetJobsQuery({ allType: false });
+  // hr get only their company jobs
+  const { data: response, isLoading } = useGetJobsQuery({ allType: true, companyId: 'company1' });
 
   return (
     <div className='flex flex-col'>
@@ -12,8 +13,9 @@ const MainPage = () => {
       <Spin spinning={isLoading}>
         <div className='px-4 py-2.5 flex gap-5 flex-wrap'>
           {response &&
+            response.data &&
             response.data.map((job: any) => (
-              <ApplicationCard key={job.id} job={job} newestAmount={3} recentAmount={150} />
+              <ApplicationCard key={job.id} job={job} newestAmount={0} recentAmount={0} />
             ))}
         </div>
       </Spin>

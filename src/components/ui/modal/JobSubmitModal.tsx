@@ -20,8 +20,6 @@ const JobSubmitModal = () => {
 
   const [form] = Form.useForm();
 
-  console.log(firebaseApp);
-
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const showModal = () => {
     setIsModalOpen(true);

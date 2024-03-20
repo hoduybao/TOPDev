@@ -58,6 +58,7 @@ const columns: TableColumnsType<DataType> = [
 ];
 
 const PendingTab = () => {
+  // admin get all jobs
   const { data: response, isLoading } = useGetJobsQuery({ allType: true });
   // const data: DataType[] = [
   //   {
@@ -103,7 +104,7 @@ const PendingTab = () => {
                 ...rowSelection,
               }}
               columns={columns}
-              dataSource={response.data.map((item: any) => ({
+              dataSource={response.data.map((item: DataType) => ({
                 ...item,
                 key: uuidv4(),
               }))}

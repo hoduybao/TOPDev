@@ -31,7 +31,4 @@ export default {
     800: '#313636',
     500: '#2D3748',
   },
-  userFooter: '#DBDBDB',
-  iconHover: '#DBDBDB',
-  mainBackground: '#F5F5F5',
 };

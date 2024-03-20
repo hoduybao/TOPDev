@@ -2,7 +2,7 @@
 // import jobData from '../../../draft/job.json';
 import DetailSession, { DetailHeader } from './Session';
 import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Spin } from 'antd';
 import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
 

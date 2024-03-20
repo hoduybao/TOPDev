@@ -52,7 +52,7 @@ const ProcessPage = () => {
       <Spin spinning={isLoading}>
         {response && (
           <KanbanBoard
-            applications={response.map((item: any) => ({
+            applications={response.map((item: KanbanApplicationType) => ({
               ...item,
               columnId: 'new',
             }))}
