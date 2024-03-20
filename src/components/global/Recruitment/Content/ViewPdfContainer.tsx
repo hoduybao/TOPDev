@@ -16,8 +16,8 @@ const ViewPdfContainer = () => {
   console.log(data);
 
   const PDFJS_VERSION = '3.4.120';
-  const MOCK_PDF_URL =
-    'https://piwwbijgpwvzynpsplfn.supabase.co/storage/v1/object/public/uploads/files/CTDT%20K20%20KTPM.pdf';
+  // const MOCK_PDF_URL =
+  //   'https://piwwbijgpwvzynpsplfn.supabase.co/storage/v1/object/public/uploads/files/CTDT%20K20%20KTPM.pdf';
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
   return (
@@ -25,8 +25,8 @@ const ViewPdfContainer = () => {
       {data && data.cvUrl && (
         <Worker workerUrl={`https://unpkg.com/pdfjs-dist@${PDFJS_VERSION}/build/pdf.worker.min.js`}>
           <Viewer
-            // fileUrl={data.cvUrl}
-            fileUrl={MOCK_PDF_URL}
+            fileUrl={data.cvUrl}
+            // fileUrl={MOCK_PDF_URL}
             plugins={[
               // Register plugins
               defaultLayoutPluginInstance,
