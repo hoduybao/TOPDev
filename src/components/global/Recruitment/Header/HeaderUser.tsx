@@ -5,7 +5,8 @@ import type { MenuProps } from 'antd';
 import { HeaderUserMenu } from '../../../../+core/constants/recruitment.constants';
 
 const HeaderUser = () => {
-  const items: MenuProps['items'] = HeaderUserMenu?.map((item) => {
+  const menuItems = HeaderUserMenu();
+  const items: MenuProps['items'] = menuItems.map((item) => {
     if (item?.description) {
       return {
         key: item?.name,

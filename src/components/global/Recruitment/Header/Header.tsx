@@ -5,10 +5,12 @@ import HeaderDropdown from './HeaderDropdown';
 import HeaderMessage from './HeaderMessage';
 import HeaderUser from './HeaderUser';
 import HeaderUserMobile from './HeaderUserMobile';
+import HeaderLanguages from './HeaderLanguages';
 
 import { HeaderMenu } from '../../../../+core/constants/recruitment.constants';
 
 const Header = () => {
+  const menuItems = HeaderMenu();
   return (
     <header>
       <nav className='z-10 fixed w-full h-[46px] bg-white px-4 py-2.5 flex gap-5 items-center justify-between'>
@@ -19,12 +21,13 @@ const Header = () => {
             </div>
           </Link>
           <ul className='hidden md:flex list-none'>
-            {HeaderMenu?.map((menu) => {
+            {menuItems.map((menu) => {
               return <HeaderDropdown key={uuidv4()} menu={menu} />;
             })}
           </ul>
         </div>
         <div className='flex items-center gap-5 md:gap-3'>
+          <HeaderLanguages />
           <HeaderMessage />
           <HeaderUser />
           <HeaderUserMobile />

@@ -5,6 +5,8 @@ import type { MenuProps } from 'antd';
 import { MoreOutlined, MailOutlined } from '@ant-design/icons';
 
 import { JobType } from '@/+core/utilities/types/recruitment.type';
+import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 
 interface PropType {
   job: JobType;
@@ -13,20 +15,26 @@ interface PropType {
 }
 
 const ApplicationCard = (props: PropType) => {
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language') || 'en';
+    i18n.changeLanguage(savedLanguage);
+  }, []);
   const { job, newestAmount, recentAmount } = props;
 
   const items: MenuProps['items'] = [
     {
       key: '1',
-      label: <div>Xem ứng viên</div>,
+      label: <div>{t('recruitment.card.dropdown.view')}</div>,
     },
     {
       key: '2',
-      label: <div>Hoạt động</div>,
+      label: <div>{t('recruitment.card.dropdown.forRe')}</div>,
     },
     {
       key: '3',
-      label: <div>Người giám xác</div>,
+      label: <div>{t('recruitment.card.dropdown.candidate')}</div>,
     },
   ];
 
@@ -50,16 +58,18 @@ const ApplicationCard = (props: PropType) => {
       <div className='pt-5 pb-10 flex justify-between items-center'>
         <Link to='/recruitment/process'>
           <Button type='primary' danger>
-            {newestAmount} Ứng viên mới
+            {newestAmount} {t('recruitment.card.in.newCandidate')}
           </Button>
         </Link>
         <div>
           <Link to='/recruitment/process'>
             <p className='text-red-500 font-bold hover:text-red-400 hover:cursor-pointer'>
-              {recentAmount} Để tuyển dụng
+              {recentAmount} {t('recruitment.card.in.forRe')}
             </p>
           </Link>
-          <p>{recentAmount} Ứng viên</p>
+          <p>
+            {recentAmount} {t('recruitment.card.in.candidate')}
+          </p>
         </div>
       </div>
     </Card>

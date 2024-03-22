@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Modal, Form, Input, Select } from 'antd';
 import { type FormProps } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 type FieldType = {
   jobTitle?: string;
@@ -10,6 +11,13 @@ type FieldType = {
 const AddRecruitmentBtn = () => {
   const [NewRecruitmentForm] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language') || 'en';
+    i18n.changeLanguage(savedLanguage);
+  }, []);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -41,10 +49,10 @@ const AddRecruitmentBtn = () => {
   return (
     <>
       <Button type='primary' danger onClick={showModal}>
-        Mới
+        {t('newJob.content')}
       </Button>
       <Modal
-        title='Tạo một Vị trí Công việc'
+        title={t('newJob.title')}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -63,14 +71,14 @@ const AddRecruitmentBtn = () => {
           }}
         >
           <Form.Item<FieldType>
-            label='Chức vụ'
+            label={t('newJob.position')}
             name='jobTitle'
             rules={[{ required: true, message: 'Please input job title!' }]}
           >
             <Input />
           </Form.Item>
 
-          <Form.Item<FieldType> label='Email đơn ứng tuyển' name='jobEmail'>
+          <Form.Item<FieldType> label={t('newJob.email')} name='jobEmail'>
             <Select
               style={{ width: 120 }}
               onChange={handleChangeJobEmail}
@@ -82,19 +90,16 @@ const AddRecruitmentBtn = () => {
             />
           </Form.Item>
 
-          <Form.Item<FieldType> label='Ghi chú'>
-            <span>
-              Ứng viên có thể gửi hồ sơ đến địa chỉ email này, nó sẽ tạo một đơn ứng tuyển một cách
-              tự động
-            </span>
+          <Form.Item<FieldType> label={t('newJob.noteTitle')}>
+            <span>{t('newJob.noteContent')}</span>
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 24 }}>
             <div className='w-full border-t border-gray-300 mt-5 pt-4 flex items-center gap-2'>
               <Button type='primary' htmlType='submit' danger>
-                Tạo
+                {t('newJob.create')}
               </Button>
-              <Button onClick={handleCancel}>Hủy bỏ</Button>
+              <Button onClick={handleCancel}>{t('newJob.cancel')}</Button>
             </div>
           </Form.Item>
         </Form>
