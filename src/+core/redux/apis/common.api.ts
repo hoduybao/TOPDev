@@ -5,9 +5,8 @@ export const commonApi = createApi({
   reducerPath: 'CommonApi',
   keepUnusedDataFor: 10,
   baseQuery: baseQueryWithAuth({
-    baseUrl: `link-api`,
+    baseUrl: `http://localhost:5000`,
     async prepareHeaders(headers) {
-
       return headers;
     },
   }),

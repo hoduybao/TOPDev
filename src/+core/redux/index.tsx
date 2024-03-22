@@ -3,7 +3,9 @@ import { commonApi } from './apis/common.api';
 import { rtkQueryErrorLogger } from './errorMiddleware';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    [commonApi.reducerPath]: commonApi.reducer,
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([rtkQueryErrorLogger, commonApi.middleware]),
 });
