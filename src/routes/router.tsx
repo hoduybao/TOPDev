@@ -12,6 +12,8 @@ import DetailPage from '../pages/recruitment/DetailPage';
 import { MY_ROUTE } from './route.constant';
 import JobPage from '../pages/job/JobPage';
 import UserLayout from '../components/global/layout/UserLayout';
+import CandidatesPage from '@/pages/recruitment/CandidatesPage';
+import ProfilePage from '@/pages/recruitment/ProfilePage';
 
 export const router = createBrowserRouter([
   {
@@ -20,9 +22,19 @@ export const router = createBrowserRouter([
     children: [{ path: MY_ROUTE.HOME, element: <HomePage /> }],
   },
   {
-    path: '/recruitment',
+    path: '/recruitment/jobs',
     element: <RecruitmentLayout />,
-    children: [{ path: MY_ROUTE.RECRUITMENT, element: <MainPage /> }],
+    children: [{ path: MY_ROUTE.RECRUITMENT_JOBS, element: <MainPage /> }],
+  },
+  {
+    path: '/recruitment/candidates',
+    element: <RecruitmentLayout />,
+    children: [{ path: MY_ROUTE.RECRUITMENT_CANDIDATES, element: <CandidatesPage /> }],
+  },
+  {
+    path: '/recruitment/profile',
+    element: <RecruitmentLayout />,
+    children: [{ path: MY_ROUTE.RECRUITMENT_PROFILE, element: <ProfilePage /> }],
   },
   {
     path: '/recruitment/process',
