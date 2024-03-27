@@ -6,7 +6,7 @@ const { Title } = Typography;
 
 const GrandChild2 = () => {
   const contextValue = useContext(MyContext);
-  const { count, setCount } = contextValue as MyContextType;
+  const { count } = contextValue as MyContextType;
   return (
     <div className='m-10 p-5 h-200' style={{ background: '#FFC0CB' }}>
       <Title level={4} className='text-blue-400 font-bold'>

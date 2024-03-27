@@ -1,6 +1,5 @@
 import { Layout as LayoutAntDesign } from 'antd';
 import { Outlet } from 'react-router-dom';
-import Header from '../Recruitment/Header/Header';
 
 const { Content } = LayoutAntDesign;
 

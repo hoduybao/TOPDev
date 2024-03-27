@@ -2,7 +2,7 @@ import Sider from 'antd/es/layout/Sider';
 import { UploadOutlined, ProfileOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { MY_ROUTE } from '@/routes/route.constant';
-import { useLocation, useNavigate  } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface NavBarProps {
   isCollapsed: boolean;

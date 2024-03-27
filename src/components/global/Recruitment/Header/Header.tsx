@@ -1,13 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 
-import HeaderDropdown from './HeaderDropdown';
 import HeaderMessage from './HeaderMessage';
 import HeaderUser from './HeaderUser';
 import HeaderUserMobile from './HeaderUserMobile';
 import HeaderLanguages from './HeaderLanguages';
 
-import { HeaderMenu } from '../../../../+core/constants/recruitment.constants';
 import { Button } from 'antd';
 import { useState } from 'react';
 

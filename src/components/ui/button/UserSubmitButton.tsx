@@ -4,7 +4,6 @@ const UserSubmitButton = ({
   isFullWidth = true,
   onClick,
   isSmall = false,
-  htmlType,
 }: {
   name: string;
   isFilled?: boolean;
