@@ -7,7 +7,6 @@ export const commonApi = createApi({
   baseQuery: baseQueryWithAuth({
     baseUrl: `link-api`,
     async prepareHeaders(headers) {
-
       return headers;
     },
   }),
