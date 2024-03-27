@@ -14,7 +14,6 @@ const GrandChild2 = () => {
       </Title>
 
       <Title level={3} className='text-red-400 font-bold'>
-        {' '}
         {count}
       </Title>
     </div>
