@@ -27,7 +27,7 @@ const JobSubmitModal = () => {
     setIsModalOpen(true);
   };
   const handleOk = async () => {
-    let value = form.getFieldsValue();
+    const value = form.getFieldsValue();
     value.jobId = jobId;
     value.userId = 'user1'; // TODO: get user id from redux
     const resp = await addNewApplication(value).unwrap();

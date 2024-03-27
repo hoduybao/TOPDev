@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import ChildComponent from '@/components/for-seminar/ChildComponent1';
-import ChildComponent2 from '@/components/for-seminar/ChildComponent2';
+import ChildComponent from '@/components/components-communication/ChildComponent1';
+import ChildComponent2 from '@/components/components-communication/ChildComponent2';
 import { Typography } from 'antd';
 import { useState } from 'react';
 
