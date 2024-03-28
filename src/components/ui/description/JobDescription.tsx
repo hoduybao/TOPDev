@@ -43,32 +43,40 @@ const JobDescription = () => {
           <DetailSession>
             <DetailHeader title='Trách nhiệm công việc' />
             <ul className='px-4'>
-              {jobResponse.data.responsibilities.map((item, index) => (
-                <li className='list-disc'>{item}</li>
+              {jobResponse.data.responsibilities.map((item: any, index: any) => (
+                <li key={index} className='list-disc'>
+                  {item}
+                </li>
               ))}
             </ul>
           </DetailSession>
           <DetailSession>
             <DetailHeader title='Kỹ năng chuyên môn' />
             <ul className='px-4'>
-              {jobResponse.data.skills.map((item, index) => (
-                <li className='list-disc'>{item}</li>
+              {jobResponse.data.skills.map((item: any, index: any) => (
+                <li key={index} className='list-disc'>
+                  {item}
+                </li>
               ))}
             </ul>
           </DetailSession>
           <DetailSession>
             <DetailHeader title='Nice to have' />
             <ul className='px-4'>
-              {jobResponse.data.extends.map((item, index) => (
-                <li className='list-disc'>{item}</li>
+              {jobResponse.data.extends.map((item: any, index: any) => (
+                <li key={index} className='list-disc'>
+                  {item}
+                </li>
               ))}
             </ul>
           </DetailSession>
           <DetailSession hideBottomLine>
             <DetailHeader title='Phúc lợi dành cho bạn' />
             <div className='px-4'>
-              {jobResponse.data.welfare.map((item, index) => (
-                <div className='list-disc'>{item}</div>
+              {jobResponse.data.welfare.map((item: any, index: any) => (
+                <div key={index} className='list-disc'>
+                  {item}
+                </div>
               ))}
             </div>
           </DetailSession>

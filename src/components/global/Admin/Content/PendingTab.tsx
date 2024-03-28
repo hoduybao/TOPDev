@@ -1,10 +1,7 @@
-import { Table, Space, Button, Input } from 'antd';
-import type { TableColumnsType } from 'antd';
-import type { SearchProps } from 'antd/es/input/Search';
-import { v4 as uuidv4 } from 'uuid';
-
+import React, { useState, useEffect } from 'react';
+import { Table, Space, Button, Input, Skeleton } from 'antd';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-
+import { v4 as uuidv4 } from 'uuid';
 import { JobType } from '@/+core/utilities/types/recruitment.type';
 import JobMockData from '../../../../draft/job.json';
 
@@ -14,7 +11,7 @@ interface DataType extends JobType {
   key: React.Key;
 }
 
-const columns: TableColumnsType<DataType> = [
+const columns = [
   {
     title: 'ID',
     dataIndex: 'id',
@@ -39,7 +36,7 @@ const columns: TableColumnsType<DataType> = [
   {
     title: 'Action',
     key: 'action',
-    render: (_, record) => (
+    render: (_: any, record: DataType) => (
       <Space size='middle'>
         <Button icon={<CheckOutlined />}>Approve {record.id}</Button>
         <Button type='primary' icon={<CloseOutlined />} danger>
@@ -51,12 +48,20 @@ const columns: TableColumnsType<DataType> = [
 ];
 
 const PendingTab = () => {
-  const data: DataType[] = [
-    {
-      key: uuidv4(),
-      ...JobMockData,
-    },
-  ];
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<DataType[]>([]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setData([
+        {
+          key: uuidv4(),
+          ...JobMockData,
+        },
+      ]);
+      setLoading(false);
+    }, 10000); // 10 seconds
+  }, []);
 
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
@@ -65,9 +70,21 @@ const PendingTab = () => {
     },
   };
 
-  const onSearch: SearchProps['onSearch'] = (value, _e, info) => {
-    console.log(info?.source, value);
+  const onSearch = (value: string) => {
+    console.log('Search value:', value);
   };
+
+  const customSkeleton = (
+    <Skeleton active paragraph={{ rows: 5 }}>
+      <Skeleton.Input style={{ width: '10%', marginBottom: '10px' }} active />
+      <Skeleton.Input style={{ width: '30%', marginBottom: '10px' }} active />
+      <Skeleton.Input style={{ width: '10%', marginBottom: '10px' }} active />
+      <Skeleton.Input style={{ width: '20%', marginBottom: '10px' }} active />
+      <Skeleton.Input style={{ width: '20%', marginBottom: '10px' }} active />
+      <Skeleton.Input style={{ width: '10%' }} active />
+      <h1>Loading</h1>
+    </Skeleton>
+  );
 
   return (
     <div className='flex flex-col items-center'>
@@ -88,13 +105,11 @@ const PendingTab = () => {
         </div>
       </div>
       <div className='w-full'>
-        <Table
-          rowSelection={{
-            ...rowSelection,
-          }}
-          columns={columns}
-          dataSource={data}
-        />
+        {loading ? (
+          customSkeleton
+        ) : (
+          <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+        )}
       </div>
     </div>
   );

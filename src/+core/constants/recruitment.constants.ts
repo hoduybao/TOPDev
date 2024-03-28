@@ -1,38 +1,56 @@
-export const HeaderMenu = [
-  {
-    title: 'Ứng viên',
-    menu: [
-      { name: 'Theo vị trí công việc', url: '/recruitment' },
-      { name: 'Tất cả đơn xin việc', url: '/recruitment' },
-    ],
-  },
-  {
-    title: 'Báo cáo',
-    menu: [
-      { name: 'Phân tích Tuyển dụng', url: '/recruitment' },
-      { name: 'Source Analysis', url: '/recruitment' },
-      { name: 'Time In Stage Analysis', url: '/recruitment' },
-      { name: 'Team Performance', url: '/recruitment' },
-    ],
-  },
-  {
-    title: 'Cấu hình',
-    menu: [
-      { name: 'Cài đặt', url: '/recruitment' },
-      { name: 'Loại việc làm', url: '/recruitment' },
-      { name: 'Các lý do từ chối', url: '/recruitment' },
-      { name: 'Phòng ban', url: '/recruitment' },
-      { name: 'Các loại kỹ năng', url: '/recruitment' },
-      { name: 'Loại hoạt động', url: '/recruitment' },
-    ],
-  },
-];
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
-export const HeaderUserMenu = [
-  { name: 'Tài liệu', url: '/recruitment' },
-  { name: 'Hỗ trợ', url: '/recruitment' },
-  { name: 'Phím tắt', url: '/recruitment', description: 'CTRL + K' },
-  { name: 'Dark mode' },
-  { name: 'Thông tin của tôi', url: '/recruitment' },
-  { name: 'Cơ sở dữ liệu của tôi', url: '/recruitment' },
-];
+export const HeaderMenu = () => {
+  const { t, i18n } = useTranslation();
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language') || 'en';
+    i18n.changeLanguage(savedLanguage);
+  }, []);
+  return [
+    {
+      title: t('candidate.title'),
+      menu: [
+        { name: t('candidate.sortByPos'), url: '/recruitment' },
+        { name: t('candidate.allApplication'), url: '/recruitment' },
+      ],
+    },
+    {
+      title: t('report.title'),
+      menu: [
+        { name: t('report.ra'), url: '/recruitment' },
+        { name: t('report.sa'), url: '/recruitment' },
+        { name: t('report.tisa'), url: '/recruitment' },
+        { name: t('report.tp'), url: '/recruitment' },
+      ],
+    },
+    {
+      title: t('configuration.title'),
+      menu: [
+        { name: t('configuration.st'), url: '/recruitment' },
+        { name: t('configuration.type'), url: '/recruitment' },
+        { name: t('configuration.rfr'), url: '/recruitment' },
+        { name: t('configuration.room'), url: '/recruitment' },
+        { name: t('configuration.skills'), url: '/recruitment' },
+        { name: t('configuration.acts'), url: '/recruitment' },
+      ],
+    },
+  ];
+};
+
+export const HeaderUserMenu = () => {
+  const { t, i18n } = useTranslation();
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language') || 'en';
+    i18n.changeLanguage(savedLanguage);
+  }, []);
+
+  return [
+    { name: t('headerUserMenu.document'), url: '/recruitment' },
+    { name: t('headerUserMenu.support'), url: '/recruitment' },
+    { name: t('headerUserMenu.Keyword'), url: '/recruitment', description: 'CTRL + K' },
+    { name: t('headerUserMenu.dm') },
+    { name: t('headerUserMenu.info'), url: '/recruitment' },
+    { name: t('headerUserMenu.db'), url: '/recruitment' },
+  ];
+};

@@ -7,8 +7,12 @@ import { Spin } from 'antd';
 const ListTechs = ({ data }: { data: string[] }) => {
   return (
     <div className='flex gap-2'>
-      {data.map((item) => {
-        return <div className='text-blue-500 px-2 bg-blue-200 rounded'>{item}</div>;
+      {data.map((item: string, index: any) => {
+        return (
+          <div key={index} className='text-blue-500 px-2 bg-blue-200 rounded'>
+            {item}
+          </div>
+        );
       })}
     </div>
   );
@@ -48,8 +52,10 @@ const ShortDetail = () => {
           <DetailSession hideBottomLine>
             <DetailHeader title='Quy trình phỏng vấn' />
             <ul className='px-4'>
-              {jobResponse.data.interviewProcess.map((item, index) => (
-                <li className='list-disc'>{item}</li>
+              {jobResponse.data.interviewProcess.map((item: any, index: any) => (
+                <li key={index} className='list-disc'>
+                  {item}
+                </li>
               ))}
             </ul>
           </DetailSession>

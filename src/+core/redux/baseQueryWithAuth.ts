@@ -7,7 +7,7 @@ export const baseQueryWithAuth: (
 ) => BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> =
   (option) => async (args, api, extraOptions) => {
     const result = await fetchBaseQuery(option)(args, api, extraOptions);
-    if (result.error && result.error.status === 401) {     
+    if (result.error && result.error.status === 401) {
       // localStorage.removeItem('isLoggedIn');
     }
     return result;
