@@ -1,8 +1,10 @@
 import { Layout as LayoutAntDesign } from 'antd';
 import { Outlet } from 'react-router-dom';
-import Footer from '../Footer/UserFooter';
-import Header from '../Header/UserHeader';
-import SearchPage from '../Search/Search';
+import { lazy } from 'react';
+
+const Footer = lazy(() => import('../Footer/UserFooter'));
+const Header = lazy(() => import('../Header/UserHeader'));
+const SearchPage = lazy(() => import('../Search/Search'));
 
 const { Content } = LayoutAntDesign;
 

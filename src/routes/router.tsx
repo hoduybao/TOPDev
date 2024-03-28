@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Layout from '../components/global/layout/Layout';
+import Layout from '../components/global/layout/Layout1';
 import RecruitmentLayout from '../components/global/layout/RecruitmentLayout';
 import RecruitmentProcessLayout from '../components/global/layout/RecruitmentProcessLayout';
 import AdminLayout from '../components/global/layout/AdminLayout';
