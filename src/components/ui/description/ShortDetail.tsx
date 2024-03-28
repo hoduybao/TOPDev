@@ -48,7 +48,7 @@ const ShortDetail = () => {
           <DetailSession hideBottomLine>
             <DetailHeader title='Quy trình phỏng vấn' />
             <ul className='px-4'>
-              {jobResponse.data.interviewProcess.map((item, index) => (
+              {jobResponse.data.interviewProcess.map((item: any) => (
                 <li className='list-disc'>{item}</li>
               ))}
             </ul>
