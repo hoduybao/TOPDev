@@ -54,7 +54,7 @@ const MainPage = () => {
 
   return (
     <div className='flex flex-col'>
-      <SubHeader />
+      <SubHeader jobs={jobs} setJobs={setJobs} />
       <div className='px-4 py-2.5 flex gap-5 flex-wrap'>
         {jobsPerPage?.map((job: JobType) => {
           return <ApplicationCard key={uuidv4()} job={job} newestAmount={3} recentAmount={150} />;

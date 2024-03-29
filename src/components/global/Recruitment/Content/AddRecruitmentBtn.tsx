@@ -1,15 +1,28 @@
 import { useState } from 'react';
-import { Button, Modal, Form, Input, Select } from 'antd';
+import { Button, Modal, Form, Input } from 'antd';
 import { type FormProps } from 'antd';
+import { v4 as uuidv4 } from 'uuid';
+
+import JobDescription from '../../Recruitment/Content/JobDescriptionEditor';
+import { JobType } from '@/+core/utilities/types/recruitment.type';
+
+interface PropType {
+  jobs: JobType[];
+  setJobs: React.Dispatch<React.SetStateAction<JobType[]>>;
+}
 
 type FieldType = {
   jobTitle?: string;
   jobEmail?: string;
+  jobDescription?: any;
 };
 
-const AddRecruitmentBtn = () => {
+const AddRecruitmentBtn = (props: PropType) => {
+  const { jobs, setJobs } = props;
+
   const [NewRecruitmentForm] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [description, setDescription] = useState<string>('');
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -25,12 +38,23 @@ const AddRecruitmentBtn = () => {
     NewRecruitmentForm.resetFields();
   };
 
-  const handleChangeJobEmail = (value: string) => {
-    console.log(`selected ${value}`);
-  };
+  // const handleChangeJobEmail = (value: string) => {
+  //   console.log(`selected ${value}`);
+  // };
 
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
+    if (values && description) {
+      const newJob: JobType = {
+        id: uuidv4(),
+        title: values?.jobTitle,
+        companyId: uuidv4(),
+        description: description,
+      };
+
+      console.log('Success:', newJob);
+      setJobs([...jobs, newJob]);
+    }
+
     handleOk();
   };
 
@@ -44,6 +68,7 @@ const AddRecruitmentBtn = () => {
         Mới
       </Button>
       <Modal
+        width={'90vw'}
         title='Tạo một Vị trí Công việc'
         open={isModalOpen}
         onOk={handleOk}
@@ -70,7 +95,11 @@ const AddRecruitmentBtn = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item<FieldType> label='Email đơn ứng tuyển' name='jobEmail'>
+          <div className='w-[100%] flex justify-center'>
+            <JobDescription description={description} setDescription={setDescription} />
+          </div>
+
+          {/* <Form.Item<FieldType> label='Email đơn ứng tuyển' name='jobEmail'>
             <Select
               style={{ width: 120 }}
               onChange={handleChangeJobEmail}
@@ -87,7 +116,7 @@ const AddRecruitmentBtn = () => {
               Ứng viên có thể gửi hồ sơ đến địa chỉ email này, nó sẽ tạo một đơn ứng tuyển một cách
               tự động
             </span>
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item wrapperCol={{ span: 24 }}>
             <div className='w-full border-t border-gray-300 mt-5 pt-4 flex items-center gap-2'>
