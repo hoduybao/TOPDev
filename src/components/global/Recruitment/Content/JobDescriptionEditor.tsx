@@ -11,7 +11,7 @@ const JobDescriptionEditor = (props: PropType) => {
 
   return (
     <ReactQuill
-      style={{ width: '100%' }}
+      style={{ width: '100%', height: '300px', maxHeight: '300px', marginBottom: '50px' }}
       theme='snow'
       value={description}
       onChange={setDescription}
