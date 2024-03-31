@@ -39,8 +39,10 @@ const MainPage = () => {
     const begin = (n - 1) * ITEMS_PER_PAGE;
     const end = (n - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE;
 
-    const items = jobs?.slice(begin, end);
-    setJobsPerPage(items);
+    if (jobs?.slice) {
+      const items = jobs?.slice(begin, end);
+      setJobsPerPage(items);
+    }
   };
 
   useEffect(() => {
