@@ -11,7 +11,13 @@ const companyApi = commonApi
           method: 'GET',
         }),
       }),
+      getAllJobsByCompanyId: build.query<any, any>({
+        query: (id: string) => ({
+          url: `/job/company/${id}`,
+          method: 'GET',
+        }),
+      }),
     }),
   });
 
-export const { useGetCompanyByIdQuery } = companyApi;
+export const { useGetCompanyByIdQuery, useGetAllJobsByCompanyIdQuery } = companyApi;
