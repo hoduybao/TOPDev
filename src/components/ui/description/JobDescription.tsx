@@ -1,10 +1,11 @@
-// import companyData from '../../../draft/company.json';
-// import jobData from '../../../draft/job.json';
+import companyData from '../../../draft/company-new.json';
+import jobData from '../../../draft/jsob-new.json';
+
 import DetailSession, { DetailHeader } from './Session';
-import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
-import { useParams } from 'react-router-dom';
 import { Spin } from 'antd';
-import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
+// import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
+// import { useParams } from 'react-router-dom';
+// import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
 
 const JobItem = ({ name, isSelect = false }: { name: string; isSelect?: boolean }) => {
   return (
@@ -28,9 +29,14 @@ const JobTags = () => {
 };
 
 const JobDescription = () => {
-  const { jobId, companyId } = useParams<{ jobId: string; companyId: string }>();
-  const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
-  const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
+  // const { jobId, companyId } = useParams<{ jobId: string; companyId: string }>();
+  // const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
+  // const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
+
+  const isLoading = false;
+  const isLoadingCompany = false;
+  const jobResponse = { data: jobData };
+  const companyResponse = { data: companyData };
 
   return (
     <Spin spinning={isLoading || isLoadingCompany}>
@@ -38,39 +44,35 @@ const JobDescription = () => {
         <div className='mt-4 bg-white-900 rounded'>
           <JobTags />
           <DetailSession>
-            <div>{companyResponse.data.introduction}</div>
+            <div dangerouslySetInnerHTML={{ __html: companyResponse.data.introduction }}></div>
           </DetailSession>
           <DetailSession>
             <DetailHeader title='Trách nhiệm công việc' />
-            <ul className='px-4'>
-              {jobResponse.data.responsibilities.map((item: any) => (
-                <li className='list-disc'>{item}</li>
-              ))}
-            </ul>
+            <div
+              className='px-4'
+              dangerouslySetInnerHTML={{ __html: jobResponse && jobResponse.data.responsibilities }}
+            />
           </DetailSession>
           <DetailSession>
             <DetailHeader title='Kỹ năng chuyên môn' />
-            <ul className='px-4'>
-              {jobResponse.data.skills.map((item: any) => (
-                <li className='list-disc'>{item}</li>
-              ))}
-            </ul>
+            <div
+              className='px-4'
+              dangerouslySetInnerHTML={{ __html: jobResponse && jobResponse.data.skills }}
+            />
           </DetailSession>
           <DetailSession>
             <DetailHeader title='Nice to have' />
-            <ul className='px-4'>
-              {jobResponse.data.extends.map((item: any) => (
-                <li className='list-disc'>{item}</li>
-              ))}
-            </ul>
+            <div
+              className='px-4'
+              dangerouslySetInnerHTML={{ __html: jobResponse && jobResponse.data.extends }}
+            />
           </DetailSession>
           <DetailSession hideBottomLine>
             <DetailHeader title='Phúc lợi dành cho bạn' />
-            <div className='px-4'>
-              {jobResponse.data.welfare.map((item: any) => (
-                <div className='list-disc'>{item}</div>
-              ))}
-            </div>
+            <div
+              className='px-4'
+              dangerouslySetInnerHTML={{ __html: jobResponse && jobResponse.data.welfare }}
+            />
           </DetailSession>
         </div>
       )}

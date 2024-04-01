@@ -13,7 +13,7 @@ const JobPage = () => {
           {/* jd session */}
           <div className='col-span-12 lg:col-span-8 sm:col-span-12'>
             <CompanyCard />
-            {/* <JobDescription /> */}
+            <JobDescription />
             <CompanyDescription />
           </div>
 
