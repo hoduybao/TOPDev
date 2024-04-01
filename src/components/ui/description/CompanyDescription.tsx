@@ -34,9 +34,12 @@ const CompanyDescription = () => {
       <DetailSession hideBottomLine>
         <DetailHeader title='INTRODUCTION' />
         <div className='w-full relative flex items-center'>
-          <div dangerouslySetInnerHTML={{ __html: companyData.introduction }}></div>
+          <div
+            className='truncate'
+            dangerouslySetInnerHTML={{ __html: companyData.introduction }}
+          ></div>
           <Link
-            className='text-base font-bold absolute right-0 bg-white px-4 text-orange-600 underline'
+            className='text-md font-bold absolute right-0 bottom-0 bg-white pl-4 text-orange-600 underline'
             to='/company'
           >
             đọc thêm

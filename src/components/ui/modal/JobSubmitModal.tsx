@@ -1,12 +1,12 @@
 import React from 'react';
 import { Form, Modal, notification, Spin } from 'antd';
-// import companyData from '../../../draft/company.json';
-// import jobData from '../../../draft/job.json';
+import companyData from '../../../draft/company-new.json';
+import jobData from '../../../draft/jsob-new.json';
 // import formData from '../../../draft/application.json';
 import UserSubmitButton from '../button/UserSubmitButton';
 import { useParams } from 'react-router-dom';
-import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
-import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
+// import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
+// import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
 import { CustomTextInput } from '../form/CustomTextInput';
 import firebaseApp from '../../../config/firebase';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
@@ -14,8 +14,14 @@ import { useCreateApplicationMutation } from '../../..//+core/redux/apis/common/
 
 const JobSubmitModal = () => {
   const { jobId, companyId } = useParams<{ jobId: string; companyId: string }>();
-  const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
-  const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
+  // const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
+  // const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
+
+  const isLoading = false;
+  const isLoadingCompany = false;
+  const jobResponse = { data: jobData };
+  const companyResponse = { data: companyData };
+
   const [addNewApplication] = useCreateApplicationMutation();
 
   const [form] = Form.useForm();

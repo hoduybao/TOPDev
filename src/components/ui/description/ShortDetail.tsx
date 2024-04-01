@@ -14,6 +14,10 @@ const ListTechs = ({ data }: { data: string[] }) => {
   );
 };
 
+const GridChildren = ({ children }: { children: React.ReactNode }) => {
+  return <div className='col-span-6 lg:col-span-12'>{children}</div>;
+};
+
 const ShortDetail = () => {
   // const { jobId } = useParams<{ jobId: string }>();
   // const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
@@ -23,30 +27,43 @@ const ShortDetail = () => {
   return (
     <Spin spinning={isLoading}>
       {jobResponse && (
-        <div className='rounded bg-white-900'>
-          <DetailSession>
+        <div className='rounded bg-white-900 pb-4'>
+          <DetailSession isHeader={true}>
             <div className='text-lg opacity-50 font-bold'>Thông tin chung</div>
           </DetailSession>
-          <DetailSession hideBottomLine>
-            <DetailHeader title='Năm kinh nghiệm tối thiểu' />
-            <div className='opacity-80'>Tất cả kinh nhiệm</div>
-          </DetailSession>
-          <DetailSession hideBottomLine>
-            <DetailHeader title='Cấp bậc' />
-            <div className='opacity-80 capitalize'>{jobResponse.data.level}</div>
-          </DetailSession>
-          <DetailSession hideBottomLine>
-            <DetailHeader title='Loại hình' />
-            <div className='opacity-80 capitalize'>{jobResponse.data.type}</div>
-          </DetailSession>
-          <DetailSession hideBottomLine>
-            <DetailHeader title='Loại hợp đồng' />
-            <div className='opacity-80 capitalize'>{jobResponse.data.typeContract}</div>
-          </DetailSession>
-          <DetailSession hideBottomLine>
-            <DetailHeader title='Các công nghệ sử dụng' />
-            <ListTechs data={jobResponse.data.techs} />
-          </DetailSession>
+          <div className='grid grid-cols-12 m-2'>
+            <GridChildren>
+              <DetailSession hideBottomLine>
+                <DetailHeader title='Năm kinh nghiệm tối thiểu' />
+                <div className='opacity-80'>Tất cả kinh nhiệm</div>
+              </DetailSession>
+            </GridChildren>
+            <GridChildren>
+              <DetailSession hideBottomLine>
+                <DetailHeader title='Cấp bậc' />
+                <div className='opacity-80 capitalize'>{jobResponse.data.level}</div>
+              </DetailSession>
+            </GridChildren>
+            <GridChildren>
+              <DetailSession hideBottomLine>
+                <DetailHeader title='Loại hình' />
+                <div className='opacity-80 capitalize'>{jobResponse.data.type}</div>
+              </DetailSession>
+            </GridChildren>
+            <GridChildren>
+              <DetailSession hideBottomLine>
+                <DetailHeader title='Loại hợp đồng' />
+                <div className='opacity-80 capitalize'>{jobResponse.data.typeContract}</div>
+              </DetailSession>
+            </GridChildren>
+            <GridChildren>
+              <DetailSession hideBottomLine>
+                <DetailHeader title='Các công nghệ sử dụng' />
+                <ListTechs data={jobResponse.data.techs} />
+              </DetailSession>
+            </GridChildren>
+          </div>
+
           <DetailSession hideBottomLine>
             <DetailHeader title='Quy trình phỏng vấn' />
             <div

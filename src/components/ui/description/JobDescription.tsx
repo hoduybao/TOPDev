@@ -44,33 +44,36 @@ const JobDescription = () => {
         <div className='mt-4 bg-white-900 rounded'>
           <JobTags />
           <DetailSession>
-            <div dangerouslySetInnerHTML={{ __html: companyResponse.data.introduction }}></div>
+            <div
+              className='text-md text-justify'
+              dangerouslySetInnerHTML={{ __html: companyResponse.data.introduction }}
+            ></div>
           </DetailSession>
           <DetailSession>
             <DetailHeader title='Trách nhiệm công việc' />
             <div
-              className='px-4'
+              className='px-4 text-md text-justify'
               dangerouslySetInnerHTML={{ __html: jobResponse && jobResponse.data.responsibilities }}
             />
           </DetailSession>
           <DetailSession>
             <DetailHeader title='Kỹ năng chuyên môn' />
             <div
-              className='px-4'
+              className='px-4 text-md text-justify'
               dangerouslySetInnerHTML={{ __html: jobResponse && jobResponse.data.skills }}
             />
           </DetailSession>
           <DetailSession>
             <DetailHeader title='Nice to have' />
             <div
-              className='px-4'
+              className='px-4 text-md text-justify'
               dangerouslySetInnerHTML={{ __html: jobResponse && jobResponse.data.extends }}
             />
           </DetailSession>
           <DetailSession hideBottomLine>
             <DetailHeader title='Phúc lợi dành cho bạn' />
             <div
-              className='px-4'
+              className='px-4 text-md'
               dangerouslySetInnerHTML={{ __html: jobResponse && jobResponse.data.welfare }}
             />
           </DetailSession>
