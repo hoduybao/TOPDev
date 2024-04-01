@@ -12,13 +12,5 @@
   "imgs": [
     "https://assets.topdev.vn/images/2023/04/17/TopDev-68xx80rBWc3Xz0wK-1681701152.jpg",
     "https://assets.topdev.vn/images/2023/04/17/TopDev-1U5jhZLKrZ0PhWbu-1681701152.jpg"
-  ],
-  "products": [
-    {
-      "id": "product1",
-      "name": "ProductName",
-      "description": "Starting with the launch of SHOWNIQ, an AI-based fashion curation platform in 2023, we will develop vigorously with the goal of becoming the Top AI fashion platform in ASEAN by 2027",
-      "image": "https://salt.topdev.vn/2gC4Bjo3Negx-kwiaODzE-qkNEeQ7HNT7qkato9VKiE/fit/128/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDIzLzA2LzE5L1NjcmVlbnNob3QtMjAyMy0wNi0xOS0wODIyMzUtMTY4NzEzNzgwNC5wbmc"
-    }
   ]
 }
