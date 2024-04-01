@@ -12,8 +12,8 @@ const JobPage = () => {
         <div className='grid grid-cols-12 gap-6 mt-6'>
           {/* jd session */}
           <div className='col-span-12 lg:col-span-8 sm:col-span-12'>
-            <CompanyCard />
-            <JobDescription />
+            {/* <CompanyCard /> */}
+            {/* <JobDescription /> */}
             <CompanyDescription />
           </div>
 
