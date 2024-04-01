@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-// import jobData from '../../../draft/job.json';
+import jobData from '../../../draft/jsob-new.json';
 import DetailSession, { DetailHeader } from './Session';
 import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
 import { Spin } from 'antd';
@@ -15,8 +15,10 @@ const ListTechs = ({ data }: { data: string[] }) => {
 };
 
 const ShortDetail = () => {
-  const { jobId } = useParams<{ jobId: string }>();
-  const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
+  // const { jobId } = useParams<{ jobId: string }>();
+  // const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
+  const jobResponse = { data: jobData };
+  const isLoading = false;
 
   return (
     <Spin spinning={isLoading}>
@@ -47,11 +49,10 @@ const ShortDetail = () => {
           </DetailSession>
           <DetailSession hideBottomLine>
             <DetailHeader title='Quy trình phỏng vấn' />
-            <ul className='px-4'>
-              {jobResponse.data.interviewProcess.map((item: any) => (
-                <li className='list-disc'>{item}</li>
-              ))}
-            </ul>
+            <div
+              className='px-4'
+              dangerouslySetInnerHTML={{ __html: jobResponse.data.interviewProcess }}
+            ></div>
           </DetailSession>
         </div>
       )}
