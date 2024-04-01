@@ -1,14 +1,20 @@
-import { useParams } from 'react-router-dom';
-// import companyData from '../../../draft/company.json';
-// import jobData from '../../../draft/job.json';
-import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
-import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
+import companyData from '../../../draft/company-new.json';
+import jobData from '../../../draft/job.json';
+// import { useParams } from 'react-router-dom';
+// import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
+// import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
 import { Spin } from 'antd';
 
 const CompanyCard = () => {
-  const { jobId, companyId } = useParams<{ jobId: string; companyId: string }>();
-  const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
-  const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
+  // apply API call
+  // const { jobId, companyId } = useParams<{ jobId: string; companyId: string }>();
+  // const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
+  // const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
+
+  const isLoading = false;
+  const isLoadingCompany = false;
+  const jobResponse = { data: jobData };
+  const companyResponse = { data: companyData };
 
   return (
     <Spin spinning={isLoadingCompany || isLoading}>
@@ -18,9 +24,7 @@ const CompanyCard = () => {
           <div className='col-span-2'>
             <img
               className='min-w-[70px]'
-              src={
-                'https://salt.topdev.vn/gyOxnd9RZhh1hvvbO1wIEYrAUo0QdX1vZR91B4bECwk/fit/384/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDIzLzA0LzE3L1RvcERldi1Hc1pIOEhQMmpRMVBDR2FGLTE2ODE3MDEyMjcuanBn'
-              }
+              src={companyResponse && companyResponse.data.avatar}
               alt=''
             />
           </div>
