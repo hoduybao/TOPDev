@@ -14,7 +14,7 @@ const JobPage = () => {
         <div className='max-w-[80rem] bg-mainBackground'>
           <div className='grid grid-cols-12 gap-6 mt-6'>
             {/* jd session */}
-            <div className='col-span-12 lg:col-span-8 sm:col-span-12'>
+            <div className='col-span-12 lg:col-span-8 sm:col-span-12 bg-red-400 p-4'>
               <CompanyCard />
               <JobDescription />
               <CompanyDescription />

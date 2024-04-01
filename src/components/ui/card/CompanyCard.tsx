@@ -1,3 +1,4 @@
+import React from 'react';
 import companyData from '../../../draft/company-new.json';
 import jobData from '../../../draft/job.json';
 // import { useParams } from 'react-router-dom';
@@ -16,12 +17,40 @@ const CompanyCard = () => {
   const jobResponse = { data: jobData };
   const companyResponse = { data: companyData };
 
+  const targetRef = React.useRef(null);
+  const [isSticky, setIsSticky] = React.useState(false);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Check if the target element is intersecting the root (viewport)
+        if (entry.isIntersecting) {
+          setIsSticky(true);
+        } else {
+          setIsSticky(false);
+        }
+      },
+      { threshold: 0.5 }, // You can adjust this threshold as needed
+    );
+
+    if (targetRef.current) {
+      observer.observe(targetRef.current);
+    }
+
+    return () => {
+      if (targetRef.current) {
+        observer.unobserve(targetRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <Spin spinning={isLoadingCompany || isLoading}>
-      <div className='bg-white-900 p-4 rounded'>
+    <div className='bg-white-900 p-4 rounded sticky top-0 z-10' ref={targetRef}>
+      <Spin spinning={isLoadingCompany || isLoading}>
         <div className='grid grid-cols-12 p-2 gap-8'>
           {/* image */}
-          <div className='col-span-2'>
+          {/* <div className={`col-span-2 ${isSticky ? 'hidden' : ''}`}> */}
+          <div className={`col-span-2 ${isSticky ? '' : ''}`}>
             <img
               className='min-w-[70px]'
               src={companyResponse && companyResponse.data.avatar}
@@ -40,8 +69,8 @@ const CompanyCard = () => {
             <div className='mt-2 text-base text-orange-600 font-semibold'>Thương lượng</div>
           </div>
         </div>
-      </div>
-    </Spin>
+      </Spin>
+    </div>
   );
 };
 

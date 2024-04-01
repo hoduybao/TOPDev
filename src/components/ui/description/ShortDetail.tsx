@@ -7,8 +7,12 @@ import { Spin } from 'antd';
 const ListTechs = ({ data }: { data: string[] }) => {
   return (
     <div className='flex gap-2'>
-      {data.map((item) => {
-        return <div className='text-blue-500 px-2 bg-blue-200 rounded'>{item}</div>;
+      {data.map((item: any) => {
+        return (
+          <div key={item} className='text-blue-500 px-2 bg-blue-200 rounded'>
+            {item}
+          </div>
+        );
       })}
     </div>
   );
