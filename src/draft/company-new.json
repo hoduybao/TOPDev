@@ -6,14 +6,9 @@
   "size": "25-99",
   "nations": ["South-Korea", "Vietnam"],
   "skills": ["PHP", "SQL"],
-  "about": ["IT company specializing in AI, mobile, KIOSK development"],
+  "about": "<div>IT company specializing in AI, mobile, KIOSK development</div>",
   "introduction": "<div>SHOWNIQ is a fashion tech startup established with the vision of innovating the fashion consumption culture of ASEAN through AI in 2022. \n Starting with the launch of SHOWNIQ, an AI-based fashion curation platform in 2023, we will develop vigorously with the goal of becoming the Top AI fashion platform in ASEAN by 2027</div>",
-  "benefit": [
-    "Salary is paid according to employee capacity.",
-    "Salary adjustment 1-2 times a year (KPI)",
-    "Work Monday to Friday",
-    "Lunar New Year (minimum bonus 13 months salary and seniority and additional bonus depending on business situation)"
-  ],
+  "benefit": "<div><div>Salary is paid according to employee capacity.</div><div>Salary adjustment 1-2 times a year (KPI)</div><div>Work Monday to Friday</div><div>Lunar New Year (minimum bonus 13 months salary and seniority and additional bonus depending on business situation)</div></div>",
   "imgs": [
     "https://assets.topdev.vn/images/2023/04/17/TopDev-68xx80rBWc3Xz0wK-1681701152.jpg",
     "https://assets.topdev.vn/images/2023/04/17/TopDev-1U5jhZLKrZ0PhWbu-1681701152.jpg"

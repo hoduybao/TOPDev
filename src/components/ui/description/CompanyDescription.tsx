@@ -29,7 +29,7 @@ const CompanyDescription = () => {
 
       <DetailSession hideBottomLine>
         <DetailHeader title='Về chúng tôi' />
-        <div>{companyData.about.join('. ')}</div>
+        <div dangerouslySetInnerHTML={{ __html: companyData.about }}></div>
       </DetailSession>
       <DetailSession hideBottomLine>
         <DetailHeader title='INTRODUCTION' />
