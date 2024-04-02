@@ -12,6 +12,7 @@ import DetailPage from '../pages/recruitment/DetailPage';
 import { MY_ROUTE } from './route.constant';
 import JobPage from '../pages/job/JobPage';
 import UserLayout from '../components/global/layout/UserLayout';
+import LoginPage from '../pages/login/LoginPage';
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
     path: '/admin',
     element: <AdminLayout />,
     children: [{ path: MY_ROUTE.ADMIN, element: <AdminMainPage /> }],
+  },
+  {
+    path: '/login',
+    element: <LoginPage/>
   },
   {
     path: '/',

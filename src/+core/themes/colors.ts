@@ -12,6 +12,7 @@ export default {
     600: '#D9D9D9',
     500: '#A0AEC0',
     400: '#718096',
+    300: '#a8a8a8',
   },
   white: {
     900: '#FFFFFF',
@@ -26,10 +27,13 @@ export default {
   },
   orange: {
     900: '#EF8943',
+    500: '#dd3f24',
   },
   black: {
-    800: '#313636',
+    400: '#393E46',
     500: '#2D3748',
+    600: '#222831',
+    800: '#313636',
   },
   userFooter: '#DBDBDB',
   iconHover: '#DBDBDB',
