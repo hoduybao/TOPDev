@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Pagination } from 'antd';
+import { Button, Pagination } from 'antd';
 
 import SubHeader from '../../components/global/Recruitment/Header/SubHeader';
 import ApplicationCard from '../../components/global/Recruitment/Content/ApplicationCard';
@@ -8,31 +8,49 @@ import ApplicationCard from '../../components/global/Recruitment/Content/Applica
 import { JobType } from '@/+core/utilities/types/recruitment.type';
 
 import JobMockData from '../../draft/job.json';
+import { gql, useLazyQuery } from '@apollo/client';
+
+type JobsQueryResult = {
+  jobs: JobType[];
+};
+
+const GET_JOBS = gql`
+  query Jobs {
+    jobs {
+      id
+      companyId
+      title
+      salary
+      responsibilities
+      skills
+      extends
+      welfare
+      experienceYearsMin
+      experienceYearsMax
+      level
+      type
+      typeContract
+      techs
+      interviewProcess
+    }
+  }
+`;
 
 const MainPage = () => {
-  const JOBS_MOCK_AMOUNT: number = 23; // use for mock jobs data without API
-  const ITEMS_PER_PAGE: number = 6;
+  const ITEMS_PER_PAGE: number = 4;
 
   const [jobs, setJobs] = useState<JobType[]>([]);
   const [jobsPerPage, setJobsPerPage] = useState<JobType[]>([]);
   const [activePage, setActivePage] = useState<number>(1);
 
-  // Use for mock jobs data only without API
-  const handleMockJobData = (amount: number) => {
-    const data = [];
+  const [fetchData, { loading, error, data }] = useLazyQuery<JobsQueryResult>(GET_JOBS);
 
-    for (let i = 0; i < amount; ++i) {
-      const job: JobType = {
-        ...JobMockData,
-        id: `job${i + 1}`,
-        title: `Job title ${i + 1}`,
-      };
-
-      data.push(job);
+  // Use for mock jobs data from graphql API
+  useEffect(() => {
+    if (data) {
+      setJobs(data?.jobs);
     }
-
-    setJobs(data);
-  };
+  }, [data]);
 
   // Pagination handle
   const handleGetJobsPerPage = (n: number) => {
@@ -45,9 +63,9 @@ const MainPage = () => {
     }
   };
 
-  useEffect(() => {
-    handleMockJobData(JOBS_MOCK_AMOUNT);
-  }, []);
+  const handleClick = () => {
+    fetchData();
+  };
 
   useEffect(() => {
     handleGetJobsPerPage(activePage);
@@ -57,21 +75,33 @@ const MainPage = () => {
   return (
     <div className='flex flex-col'>
       <SubHeader jobs={jobs} setJobs={setJobs} />
-      <div className='px-4 py-2.5 flex gap-5 flex-wrap'>
-        {jobsPerPage?.map((job: JobType) => {
-          return <ApplicationCard key={uuidv4()} job={job} newestAmount={3} recentAmount={150} />;
-        })}
+      <div>
+        <Button onClick={handleClick}>Fetch data</Button>
       </div>
-      <div className='my-5 flex items-center justify-center'>
-        <Pagination
-          current={activePage}
-          total={jobs?.length}
-          pageSize={ITEMS_PER_PAGE} // items per page
-          onChange={(page: number) => {
-            setActivePage(page);
-          }}
-        />
-      </div>
+
+      {loading && <p>Loading...</p>}
+      {error && <p>Error : {error.message}</p>}
+      {data && (
+        <>
+          <div className='px-4 py-2.5 flex gap-5 flex-wrap'>
+            {jobsPerPage?.map((job: JobType) => {
+              return (
+                <ApplicationCard key={uuidv4()} job={job} newestAmount={3} recentAmount={150} />
+              );
+            })}
+          </div>
+          <div className='my-5 flex items-center justify-center'>
+            <Pagination
+              current={activePage}
+              total={jobs?.length}
+              pageSize={ITEMS_PER_PAGE} // items per page
+              onChange={(page: number) => {
+                setActivePage(page);
+              }}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

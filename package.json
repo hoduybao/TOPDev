@@ -14,6 +14,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@apollo/client": "^3.9.9",
     "@dnd-kit/core": "^6.0.8",
     "@dnd-kit/sortable": "^7.0.2",
     "@react-pdf-viewer/core": "^3.12.0",
@@ -23,6 +24,7 @@
     "antd": "5.10.1",
     "clsx": "2.1.0",
     "firebase": "^10.9.0",
+    "graphql": "^16.8.1",
     "pdfjs-dist": "^3.4.120",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
