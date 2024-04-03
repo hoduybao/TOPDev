@@ -13,6 +13,7 @@ export default {
     500: '#A0AEC0',
     400: '#718096',
     300: '#a8a8a8',
+    100: '#EFEFEF',
   },
   white: {
     900: '#FFFFFF',
