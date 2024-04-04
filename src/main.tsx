@@ -4,7 +4,8 @@ import App from './App.tsx';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: 'https://demographql.onrender.com/graphql',
+  // uri: 'https://demographql.onrender.com/graphql',
+  uri: 'http://localhost:5008/graphql',
   cache: new InMemoryCache(),
 });
 
