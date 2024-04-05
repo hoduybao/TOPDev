@@ -18,44 +18,70 @@ const JobPage = () => {
 
   const jdRef = React.useRef<HTMLDivElement>(null);
   const companyRef = React.useRef<HTMLDivElement>(null);
+  const cardRef = React.useRef<HTMLDivElement>(null);
+  const stickyRef = React.useRef<HTMLDivElement>(null);
 
-  const { ref: stickyRef, isSticky } = useSticky();
+  const [isSticky, setIsSticky] = React.useState(false);
+  console.log('isSticky', isSticky);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const top = stickyRef.current?.getBoundingClientRect().top;
+      console.log(top);
+
+      if (top === 0) {
+        console.log('set true');
+        setIsSticky(true);
+      } else {
+        console.log('set false');
+        setIsSticky(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <Container>
       <div className='w-full flex justify-center items-center'>
-        <div className='max-w-[80rem] bg-mainBackground'>
+        <div className='w-[80rem] bg-mainBackground h-[1000px]'>
           <div className='grid grid-cols-12 gap-6 mt-6'>
             {/* jd session */}
-            <div className='col-span-12 lg:col-span-8'>
-              <div className='sticky top-0 z-20 ' ref={stickyRef}>
-                <CompanyCard
-                  isSticky={false}
+            <div className='lg:col-span-8 bg-gray-500 h-[500px]'>
+              <div className='sticky top-0 z-20' ref={stickyRef}>
+                <h1 className='h-[100px]'>Home Page</h1>
+                <h1 className={`h-[100px] ${isSticky && 'hidden'}`}>Home Page description</h1>
+                {/* <CompanyCard
+                  cardRef={cardRef}
+                  isSticky={isSticky}
                   jdClicked={jdClicked}
                   changeClicked={changeClicked}
                   jdRef={jdRef}
                   companyRef={companyRef}
-                />
+                /> */}
               </div>
 
-              <div className='mt-4 '>
-                <JobTags
+              <div className='mt-4 h-[400px] bg-blue-400'>
+                {/* <JobTags
                   jdClicked={jdClicked}
                   changeClicked={changeClicked}
                   jdRef={jdRef}
                   companyRef={companyRef}
-                />
-                <div ref={jdRef}>
+                /> */}
+                {/* <div ref={jdRef}>
                   <JobDescription />
                 </div>
                 <div ref={companyRef}>
                   <CompanyDescription />
-                </div>
+                </div> */}
               </div>
             </div>
 
             {/* submit session */}
-            <div className='col-span-12 lg:col-span-4 sm:col-span-12 '>
+            <div className='lg:col-span-4 bg-gray-500'>
               <div className='sticky top-0 z-10'>
                 <JobSubmitModal />
                 <UserSubmitButton name='Tạo CV để ứng tuyển' onClick={() => {}} />

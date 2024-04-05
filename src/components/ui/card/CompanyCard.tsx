@@ -5,21 +5,8 @@ import jobData from '../../../draft/job.json';
 // import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
 // import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
 import { Spin } from 'antd';
-import JobTags from '../tag/JobTags';
 
-const CompanyCard = ({
-  isSticky,
-  jdClicked,
-  changeClicked,
-  companyRef,
-  jdRef,
-}: {
-  isSticky: boolean;
-  jdClicked: boolean;
-  changeClicked: (value: boolean) => void;
-  jdRef: React.RefObject<HTMLDivElement>;
-  companyRef: React.RefObject<HTMLDivElement>;
-}) => {
+const CompanyCard = ({ isSticky }: { isSticky: boolean }) => {
   // apply API call
   // const { jobId, companyId } = useParams<{ jobId: string; companyId: string }>();
   // const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
@@ -31,33 +18,24 @@ const CompanyCard = ({
   const companyResponse = { data: companyData };
 
   return (
-    <div className={`bg-white-900 p-4 pb-0 rounded shadow-md ${isSticky && ''}`}>
-      <Spin spinning={isLoadingCompany || isLoading}>
-        <div className='grid grid-cols-12 p-2 gap-8'>
-          {/* image */}
-          <div className={`col-span-2 ${isSticky ? 'hidden' : ''}`}>
-            <img
-              className='min-w-[70px]'
-              src={companyResponse && companyResponse.data.avatar}
-              alt=''
-            />
-          </div>
-          {/* info */}
-          <div className={`col-span-10 ${isSticky && 'col-span-12'}`}>
-            <div className='font-bold text-2xl'>{jobResponse && jobResponse.data.title}</div>
-            <div className='uppercase opacity-70 font-bold text-lg'>
-              {companyResponse && companyResponse.data.name}
-            </div>
-            <div className={`mt-2 text-base opacity-70`}>
-              {!isSticky && companyResponse && companyResponse.data.address}
-            </div>
-            <div className={`mt-2 text-base text-orange-600 font-semibold`}>
-              {!isSticky && 'Thương lượng'}
-            </div>
-          </div>
+    // <Spin spinning={isLoadingCompany || isLoading}>
+    <>
+      <div className={`w-[16.67%] ${isSticky ? 'hidden' : ''}`}>
+        <img className='min-w-[70px]' src={companyResponse && companyResponse.data.avatar} alt='' />
+      </div>
+
+      <div className={` ${isSticky ? 'w-[100%]' : 'w-[83.33%]'}`}>
+        <div className='font-bold text-2xl'>{jobResponse && jobResponse.data.title}</div>
+        <div className='uppercase opacity-70 font-bold text-lg'>
+          {companyResponse && companyResponse.data.name}
         </div>
-      </Spin>
-    </div>
+        <div className={`mt-2 text-base opacity-70`}>
+          {companyResponse ? companyResponse.data.address : ''}
+        </div>
+        <div className={`mt-2 text-base text-orange-600 font-semibold`}>{'Thương lượng'}</div>
+      </div>
+    </>
+    // </Spin>
   );
 };
 

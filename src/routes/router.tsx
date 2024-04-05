@@ -10,7 +10,7 @@ import AdminMainPage from '../pages/admin/MainPage';
 import ProcessPage from '../pages/recruitment/ProcessPage';
 import DetailPage from '../pages/recruitment/DetailPage';
 import { MY_ROUTE } from './route.constant';
-import JobPage from '../pages/job/JobPage';
+import JobPage from '../pages/job/JobPageNew';
 import UserLayout from '../components/global/layout/UserLayout';
 
 export const router = createBrowserRouter([

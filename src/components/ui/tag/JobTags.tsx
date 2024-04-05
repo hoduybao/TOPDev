@@ -39,7 +39,7 @@ const JobTags = ({
 }) => {
   return (
     // sticky z-10 top-[170px]
-    <div className={`grid grid-cols-12 bg-white-900 sticky top-[150px] z-10 shadow-md`}>
+    <div className={`grid grid-cols-12 bg-white-900 shadow-md rounded rounded-b-none`}>
       <JobItem
         alias='jdTag'
         onClick={() => {

@@ -16,8 +16,8 @@ export default function useSticky() {
       },
       {
         root: null,
-        rootMargin: '-1px',
-        threshold: [1], // Adjust the threshold as needed
+        rootMargin: '-1px 0px 0px 0px',
+        threshold: [1],
       },
     );
 
