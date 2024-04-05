@@ -122,7 +122,8 @@ const JobSubmitModal = () => {
         <div className='mb-2'>
           <UserSubmitButton name='Ứng tuyển ngay' onClick={showModal} isFilled />
           <Modal
-            width='40%'
+            width={'100%'}
+            style={{ maxWidth: '800px' }}
             title={
               <div className='text-xl'>
                 Bạn đang ứng tuyển
