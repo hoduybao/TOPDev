@@ -19,8 +19,8 @@ const JobPage = () => {
 
   return (
     <Container>
-      <div className='flex items-start w-full gap-2'>
-        <section className='lg:w-[70%] flex flex-col gap-4 relative'>
+      <div className='flex flex-col lg:flex-row items-start w-full gap-2'>
+        <section className='w-full lg:w-[70%] flex flex-col gap-4 relative'>
           <section
             className={`flex items-start bg-white-900 rounded shadow-md p-4
             sticky top-0 z-10
@@ -44,7 +44,7 @@ const JobPage = () => {
           </section>
         </section>
 
-        <section className='lg:w-[30%] sticky top-0 z-10'>
+        <section className='w-full lg:w-[30%] sticky top-0 z-10'>
           <JobSubmitModal />
           <UserSubmitButton name='Tạo CV để ứng tuyển' onClick={() => {}} />
           <ShortDetail />

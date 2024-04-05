@@ -47,10 +47,10 @@ const JobPage = () => {
   return (
     <Container>
       <div className='w-full flex justify-center items-center'>
-        <div className='w-[80rem] bg-mainBackground h-[1000px]'>
+        <div className='w-[80rem] bg-mainBackground'>
           <div className='grid grid-cols-12 gap-6 mt-6'>
             {/* jd session */}
-            <div className='lg:col-span-8 bg-gray-500 h-[500px]'>
+            <div className='col-span-12 lg:col-span-8 bg-gray-500 h-[500px]'>
               <div className='sticky top-0 z-20' ref={stickyRef}>
                 <h1 className='h-[100px]'>Home Page</h1>
                 <h1 className={`h-[100px] ${isSticky && 'hidden'}`}>Home Page description</h1>
