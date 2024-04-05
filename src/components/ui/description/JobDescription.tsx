@@ -21,7 +21,7 @@ const JobDescription = () => {
   return (
     <Spin spinning={isLoading || isLoadingCompany}>
       {jobResponse && companyResponse && (
-        <div className='mt-4 bg-white-900 rounded' id='jobDescription'>
+        <div className=' bg-white-900 rounded' id='jobDescription'>
           <DetailSession>
             <div
               className='text-md text-justify'

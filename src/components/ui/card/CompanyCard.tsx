@@ -5,8 +5,21 @@ import jobData from '../../../draft/job.json';
 // import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
 // import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
 import { Spin } from 'antd';
+import JobTags from '../tag/JobTags';
 
-const CompanyCard = ({ isSticky }: { isSticky: boolean }) => {
+const CompanyCard = ({
+  isSticky,
+  jdClicked,
+  changeClicked,
+  companyRef,
+  jdRef,
+}: {
+  isSticky: boolean;
+  jdClicked: boolean;
+  changeClicked: (value: boolean) => void;
+  jdRef: React.RefObject<HTMLDivElement>;
+  companyRef: React.RefObject<HTMLDivElement>;
+}) => {
   // apply API call
   // const { jobId, companyId } = useParams<{ jobId: string; companyId: string }>();
   // const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
@@ -18,7 +31,7 @@ const CompanyCard = ({ isSticky }: { isSticky: boolean }) => {
   const companyResponse = { data: companyData };
 
   return (
-    <div style={{ position: '-webkit-sticky' }} className={`bg-white-900 p-4 rounded shadow-sm`}>
+    <div className={`bg-white-900 p-4 pb-0 rounded shadow-md ${isSticky && ''}`}>
       <Spin spinning={isLoadingCompany || isLoading}>
         <div className='grid grid-cols-12 p-2 gap-8'>
           {/* image */}
