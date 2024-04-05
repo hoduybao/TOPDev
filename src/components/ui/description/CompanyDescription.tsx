@@ -13,7 +13,7 @@ const ListItem = ({ title, data, size }: { title: string; data?: string[]; size?
 
 const CompanyDescription = () => {
   return (
-    <div className='mt-4 bg-white rounded'>
+    <div className='mt-4 bg-white rounded' id='companyDescription'>
       <DetailSession hideBottomLine>
         <DetailHeader title='Công ty' />
         <div className='uppercase opacity-80 text-base font-bold'>{companyData.name}</div>

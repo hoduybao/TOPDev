@@ -5,16 +5,8 @@ import jobData from '../../../draft/job.json';
 // import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
 // import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
 import { Spin } from 'antd';
-import useSticky from '../../../hooks/sticky';
 
-const CompanyCard = () => {
-  const { ref: stickyRef } = useSticky();
-  let isSticky = false;
-  isSticky = true;
-
-  // const { ref: stickyRef, isSticky } = useSticky();
-  // console.log('isSticky', isSticky);
-
+const CompanyCard = ({ isSticky }: { isSticky: boolean }) => {
   // apply API call
   // const { jobId, companyId } = useParams<{ jobId: string; companyId: string }>();
   // const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
@@ -26,16 +18,16 @@ const CompanyCard = () => {
   const companyResponse = { data: companyData };
 
   return (
-    <div className={`bg-white-900 p-4 rounded sticky z-10`} ref={stickyRef}>
+    <div style={{ position: '-webkit-sticky' }} className={`bg-white-900 p-4 rounded shadow-sm`}>
       <Spin spinning={isLoadingCompany || isLoading}>
         <div className='grid grid-cols-12 p-2 gap-8'>
           {/* image */}
           <div className={`col-span-2 ${isSticky ? 'hidden' : ''}`}>
-            {/* <img
+            <img
               className='min-w-[70px]'
               src={companyResponse && companyResponse.data.avatar}
               alt=''
-            /> */}
+            />
           </div>
           {/* info */}
           <div className={`col-span-10 ${isSticky && 'col-span-12'}`}>

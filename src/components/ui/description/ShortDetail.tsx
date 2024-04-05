@@ -1,7 +1,7 @@
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import jobData from '../../../draft/jsob-new.json';
 import DetailSession, { DetailHeader } from './Session';
-import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
+// import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
 import { Spin } from 'antd';
 
 const ListTechs = ({ data }: { data: string[] }) => {
