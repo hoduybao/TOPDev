@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Rate, Dropdown } from 'antd';
@@ -17,12 +17,12 @@ interface PropType {
 const ApplicationCard = (props: PropType) => {
   const { application, deleteApplication } = props;
 
+  const params = useParams();
+
   const cardItems: MenuProps['items'] = [
     {
       key: 'detail',
-      label: (
-        <Link to={`/recruitment/process/detail-application/${application?.id}`}>Xem chi tiết</Link>
-      ),
+      label: <Link to={`/recruitment/${params?.jobId}/${application?.id}`}>Xem chi tiết</Link>,
     },
     {
       type: 'divider',

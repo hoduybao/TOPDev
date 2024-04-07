@@ -9,7 +9,7 @@ export default function RecruitmentLayout() {
     <LayoutAntDesign className='bg-white'>
       <Header />
       <LayoutAntDesign
-        className={`bg-primary-white mt-[46px] h-[calc(100vh-46px)] duration-500 ease-in-out`}
+        className={`bg-primary-white mt-[46px] min-h-[calc(100vh-46px)] duration-500 ease-in-out`}
       >
         <Content className='m-auto transition w-full'>
           <Outlet />

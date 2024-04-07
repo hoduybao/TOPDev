@@ -18,15 +18,7 @@ const ApplicationCard = (props: PropType) => {
   const items: MenuProps['items'] = [
     {
       key: '1',
-      label: <div>Xem ứng viên</div>,
-    },
-    {
-      key: '2',
-      label: <div>Hoạt động</div>,
-    },
-    {
-      key: '3',
-      label: <div>Người giám xác</div>,
+      label: <Link to={`/recruitment/${job?.id}`}>Xem ứng viên</Link>,
     },
   ];
 
@@ -48,7 +40,7 @@ const ApplicationCard = (props: PropType) => {
         </Dropdown>
       </div>
       <div className='pt-5 pb-10 flex justify-between items-center'>
-        <Link to='/recruitment/process'>
+        <Link to={`/recruitment/${job?.id}`}>
           <Button type='primary' danger>
             {newestAmount} Ứng viên mới
           </Button>

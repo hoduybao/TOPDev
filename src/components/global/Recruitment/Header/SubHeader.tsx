@@ -5,8 +5,16 @@ import type { SearchProps } from 'antd/es/input/Search';
 
 import { UploadOutlined, SettingOutlined, CaretDownOutlined } from '@ant-design/icons';
 import AddRecruitmentBtn from '../Content/AddRecruitmentBtn';
+import { JobType } from '@/+core/utilities/types/recruitment.type';
 
-const SubHeader = () => {
+interface PropType {
+  jobs: JobType[];
+  setJobs: React.Dispatch<React.SetStateAction<JobType[]>>;
+}
+
+const SubHeader = (props: PropType) => {
+  const { jobs, setJobs } = props;
+
   const { Search } = Input;
 
   const actionsItems: MenuProps['items'] = [
@@ -49,7 +57,7 @@ const SubHeader = () => {
   return (
     <div className='bg-white px-4 pt-2.5 pb-4 border-b border-gray-300 flex items-center justify-between'>
       <div className='flex items-center gap-3'>
-        <AddRecruitmentBtn />
+        <AddRecruitmentBtn jobs={jobs} setJobs={setJobs} />
         <p className='text-[16px]'>Vị trí công việc</p>
         <Dropdown menu={{ items: actionsItems }} trigger={['click']}>
           <div>
