@@ -20,7 +20,7 @@ const CompanyCard = ({ isSticky }: { isSticky: boolean }) => {
   return (
     // <Spin spinning={isLoadingCompany || isLoading}>
     <>
-      <div className={`w-[16.67%] ${isSticky ? 'hidden' : ''}`}>
+      <div className={`mr-4 p-2 w-[16.67%] ${isSticky ? 'hidden' : ''}`}>
         <img className='min-w-[70px]' src={companyResponse && companyResponse.data.avatar} alt='' />
       </div>
 

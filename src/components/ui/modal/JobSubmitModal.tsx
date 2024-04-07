@@ -69,6 +69,7 @@ const CustomInputTextArea = (props: CustomInputType) => {
       <ReactQuill
         theme='snow'
         value={value}
+        style={{ height: '150px' }}
         // className='max-h-[100px] overflow-y-scroll'
         onChange={(value) => {
           console.log(value);
