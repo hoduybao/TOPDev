@@ -1,14 +1,14 @@
+import { HomePage } from '@/pages/home/HomePage';
 import { createBrowserRouter } from 'react-router-dom';
-import Layout from '../components/global/layout/Layout';
+import AdminLayout from '../components/global/layout/AdminLayout';
 import RecruitmentLayout from '../components/global/layout/RecruitmentLayout';
 import RecruitmentProcessLayout from '../components/global/layout/RecruitmentProcessLayout';
-import AdminLayout from '../components/global/layout/AdminLayout';
-import { HomePage } from '../pages/home/HomePage';
-import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
-import MainPage from '../pages/recruitment/MainPage';
+import UserLayout from '../components/global/layout/UserLayout';
 import AdminMainPage from '../pages/admin/MainPage';
-import ProcessPage from '../pages/recruitment/ProcessPage';
+import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import DetailPage from '../pages/recruitment/DetailPage';
+import MainPage from '../pages/recruitment/MainPage';
+import ProcessPage from '../pages/recruitment/ProcessPage';
 import { MY_ROUTE } from './route.constant';
 import JobPage from '../pages/job/JobPageNew';
 import UserLayout from '../components/global/layout/UserLayout';
@@ -17,11 +17,11 @@ import LoginLayout from '../components/global/layout/LoginLayout';
 import ResetPasswordPage from '../pages/login/ResetPasswordPage';
 
 export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout />,
-    children: [{ path: MY_ROUTE.HOME, element: <HomePage /> }],
-  },
+  // {
+  //   path: '/',
+  //   element: <Layout />,
+  //   children: [{ path: MY_ROUTE.HOME, element: <HomePage /> }],
+  // },
   {
     path: '/recruitment',
     element: <RecruitmentLayout />,
@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <UserLayout />,
-    children: [{ path: MY_ROUTE.JOB, element: <JobPage /> }],
+    children: [{ path: MY_ROUTE.HOME, element: <HomePage /> }],
   },
   { path: '/*', element: <NotFoundPage /> },
 ]);

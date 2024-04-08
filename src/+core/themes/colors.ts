@@ -25,6 +25,7 @@ export default {
   },
   red: {
     900: '#E5342F',
+    800: '#dd3f24',
   },
   orange: {
     900: '#EF8943',
