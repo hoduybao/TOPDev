@@ -13,6 +13,8 @@ import { MY_ROUTE } from './route.constant';
 import JobPage from '../pages/job/JobPage';
 import UserLayout from '../components/global/layout/UserLayout';
 import LoginPage from '../pages/login/LoginPage';
+import LoginLayout from '../components/global/layout/LoginLayout';
+import ResetPasswordPage from '../pages/login/ResetPasswordPage';
 
 export const router = createBrowserRouter([
   {
@@ -42,7 +44,13 @@ export const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <LoginPage/>
+    element: <LoginLayout />,
+    children: [{ path: MY_ROUTE.LOGIN, element: <LoginPage /> }],
+  },
+  {
+    path: '/reset-password',
+    element: <LoginLayout />,
+    children: [{ path: MY_ROUTE.RESET_PASSWORD, element: <ResetPasswordPage /> }],
   },
   {
     path: '/',

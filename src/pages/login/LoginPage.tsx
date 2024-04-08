@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import colors from '../../+core/themes/colors';
-import { Button, Form, FormProps, Input } from 'antd';
+import { Form, FormProps, Input } from 'antd';
+import { MY_ROUTE } from '../../routes/route.constant';
 
 type FieldType = {
   username?: string;
@@ -19,29 +20,7 @@ const LoginPage = () => {
   return (
     <>
       <div className='font-roboto'>
-        <nav className='bg-black-600 w-full h-100 px-2 py-1 flex justify-between items-center'>
-          <div>
-            <button className='px-4 py-2'>
-              <i className='fa fa-bars text-white-900'></i>
-            </button>
-          </div>
-          <div className='flex lg:hidden'>
-            <img
-              src='https://accounts.topdev.vn/asset/images/logo-td-white.png'
-              alt=''
-              className='img-fluid logo-white w-20 sm:w-32'
-            />
-            <p className='inline text-2xl text-white-900 hidden sm:block'>
-              <span className='text-orange-500'>Việc Làm IT </span>
-              Hàng Đầu
-            </p>
-          </div>
-
-          <div className='hidden lg:block'>
-            <button>hello </button>
-          </div>
-        </nav>
-
+        {/* Content */}
         <div className='xl:flex transition duration-1000'>
           <div
             className='flex flex-col items-center py-11 px-3.5 xl:flex-1 xl:pt-40 xl:pb-0'
@@ -190,7 +169,7 @@ const LoginPage = () => {
                       </button>
                       <div className='text-right'>
                         <a
-                          href='/recruitment'
+                          href={MY_ROUTE.RESET_PASSWORD}
                           className='font-bold underline underline-offset-[4px] hover:text-orange-500 hover:underline'
                         >
                           Quên mật khẩu?
@@ -240,107 +219,6 @@ const LoginPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div className='bg-gray-100 flex justify-center pt-5 pb-12 text-black-400 text-base'>
-          <div className='flex md:flex-col xl:w-[71.25rem] lg:w-[60rem] lg:flex-row'>
-            <div className='flex-grow w-3/5 px-3.5'>
-              <div>
-                <a href='/'>
-                  <img
-                    className='w-40'
-                    src='https://accounts.topdev.vn/asset/images/logo.png'
-                    alt='TopDev'
-                  />
-                </a>
-              </div>
-              <div>
-                <p>
-                  Tầng 12A, Toà nhà AP Tower, 518B Điện Biên Phủ, Phường 21, Quận Bình Thạnh, Thành
-                  phố Hồ Chí Minh
-                </p>
-                <p>Copyright © CÔNG TY CỔ PHẦN APPLANCER</p>
-                <p>
-                  Liên Hệ: <a href='tel:02862733496'>028 6273 3496</a> -{' '}
-                  <a href='mailto:contact@topdev.vn'>contact@topdev.vn</a>
-                </p>
-                <p>ĐKKD : 031 303 2338 - Cấp ngày : 27/11/2014</p>
-              </div>
-            </div>
-            <div className='flex-grow w-3/5 px-3.5'>
-              <p className='font-bold'>Về TevDop</p>
-              <ul className='flex-column'>
-                <li>
-                  <a href='/'>Về chúng tôi</a>
-                </li>
-                <li>
-                  <a href='/'>Liên hệ</a>
-                </li>
-                <li>
-                  <a href='/'>Thoả thuận sử dụng</a>
-                </li>
-                <li>
-                  <a href='/'>Cơ hội việc làm</a>
-                </li>
-                <li>
-                  <a href='/'>Quy định bảo mật</a>
-                </li>
-                <li>
-                  <a href='/'>Quy chế hoạt động của sán giao dịch thương mại điện tử TEVDOP</a>
-                </li>
-                <li>
-                  <a href='/'>Giải quyết khiếu nại</a>
-                </li>
-              </ul>
-            </div>
-            <div className='flex-grow w-3/5 px-3.5'>
-              <p className='font-bold'>Dành Cho Người Tìm Việc</p>
-              <ul className='flex-column'>
-                <li>
-                  <a href='/'>Tính lương Gross - Net</a>
-                </li>
-                <li>
-                  <a href='/'>Tạo CV</a>
-                </li>
-                <li>
-                  <a href='/'>Tìm kiếm công việc IT</a>
-                </li>
-                <li>
-                  <a href='/'>Trắc nghiệm tính cách</a>
-                </li>
-              </ul>
-            </div>
-            <div className='flex-grow w-3/5 px-3.5'>
-              <p className='font-bold'>Dành Cho Các Nhà Tuyển Dụng</p>
-              <ul className='flex-column'>
-                <li>
-                  <a href='/'>Đăng việc làm IT</a>
-                </li>
-                <li>
-                  <a href='/'>Tìm kiếm nhân tài</a>
-                </li>
-              </ul>
-            </div>
-            <div className='flex-grow w-3/5 px-3.5'>
-              <p className='mb-2.5 font-bold'>Theo dõi chúng tôi tại</p>
-              <ul className='flex gap-3'>
-                <li>
-                  <a href='/'>
-                    <i className='fa fa-3x fa-facebook-square' aria-hidden='true'></i>
-                  </a>
-                </li>
-                <li>
-                  <a href='/'>
-                    <i className='fa fa-3x fa-linkedin-square' aria-hidden='true'></i>
-                  </a>
-                </li>
-                <li>
-                  <a href='/'>
-                    <i className='fa fa-3x fa-youtube-square' aria-hidden='true'></i>
-                  </a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>

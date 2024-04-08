@@ -28,6 +28,7 @@ export default {
   },
   orange: {
     900: '#EF8943',
+    800: '#d34127',
     500: '#dd3f24',
   },
   black: {
@@ -36,6 +37,10 @@ export default {
     500: '#2D3748',
     600: '#222831',
     800: '#313636',
+  },
+  blue: {
+    500: '#3490dc',
+    900: '#227dc7',
   },
   userFooter: '#DBDBDB',
   iconHover: '#DBDBDB',
