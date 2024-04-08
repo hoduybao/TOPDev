@@ -1,20 +1,18 @@
+import AdminLayout from '@/components/global/layout/AdminLayout';
 import { HomePage } from '@/pages/home/HomePage';
 import { createBrowserRouter } from 'react-router-dom';
-import AdminLayout from '../components/global/layout/AdminLayout';
+import LoginLayout from '../components/global/layout/LoginLayout';
 import RecruitmentLayout from '../components/global/layout/RecruitmentLayout';
 import RecruitmentProcessLayout from '../components/global/layout/RecruitmentProcessLayout';
 import UserLayout from '../components/global/layout/UserLayout';
 import AdminMainPage from '../pages/admin/MainPage';
+import LoginPage from '../pages/login/LoginPage';
+import ResetPasswordPage from '../pages/login/ResetPasswordPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import DetailPage from '../pages/recruitment/DetailPage';
 import MainPage from '../pages/recruitment/MainPage';
 import ProcessPage from '../pages/recruitment/ProcessPage';
 import { MY_ROUTE } from './route.constant';
-import JobPage from '../pages/job/JobPageNew';
-import UserLayout from '../components/global/layout/UserLayout';
-import LoginPage from '../pages/login/LoginPage';
-import LoginLayout from '../components/global/layout/LoginLayout';
-import ResetPasswordPage from '../pages/login/ResetPasswordPage';
 
 export const router = createBrowserRouter([
   // {
