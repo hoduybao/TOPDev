@@ -1,76 +1,60 @@
-// import companyData from '../../../draft/company.json';
-// import jobData from '../../../draft/job.json';
+import { LegacyRef } from 'react';
+import companyData from '../../../draft/company-new.json';
+import jobData from '../../../draft/jsob-new.json';
+
 import DetailSession, { DetailHeader } from './Session';
-import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
-import { useParams } from 'react-router-dom';
 import { Spin } from 'antd';
-import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
-
-const JobItem = ({ name, isSelect = false }: { name: string; isSelect?: boolean }) => {
-  return (
-    <div
-      className={`
-    ${isSelect && 'font-bold text-orange-600 border-b-4 border-orange-600'}
-    py-4 text-base col-span-6 text-center`}
-    >
-      {name}
-    </div>
-  );
-};
-
-const JobTags = () => {
-  return (
-    <div className='grid grid-cols-12'>
-      <JobItem name='Mô tả công việc' isSelect />
-      <JobItem name='Giới thiệu về công ty' />
-    </div>
-  );
-};
+// import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
+// import { useParams } from 'react-router-dom';
+// import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
 
 const JobDescription = () => {
-  const { jobId, companyId } = useParams<{ jobId: string; companyId: string }>();
-  const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
-  const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
+  // const { jobId, companyId } = useParams<{ jobId: string; companyId: string }>();
+  // const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
+  // const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
+
+  const isLoading = false;
+  const isLoadingCompany = false;
+  const jobResponse = { data: jobData };
+  const companyResponse = { data: companyData };
 
   return (
     <Spin spinning={isLoading || isLoadingCompany}>
       {jobResponse && companyResponse && (
-        <div className='mt-4 bg-white-900 rounded'>
-          <JobTags />
+        <div className=' bg-white-900 rounded rounded-t-none' id='jobDescription'>
           <DetailSession>
-            <div>{companyResponse.data.introduction}</div>
+            <div
+              className='text-md text-justify'
+              dangerouslySetInnerHTML={{ __html: companyResponse.data.introduction }}
+            ></div>
           </DetailSession>
           <DetailSession>
             <DetailHeader title='Trách nhiệm công việc' />
-            <ul className='px-4'>
-              {jobResponse.data.responsibilities.map((item: any) => (
-                <li className='list-disc'>{item}</li>
-              ))}
-            </ul>
+            <div
+              className='px-4 text-md text-justify'
+              dangerouslySetInnerHTML={{ __html: jobResponse && jobResponse.data.responsibilities }}
+            />
           </DetailSession>
           <DetailSession>
             <DetailHeader title='Kỹ năng chuyên môn' />
-            <ul className='px-4'>
-              {jobResponse.data.skills.map((item: any) => (
-                <li className='list-disc'>{item}</li>
-              ))}
-            </ul>
+            <div
+              className='px-4 text-md text-justify'
+              dangerouslySetInnerHTML={{ __html: jobResponse && jobResponse.data.skills }}
+            />
           </DetailSession>
           <DetailSession>
             <DetailHeader title='Nice to have' />
-            <ul className='px-4'>
-              {jobResponse.data.extends.map((item: any) => (
-                <li className='list-disc'>{item}</li>
-              ))}
-            </ul>
+            <div
+              className='px-4 text-md text-justify'
+              dangerouslySetInnerHTML={{ __html: jobResponse && jobResponse.data.extends }}
+            />
           </DetailSession>
           <DetailSession hideBottomLine>
             <DetailHeader title='Phúc lợi dành cho bạn' />
-            <div className='px-4'>
-              {jobResponse.data.welfare.map((item: any) => (
-                <div className='list-disc'>{item}</div>
-              ))}
-            </div>
+            <div
+              className='px-4 text-md'
+              dangerouslySetInnerHTML={{ __html: jobResponse && jobResponse.data.welfare }}
+            />
           </DetailSession>
         </div>
       )}

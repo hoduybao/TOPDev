@@ -1,0 +1,17 @@
+{
+  "id": "company1",
+  "name": "CÔNG TY CỔ PHẦN SHOWNIQ",
+  "avatar": "https://salt.topdev.vn/gyOxnd9RZhh1hvvbO1wIEYrAUo0QdX1vZR91B4bECwk/fit/384/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDIzLzA0LzE3L1RvcERldi1Hc1pIOEhQMmpRMVBDR2FGLTE2ODE3MDEyMjcuanBn",
+  "address": "299 Hoàng Diệu, Phường 06, Quận 4, Thành phố Hồ Chí Minh",
+  "fields": ["Software", "Thương mại điện tử/ Bán lẻ"],
+  "size": "25-99",
+  "nations": ["South-Korea", "Vietnam"],
+  "skills": ["PHP", "SQL"],
+  "about": "<div>IT company specializing in AI, mobile, KIOSK development</div>",
+  "introduction": "<div><div><b>NEXACORN</b> is an IT company specializing in the development and provision of various AI software solutions, and platform services. With a team of highly specialized professionals in the field of 4.0 technology, we utilize advanced technologies such as machine learning training, in-depth development of artificial intelligence core technology (Artificial Intelligence - AI), and Big Data, Cloud, Blockchain</div><div><b>NEXACORN</b> conducts research to deliver software products of the highest quality to users. Our aim is to contribute to making human life more beautiful and happier through our software products.</div></div>",
+  "benefit": "<div><div>Salary is paid according to employee capacity.</div><div>Salary adjustment 1-2 times a year (KPI)</div><div>Work Monday to Friday</div><div>Lunar New Year (minimum bonus 13 months salary and seniority and additional bonus depending on business situation)</div></div>",
+  "imgs": [
+    "https://assets.topdev.vn/images/2023/04/17/TopDev-68xx80rBWc3Xz0wK-1681701152.jpg",
+    "https://assets.topdev.vn/images/2023/04/17/TopDev-1U5jhZLKrZ0PhWbu-1681701152.jpg"
+  ]
+}

@@ -1,10 +1,12 @@
 export const MY_ROUTE = {
   HOME: '',
   RECRUITMENT: '/recruitment',
-  RECRUITMENT_PROCESS: '/recruitment/process',
-  RECRUITMENT_DETAIL: '/recruitment/process/detail-application/:id',
+  RECRUITMENT_PROCESS: '/recruitment/:jobId',
+  RECRUITMENT_DETAIL: '/recruitment/:jobId/:applicationId',
   ADMIN: '/admin',
   JOB: 'jobs/:companyId/:jobId',
+  LOGIN: '/login',
+  RESET_PASSWORD: '/reset-password',
 };
 
 export const DEFAULT_ROUTE = MY_ROUTE.HOME;

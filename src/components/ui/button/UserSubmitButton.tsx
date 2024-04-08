@@ -4,6 +4,7 @@ const UserSubmitButton = ({
   isFullWidth = true,
   onClick,
   isSmall = false,
+  customClass,
 }: {
   name: string;
   isFilled?: boolean;
@@ -11,6 +12,7 @@ const UserSubmitButton = ({
   isSmall?: boolean;
   onClick?: (values?: any) => void;
   htmlType?: string;
+  customClass?: string;
 }) => {
   return (
     <div className={`${isFullWidth && 'w-full'} mb-2`}>
@@ -19,7 +21,9 @@ const UserSubmitButton = ({
         className={`
         ${isFilled ? 'bg-orange-600 text-white-900' : 'text-orange-600 border border-orange-600'}
         ${isSmall ? 'p-2' : 'p-4'}
-        w-full text-base font-bold rounded`}
+        w-full text-base font-bold rounded
+        ${customClass}
+        `}
       >
         {name}
       </button>
