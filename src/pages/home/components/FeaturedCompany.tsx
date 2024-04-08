@@ -37,7 +37,7 @@ export default function FeaturedCompany() {
             srcSet='https://salt.topdev.vn/yZu49eJi-tc20ZQ95HZP7mZ99USaGC_dajSPmT5SN8k/fit/1080/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDIzLzExLzE1L1RvcERldi1lOTU1NzNhMDVlYTU4MGZiZDliNC0xNzAwMDQyODUyLmpwZw'
             className='w-full h-full rounded object-cover'
           />
-          <div className='absolute bottom-0 translate-y-1/2 bg-white shadow-md w-[94%] rounded p-4 flex gap-2 cursor-pointer'>
+          <div className='absolute bottom-0 translate-y-1/2 bg-white-900 shadow-md w-[94%] rounded p-4 flex gap-2 cursor-pointer'>
             <div className='p-2 w-[160px] h-[112px]'>
               <img
                 srcSet='https://salt.topdev.vn/mipLnM6MrEoN03jjKtZvBf9kPk6EwOQH3jj6H66gFCI/fit/256/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDIzLzExLzAzL1RvcERldi1Mb2dvLUNvbmctVHktQ3AtQ2h1bmctS2hvYW4tVklFVENBUC0xNjk4OTk4OTcwLnBuZw'
@@ -63,18 +63,17 @@ export default function FeaturedCompany() {
                 <img src={ICONS.minorRightArrow} className='mt-1' />
               </div>
             </div>
-            <FollowIcon className='hover:stroke-primary-red stroke-[#dbdbdb] !w-' />
+            <FollowIcon className='hover:stroke-primary-red stroke-[#dbdbdb]' />
           </div>
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        {' '}
         <div className='w-[816px] h-[190px] relative group flex justify-center company_item_slider'>
           <img
             srcSet='https://salt.topdev.vn/yZu49eJi-tc20ZQ95HZP7mZ99USaGC_dajSPmT5SN8k/fit/1080/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDIzLzExLzE1L1RvcERldi1lOTU1NzNhMDVlYTU4MGZiZDliNC0xNzAwMDQyODUyLmpwZw'
             className='w-full h-full rounded object-cover'
           />
-          <div className='absolute bottom-0 translate-y-1/2 bg-white shadow-md w-[94%] rounded p-4 flex gap-2 cursor-pointer'>
+          <div className='absolute bottom-0 translate-y-1/2 bg-white-900 shadow-md w-[94%] rounded p-4 flex gap-2 cursor-pointer'>
             <div className='p-2 w-[160px] h-[112px]'>
               <img
                 srcSet='https://salt.topdev.vn/mipLnM6MrEoN03jjKtZvBf9kPk6EwOQH3jj6H66gFCI/fit/256/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDIzLzExLzAzL1RvcERldi1Mb2dvLUNvbmctVHktQ3AtQ2h1bmctS2hvYW4tVklFVENBUC0xNjk4OTk4OTcwLnBuZw'
@@ -100,18 +99,17 @@ export default function FeaturedCompany() {
                 <img src={ICONS.minorRightArrow} className='mt-1' />
               </div>
             </div>
-            <FollowIcon className='hover:stroke-primary-red stroke-[#dbdbdb] !w-' />
+            <FollowIcon className='hover:stroke-primary-red stroke-[#dbdbdb]' />
           </div>
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        {' '}
         <div className='w-[816px] h-[190px] relative group flex justify-center company_item_slider'>
           <img
             srcSet='https://salt.topdev.vn/yZu49eJi-tc20ZQ95HZP7mZ99USaGC_dajSPmT5SN8k/fit/1080/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDIzLzExLzE1L1RvcERldi1lOTU1NzNhMDVlYTU4MGZiZDliNC0xNzAwMDQyODUyLmpwZw'
             className='w-full h-full rounded object-cover'
           />
-          <div className='absolute bottom-0 translate-y-1/2 bg-white shadow-md w-[94%] rounded p-4 flex gap-2 cursor-pointer'>
+          <div className='absolute bottom-0 translate-y-1/2 bg-white-900 shadow-md w-[94%] rounded p-4 flex gap-2 cursor-pointer'>
             <div className='p-2 w-[160px] h-[112px]'>
               <img
                 srcSet='https://salt.topdev.vn/mipLnM6MrEoN03jjKtZvBf9kPk6EwOQH3jj6H66gFCI/fit/256/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDIzLzExLzAzL1RvcERldi1Mb2dvLUNvbmctVHktQ3AtQ2h1bmctS2hvYW4tVklFVENBUC0xNjk4OTk4OTcwLnBuZw'
@@ -137,18 +135,17 @@ export default function FeaturedCompany() {
                 <img src={ICONS.minorRightArrow} className='mt-1' />
               </div>
             </div>
-            <FollowIcon className='hover:stroke-primary-red stroke-[#dbdbdb] !w-' />
+            <FollowIcon className='hover:stroke-primary-red stroke-[#dbdbdb]' />
           </div>
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        {' '}
         <div className='w-[816px] h-[190px] relative group flex justify-center company_item_slider'>
           <img
             srcSet='https://salt.topdev.vn/yZu49eJi-tc20ZQ95HZP7mZ99USaGC_dajSPmT5SN8k/fit/1080/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDIzLzExLzE1L1RvcERldi1lOTU1NzNhMDVlYTU4MGZiZDliNC0xNzAwMDQyODUyLmpwZw'
             className='w-full h-full rounded object-cover'
           />
-          <div className='absolute bottom-0 translate-y-1/2 bg-white shadow-md w-[94%] rounded p-4 flex gap-2 cursor-pointer'>
+          <div className='absolute bottom-0 translate-y-1/2 bg-white-900 shadow-md w-[94%] rounded p-4 flex gap-2 cursor-pointer'>
             <div className='p-2 w-[160px] h-[112px]'>
               <img
                 srcSet='https://salt.topdev.vn/mipLnM6MrEoN03jjKtZvBf9kPk6EwOQH3jj6H66gFCI/fit/256/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDIzLzExLzAzL1RvcERldi1Mb2dvLUNvbmctVHktQ3AtQ2h1bmctS2hvYW4tVklFVENBUC0xNjk4OTk4OTcwLnBuZw'
@@ -174,7 +171,7 @@ export default function FeaturedCompany() {
                 <img src={ICONS.minorRightArrow} className='mt-1' />
               </div>
             </div>
-            <FollowIcon className='hover:stroke-primary-red stroke-[#dbdbdb] !w-' />
+            <FollowIcon className='hover:stroke-primary-red stroke-[#dbdbdb]' />
           </div>
         </div>
       </SwiperSlide>

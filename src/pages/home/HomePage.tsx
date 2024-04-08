@@ -26,7 +26,7 @@ export function HomePage() {
             {recommendations.map((recommendation, index) => (
               <div
                 key={index}
-                className='px-3 py-2 border border-[#C2C2C2] text-base bg-white rounded-[4px] hover:bg-[#F5F5F5] cursor-pointer'
+                className='px-3 py-2 border border-[#C2C2C2] text-base bg-white-900 rounded-[4px] hover:bg-[#F5F5F5] cursor-pointer'
               >
                 {recommendation}
               </div>
@@ -34,7 +34,7 @@ export function HomePage() {
           </div>
         </div>
       </div>
-      <div className='w-full bg-white !rounded-t-[54px] -mt-12 flex justify-center'>
+      <div className='w-full bg-white-900 !rounded-t-[54px] -mt-12 flex justify-center'>
         <div className='w-4/5 relative'>
           <ToolSection />
           <div className='mt-[150px] text-[36px] font-bold'>

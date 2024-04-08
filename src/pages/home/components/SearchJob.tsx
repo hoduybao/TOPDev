@@ -5,7 +5,7 @@ export default function SearchJob() {
     <>
       <div className='flex justify-start gap-2 items-center'>
         <div className='text-2xl font-bold text-[#292929]'>Tìm kiếm</div>
-        <div className='p-2 bg-primary-red text-2xl text-white font-bold rounded-sm'>
+        <div className='p-2 bg-primary-red text-2xl text-white-900 font-bold rounded-sm'>
           Javascript
         </div>
       </div>

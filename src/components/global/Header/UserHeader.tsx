@@ -20,12 +20,12 @@ const HeaderMenuItem = ({ items }: { items: any }) => {
       <div className='flex justify-between items-center gap-3 p-8'>
         <div className='text-base font-bold group-hover:text-primary-red'>{items.title}</div>
         {items.children && (
-          <ArrowDownIcon className='transform group-hover:rotate-180 transition-transform duration-500 stroke-black  group-hover:stroke-primary-red' />
+          <ArrowDownIcon className='transform group-hover:rotate-180 transition-transform duration-500 stroke-black-900  group-hover:stroke-primary-red' />
         )}
       </div>
       {items.children && items.children.length > 0 && (
         <div className='absolute left-0 top-[84px] flex'>
-          <div className='bg-white w-[300px] group-hover:block hidden group-hover:animate-slide-top shadow-md'>
+          <div className='bg-white-900 w-[300px] group-hover:block hidden group-hover:animate-slide-top shadow-md'>
             {items.children.map((item: any, index: number) => (
               <div
                 key={index}
@@ -35,7 +35,7 @@ const HeaderMenuItem = ({ items }: { items: any }) => {
                 }}
                 onMouseLeave={() => setChildren(null)}
               >
-                <span className='text-base text-gray-800'> {item.title} </span>
+                <span className='text-base text-[##424242]'> {item.title} </span>
                 {item.children && item.children.length > 0 && (
                   <ArrowRightIcon className='stroke-black' />
                 )}
@@ -44,7 +44,7 @@ const HeaderMenuItem = ({ items }: { items: any }) => {
           </div>
           {children && (
             <div
-              className={`bg-white shadow w-[500px] group-hover:animate-slide-top ${
+              className={`bg-white-900 shadow w-[500px] group-hover:animate-slide-top ${
                 children.grid === true && 'grid grid-cols-3 content-start'
               }`}
               onMouseEnter={() => setChildren(children)} // Keep hoveredItem when mouse enters children
@@ -55,7 +55,7 @@ const HeaderMenuItem = ({ items }: { items: any }) => {
                   key={index}
                   className='pl-4 py-3 hover:bg-gray-100 flex justify-between items-center group/item relative rounded-sm'
                 >
-                  <span className='text-base text-gray-800'> {item.title} </span>
+                  <span className='text-base text-[##424242]'> {item.title} </span>
                 </div>
               ))}
             </div>
@@ -526,19 +526,19 @@ const UserHeader = () => {
         <div className='flex items-center h-full gap-4'>
           <Show hideInMobile>
             <div className='flex gap-2 items-center justify-center group cursor-pointer'>
-              <PhoneIcon className='fill-black  group-hover:fill-primary-red' />
+              <PhoneIcon className='group-hover:fill-primary-red fill-black-900' />
               <div className='text-base font-semibold group-hover:text-primary-red'>
                 028 6273 3496
               </div>
             </div>
           </Show>
           <Show hideInMobile>
-            <Button className=' !text-primary-red !font-bold hover:!border-primary-red border-primary-red !bg-white hover:!bg-red-300 !text-base !px-6 !h-11 !leading-[100%] rounded-[4px]'>
+            <Button className=' !text-primary-red !font-bold hover:!border-primary-red border-primary-red !bg-white-900 hover:!bg-red-300 !text-base !px-6 !h-11 !leading-[100%] rounded-[4px]'>
               {t('employer')}
             </Button>
           </Show>
           <Show hideInMobile>
-            <Button className='!bg-primary-red !text-white !font-bold border-none hover:!bg-secondary-red !text-base !px-6 !h-11 !leading-[100%]  rounded-[4px]'>
+            <Button className='!bg-primary-red !text-white-900 !font-bold border-none hover:!bg-secondary-red !text-base !px-6 !h-11 !leading-[100%]  rounded-[4px]'>
               Đăng nhập
             </Button>
           </Show>
