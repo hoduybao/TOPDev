@@ -18,14 +18,17 @@ const CompanyDescription = () => {
       <CompanyCard />
       <div>
         <div
+          className='pb-4 sticky top-0 z-10 bg-mainBackground'
           style={{
             visibility: isSticky ? 'visible' : 'hidden',
           }}
           ref={ref}
-          className={`sticky top-0 z-10 bg-white-900 p-4`}
         >
-          <CompanyCardContent isStickyCustom />
+          <div className={` bg-white-900 p-4`}>
+            <CompanyCardContent isStickyCustom />
+          </div>
         </div>
+
         <div className='sticky top-[7rem] z-10 bg-white-900'>
           <SelectionTags
             listTags={[

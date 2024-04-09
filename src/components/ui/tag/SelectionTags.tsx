@@ -45,7 +45,7 @@ const SelectionTags = ({ listTags }: JobTagsProps) => {
     setTag(value);
     listTags.forEach((tag) => {
       if (tag.type === value) {
-        tag.ref.current?.scrollIntoView({ behavior: 'smooth' });
+        tag.ref.current?.scrollIntoView({ block: 'start', inline: 'start', behavior: 'smooth' });
       }
     });
   };
