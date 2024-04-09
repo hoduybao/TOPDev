@@ -1,33 +1,48 @@
 import React from 'react';
-import CompanyCard from './CompanyCard';
+import CompanyCard, { CompanyCardContent } from './CompanyCard';
 import { useTranslation } from 'react-i18next';
 import SelectionTags, { TAG_TYPES } from '@/components/ui/tag/SelectionTags';
 import ProductsSession from './ProductsSession';
 import ProfileSession from './ProfileSession';
+import useSticky from '@/hooks/sticky';
 
 const CompanyDescription = () => {
   const productRef = React.useRef<HTMLDivElement>(null);
   const companyRef = React.useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
+  const { ref, isSticky } = useSticky();
+  console.log(isSticky);
 
   return (
-    <div>
+    <div className=''>
       <CompanyCard />
-      <div className='mt-20 '>
-        <SelectionTags
-          listTags={[
-            {
-              type: TAG_TYPES.COMPANY,
-              name: t('company.infomation'),
-              ref: companyRef,
-            },
-            {
-              type: TAG_TYPES.PRODUCT,
-              name: t('product.infomation'),
-              ref: productRef,
-            },
-          ]}
-        />
+      <div>
+        <div
+          style={{
+            visibility: isSticky ? 'visible' : 'hidden',
+          }}
+          ref={ref}
+          className={`sticky top-0 z-10 bg-white-900 p-4`}
+        >
+          <CompanyCardContent isStickyCustom />
+        </div>
+        <div className='sticky top-[7rem] z-10 bg-white-900'>
+          <SelectionTags
+            listTags={[
+              {
+                type: TAG_TYPES.COMPANY,
+                name: t('company.infomation'),
+                ref: companyRef,
+              },
+              {
+                type: TAG_TYPES.PRODUCT,
+                name: t('product.infomation'),
+                ref: productRef,
+              },
+            ]}
+          />
+        </div>
+
         <div ref={companyRef} className='bg-white-900 rounded'>
           <ProfileSession />
         </div>
