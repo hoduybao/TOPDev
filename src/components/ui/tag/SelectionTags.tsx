@@ -1,5 +1,11 @@
 import React from 'react';
 
+export enum TAG_TYPES {
+  JD = 'jd',
+  COMPANY = 'company',
+  PRODUCT = 'product',
+}
+
 const selectedClass = 'font-bold text-orange-600 border-b-4 border-orange-600';
 
 type TagItemProps = {
@@ -15,18 +21,13 @@ const TagItem = ({ type, name, isSelected = false, onClick }: TagItemProps) => {
       id={type}
       onClick={onClick}
       className={`
-      ${isSelected && selectedClass}
+      ${isSelected ? selectedClass : 'border-b-[1px] border-black-900'}
       py-4 text-base col-span-6 text-center hover:cursor-pointer`}
     >
       {name}
     </div>
   );
 };
-
-export enum TAG_TYPES {
-  JD = 'jd',
-  COMPANY = 'company',
-}
 
 type TagProp = {
   type: string;
@@ -37,7 +38,7 @@ type JobTagsProps = {
   listTags: TagProp[];
 };
 
-const JobTags = ({ listTags }: JobTagsProps) => {
+const SelectionTags = ({ listTags }: JobTagsProps) => {
   const [selectedTag, setTag] = React.useState<string>(listTags[0].type);
 
   const updateTag = (value: string) => {
@@ -65,4 +66,4 @@ const JobTags = ({ listTags }: JobTagsProps) => {
   );
 };
 
-export default JobTags;
+export default SelectionTags;

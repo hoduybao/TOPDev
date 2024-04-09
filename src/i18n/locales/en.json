@@ -2,5 +2,7 @@
   "employer": "Employer",
   "button.follow": "Follow",
   "job.description": "Job Description",
-  "company.about": "About Company"
+  "company.about": "About Company",
+  "company.infomation": "Company Profile",
+  "product.infomation": "Product"
 }

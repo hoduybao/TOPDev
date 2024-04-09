@@ -14,5 +14,17 @@
   "imgs": [
     "https://assets.topdev.vn/images/2023/04/17/TopDev-68xx80rBWc3Xz0wK-1681701152.jpg",
     "https://assets.topdev.vn/images/2023/04/17/TopDev-1U5jhZLKrZ0PhWbu-1681701152.jpg"
+  ],
+  "products": [
+    {
+      "name": "Ứng dụng đề xuất phong cách xanh",
+      "img": "https://salt.topdev.vn/J-vftdBF2cwhS8AVX-hHEEEbRICVwSvcq2xDlMVCjpc/fit/256/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDIzLzA2LzE5L1NjcmVlbnNob3QtMjAyMy0wNi0xOS0wODIyMzUtMTY4NzEzNzgwNC5wbmc",
+      "description": "Continuous skills and professional training courses are organized for different target groups, with diverse forms of training and testing, meeting the needs of regular learning Continuous skills and professional training courses are organized for different target groups, with diverse forms of training and testing, meeting the needs of regular learning to constantly improve the qualifications of SHOWNIQ employees"
+    },
+    {
+      "name": "Ứng dụng đề xuất phong cách xanh",
+      "img": "https://salt.topdev.vn/J-vftdBF2cwhS8AVX-hHEEEbRICVwSvcq2xDlMVCjpc/fit/256/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDIzLzA2LzE5L1NjcmVlbnNob3QtMjAyMy0wNi0xOS0wODIyMzUtMTY4NzEzNzgwNC5wbmc",
+      "description": "Continuous skills and professional training courses are organized for different target groups, with diverse forms of training and testing, meeting the needs of regular learning to constantly improve the qualifications of SHOWNIQ employees"
+    }
   ]
 }

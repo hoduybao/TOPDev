@@ -14,7 +14,7 @@ const CustomButton = ({
     <Button
       className={`${
         isOutlined ? 'text-white-900 bg-orange-500' : 'text-orange-500 border-orange-500'
-      } rounded h-full py-2`}
+      } rounded h-full w-full py-2`}
     >
       {children}
     </Button>
@@ -37,9 +37,9 @@ const CompanyCard = () => {
             <h1 className='font-bold text-lg'>{companyData.name}</h1>
             <div className='mt-4' dangerouslySetInnerHTML={{ __html: companyData.about }}></div>
             <div className='flex gap-4 mt-4 justify-start'>
-              <div>
+              <div className='flex-1'>
                 <CustomButton isOutlined>
-                  <div className='flex'>
+                  <div className='flex justify-center'>
                     <img className='w-[20px] text-white-900' src={ICONS.bookmark} alt='bookmark' />
                     <span className='mx-2 font-bold text-base'>{t('button.follow')}</span>
                   </div>
