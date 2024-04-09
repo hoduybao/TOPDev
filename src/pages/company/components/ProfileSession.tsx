@@ -1,12 +1,14 @@
 import ContentSession from './ContentSession';
 import companyData from '../../../draft/company-new.json';
+import { useTranslation } from 'react-i18next';
 
 const ProfileSession = () => {
+  const { t } = useTranslation();
   return (
     <div className='p-4'>
-      <ContentSession header='about us' content={companyData.about} />
-      <ContentSession header='introduction' content={companyData.introduction} />
-      <ContentSession header='benefit' content={companyData.benefit} />
+      <ContentSession header={t('company.aboutus')} content={companyData.about} />
+      <ContentSession header={t('company.introduction')} content={companyData.introduction} />
+      <ContentSession header={t('company.benefit')} content={companyData.benefit} />
       <div className='flex gap-2 mb-2'>
         {companyData.imgs.map((img, index) => (
           <img
@@ -17,7 +19,7 @@ const ProfileSession = () => {
           />
         ))}
       </div>
-      <ContentSession header='job benefit' content={companyData.benefit} />
+      <ContentSession header={t('company.benefit')} content={companyData.benefit} />
     </div>
   );
 };

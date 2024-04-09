@@ -4,5 +4,15 @@
   "job.description": "Mô tả công việc",
   "company.about": "Mô tả công ty",
   "company.infomation": "Thông tin công ty",
+  "company.contact": "Thông tin liên hệ",
+  "company.general": "Thông tin chung",
+  "company.industry": "Lĩnh vực",
+  "company.size": "Quy mô công ty",
+  "company.nations": "Quốc tịch công ty",
+  "company.skills": "Kỹ năng",
+  "company.address": "Địa chỉ công ty",
+  "company.aboutus": "Về chúng tôi",
+  "company.introduction": "Introduction",
+  "company.benefit": "Phúc lợi",
   "product.infomation": "Thông tin sản phẩm"
 }

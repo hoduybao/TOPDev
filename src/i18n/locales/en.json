@@ -4,5 +4,15 @@
   "job.description": "Job Description",
   "company.about": "About Company",
   "company.infomation": "Company Profile",
+  "company.contact": "Contact Infomation",
+  "company.general": "General Infomation",
+  "company.industry": "Industry",
+  "company.size": "Company size",
+  "company.nations": "Nationality",
+  "company.skills": "Tech stack",
+  "company.address": "Office address",
+  "company.aboutus": "About us",
+  "company.introduction": "Introduction",
+  "company.benefit": "benefits",
   "product.infomation": "Product"
 }
