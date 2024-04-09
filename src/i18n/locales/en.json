@@ -1,4 +1,6 @@
 {
   "employer": "Employer",
-  "button.follow": "Follow"
+  "button.follow": "Follow",
+  "job.description": "Job Description",
+  "company.about": "About Company"
 }

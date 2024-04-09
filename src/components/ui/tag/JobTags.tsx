@@ -2,23 +2,20 @@ import React from 'react';
 
 const selectedClass = 'font-bold text-orange-600 border-b-4 border-orange-600';
 
-const JobItem = ({
-  alias,
-  name,
-  onClick = () => {},
-  clicked = false,
-}: {
-  alias: string;
+type TagItemProps = {
+  type: string;
   name: string;
-  onClick?: () => void;
-  clicked?: boolean;
-}) => {
+  isSelected?: boolean;
+  onClick: () => void;
+};
+
+const TagItem = ({ type, name, isSelected = false, onClick }: TagItemProps) => {
   return (
     <div
-      id={alias}
+      id={type}
       onClick={onClick}
       className={`
-      ${clicked && selectedClass}
+      ${isSelected && selectedClass}
       py-4 text-base col-span-6 text-center hover:cursor-pointer`}
     >
       {name}
@@ -26,38 +23,44 @@ const JobItem = ({
   );
 };
 
-const JobTags = ({
-  jdClicked,
-  changeClicked,
-  companyRef,
-  jdRef,
-}: {
-  jdClicked: boolean;
-  changeClicked: (value: boolean) => void;
-  jdRef: React.RefObject<HTMLDivElement>;
-  companyRef: React.RefObject<HTMLDivElement>;
-}) => {
+export enum TAG_TYPES {
+  JD = 'jd',
+  COMPANY = 'company',
+}
+
+type TagProp = {
+  type: string;
+  name: string;
+  ref: React.RefObject<HTMLDivElement>;
+};
+type JobTagsProps = {
+  listTags: TagProp[];
+};
+
+const JobTags = ({ listTags }: JobTagsProps) => {
+  const [selectedTag, setTag] = React.useState<string>(listTags[0].type);
+
+  const updateTag = (value: string) => {
+    setTag(value);
+    listTags.forEach((tag) => {
+      if (tag.type === value) {
+        tag.ref.current?.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  };
+
   return (
-    // sticky z-10 top-[170px]
     <div className={`grid grid-cols-12 bg-white-900 shadow-md rounded rounded-b-none`}>
-      <JobItem
-        alias='jdTag'
-        onClick={() => {
-          jdRef.current?.scrollIntoView({ behavior: 'smooth' });
-          changeClicked(true);
-        }}
-        name='Mô tả công việc'
-        clicked={jdClicked}
-      />
-      <JobItem
-        alias='companyTag'
-        onClick={() => {
-          companyRef.current?.scrollIntoView({ behavior: 'smooth' });
-          changeClicked(false);
-        }}
-        name='Giới thiệu về công ty'
-        clicked={!jdClicked}
-      />
+      {listTags.map((tagItem) => (
+        <TagItem
+          type={tagItem.type}
+          name={tagItem.name}
+          isSelected={selectedTag === tagItem.type ? true : false}
+          onClick={() => {
+            updateTag(tagItem.type);
+          }}
+        />
+      ))}
     </div>
   );
 };

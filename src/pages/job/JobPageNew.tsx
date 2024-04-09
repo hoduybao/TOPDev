@@ -4,18 +4,16 @@ import CompanyCard from '../../components/ui/card/CompanyCard';
 import JobSubmitModal from '../../components/ui/modal/JobSubmitModal';
 import UserSubmitButton from '../../components/ui/button/UserSubmitButton';
 import ShortDetail from '../../components/ui/description/ShortDetail';
-import JobTags from '../../components/ui/tag/JobTags';
+import JobTags, { TAG_TYPES } from '../../components/ui/tag/JobTags';
 import React from 'react';
 import JobDescription from '../../components/ui/description/JobDescription';
 import CompanyDescription from '../../components/ui/description/CompanyDescription';
+import { useTranslation } from 'react-i18next';
 
 const JobPage = () => {
   const jdRef = React.useRef<HTMLDivElement>(null);
   const companyRef = React.useRef<HTMLDivElement>(null);
-  const [jdClicked, setJdClicked] = React.useState(true);
-  const changeClicked = (value: boolean) => {
-    setJdClicked(value);
-  };
+  const { t } = useTranslation();
 
   return (
     <Container>
@@ -30,10 +28,18 @@ const JobPage = () => {
           </section>
           <section>
             <JobTags
-              jdClicked={jdClicked}
-              changeClicked={changeClicked}
-              jdRef={jdRef}
-              companyRef={companyRef}
+              listTags={[
+                {
+                  type: TAG_TYPES.JD,
+                  name: t('job.description'),
+                  ref: jdRef,
+                },
+                {
+                  type: TAG_TYPES.COMPANY,
+                  name: t('company.about'),
+                  ref: companyRef,
+                },
+              ]}
             />
             <div ref={jdRef}>
               <JobDescription />
