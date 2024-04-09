@@ -56,7 +56,7 @@ const ColumnContainer = (props: PropType) => {
     <div
       ref={setNodeRef}
       style={style}
-      className='bg-white w-[350px] h-[500px] max-h-[500px] rounded-md flex flex-col'
+      className='bg-[#fff] w-[350px] h-[500px] max-h-[500px] rounded-md flex flex-col'
     >
       {/* Column title */}
       <div
@@ -65,14 +65,14 @@ const ColumnContainer = (props: PropType) => {
         onClick={() => {
           setEditMode(true);
         }}
-        className='bg-primary-red text-white text-md h-[60px] cursor-grab rounded-md rounded-b-none p-3
+        className='bg-primary-red text-[#fff] text-md h-[60px] cursor-grab rounded-md rounded-b-none p-3
                     font-semibold flex items-center justify-between'
       >
         <div className='flex gap-2'>
           {!editMode && column.title}
           {editMode && (
             <input
-              className='bg-white text-black focus:border-blue-400 border rounded outline-none px-2'
+              className='bg-[#fff] text-[#000] focus:border-blue-400 border rounded outline-none px-2'
               value={column.title}
               onChange={(e) => updateColumn(column.id, e.target.value)}
               autoFocus

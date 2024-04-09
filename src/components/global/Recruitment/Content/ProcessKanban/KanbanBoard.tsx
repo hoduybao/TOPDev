@@ -226,7 +226,7 @@ const KanbanBoard = (props: PropType) => {
             onClick={() => {
               createNewColumn();
             }}
-            className='h-[60px] w-[350px] min-w-[350px] flex items-center gap-2 bg-primary-red text-white font-semibold
+            className='h-[60px] w-[350px] min-w-[350px] flex items-center gap-2 bg-primary-red text-[#fff] font-semibold
                         hover:cursor-pointer rounded-md p-4'
           >
             <PlusCircleOutlined className='text-xl' />

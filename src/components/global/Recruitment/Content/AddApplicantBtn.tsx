@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Modal, Form, Input, Select } from 'antd';
 import { type FormProps } from 'antd';
 
@@ -27,6 +28,8 @@ interface PropType {
 
 const AddApplicantBtn = (props: PropType) => {
   const { createNewDetailApplication } = props;
+
+  const { t } = useTranslation();
 
   const [NewRecruitmentForm] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -60,10 +63,10 @@ const AddApplicantBtn = (props: PropType) => {
   return (
     <>
       <Button type='primary' danger onClick={showModal}>
-        Mới
+        {t('recruitmentAdd')}
       </Button>
       <Modal
-        title='Tạo một Ứng viên cho công việc'
+        title={t('recruitmentCreateApplicant')}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -82,7 +85,7 @@ const AddApplicantBtn = (props: PropType) => {
           }}
         >
           <Form.Item<FieldType>
-            label='Tiêu đề / Hồ sơ ứng tuyển'
+            label={`${t('recruitmentTitle')}`}
             name='title'
             rules={[{ required: true, message: 'Please input job title!' }]}
           >
@@ -90,7 +93,7 @@ const AddApplicantBtn = (props: PropType) => {
           </Form.Item>
 
           <Form.Item<FieldType>
-            label='Tên ứng viên'
+            label={`${t('recruitmentApplicantName')}`}
             name='name'
             rules={[{ required: true, message: 'Please input applicant name!' }]}
           >
@@ -106,8 +109,8 @@ const AddApplicantBtn = (props: PropType) => {
           </Form.Item>
 
           <Form.Item
+            label={`${t('recruitmentPhone')}`}
             name='phone'
-            label='Phone Number'
             rules={[{ required: true, message: 'Please input applicant phone number!' }]}
           >
             <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
@@ -116,9 +119,9 @@ const AddApplicantBtn = (props: PropType) => {
           <Form.Item wrapperCol={{ span: 24 }}>
             <div className='w-full border-t border-gray-300 mt-5 pt-4 flex items-center gap-2'>
               <Button type='primary' htmlType='submit' danger>
-                Tạo
+                {t('recruitmentCreateJob')}
               </Button>
-              <Button onClick={handleCancel}>Hủy bỏ</Button>
+              <Button onClick={handleCancel}>{t('recruitmentCancelJob')}</Button>
             </div>
           </Form.Item>
         </Form>

@@ -13,7 +13,7 @@ export interface JobType {
   type?: string;
   typeContract?: string;
   techs?: string[];
-  interviewProcess?: string[];
+  interviewProcess?: string[] | any;
   description?: string;
 }
 
