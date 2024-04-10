@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import BottomSliders from './BottomSliders';
+import Container from '@/components/global/Container/Container';
 
 type JobItem = {
   alias: string;
@@ -44,14 +46,10 @@ const hotCompanies: JobItem[] = [
   { alias: 'job.hot.fin', url: '/' },
 ];
 
-const Slider = () => {
-  return <div>Slider</div>;
-};
-
 const ListCompaniesTypes = () => {
   const { t } = useTranslation();
   return (
-    <div className='flex flex-col gap-4 p-4 lg:flex-row'>
+    <div className='flex flex-col gap-4 p-4 lg:flex-row '>
       {/* fresher */}
       <ListCompaniesItem header={t('job.fresher')} items={fresherJob} />
       {/* fields */}
@@ -84,9 +82,11 @@ const ListCompaniesItem = ({ header, items }: ListCompaniesItemProps) => {
 
 const CompaniesFooter = () => {
   return (
-    <div>
-      <Slider />
-      <ListCompaniesTypes />
+    <div className='mt-8'>
+      <BottomSliders />
+      <Container>
+        <ListCompaniesTypes />
+      </Container>
     </div>
   );
 };

@@ -18,17 +18,19 @@ const LoadMoreBtn = () => {
 
 const CompaniesPage = () => {
   return (
-    <Container>
-      <SearchSession />
-      <CompanyTypes />
-      <CompanySliders />
-      <CompanySliders />
-      <ListCompanies />
-      <div className='flex justify-center'>
-        <LoadMoreBtn />
-      </div>
+    <>
+      <Container>
+        <SearchSession />
+        <CompanyTypes />
+        <CompanySliders />
+        <CompanySliders />
+        <ListCompanies />
+        <div className='flex justify-center'>
+          <LoadMoreBtn />
+        </div>
+      </Container>
       <CompaniesFooter />
-    </Container>
+    </>
   );
 };
 
