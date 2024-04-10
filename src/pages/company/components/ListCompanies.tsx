@@ -13,7 +13,11 @@ const Companies = () => {
   return (
     <div className='grid grid-cols-12 gap-2'>
       {data.map((company: SliderCompanyItem, index: number) => (
-        <SliderItem company={company} key={company.id + index} extraClass='col-span-3' />
+        <SliderItem
+          company={company}
+          key={company.id + index}
+          extraClass='col-span-12 md:col-span-6 lg:col-span-3'
+        />
       ))}
     </div>
   );

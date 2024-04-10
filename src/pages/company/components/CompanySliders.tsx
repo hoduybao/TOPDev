@@ -100,12 +100,26 @@ const Sliders = ({ size, autoplay }: { size: number; autoplay: boolean }) => {
 
   const swiperProps = {
     spaceBetween: 5,
-    slidesPerView: size,
+    // slidesPerView: size,
     autoHeight: true,
     loop: true,
     modules: autoplay ? [Autoplay, Navigation, Pagination] : [Navigation, Pagination],
     autoplay: autoplay ? { delay: 3000 } : {},
     scrollbar: { draggable: true },
+    breakpoints: {
+      640: {
+        slidesPerView: 1,
+        spaceBetween: 10,
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 10,
+      },
+      1024: {
+        slidesPerView: size,
+        spaceBetween: 10,
+      },
+    },
   };
 
   return (
