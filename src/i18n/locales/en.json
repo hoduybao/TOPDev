@@ -51,5 +51,10 @@
   "job.hot.game": "Companies in Game / Entertainment Industry",
   "job.hot.agency": "Companies in Media advertisement Industry",
   "job.hot.service": "Companies in IT Service Industry",
-  "job.hot.fin": "Companies in Fintech Industry"
+  "job.hot.fin": "Companies in Fintech Industry",
+
+  "trend.top": "top companies",
+  "trend.follow": "companies being follow a lot",
+  "trend.job": "companies have new jobs",
+  "trend.total": "company in total"
 }

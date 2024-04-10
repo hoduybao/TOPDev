@@ -51,5 +51,10 @@
   "job.hot.game": "Công ty ngành Game / Giải trí",
   "job.hot.agency": "Công ty ngành Quảng Cáo Truyền Thông",
   "job.hot.service": "Công ty ngành Dịch vụ IT",
-  "job.hot.fin": "Công ty ngành Fintech"
+  "job.hot.fin": "Công ty ngành Fintech",
+
+  "trend.top": "công ty hàng đầu",
+  "trend.follow": "công ty được theo dõi nhiều",
+  "trend.job": "công ty có việc làm mới nhất",
+  "trend.total": "công ty đang chờ đón bạn"
 }
