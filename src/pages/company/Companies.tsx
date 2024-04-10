@@ -7,6 +7,7 @@ import { Button } from 'antd';
 import CompaniesFooter from './components/CompaniesFooter';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
+import ListCompanies from './components/ListCompanies';
 
 const LoadMoreBtn = () => {
   const { t } = useTranslation();
@@ -36,13 +37,17 @@ const CompaniesPage = () => {
         <SearchSession />
         <CompanyTypes list={list} />
         <div ref={topRef}>
-          <CompanySliders type='trend.top' />
+          <CompanySliders type='trend.top' size={4} autoplay />
         </div>
         <div ref={flRef}>
-          <CompanySliders type='trend.follow' />
+          <CompanySliders type='trend.follow' size={4} />
         </div>
-        {/* <ListCompanies type='trend.job' /> */}
-        {/* <ListCompanies type='trend.total' /> */}
+        <div ref={trendRef}>
+          <ListCompanies type='trend.job' />
+        </div>
+        <div ref={totalRef}>
+          <ListCompanies type='trend.follow' />
+        </div>
         <div className='flex justify-center'>
           <LoadMoreBtn />
         </div>
@@ -51,5 +56,14 @@ const CompaniesPage = () => {
     </>
   );
 };
+
+// const swiperProps = {
+//   spaceBetween: 5,
+//   slidesPerView: size,
+//   autoHeight: true,
+//   loop: true,
+//   modules: [Autoplay],
+//   autoplay: { delay: 1000 },
+// };
 
 export default CompaniesPage;

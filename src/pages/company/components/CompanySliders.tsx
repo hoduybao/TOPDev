@@ -6,12 +6,14 @@ import { useTranslation } from 'react-i18next';
 import { ICONS } from '@/config/icons';
 import { Link } from 'react-router-dom';
 import { ArrowRightOutlined } from '@ant-design/icons';
-
+import { Autoplay } from 'swiper/modules';
 type Props = {
   type: string;
+  size: number;
+  autoplay?: boolean;
 };
 
-type SliderCompanyItem = {
+export type SliderCompanyItem = {
   id: string;
   name: string;
   avatar: string;
@@ -20,9 +22,15 @@ type SliderCompanyItem = {
   slogan: string;
   background: string;
 };
-const SliderItem = ({ company }: { company: SliderCompanyItem }) => {
+export const SliderItem = ({
+  company,
+  extraClass,
+}: {
+  company: SliderCompanyItem;
+  extraClass?: string;
+}) => {
   return (
-    <div className='w-full h-full border-[1px] border-gray-300'>
+    <div className={'w-full h-full border-[1px] border-gray-300 ' + extraClass}>
       <div className='mb-2'>
         <img
           src={company.background}
@@ -66,7 +74,7 @@ const SliderItem = ({ company }: { company: SliderCompanyItem }) => {
   );
 };
 
-const Sliders = () => {
+const Sliders = ({ size, autoplay }: { size: number; autoplay: boolean }) => {
   const data: SliderCompanyItem[] = [
     companyData,
     companyData,
@@ -74,16 +82,19 @@ const Sliders = () => {
     companyData,
     companyData,
   ];
+
+  const swiperProps = {
+    spaceBetween: 5,
+    slidesPerView: size,
+    autoHeight: true,
+    loop: true,
+    modules: autoplay ? [Autoplay] : [],
+    autoplay: autoplay ? { delay: 3000 } : {},
+  };
+
   return (
-    <div className=''>
-      <Swiper
-        spaceBetween={5}
-        slidesPerView={4}
-        autoHeight={true}
-        // className='swiper_container'
-        // onSlideChange={() => console.log('slide change')}
-        // onSwiper={(swiper) => console.log(swiper)}
-      >
+    <div>
+      <Swiper {...swiperProps}>
         {data.map((company: SliderCompanyItem, index: number) => (
           <SwiperSlide key={company.id + index}>
             <SliderItem company={company} />
@@ -94,13 +105,13 @@ const Sliders = () => {
   );
 };
 
-const CompanySliders = ({ type }: Props) => {
+const CompanySliders = ({ type, size, autoplay = false }: Props) => {
   const { t } = useTranslation();
   return (
     <div className='my-4' id={type}>
       <h3 className='capitalize font-bold text-lg mb-4'>{t(type)}</h3>
       <div className='h-full '>
-        <Sliders />
+        <Sliders size={size} autoplay={autoplay} />
       </div>
     </div>
   );
