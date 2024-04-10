@@ -29,9 +29,9 @@ const CompanyTypes = () => {
     { alias: 'trend.total', url: '/' },
   ];
   return (
-    <div className='flex'>
+    <div className='grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4 lg:gap-0'>
       {list.map((item, index) => (
-        <div className='w-[25%]'>
+        <div className='md:col-span-1'>
           <CompanyItem key={index} {...item} />
         </div>
       ))}
