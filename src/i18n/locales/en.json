@@ -56,5 +56,11 @@
   "trend.top": "top companies",
   "trend.follow": "companies being follow a lot",
   "trend.job": "companies have new jobs",
-  "trend.total": "company in total"
+  "trend.total": "company in total",
+
+  "search.keywords": "enter company keyword",
+  "search.location": "location",
+  "search.location.hcm": "ho chi minh",
+  "search.location.hn": "ha noi",
+  "search.location.dn": "da nang"
 }

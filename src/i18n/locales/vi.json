@@ -56,5 +56,11 @@
   "trend.top": "công ty hàng đầu",
   "trend.follow": "công ty được theo dõi nhiều",
   "trend.job": "công ty có việc làm mới nhất",
-  "trend.total": "công ty đang chờ đón bạn"
+  "trend.total": "công ty đang chờ đón bạn",
+
+  "search.keywords": "nhập từ khóa công ty",
+  "search.location": "địa điểm",
+  "search.location.hcm": "hồ chí minh",
+  "search.location.hn": "hà nội",
+  "search.location.dn": "đà nẵng"
 }
