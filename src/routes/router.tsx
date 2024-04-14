@@ -11,6 +11,7 @@ import ResetPasswordPage from '../pages/login/ResetPasswordPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import DetailPage from '../pages/recruitment/DetailPage';
 import MainPage from '../pages/recruitment/MainPage';
+import DetailJobPage from '@/pages/recruitment/DetailJobPage';
 import ProcessPage from '../pages/recruitment/ProcessPage';
 import { MY_ROUTE } from './route.constant';
 import JobPage from '../pages/job/JobPageNew';
@@ -30,11 +31,16 @@ export const router = createBrowserRouter([
   },
   {
     path: '/recruitment/:jobId',
+    element: <RecruitmentLayout />,
+    children: [{ path: MY_ROUTE.RECRUITMENT_DETAIL_JOB, element: <DetailJobPage /> }],
+  },
+  {
+    path: '/recruitment/:jobId/applications',
     element: <RecruitmentProcessLayout />,
     children: [{ path: MY_ROUTE.RECRUITMENT_PROCESS, element: <ProcessPage /> }],
   },
   {
-    path: '/recruitment/:jobId/:applicationId',
+    path: '/recruitment/:jobId/application/:applicationId',
     element: <RecruitmentProcessLayout />,
     children: [{ path: MY_ROUTE.RECRUITMENT_DETAIL, element: <DetailPage /> }],
   },
