@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Dropdown, Input } from 'antd';
 import type { MenuProps } from 'antd';
 import type { SearchProps } from 'antd/es/input/Search';
@@ -15,6 +16,8 @@ interface PropType {
 
 const ProcessSubHeader = (props: PropType) => {
   const { createNewDetailApplication } = props;
+
+  const { t } = useTranslation();
 
   const actionsItems: MenuProps['items'] = [
     {
@@ -54,10 +57,10 @@ const ProcessSubHeader = (props: PropType) => {
   };
 
   return (
-    <div className='bg-white px-4 pt-2.5 pb-4 border-b border-gray-300 flex items-center justify-between'>
+    <div className='bg-[#fff] px-4 pt-2.5 pb-4 border-b border-gray-300 flex items-center justify-between'>
       <div className='flex items-center gap-3'>
         <AddApplicantBtn createNewDetailApplication={createNewDetailApplication} />
-        <p className='text-[16px]'>Ứng viên</p>
+        <p className='text-[16px]'>{t('recruitmentApplicant')}</p>
         <Dropdown menu={{ items: actionsItems }} trigger={['click']}>
           <div>
             <SettingOutlined />
@@ -74,7 +77,7 @@ const ProcessSubHeader = (props: PropType) => {
               </div>
             </Dropdown>
           }
-          placeholder='Tìm kiếm...'
+          placeholder={`${t('recruitmentSearch')}...`}
           allowClear
           onSearch={onSearch}
         />

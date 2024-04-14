@@ -1,4 +1,5 @@
 import { Button, Card, Dropdown, Rate } from 'antd';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import type { MenuProps } from 'antd';
@@ -15,10 +16,18 @@ interface PropType {
 const ApplicationCard = (props: PropType) => {
   const { job, newestAmount, recentAmount } = props;
 
+  const { t } = useTranslation();
+
   const items: MenuProps['items'] = [
     {
       key: '1',
-      label: <Link to={`/recruitment/${job?.id}`}>Xem ứng viên</Link>,
+      label: <Link to={`/recruitment/${job?.id}`}>{t('recruitmentViewDetailJob')}</Link>,
+    },
+    {
+      key: '2',
+      label: (
+        <Link to={`/recruitment/${job?.id}/applications`}>{t('recruitmentViewApplicants')}</Link>
+      ),
     },
   ];
 
@@ -40,18 +49,20 @@ const ApplicationCard = (props: PropType) => {
         </Dropdown>
       </div>
       <div className='pt-5 pb-10 flex justify-between items-center'>
-        <Link to={`/recruitment/${job?.id}`}>
+        <Link to={`/recruitment/${job?.id}/applications`}>
           <Button type='primary' danger>
-            {newestAmount} Ứng viên mới
+            {newestAmount} {t('recruitmentNewApplicant')}
           </Button>
         </Link>
         <div>
-          <Link to='/recruitment/process'>
+          <Link to={`/recruitment/${job?.id}/applications`}>
             <p className='text-red-500 font-bold hover:text-red-400 hover:cursor-pointer'>
-              {recentAmount} Để tuyển dụng
+              {recentAmount} {t('recruitmentFor')}
             </p>
           </Link>
-          <p>{recentAmount} Ứng viên</p>
+          <p>
+            {recentAmount} {t('recruitmentApplicant')}
+          </p>
         </div>
       </div>
     </Card>

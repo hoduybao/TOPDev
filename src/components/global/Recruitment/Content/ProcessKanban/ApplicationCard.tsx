@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Rate, Dropdown } from 'antd';
@@ -17,19 +18,25 @@ interface PropType {
 const ApplicationCard = (props: PropType) => {
   const { application, deleteApplication } = props;
 
+  const { t } = useTranslation();
+
   const params = useParams();
 
   const cardItems: MenuProps['items'] = [
     {
       key: 'detail',
-      label: <Link to={`/recruitment/${params?.jobId}/${application?.id}`}>Xem chi tiết</Link>,
+      label: (
+        <Link to={`/recruitment/${params?.jobId}/application/${application?.id}`}>
+          {t('recruitmentViewApplication')}
+        </Link>
+      ),
     },
     {
       type: 'divider',
     },
     {
       key: 'delete',
-      label: 'Xóa',
+      label: `${t('recruitmentDelete')}`,
     },
   ];
 
@@ -96,7 +103,7 @@ const ApplicationCard = (props: PropType) => {
       {...attributes}
       {...listeners}
       onClick={toggleViewDetailApplication}
-      className='relative bg-white border-2 border-gray-300 p-2.5 h-[120px] min-h-[120px] items-center
+      className='relative bg-[#fff] border-2 border-gray-300 p-2.5 h-[120px] min-h-[120px] items-center
                   flex text-left rounded-md hover:border-primary-red cursor-grab'
       onMouseEnter={() => {
         setMouseIsOver(true);
