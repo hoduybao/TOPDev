@@ -11,8 +11,12 @@ import ResetPasswordPage from '../pages/login/ResetPasswordPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import DetailPage from '../pages/recruitment/DetailPage';
 import MainPage from '../pages/recruitment/MainPage';
+import DetailJobPage from '@/pages/recruitment/DetailJobPage';
 import ProcessPage from '../pages/recruitment/ProcessPage';
 import { MY_ROUTE } from './route.constant';
+import JobPage from '../pages/job/JobPageNew';
+import CompaniesPage from '../pages/company/Companies';
+import CompanyPage from '../pages/company/Company';
 import AccountManagementPage from '@/pages/admin/AccountManagementPage';
 import AdminLoginPage from '@/pages/admin/LoginPage';
 
@@ -29,11 +33,16 @@ export const router = createBrowserRouter([
   },
   {
     path: '/recruitment/:jobId',
+    element: <RecruitmentLayout />,
+    children: [{ path: MY_ROUTE.RECRUITMENT_DETAIL_JOB, element: <DetailJobPage /> }],
+  },
+  {
+    path: '/recruitment/:jobId/applications',
     element: <RecruitmentProcessLayout />,
     children: [{ path: MY_ROUTE.RECRUITMENT_PROCESS, element: <ProcessPage /> }],
   },
   {
-    path: '/recruitment/:jobId/:applicationId',
+    path: '/recruitment/:jobId/application/:applicationId',
     element: <RecruitmentProcessLayout />,
     children: [{ path: MY_ROUTE.RECRUITMENT_DETAIL, element: <DetailPage /> }],
   },
@@ -65,7 +74,13 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <UserLayout />,
-    children: [{ path: MY_ROUTE.HOME, element: <HomePage /> }],
+    children: [
+      { path: MY_ROUTE.HOME, element: <HomePage /> },
+      { path: MY_ROUTE.JOB, element: <JobPage /> },
+      { path: MY_ROUTE.COMPANIES, element: <CompaniesPage /> },
+      { path: MY_ROUTE.COMPANY, element: <CompanyPage /> },
+    ],
   },
+
   { path: '/*', element: <NotFoundPage /> },
 ]);

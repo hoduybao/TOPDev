@@ -1,5 +1,5 @@
 import { HRAccount } from '@/+core/utilities/types/admin.type';
-import { CloseOutlined, LockOutlined, StopOutlined } from '@ant-design/icons';
+import { StopOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
 import { useEffect, useState } from 'react';

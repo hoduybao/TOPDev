@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 
@@ -6,6 +7,8 @@ import { UploadOutlined, SettingOutlined } from '@ant-design/icons';
 
 const DetailSubHeader = () => {
   const params = useParams();
+
+  const { t } = useTranslation();
 
   const actionsItems: MenuProps['items'] = [
     {
@@ -25,7 +28,7 @@ const DetailSubHeader = () => {
     <div className='bg-white px-4 pt-2.5 pb-4 border-b border-gray-300 flex items-center justify-between'>
       <div className='flex items-center gap-3'>
         <div className='flex items-center gap-3'>
-          <p className='text-[16px] font-semibold text-primary-red'>Ứng viên</p>
+          <p className='text-[16px] font-semibold text-primary-red'>{t('recruitmentApplicant')}</p>
           <p className='text-[16px] '>{params?.id}</p>
         </div>
         <Dropdown menu={{ items: actionsItems }} trigger={['click']}>
