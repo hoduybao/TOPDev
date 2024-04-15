@@ -1,4 +1,3 @@
-import { LegacyRef } from 'react';
 import companyData from '../../../draft/company-new.json';
 import jobData from '../../../draft/jsob-new.json';
 

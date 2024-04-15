@@ -9,7 +9,8 @@ export default function AdminLayout() {
     <LayoutAntDesign className='bg-white'>
       <Header />
       <LayoutAntDesign
-        className={`bg-primary-white mt-[46px] min-h-[calc(100vh-46px)] duration-500 ease-in-out`}
+        className={`bg-primary-white duration-500 mt-[46px] ease-in-out`}
+        style={{ height: 'calc(100vh - 46px)' }}
       >
         <Content className='m-auto transition w-full'>
           <Outlet />

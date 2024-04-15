@@ -4,6 +4,8 @@ export const MY_ROUTE = {
   RECRUITMENT_PROCESS: '/recruitment/:jobId',
   RECRUITMENT_DETAIL: '/recruitment/:jobId/:applicationId',
   ADMIN: '/admin',
+  ADMIN_ACCOUNT_MANAGEMENT: '/admin/manage-account',
+  ADMIN_LOGIN: '/admin/login',
   JOB: 'jobs/:companyId/:jobId',
   LOGIN: '/login',
   RESET_PASSWORD: '/reset-password',

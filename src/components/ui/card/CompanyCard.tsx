@@ -4,7 +4,6 @@ import jobData from '../../../draft/job.json';
 // import { useParams } from 'react-router-dom';
 // import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
 // import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
-import { Spin } from 'antd';
 
 const CompanyCard = ({ isSticky }: { isSticky: boolean }) => {
   // apply API call
@@ -12,8 +11,6 @@ const CompanyCard = ({ isSticky }: { isSticky: boolean }) => {
   // const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
   // const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
 
-  const isLoading = false;
-  const isLoadingCompany = false;
   const jobResponse = { data: jobData };
   const companyResponse = { data: companyData };
 

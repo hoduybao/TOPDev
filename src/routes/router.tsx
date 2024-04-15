@@ -13,6 +13,8 @@ import DetailPage from '../pages/recruitment/DetailPage';
 import MainPage from '../pages/recruitment/MainPage';
 import ProcessPage from '../pages/recruitment/ProcessPage';
 import { MY_ROUTE } from './route.constant';
+import AccountManagementPage from '@/pages/admin/AccountManagementPage';
+import AdminLoginPage from '@/pages/admin/LoginPage';
 
 export const router = createBrowserRouter([
   // {
@@ -39,6 +41,16 @@ export const router = createBrowserRouter([
     path: '/admin',
     element: <AdminLayout />,
     children: [{ path: MY_ROUTE.ADMIN, element: <AdminMainPage /> }],
+  },
+  {
+    path: MY_ROUTE.ADMIN_LOGIN,
+    element: <AdminLayout />,
+    children: [{ path: MY_ROUTE.ADMIN_LOGIN, element: <AdminLoginPage /> }],
+  },
+  {
+    path: MY_ROUTE.ADMIN_ACCOUNT_MANAGEMENT,
+    element: <AdminLayout />,
+    children: [{ path: MY_ROUTE.ADMIN_ACCOUNT_MANAGEMENT, element: <AccountManagementPage /> }],
   },
   {
     path: '/login',
