@@ -131,5 +131,7 @@
   "getJobAlerts": "Tạo thông báo việc làm ngay",
   "highlight": "Tiêu điểm",
   "notification": "Thông báo",
-  "markAllRead": "Đánh dấu đã đọc tất cả"
+  "markAllRead": "Đánh dấu đã đọc tất cả",
+  "followJob": "Việc đã theo dõi",
+  "availableJob": "Còn hạn - Ứng tuyển ngay"
 }

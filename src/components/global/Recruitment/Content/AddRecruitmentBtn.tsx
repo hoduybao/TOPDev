@@ -61,6 +61,7 @@ const AddRecruitmentBtn = (props: PropType) => {
       id: uuidv4(),
       title: values?.title,
       companyId: uuidv4(),
+      companyName: values?.companyName,
       level: values?.level,
       salary: values?.salary,
       techs: values?.techs,

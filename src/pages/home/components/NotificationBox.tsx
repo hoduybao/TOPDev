@@ -12,7 +12,7 @@ const NotificationBox = () => {
 
   const notiBoxRef = useRef<HTMLDivElement>(null);
 
-  const [notifications, setNotifications] = useState<NotificationType[]>(NotfiFakeData); // Use for API
+  const [notifications, setNotifications] = useState<NotificationType[]>(NotfiFakeData);
   const [openNotiBox, setOpenNotiBox] = useState<boolean>(false);
 
   const handleSeenNotification = (noti: NotificationType) => {
@@ -79,14 +79,16 @@ const NotificationBox = () => {
       >
         <div className='flex items-center justify-between border-b border-gray-200 p-4'>
           <h3 className='text-sm font-bold text-[#515151] lg:text-base'>{t('notification')}</h3>
-          <button
-            className='px-4 py-2 rounded-sm bg-gray-200 font-bold hover:bg-gray-300'
-            onClick={() => {
-              handleMarkAllRead();
-            }}
-          >
-            {t('markAllRead')}
-          </button>
+          {notifications?.length !== 0 && (
+            <button
+              className='px-4 py-2 rounded-sm bg-gray-200 font-bold hover:bg-gray-300'
+              onClick={() => {
+                handleMarkAllRead();
+              }}
+            >
+              {t('markAllRead')}
+            </button>
+          )}
         </div>
         <ul className='max-h-[400px] overflow-y-auto overscroll-contain'>
           {notifications?.length === 0 && (
