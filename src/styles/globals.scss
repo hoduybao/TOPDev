@@ -60,3 +60,36 @@ html {
 .swiper-pagination .swiper-pagination-bullet-active {
   background: #dd3f24;
 }
+
+.custom-tab {
+  .ant-tabs-nav::before {
+    display: none;
+  }
+
+  .ant-tabs-nav {
+    margin: 0 !important;
+  }
+
+  .ant-tabs-nav-list {
+    border-bottom: 1px solid #d2d5e0;
+  }
+
+  .ant-tabs-tab {
+    padding: 15px 30px !important;
+  }
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #dd3f24 !important;
+    text-shadow: 0 0 0.25px #dd3f24;
+  }
+  .ant-tabs-tab-btn:hover {
+    color: #dd3f24 !important;
+  }
+  .ant-tabs:hover .ant-tabs-tab:hover {
+    color: #dd3f24 !important;
+  }
+
+  .ant-tabs-ink-bar {
+    height: 3px !important;
+    background: #dd3f24;
+  }
+}

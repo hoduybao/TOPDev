@@ -10,6 +10,8 @@ export default {
       colors: {
         ...colors,
         'primary-red': '#dd3f24',
+        'primary-200': '#FFBCB0',
+        'primary-100': '#FEEEEB',
         'secondary-red': '#c43820',
         'red-300': '#FEEEEB',
         'primary-gray': '#262a36',

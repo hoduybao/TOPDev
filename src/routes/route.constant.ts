@@ -1,5 +1,6 @@
 export const MY_ROUTE = {
   HOME: '',
+  IT_JOBS: '/it-jobs',
   RECRUITMENT: '/recruitment',
   RECRUITMENT_PROCESS: '/recruitment/:jobId',
   RECRUITMENT_DETAIL: '/recruitment/:jobId/:applicationId',
