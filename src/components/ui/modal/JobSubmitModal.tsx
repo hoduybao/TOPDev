@@ -8,7 +8,6 @@ import { useParams } from 'react-router-dom';
 // import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
 // import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
 import firebaseApp from '../../../config/firebase';
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { useCreateApplicationMutation } from '../../..//+core/redux/apis/common/application/application.api';
 import { Rule } from 'antd/es/form';
 import ReactQuill from 'react-quill';
@@ -85,6 +84,8 @@ const JobSubmitModal = () => {
   // const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
   // const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
 
+  console.log(companyId); // To build
+
   const isLoading = false;
   const isLoadingCompany = false;
   const jobResponse = { data: jobData };
@@ -101,7 +102,7 @@ const JobSubmitModal = () => {
     setIsModalOpen(true);
   };
   const handleOk = async () => {
-    let value = form.getFieldsValue();
+    const value = form.getFieldsValue();
     console.log(value);
 
     value.jobId = jobId;

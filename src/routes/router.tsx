@@ -18,6 +18,8 @@ import { MY_ROUTE } from './route.constant';
 import JobPage from '../pages/job/JobPageNew';
 import CompaniesPage from '../pages/company/Companies';
 import CompanyPage from '../pages/company/Company';
+import AccountManagementPage from '@/pages/admin/AccountManagementPage';
+import AdminLoginPage from '@/pages/admin/LoginPage';
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +51,16 @@ export const router = createBrowserRouter([
     path: '/admin',
     element: <AdminLayout />,
     children: [{ path: MY_ROUTE.ADMIN, element: <AdminMainPage /> }],
+  },
+  {
+    path: MY_ROUTE.ADMIN_LOGIN,
+    element: <AdminLayout />,
+    children: [{ path: MY_ROUTE.ADMIN_LOGIN, element: <AdminLoginPage /> }],
+  },
+  {
+    path: MY_ROUTE.ADMIN_ACCOUNT_MANAGEMENT,
+    element: <AdminLayout />,
+    children: [{ path: MY_ROUTE.ADMIN_ACCOUNT_MANAGEMENT, element: <AccountManagementPage /> }],
   },
   {
     path: '/login',

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import colors from '../../+core/themes/colors';
 import { Form, FormProps, Input } from 'antd';
-import { MY_ROUTE } from '../../routes/route.constant';
+import { MY_ROUTE } from '@/routes/route.constant';
 
 type FieldType = {
   username?: string;
