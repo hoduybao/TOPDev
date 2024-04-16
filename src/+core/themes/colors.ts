@@ -13,6 +13,7 @@ export default {
     500: '#A0AEC0',
     400: '#718096',
     300: '#a8a8a8',
+    200: '#DBDBDB',
     100: '#EFEFEF',
   },
   white: {
@@ -43,6 +44,8 @@ export default {
   blue: {
     500: '#3490dc',
     900: '#227dc7',
+    light: '#EDFBFF',
+    dark: '#1047B2',
   },
   userFooter: '#DBDBDB',
   iconHover: '#DBDBDB',
