@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Button, Form, Input, Select, Rate } from 'antd';
 import { type FormProps } from 'antd';
 
@@ -21,6 +22,8 @@ type FieldType = {
 const DetailApplicationContainer = () => {
   const [NewRecruitmentForm] = Form.useForm();
 
+  const { t } = useTranslation();
+
   const prefixSelector = (
     <Form.Item name='prefix' noStyle>
       <Select style={{ width: 70 }} disabled>
@@ -43,7 +46,7 @@ const DetailApplicationContainer = () => {
   return (
     <div className='p-4 h-auto'>
       <Button type='primary' danger>
-        Từ chối
+        {t('recruitmentReject')}
       </Button>
       <Form
         {...layout}
@@ -62,7 +65,7 @@ const DetailApplicationContainer = () => {
         }}
       >
         <Form.Item<FieldType>
-          label='Tiêu đề / Hồ sơ ứng tuyển'
+          label={`${t('recruitmentTitle')}`}
           name='title'
           rules={[{ required: true, message: 'Please input job title!' }]}
         >
@@ -70,7 +73,7 @@ const DetailApplicationContainer = () => {
         </Form.Item>
 
         <Form.Item<FieldType>
-          label='Tên ứng viên'
+          label={`${t('recruitmentApplicantName')}`}
           name='name'
           rules={[{ required: true, message: 'Please input applicant name!' }]}
         >
@@ -86,15 +89,15 @@ const DetailApplicationContainer = () => {
         </Form.Item>
 
         <Form.Item
+          label={`${t('recruitmentPhone')}`}
           name='phone'
-          label='Điện thoại'
           rules={[{ required: true, message: 'Please input applicant phone number!' }]}
         >
           <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
         </Form.Item>
 
         <Form.Item<FieldType>
-          label='Đánh giá'
+          label={`${t('recruitmentRating')}`}
           name='rating'
           rules={[{ required: true, message: 'Please input applicant rating!' }]}
         >
@@ -104,10 +107,10 @@ const DetailApplicationContainer = () => {
         <Form.Item wrapperCol={{ span: 24 }}>
           <div className='w-full border-t border-gray-300 mt-5 pt-4 flex items-center gap-2'>
             <Button type='primary' htmlType='submit' danger>
-              Gửi tin
+              {t('recruitmentSend')}
             </Button>
-            <Button htmlType='button'>Ghi chú</Button>
-            <Button htmlType='button'>Hoạt động</Button>
+            <Button htmlType='button'>{t('recruitmentEvaluate')}</Button>
+            <Button htmlType='button'>{t('recruitmentActivity')}</Button>
           </div>
         </Form.Item>
       </Form>

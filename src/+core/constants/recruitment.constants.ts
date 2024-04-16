@@ -1,13 +1,13 @@
 export const HeaderMenu = [
   {
-    title: 'Ứng viên',
+    title: 'recruitmentApplicant',
     menu: [
       { name: 'Theo vị trí công việc', url: '/recruitment' },
       { name: 'Tất cả đơn xin việc', url: '/recruitment' },
     ],
   },
   {
-    title: 'Báo cáo',
+    title: 'recruitmentReport',
     menu: [
       { name: 'Phân tích Tuyển dụng', url: '/recruitment' },
       { name: 'Source Analysis', url: '/recruitment' },
@@ -16,7 +16,7 @@ export const HeaderMenu = [
     ],
   },
   {
-    title: 'Cấu hình',
+    title: 'recruitmentConfig',
     menu: [
       { name: 'Cài đặt', url: '/recruitment' },
       { name: 'Loại việc làm', url: '/recruitment' },

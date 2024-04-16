@@ -472,7 +472,7 @@ const LanguageItem = ({
   );
 };
 
-const LanguageSelector = () => {
+export const LanguageSelector = () => {
   const { i18n } = useTranslation();
   const onChangeLanguage = (language: string) => {
     console.log(language);

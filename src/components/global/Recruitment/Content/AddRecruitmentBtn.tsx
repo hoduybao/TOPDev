@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { Button, Modal, Form, Input, InputNumber, Select, Space } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { Button, Modal, Form, Input, InputNumber, Select } from 'antd';
+// import { Space } from 'antd';
+
 import { type FormProps } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+// import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
-import JobDescription from '../../Recruitment/Content/JobDescriptionEditor';
+import TextContentEditor from '../../Recruitment/Content/TextContentEditor';
 import { JobType } from '@/+core/utilities/types/recruitment.type';
 
 const { Option } = Select;
@@ -26,14 +29,17 @@ type FieldType = {
   typeContract?: string;
   type?: string;
   jobDescription?: any;
-  interviewProcess?: string[];
+  interviewProcess?: string[] | any;
 };
 
 const AddRecruitmentBtn = (props: PropType) => {
   const { jobs, setJobs } = props;
 
+  const { t } = useTranslation();
+
   const [NewRecruitmentForm] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [interviewProcess, setInterviewProcess] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
   const showModal = () => {
@@ -62,9 +68,10 @@ const AddRecruitmentBtn = (props: PropType) => {
       experienceYearsMax: values?.experienceYearsMax,
       typeContract: values?.typeContract,
       type: values?.type,
-      interviewProcess: values?.interviewProcess?.map((p: any) => {
-        return p?.title;
-      }),
+      // interviewProcess: values?.interviewProcess?.map((p: any) => {
+      //   return p?.title;
+      // }),
+      interviewProcess: interviewProcess,
       description: description,
     };
 
@@ -82,11 +89,11 @@ const AddRecruitmentBtn = (props: PropType) => {
   return (
     <>
       <Button type='primary' danger onClick={showModal}>
-        Mới
+        {t('recruitmentAdd')}
       </Button>
       <Modal
         width={'90vw'}
-        title='Tạo một Vị trí Công việc'
+        title={t('recruitmentCreateJobPosition')}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -108,7 +115,7 @@ const AddRecruitmentBtn = (props: PropType) => {
           }}
         >
           <Form.Item<FieldType>
-            label='Tên công ty'
+            label={`${t('recruitmentCompanyName')}`}
             name='companyName'
             rules={[{ required: true, message: 'Please input company name!' }]}
           >
@@ -116,7 +123,7 @@ const AddRecruitmentBtn = (props: PropType) => {
           </Form.Item>
 
           <Form.Item<FieldType>
-            label='Chức vụ'
+            label={`${t('recruitmentJobTitle')}`}
             name='title'
             rules={[{ required: true, message: 'Please input job title!' }]}
           >
@@ -124,7 +131,7 @@ const AddRecruitmentBtn = (props: PropType) => {
           </Form.Item>
 
           <Form.Item<FieldType>
-            label='Cấp bậc'
+            label={`${t('recruitmentLevel')}`}
             name='level'
             rules={[{ required: true, message: 'Please input job level!' }]}
           >
@@ -144,7 +151,7 @@ const AddRecruitmentBtn = (props: PropType) => {
           </Form.Item>
 
           <Form.Item<FieldType>
-            label='Mức lương'
+            label={`${t('recruitmentSalary')}`}
             name='salary'
             rules={[{ required: true, message: 'Please input job salary!' }]}
           >
@@ -160,8 +167,8 @@ const AddRecruitmentBtn = (props: PropType) => {
           </Form.Item>
 
           <Form.Item
+            label={`${t('recruitmentTechs')}`}
             name='techs'
-            label='Công nghệ sử dụng'
             rules={[
               { required: true, message: 'Please select your favourite colors!', type: 'array' },
             ]}
@@ -174,8 +181,8 @@ const AddRecruitmentBtn = (props: PropType) => {
           </Form.Item>
 
           <Form.Item
+            label={`${t('recruitmentMinExp')}`}
             name='experienceYearsMin'
-            label='Số năm kinh nghiệm tối thiểu'
             rules={[
               {
                 required: true,
@@ -189,8 +196,8 @@ const AddRecruitmentBtn = (props: PropType) => {
           </Form.Item>
 
           <Form.Item
+            label={`${t('recruitmentMaxExp')}`}
             name='experienceYearsMax'
-            label='Số năm kinh nghiệm tối đa'
             rules={[
               {
                 required: true,
@@ -203,7 +210,7 @@ const AddRecruitmentBtn = (props: PropType) => {
             <InputNumber />
           </Form.Item>
 
-          <Form.Item<FieldType> label='Loại hợp đồng' name='typeContract'>
+          <Form.Item<FieldType> label={`${t('recruitmentContractType')}`} name='typeContract'>
             <Select
               style={{ width: 200 }}
               options={[
@@ -213,7 +220,7 @@ const AddRecruitmentBtn = (props: PropType) => {
             />
           </Form.Item>
 
-          <Form.Item<FieldType> label='Địa điểm làm việc' name='type'>
+          <Form.Item<FieldType> label={`${t('recruitmentType')}`} name='type'>
             <Select
               style={{ width: 200 }}
               options={[
@@ -223,7 +230,7 @@ const AddRecruitmentBtn = (props: PropType) => {
             />
           </Form.Item>
 
-          <Form.Item<FieldType> label='Quy trình phỏng vấn' name='interviewProcess'>
+          {/* <Form.Item<FieldType> label={`${t('recruitmentInterview')}`} name='interviewProcess'>
             <Form.List name='interviewProcess'>
               {(fields, { add, remove }) => (
                 <>
@@ -248,18 +255,22 @@ const AddRecruitmentBtn = (props: PropType) => {
                 </>
               )}
             </Form.List>
+          </Form.Item> */}
+
+          <Form.Item<FieldType> label={`${t('recruitmentInterview')}`} name='interviewProcess'>
+            <TextContentEditor content={interviewProcess} setContent={setInterviewProcess} />
           </Form.Item>
 
-          <Form.Item<FieldType> label='Mô tả công việc' name='jobDescription'>
-            <JobDescription description={description} setDescription={setDescription} />
+          <Form.Item<FieldType> label={`${t('recruitmentDesctiption')}`} name='jobDescription'>
+            <TextContentEditor content={description} setContent={setDescription} />
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 24 }}>
             <div className='w-full border-t border-gray-300 mt-5 pt-4 flex items-center gap-2'>
               <Button type='primary' htmlType='submit' danger>
-                Tạo
+                {t('recruitmentCreateJob')}
               </Button>
-              <Button onClick={handleCancel}>Hủy bỏ</Button>
+              <Button onClick={handleCancel}>{t('recruitmentCancelJob')}</Button>
             </div>
           </Form.Item>
         </Form>
