@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BellOutlined } from '@ant-design/icons';
 import { NotificationType } from '@/+core/utilities/types/noti.type';
 
@@ -7,6 +8,8 @@ import NotificationItem from './NotificationItem';
 import NotfiFakeData from '../../../draft/notifications.json';
 
 const NotificationBox = () => {
+  const { t } = useTranslation();
+
   const notiBoxRef = useRef<HTMLDivElement>(null);
 
   const [notifications, setNotifications] = useState<NotificationType[]>(NotfiFakeData); // Use for API
@@ -27,6 +30,17 @@ const NotificationBox = () => {
       setNotifications(newNotis);
       window.open(`${noti?.url}`, '_blank', 'noreferrer');
     }
+  };
+
+  const handleMarkAllRead = () => {
+    const newNotis = notifications?.map((n) => {
+      return {
+        ...n,
+        isSeen: true,
+      };
+    });
+
+    if (newNotis) setNotifications(newNotis);
   };
 
   useEffect(() => {
@@ -64,7 +78,15 @@ const NotificationBox = () => {
         }`}
       >
         <div className='flex items-center justify-between border-b border-gray-200 p-4'>
-          <h3 className='text-sm font-bold text-[#515151] lg:text-base'>Thông báo</h3>
+          <h3 className='text-sm font-bold text-[#515151] lg:text-base'>{t('notification')}</h3>
+          <button
+            className='px-4 py-2 rounded-sm bg-gray-200 font-bold hover:bg-gray-300'
+            onClick={() => {
+              handleMarkAllRead();
+            }}
+          >
+            {t('markAllRead')}
+          </button>
         </div>
         <ul className='max-h-[400px] overflow-y-auto overscroll-contain'>
           {notifications?.length === 0 && (

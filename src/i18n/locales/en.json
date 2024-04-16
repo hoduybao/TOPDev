@@ -129,5 +129,7 @@
   "company_information": "Company information",
   "follow": "Follow",
   "getJobAlerts": "Get job alert for this search",
-  "highlight": "Highlight"
+  "highlight": "Highlight",
+  "notification": "Notification",
+  "markAllRead": "Mark all read"
 }
