@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Modal, Form, Input, InputNumber, Select } from 'antd';
+import useSize from '@/hooks/useSize';
+import { Button, Modal, Form, Input, InputNumber, Select, notification } from 'antd';
 // import { Space } from 'antd';
 
 import { type FormProps } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 
 // import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
 import TextContentEditor from '../../Recruitment/Content/TextContentEditor';
 import { JobType } from '@/+core/utilities/types/recruitment.type';
@@ -36,11 +38,15 @@ const AddRecruitmentBtn = (props: PropType) => {
   const { jobs, setJobs } = props;
 
   const { t } = useTranslation();
+  const windowsize = useSize();
+
+  const [api, contextHolder] = notification.useNotification();
 
   const [NewRecruitmentForm] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [interviewProcess, setInterviewProcess] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const [createJobModalWidth, setJobModalWidth] = useState<string>('');
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -79,21 +85,44 @@ const AddRecruitmentBtn = (props: PropType) => {
     console.log('Success:', newJob);
     setJobs([...jobs, newJob]);
 
+    setInterviewProcess('');
     setDescription('');
     handleOk();
+
+    api.open({
+      message: 'Notification',
+      icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+      description: 'Create new job successfully',
+      duration: 5,
+      placement: 'bottomLeft',
+    });
   };
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed:', errorInfo);
+
+    api.open({
+      message: 'Notification',
+      icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+      description: 'Create new job failed',
+      duration: 5,
+      placement: 'bottomLeft',
+    });
   };
+
+  useEffect(() => {
+    if (windowsize[0] <= 1280) setJobModalWidth('90vw');
+    if (windowsize[0] > 1280) setJobModalWidth('60vw');
+  }, [windowsize]);
 
   return (
     <>
+      {contextHolder}
       <Button type='primary' danger onClick={showModal}>
         {t('recruitmentAdd')}
       </Button>
       <Modal
-        width={'90vw'}
+        width={createJobModalWidth}
         title={t('recruitmentCreateJobPosition')}
         open={isModalOpen}
         onOk={handleOk}
@@ -104,8 +133,8 @@ const AddRecruitmentBtn = (props: PropType) => {
           form={NewRecruitmentForm}
           name='create-new-job'
           className='mt-5 pr-5 flex flex-col gap-5 h-[70vh] overflow-x-auto'
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           initialValues={{
