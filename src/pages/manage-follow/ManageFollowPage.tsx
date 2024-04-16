@@ -5,9 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { JobType } from '@/+core/utilities/types/recruitment.type';
 
 import FollowJobCard from './components/FollowJobCard';
+import SeenJobCard from './components/SeenJobCard';
 
 const ManageFollowPage = () => {
   const JOBS_MOCK_AMOUNT: number = 17; // use for mock jobs data without API
+  const SEEN_JOBS_MOCK_AMOUNT: number = 23; // use for mock jobs data without API
+
   const ITEMS_PER_PAGE: number = 6;
 
   const { t } = useTranslation();
@@ -15,6 +18,10 @@ const ManageFollowPage = () => {
   const [followJobs, setFollowJobs] = useState<JobType[]>([]);
   const [followJobsPerPage, setFollowJobsPerPage] = useState<JobType[]>([]);
   const [activeFollowPage, setActiveFollowPage] = useState<number>(1);
+
+  const [seenJobs, setSeenJobs] = useState<JobType[]>([]);
+  const [seenJobsPerPage, setSeenJobsPerPage] = useState<JobType[]>([]);
+  const [activeSeenPage, setActiveSeenPage] = useState<number>(1);
 
   // Use for mock jobs data only without API
   const handleMockFollowJobData = (amount: number) => {
@@ -36,6 +43,25 @@ const ManageFollowPage = () => {
     setFollowJobs(data);
   };
 
+  const handleMockSeenJobData = (amount: number) => {
+    const data = [];
+
+    for (let i = 0; i < amount; ++i) {
+      const job: JobType = {
+        id: uuidv4(),
+        title: `Nhân viên IT HelpDesk Fulltime Remote ${i + 1}`,
+        location: 'Thành phố Hà Nội',
+        companyLogo:
+          'https://salt.topdev.vn/MUayHB5YkT7w9AtbW_K8tQg12GqIxdcvFVhTxv8VnCg/fit/256/1000/ce/1/aHR0cHM6Ly9hc3NldHMudG9wZGV2LnZuL2ltYWdlcy8yMDI0LzAzLzA2L1RvcERldi04b3NmZnRtR3Awa2oxNFd5LTE3MDk2OTQ1NjAucG5n',
+        salary: 'Negotiable',
+      };
+
+      data.push(job);
+    }
+
+    setSeenJobs(data);
+  };
+
   // Pagination handle
   const handleGetFollowJobsPerPage = (n: number) => {
     const begin = (n - 1) * ITEMS_PER_PAGE;
@@ -44,6 +70,16 @@ const ManageFollowPage = () => {
     if (followJobs?.slice) {
       const items = followJobs?.slice(begin, end);
       setFollowJobsPerPage(items);
+    }
+  };
+
+  const handleGetSeenJobsPerPage = (n: number) => {
+    const begin = (n - 1) * ITEMS_PER_PAGE;
+    const end = (n - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE;
+
+    if (seenJobs?.slice) {
+      const items = seenJobs?.slice(begin, end);
+      setSeenJobsPerPage(items);
     }
   };
 
@@ -61,14 +97,33 @@ const ManageFollowPage = () => {
     window.open(`jobs/companyId/${job?.id}`, '_blank', 'noreferrer');
   };
 
+  const handleSaveJob = (job: JobType) => {
+    console.log('Save job', job);
+    setFollowJobs([...followJobs, job]);
+  };
+
+  const checkSaveJob = (job: JobType) => {
+    for (let i = 0; i < followJobs?.length; ++i) {
+      if (followJobs[i]?.id === job?.id) return true;
+    }
+
+    return false;
+  };
+
   useEffect(() => {
     handleMockFollowJobData(JOBS_MOCK_AMOUNT);
+    handleMockSeenJobData(SEEN_JOBS_MOCK_AMOUNT);
   }, []);
 
   useEffect(() => {
     handleGetFollowJobsPerPage(activeFollowPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [followJobs, activeFollowPage]);
+
+  useEffect(() => {
+    handleGetSeenJobsPerPage(activeSeenPage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seenJobs, activeSeenPage]);
 
   return (
     <div className='w-full flex flex-col items-center'>
@@ -96,6 +151,33 @@ const ManageFollowPage = () => {
             pageSize={ITEMS_PER_PAGE} // items per page
             onChange={(page: number) => {
               setActiveFollowPage(page);
+            }}
+          />
+        </div>
+        <div className='flex flex-col gap-8'>
+          <h3 className='text-xl font-bold text-primary-red'>{t('seenJob')}</h3>
+          {seenJobsPerPage?.length === 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+          <div className='grid sm:grid-cols-2 xl:grid-cols-3 gap-5'>
+            {seenJobsPerPage?.length !== 0 &&
+              seenJobsPerPage?.map((job) => {
+                return (
+                  <SeenJobCard
+                    key={job?.id}
+                    job={job}
+                    handleApplyJob={handleApplyJob}
+                    checkSaveJob={checkSaveJob}
+                    handleSaveJob={handleSaveJob}
+                  />
+                );
+              })}
+          </div>
+          <Pagination
+            className='self-end'
+            current={activeSeenPage}
+            total={seenJobs?.length}
+            pageSize={ITEMS_PER_PAGE} // items per page
+            onChange={(page: number) => {
+              setActiveSeenPage(page);
             }}
           />
         </div>

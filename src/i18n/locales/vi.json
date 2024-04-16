@@ -133,5 +133,8 @@
   "notification": "Thông báo",
   "markAllRead": "Đánh dấu đã đọc tất cả",
   "followJob": "Việc đã theo dõi",
-  "availableJob": "Còn hạn - Ứng tuyển ngay"
+  "availableJob": "Còn hạn - Ứng tuyển ngay",
+  "seenJob": "Việc đã xem",
+  "saveJob": "Lưu việc",
+  "savedJob": "Đã lưu"
 }

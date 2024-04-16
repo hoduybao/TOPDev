@@ -132,6 +132,9 @@
   "highlight": "Highlight",
   "notification": "Notification",
   "markAllRead": "Mark all read",
-  "followJob": "Followed Jobs",
-  "availableJob": "Available - Apply now"
+  "followJob": "Followed jobs",
+  "availableJob": "Available - Apply now",
+  "seenJob": "Seen jobs",
+  "saveJob": "Save job",
+  "savedJob": "Saved"
 }
