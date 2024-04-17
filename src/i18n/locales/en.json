@@ -129,5 +129,10 @@
   "company_information": "Company information",
   "follow": "Follow",
   "getJobAlerts": "Get job alert for this search",
-  "highlight": "Highlight"
+  "highlight": "Highlight",
+
+  "greeting": "Hi,",
+  "job.finding": "Open to Work",
+  "job.finding.description.part1": "Turning on the 'Open to Work' status boosts your job search success rate by",
+  "job.finding.description.part2": ""
 }

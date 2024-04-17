@@ -129,5 +129,9 @@
   "company_information": "Thông tin công ty",
   "follow": "Theo dõi",
   "getJobAlerts": "Tạo thông báo việc làm ngay",
-  "highlight": "Tiêu điểm"
+  "highlight": "Tiêu điểm",
+  "greeting": "Xin chào",
+  "job.finding": "Đang tìm việc",
+  "job.finding.description.part1": "Bật trạng thái “Đang tìm việc” giúp bạn tăng",
+  "job.finding.description.part2": "cơ hội tìm được việc làm."
 }

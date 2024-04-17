@@ -20,6 +20,7 @@ import CompaniesPage from '../pages/company/Companies';
 import CompanyPage from '../pages/company/Company';
 import AccountManagementPage from '@/pages/admin/AccountManagementPage';
 import AdminLoginPage from '@/pages/admin/LoginPage';
+import JobManagement from '@/pages/job-management/JobManagement';
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +72,11 @@ export const router = createBrowserRouter([
     path: '/reset-password',
     element: <LoginLayout />,
     children: [{ path: MY_ROUTE.RESET_PASSWORD, element: <ResetPasswordPage /> }],
+  },
+  {
+    path: MY_ROUTE.JOB_MANAGEMENT,
+    element: <UserLayout />,
+    children: [{ path: MY_ROUTE.JOB_MANAGEMENT, element: <JobManagement /> }],
   },
   {
     path: '/',
