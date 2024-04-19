@@ -1,7 +1,7 @@
 import { DownloadOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
 import { Button, Image } from 'antd';
-import React from 'react';
 import { Link } from 'react-router-dom';
+import UserProfileModal from './UserProfileModal';
 
 const AddSubSession = ({ content }: { content: string }) => {
   return <div className='text-gray-400 text-lg'>{content}</div>;
@@ -74,7 +74,12 @@ const UserInformation = ({
           </div>
         </div>
         <div>
-          <EditOutlined className='font-base' />
+          <UserProfileModal
+            createNewDetailApplication={() => {
+              // handle profile data
+              console.log('createNewDetailApplication');
+            }}
+          />
         </div>
       </div>
     </div>
