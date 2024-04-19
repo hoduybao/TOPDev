@@ -13,12 +13,14 @@ import AdsSession from './components/AdsSession';
 const MyCV = () => {
   return (
     <Container>
-      <div className='grid grid-cols-4 gap-4'>
+      <div className='grid grid-cols-4 gap-6 mt-8'>
         <div className='col-span-3'>
+          {/* part 1 */}
           <UserSession />
           <UserStatusSession />
           <SummarySession />
           <SkillsSession />
+          {/* part 2 */}
           <ExpSession />
           <EducationSession />
           <ProjectsSession />
