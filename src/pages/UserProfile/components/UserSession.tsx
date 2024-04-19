@@ -17,7 +17,7 @@ type UserSessionProps = {
   dob?: string;
   socialMediaLink?: string;
 };
-const InformationSession = ({
+const UserInformation = ({
   fullName,
   role,
   yoe,
@@ -92,7 +92,7 @@ const UserSession = () => {
         />
       </div>
       <div className='flex-1'>
-        <InformationSession
+        <UserInformation
           fullName='Quang Hung Ngo'
           role='Front-end Engineer'
           yoe={1}
