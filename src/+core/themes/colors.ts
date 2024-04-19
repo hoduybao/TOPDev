@@ -51,4 +51,5 @@ export default {
   iconHover: '#DBDBDB',
   mainBackground: '#F5F5F5',
   selectCVPage: '#FEEEEB',
+  profileBackground: '#FBD5D5',
 };
