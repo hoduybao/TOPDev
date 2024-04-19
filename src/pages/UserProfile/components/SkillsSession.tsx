@@ -23,7 +23,7 @@ const SkillsList = ({ skills, title }: { title: string; skills: string[] }) => {
 
 const SkillsSession = () => {
   return (
-    <div className='rounded bg-white-900'>
+    <div className='rounded bg-white-900 mb-4'>
       <div className='flex-1'>
         <div className='p-4 flex gap-4 justify-between'>
           <div>
@@ -38,7 +38,7 @@ const SkillsSession = () => {
         <div className='border-[1px] border-gray-200 mt-4'></div>
         <div className='p-4'>
           <SkillsList title='Technical skills' skills={['JS', 'C++', 'Java']} />
-          <SkillsList title='Soft skills' skills={['JS', 'C++', 'Java']} />
+          <SkillsList title='Soft skills ( optional )' skills={['JS', 'C++', 'Java']} />
         </div>
       </div>
     </div>

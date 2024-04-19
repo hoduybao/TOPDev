@@ -18,7 +18,6 @@ const SkillsModal = () => {
   ];
 
   const handleOk = () => {
-    //setIsModalOpen(false);
     //SkillsForm.resetFields();
     const value = SkillsForm.getFieldsValue();
     console.log(value);
