@@ -70,7 +70,6 @@ const JobForm = ({
             wrapperCol={{ span: 24 }}
             name='isDoing'
             valuePropName='checked'
-            label={<div className='text-gray-400 text-base font-semibold'>Company</div>}
           >
             <Checkbox
               onChange={(e) => {

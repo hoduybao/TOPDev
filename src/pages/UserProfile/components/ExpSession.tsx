@@ -113,7 +113,7 @@ const ExpSession = () => {
     },
   ];
   return (
-    <div className='rounded bg-white-900'>
+    <div className='rounded bg-white-900 mb-4'>
       <div className='flex-1'>
         <div className='p-4 flex gap-4 justify-between'>
           <div>
