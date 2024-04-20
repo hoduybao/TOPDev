@@ -3,6 +3,7 @@ import { Button, Form, Modal } from 'antd';
 import React from 'react';
 import { YOEProps } from './ExpSession';
 import ManageJobModal from './ManageJobModal';
+import { v4 as uuidv4 } from 'uuid';
 
 const JobItem = ({ data }: { data: YOEProps }) => {
   const { timeBegin, appliedSkills, companyName, position, timeEnd, description } = data;
@@ -83,7 +84,7 @@ const ExpModal = () => {
         <div className='flex gap-4 flex-col'>
           {data.map((item) => {
             return (
-              <div key={item.position + item.companyName}>
+              <div key={uuidv4()}>
                 <JobItem data={item} />
               </div>
             );

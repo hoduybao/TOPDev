@@ -31,8 +31,16 @@ const JobForm = ({
   onFinish: (value: any) => void;
 }) => {
   const [value, setValue] = React.useState('');
-  const { appliedSkills, companyName, position, timeBegin, timeEnd, description, isDoing } =
-    initData;
+  const {
+    appliedSkills,
+    companyName,
+    position,
+    timeBegin,
+    timeEnd,
+    description,
+    isDoing = false,
+  } = initData;
+  const [checked, setChecked] = React.useState<boolean>(isDoing);
 
   return (
     <div>
@@ -69,11 +77,17 @@ const JobForm = ({
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
             name='isDoing'
+            valuePropName='checked'
             label={<div className='text-gray-400 text-base font-semibold'>Company</div>}
-            rules={[{ required: true, message: 'Please input your company' }]}
-            initialValue={isDoing}
           >
-            <Checkbox>I am currenlty working in this role</Checkbox>;
+            <Checkbox
+              onChange={(e) => {
+                instance.setFieldsValue({ isDoing: e.target.checked });
+              }}
+            >
+              I am currenlty working in this role
+            </Checkbox>
+            ;
           </Form.Item>
 
           <div className='grid grid-cols-2 gap-4'>
@@ -105,7 +119,7 @@ const JobForm = ({
             name='description'
             label={<div className='text-gray-400 text-base font-semibold'>Description</div>}
             rules={[{ required: true, message: 'Please input your end date' }]}
-            // initialValue={timeEnd}
+            initialValue={''}
           >
             <ReactQuill
               theme='snow'
@@ -124,7 +138,7 @@ const JobForm = ({
             name='appliedSkills'
             label={<div className='text-gray-400 text-base font-semibold'>Technical Skills</div>}
             rules={[{ required: true, message: 'Please input your end date' }]}
-            // initialValue={timeEnd}
+            initialValue={[]}
           >
             <Select
               placeholder='Select technical skills'
@@ -137,7 +151,7 @@ const JobForm = ({
             />
           </Form.Item>
 
-          <Form.Item<FormFields>
+          {/* <Form.Item<FormFields>
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
             name='projects'
@@ -150,7 +164,7 @@ const JobForm = ({
                 // setProjects([...projects, value]);
               }}
             />
-          </Form.Item>
+          </Form.Item> */}
         </div>
       </Form>
     </div>
