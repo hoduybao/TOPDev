@@ -22,12 +22,12 @@ export type ExtendItem = {
 };
 
 const list: ExtendItem[] = [
-  { name: 'Add languages', status: true },
-  { name: 'Add hobbies', status: true },
-  { name: 'Add references', status: true },
-  { name: 'Add activities', status: true },
-  { name: 'Add certificates', status: true },
-  { name: 'Add Others', status: true },
+  { name: 'Add languages', status: false },
+  { name: 'Add hobbies', status: false },
+  { name: 'Add references', status: false },
+  { name: 'Add activities', status: false },
+  { name: 'Add certificates', status: false },
+  { name: 'Add Others', status: false },
 ];
 
 const MyCV = () => {
