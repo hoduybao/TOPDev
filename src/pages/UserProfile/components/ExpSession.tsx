@@ -1,5 +1,6 @@
 import React from 'react';
 import ExpModal from './ExpModal';
+import { v4 as uuidv4 } from 'uuid';
 
 export type YOEProps = {
   timeBegin: string;
@@ -8,6 +9,7 @@ export type YOEProps = {
   companyName: string;
   description?: string;
   appliedSkills: string[];
+  isDoing?: boolean;
 };
 
 const YOEItem = ({
@@ -37,7 +39,7 @@ const YOEItem = ({
               return (
                 <div
                   className='bg-white-900 border-[1px] border-gray-200 rounded px-2 py-1'
-                  key={skill}
+                  key={uuidv4()}
                 >
                   {skill}
                 </div>
@@ -88,7 +90,7 @@ const ExpSession = () => {
         <div className='p-4 flex flex-col gap-4'>
           {data.map((item, index) => {
             return (
-              <div key={item.position + item.companyName}>
+              <div key={uuidv4()}>
                 <YOEItem {...item} />
                 {index !== data.length - 1 && (
                   <div className='mt-4 border-[1px] border-gray-200'></div>

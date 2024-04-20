@@ -2,15 +2,10 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Form, Modal } from 'antd';
 import React from 'react';
 import { YOEProps } from './ExpSession';
+import ManageJobModal from './ManageJobModal';
 
-const JobItem = ({
-  timeBegin,
-  appliedSkills,
-  companyName,
-  position,
-  timeEnd,
-  description,
-}: YOEProps) => {
+const JobItem = ({ data }: { data: YOEProps }) => {
+  const { timeBegin, appliedSkills, companyName, position, timeEnd, description } = data;
   return (
     <div className='flex gap-4 justify-between bg-gray-100 p-4'>
       <div className='mb-3'>
@@ -26,7 +21,7 @@ const JobItem = ({
       </div>
 
       <div className='flex gap-6'>
-        <EditOutlined className='font-base' />
+        <ManageJobModal data={data} />
         <DeleteOutlined className='font-base' />
       </div>
     </div>
@@ -89,7 +84,7 @@ const ExpModal = () => {
           {data.map((item) => {
             return (
               <div key={item.position + item.companyName}>
-                <JobItem {...item} />
+                <JobItem data={item} />
               </div>
             );
           })}

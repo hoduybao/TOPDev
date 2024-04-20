@@ -1,6 +1,7 @@
 import { ArrowRightOutlined } from '@ant-design/icons';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 type TipItemProps = {
   action: string;
@@ -35,10 +36,10 @@ const QuickTips = () => {
     <div>
       {data.map((tipItem, index) => {
         return (
-          <>
-            <TipItem key={'Tipitem' + index} {...tipItem} />
+          <div key={uuidv4()}>
+            <TipItem {...tipItem} />
             {index !== data.length - 1 && <div className='border-b border-gray-300' />}
-          </>
+          </div>
         );
       })}
     </div>
