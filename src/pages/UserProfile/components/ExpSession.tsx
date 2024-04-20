@@ -2,6 +2,7 @@ import React from 'react';
 import ExpModal from './ExpModal';
 import { v4 as uuidv4 } from 'uuid';
 import { AddProjectFormField } from './AddProjectForm';
+import { FileTextOutlined } from '@ant-design/icons';
 
 export type YOEProps = {
   timeBegin: string;
@@ -21,6 +22,7 @@ const YOEItem = ({
   companyName,
   description,
   appliedSkills,
+  projects,
 }: YOEProps) => {
   return (
     <div className='flex gap-4'>
@@ -49,6 +51,29 @@ const YOEItem = ({
             })}
           </div>
         </div>
+        {projects ? (
+          <div className='bg-gray-100 p-2 rounded mt-2'>
+            <h3 className='font-bold text-gray-400 text-base mb-3'>Projects</h3>
+            <div className='flex gap-4 flex-col'>
+              {projects?.map((project: AddProjectFormField, index: number) => {
+                return (
+                  <div key={uuidv4()}>
+                    <div className='flex justify-between rounded mb-2'>
+                      <div className='font-bold text-base flex gap-2'>
+                        <FileTextOutlined />
+                        <h3>{project.name}</h3>
+                      </div>
+                      <div>{project.timeline}</div>
+                    </div>
+                    {index !== projects.length - 1 && (
+                      <div className='border-[1px] border-gray-200'></div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -64,6 +89,18 @@ const ExpSession = () => {
       description:
         'Detail experience reflects your skills, values, and contributions during the time you spent at your previous companies.',
       appliedSkills: ['JS', 'C++', 'Java'],
+      projects: [
+        {
+          name: 'Project 1',
+          timeline: '2020-2021',
+          description: 'This is a project',
+        },
+        {
+          name: 'Project 2',
+          timeline: '2020-2021',
+          description: 'This is a project',
+        },
+      ],
     },
     {
       timeBegin: '04-2024',

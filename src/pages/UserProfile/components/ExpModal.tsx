@@ -1,29 +1,45 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, FileTextOutlined } from '@ant-design/icons';
 import { Button, Form, Modal } from 'antd';
 import React from 'react';
 import { YOEProps } from './ExpSession';
 import ManageJobModal from './ManageJobModal';
 import { v4 as uuidv4 } from 'uuid';
+import { AddProjectFormField } from './AddProjectForm';
 
 const JobItem = ({ data }: { data: YOEProps }) => {
-  const { timeBegin, appliedSkills, companyName, position, timeEnd, description } = data;
+  const { timeBegin, projects, companyName, position, timeEnd, description } = data;
   return (
-    <div className='flex gap-4 justify-between bg-gray-100 p-4'>
-      <div className='mb-3'>
-        <div>
-          <span className='text-orange-500 text-base font-bold'>{position}</span> at{' '}
-          <span className='uppercase text-base text-gray-400 font-bold'>{companyName}</span>
-        </div>
-        <div>
-          <div className='text-base text-gray-400'>
-            {timeBegin} - {timeEnd}
+    <div className='bg-gray-100'>
+      <div className='flex gap-4 justify-between  p-4'>
+        <div className='mb-3'>
+          <div>
+            <span className='text-orange-500 text-base font-bold'>{position}</span> at{' '}
+            <span className='uppercase text-base text-gray-400 font-bold'>{companyName}</span>
+          </div>
+          <div>
+            <div className='text-base text-gray-400'>
+              {timeBegin} - {timeEnd}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className='flex gap-6'>
-        <ManageJobModal data={data} />
-        <DeleteOutlined className='font-base' />
+        <div className='flex gap-6'>
+          <ManageJobModal data={data} />
+          <DeleteOutlined className='font-base' />
+        </div>
+      </div>
+      <div className='flex flex-col gap-2 p-2'>
+        {projects?.map((project: AddProjectFormField) => {
+          return (
+            <div key={uuidv4()} className='flex justify-between p-2 rounded bg-white-900'>
+              <div className='font-bold text-base flex gap-2'>
+                <FileTextOutlined />
+                <h3>{project.name}</h3>
+              </div>
+              <div>{project.timeline}</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

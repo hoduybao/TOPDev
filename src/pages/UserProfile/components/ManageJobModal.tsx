@@ -235,7 +235,7 @@ const ManageJobModal = ({ data }: { data: YOEProps }) => {
             <Button
               type='primary'
               className='bg-white border-none text-black-900 shadow-none mt-5 p-6 flex items-center font-bold'
-              onClick={handleOk}
+              onClick={handleCancel}
             >
               Cancel
             </Button>

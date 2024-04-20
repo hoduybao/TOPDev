@@ -25,6 +25,8 @@ const AddProjectForm = ({
 
   const handleOk = () => {
     setProjectValue(AddProjectForm.getFieldsValue());
+    AddProjectForm.resetFields();
+    setIsAddingProjects(false);
   };
 
   return (
