@@ -1,27 +1,33 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { ExtendItem } from '../MyCV';
 
-const CustomButton = ({ title }: { title: string }) => {
+const CustomButton = ({
+  title,
+  onClick,
+}: {
+  title: string;
+  onClick: (value: ExtendItem) => void;
+}) => {
   return (
-    <Button className='text-orange-500 font-bold p-6 flex items-center justify-center border-[1px] border-orange-500 rounded'>
+    <Button
+      onClick={() => onClick({ name: title, status: true })}
+      className='text-orange-500 font-bold p-6 flex items-center justify-center border-[1px] border-orange-500 rounded'
+    >
       <PlusOutlined className='text-base' />
       {title}
     </Button>
   );
 };
 
-const list = [
-  'Add languages',
-  'Add hobbies',
-  'Add references',
-  'Add activities',
-  'Add certificates',
-  'Add Others',
-];
-
-const AddMoreSession = () => {
+const AddMoreSession = ({
+  list,
+  onClick,
+}: {
+  list: ExtendItem[];
+  onClick: (value: ExtendItem) => void;
+}) => {
   return (
     <div className='rounded bg-white-900 mb-4'>
       <div className='flex-1'>
@@ -33,9 +39,11 @@ const AddMoreSession = () => {
         </div>
         <div className='border-[1px] border-gray-200 mt-4'></div>
         <div className='p-4 flex gap-4 w-full flex-wrap'>
-          {list.map((item: string) => {
-            return <CustomButton key={uuidv4()} title={item} />;
-          })}
+          {list
+            .filter((item) => !item.status)
+            .map((item: ExtendItem) => {
+              return <CustomButton key={uuidv4()} title={item.name} onClick={onClick} />;
+            })}
         </div>
       </div>
     </div>
