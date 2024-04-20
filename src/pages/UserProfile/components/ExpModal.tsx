@@ -37,6 +37,18 @@ const ExpModal = () => {
       position: 'developer',
       companyName: 'ABC',
       appliedSkills: ['JS', 'C++', 'Java'],
+      projects: [
+        {
+          name: 'Project 1',
+          timeline: '2020-2021',
+          description: 'This is a project',
+        },
+        {
+          name: 'Project 2',
+          timeline: '2020-2021',
+          description: 'This is a project',
+        },
+      ],
     },
     {
       timeBegin: '04-2024',

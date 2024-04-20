@@ -1,25 +1,13 @@
 import { EditOutlined } from '@ant-design/icons';
-import {
-  Button,
-  Checkbox,
-  CheckboxProps,
-  DatePicker,
-  Form,
-  FormInstance,
-  FormProps,
-  Input,
-  Modal,
-  Select,
-} from 'antd';
+import { Button, Checkbox, DatePicker, Form, FormInstance, Input, Modal, Select } from 'antd';
 import React from 'react';
 import { YOEProps } from './ExpSession';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import AddProjectForm from './AddProjectForm';
+import AddProjectForm, { AddProjectFormField } from './AddProjectForm';
+import { v4 as uuidv4 } from 'uuid';
 
-interface FormFields extends YOEProps {
-  projects: { name: string; timeline: string; description: string }[];
-}
+interface FormFields extends YOEProps {}
 
 const JobForm = ({
   initData,
@@ -39,8 +27,12 @@ const JobForm = ({
     timeEnd,
     description,
     isDoing = false,
+    projects,
   } = initData;
-  const [checked, setChecked] = React.useState<boolean>(isDoing);
+
+  const [currentProjects, setCurrentProjects] = React.useState<AddProjectFormField[]>(
+    projects || [],
+  );
 
   return (
     <div>
@@ -119,12 +111,12 @@ const JobForm = ({
             name='description'
             label={<div className='text-gray-400 text-base font-semibold'>Description</div>}
             rules={[{ required: true, message: 'Please input your end date' }]}
-            initialValue={''}
+            initialValue={description}
           >
             <ReactQuill
               theme='snow'
               style={{ width: '100%', height: '100px', maxHeight: '100px', marginBottom: '50px' }}
-              value={value}
+              value={description}
               onChange={(value) => {
                 console.log(value);
                 setValue(value);
@@ -138,7 +130,7 @@ const JobForm = ({
             name='appliedSkills'
             label={<div className='text-gray-400 text-base font-semibold'>Technical Skills</div>}
             rules={[{ required: true, message: 'Please input your end date' }]}
-            initialValue={[]}
+            initialValue={appliedSkills}
           >
             <Select
               placeholder='Select technical skills'
@@ -151,20 +143,57 @@ const JobForm = ({
             />
           </Form.Item>
 
-          {/* <Form.Item<FormFields>
+          {/* render list projects */}
+          <div className='flex flex-col gap-4'>
+            {currentProjects?.map((project: AddProjectFormField) => {
+              return (
+                <div key={uuidv4()}>
+                  <AddProjectForm
+                    isEdit
+                    initValue={project}
+                    setProjectValue={(value: AddProjectFormField) => {
+                      console.log('value', value);
+
+                      const newProjects = currentProjects.map((item: AddProjectFormField) => {
+                        if (item.name === value.name) {
+                          return value;
+                        }
+                        return item;
+                      });
+                      console.log('newProjects', newProjects);
+
+                      setCurrentProjects(newProjects);
+                      instance.setFieldsValue({ projects: newProjects });
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+          <Form.Item<FormFields>
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
             name='projects'
-            label={<div className='text-gray-400 text-base font-semibold'>Technical Skills</div>}
+            label={
+              <div>
+                <div className='text-gray-400 text-base font-semibold'>Project in this role</div>
+                <p className='text-gray-400'>
+                  Rest assured, if left blank, this section will not appear on your profile.
+                </p>
+              </div>
+            }
             rules={[{ required: true, message: 'Please input your end date' }]}
-            // initialValue={timeEnd}
+            initialValue={projects}
           >
             <AddProjectForm
               setProjectValue={(value: any) => {
-                // setProjects([...projects, value]);
+                const newProjects = [...currentProjects, value];
+                setCurrentProjects(newProjects);
+                instance.setFieldsValue({ projects: newProjects });
               }}
             />
-          </Form.Item> */}
+          </Form.Item>
         </div>
       </Form>
     </div>
@@ -181,7 +210,6 @@ const ManageJobModal = ({ data }: { data: YOEProps }) => {
 
   // form manage
   const [JobFormInstance] = Form.useForm();
-  const [projects, setProjects] = React.useState<FormFields['projects']>([]);
 
   const handleOk = () => {
     console.log('handle ok', JobFormInstance.getFieldsValue());

@@ -1,6 +1,7 @@
 import React from 'react';
 import ExpModal from './ExpModal';
 import { v4 as uuidv4 } from 'uuid';
+import { AddProjectFormField } from './AddProjectForm';
 
 export type YOEProps = {
   timeBegin: string;
@@ -10,6 +11,7 @@ export type YOEProps = {
   description?: string;
   appliedSkills: string[];
   isDoing?: boolean;
+  projects?: AddProjectFormField[];
 };
 
 const YOEItem = ({

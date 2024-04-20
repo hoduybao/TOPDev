@@ -1,9 +1,10 @@
+import { EditOutlined, FileTextOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-type AddProjectFormField = {
+export type AddProjectFormField = {
   name: string;
   timeline: string;
   description: string;
@@ -11,7 +12,11 @@ type AddProjectFormField = {
 
 const AddProjectForm = ({
   setProjectValue,
+  initValue,
+  isEdit = false,
 }: {
+  isEdit?: boolean;
+  initValue?: AddProjectFormField;
   setProjectValue: (value: AddProjectFormField) => void;
 }) => {
   const [isAddingProjects, setIsAddingProjects] = React.useState(false);
@@ -19,27 +24,43 @@ const AddProjectForm = ({
   const [value, setValue] = React.useState('');
 
   const handleOk = () => {
-    console.log('handle ok', AddProjectForm.getFieldsValue());
     setProjectValue(AddProjectForm.getFieldsValue());
   };
 
   return (
-    <div>
-      <Button type='primary' disabled={isAddingProjects} onClick={() => setIsAddingProjects(true)}>
-        Add Project
-      </Button>
+    <div className='mt-4'>
+      <div className='w-full flex justify-center'>
+        {isEdit ? (
+          <div className='w-full flex justify-between px-4'>
+            <div>
+              <div className='flex'>
+                <FileTextOutlined className='font-base mr-4' />
+                <h3 className='font-bold text-base'>{initValue?.name}</h3>
+              </div>
+              <div>{initValue?.timeline}</div>
+            </div>
+            <EditOutlined className='font-base' onClick={() => setIsAddingProjects(true)} />
+          </div>
+        ) : (
+          <Button
+            className='text-orange-500 border-[1px] border-orange-500 p-6 font-bold rounded flex items-center justify-center'
+            disabled={isAddingProjects}
+            onClick={() => setIsAddingProjects(true)}
+          >
+            <PlusCircleOutlined className='mx-2' />
+            Add More Project
+          </Button>
+        )}
+      </div>
+
       {isAddingProjects ? (
-        <Form
-          form={AddProjectForm}
-          name='add-project-form'
-          onFinish={() => {}}
-          onFinishFailed={() => {}}
-        >
+        <Form form={AddProjectForm} name='add-project-form'>
           <Form.Item<AddProjectFormField>
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
             name='name'
             label={<div className='text-gray-400 text-base font-semibold'>Project name</div>}
+            initialValue={initValue?.name}
           >
             <Input />
           </Form.Item>
@@ -48,6 +69,7 @@ const AddProjectForm = ({
             wrapperCol={{ span: 24 }}
             name='timeline'
             label={<div className='text-gray-400 text-base font-semibold'>Timeline</div>}
+            initialValue={initValue?.timeline}
           >
             <Input />
           </Form.Item>
@@ -57,7 +79,7 @@ const AddProjectForm = ({
             name='description'
             label={<div className='text-gray-400 text-base font-semibold'>Description</div>}
             rules={[{ required: true, message: 'Please input your end date' }]}
-            // initialValue={timeEnd}
+            initialValue={initValue?.description}
           >
             <ReactQuill
               theme='snow'
@@ -69,7 +91,6 @@ const AddProjectForm = ({
               }}
               value={value}
               onChange={(value) => {
-                console.log(value);
                 setValue(value);
               }}
             />
@@ -80,7 +101,10 @@ const AddProjectForm = ({
               <Button
                 type='primary'
                 className='bg-white border-none text-black-900 shadow-none mt-5 p-6 flex items-center font-bold'
-                onClick={handleOk}
+                onClick={() => {
+                  AddProjectForm.resetFields();
+                  setIsAddingProjects(false);
+                }}
               >
                 Cancel
               </Button>
