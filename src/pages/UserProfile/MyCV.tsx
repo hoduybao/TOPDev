@@ -9,6 +9,12 @@ import EducationSession from './components/EducationSession';
 import ProjectsSession from './components/ProjectsSession';
 import AddMoreSession from './components/AddMoreSession';
 import AdsSession from './components/AdsSession';
+import LanguagesSession from './components/LanguagesSession';
+import HobbiesSession from './components/HobbiesSession';
+import ReferencesSession from './components/ReferencesSession';
+import ActivitiesSession from './components/ActivitiesSession';
+import CertificatesSession from './components/CertificatesSession';
+import OthersSession from './components/OthersSession';
 
 export type ExtendItem = {
   name: string;
@@ -16,12 +22,12 @@ export type ExtendItem = {
 };
 
 const list: ExtendItem[] = [
-  { name: 'Add languages', status: false },
-  { name: 'Add hobbies', status: false },
-  { name: 'Add references', status: false },
-  { name: 'Add activities', status: false },
-  { name: 'Add certificates', status: false },
-  { name: 'Add Others', status: false },
+  { name: 'Add languages', status: true },
+  { name: 'Add hobbies', status: true },
+  { name: 'Add references', status: true },
+  { name: 'Add activities', status: true },
+  { name: 'Add certificates', status: true },
+  { name: 'Add Others', status: true },
 ];
 
 const MyCV = () => {
@@ -48,8 +54,20 @@ const MyCV = () => {
           <ExpSession />
           <EducationSession />
           <ProjectsSession />
-          <AddMoreSession list={extendList} onClick={unlockItem} />
           {/* extends */}
+          {extendList.find((item) => item.name === 'Add languages')?.status && <LanguagesSession />}
+          {extendList.find((item) => item.name === 'Add hobbies')?.status && <HobbiesSession />}
+          {extendList.find((item) => item.name === 'Add references')?.status && (
+            <ReferencesSession />
+          )}
+          {extendList.find((item) => item.name === 'Add activities')?.status && (
+            <ActivitiesSession />
+          )}
+          {extendList.find((item) => item.name === 'Add certificates')?.status && (
+            <CertificatesSession />
+          )}
+          {extendList.find((item) => item.name === 'Add Others')?.status && <OthersSession />}
+          <AddMoreSession list={extendList} onClick={unlockItem} />
         </div>
 
         <div className='col-span-1'>

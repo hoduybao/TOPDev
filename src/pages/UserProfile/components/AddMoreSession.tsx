@@ -35,7 +35,6 @@ const AddMoreSession = ({
           <div>
             <h3 className='text-2xl font-bold text-black-900'>Add more section</h3>
           </div>
-          {/* <EducationModal /> */}
         </div>
         <div className='border-[1px] border-gray-200 mt-4'></div>
         <div className='p-4 flex gap-4 w-full flex-wrap'>
