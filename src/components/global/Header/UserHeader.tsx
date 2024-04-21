@@ -14,7 +14,6 @@ type HeaderMenuItemProps = {
 
 const HeaderMenuItem = ({ items }: { items: any }) => {
   const [children, setChildren] = useState<HeaderMenuItemProps | null>(null);
-  console.log(children);
 
   return (
     <div className='h-full group cursor-pointer relative z-10'>
