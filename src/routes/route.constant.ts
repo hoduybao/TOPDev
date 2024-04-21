@@ -13,6 +13,7 @@ export const MY_ROUTE = {
   COMPANIES: 'companies',
   LOGIN: '/login',
   RESET_PASSWORD: '/reset-password',
+  MY_PAGES: '/users',
 };
 
 export const DEFAULT_ROUTE = MY_ROUTE.HOME;
