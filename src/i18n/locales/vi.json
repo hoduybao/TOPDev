@@ -151,5 +151,12 @@
   "attract.step3": ", sau đó bật chế độ ",
   "cv.complete": "Hoàn thành Topdev CV",
   "cv.create": "Tạo CV",
-  "cv.open": "Đang tìm việc"
+  "cv.open": "Đang tìm việc",
+  "notification": "Thông báo",
+  "markAllRead": "Đánh dấu đã đọc tất cả",
+  "followJob": "Việc đã theo dõi",
+  "availableJob": "Còn hạn - Ứng tuyển ngay",
+  "seenJob": "Việc đã xem",
+  "saveJob": "Lưu việc",
+  "savedJob": "Đã lưu"
 }

@@ -22,6 +22,7 @@ import AccountManagementPage from '@/pages/admin/AccountManagementPage';
 import AdminLoginPage from '@/pages/admin/LoginPage';
 import JobManagement from '@/pages/job-management/JobManagement';
 import MyCV from '@/pages/UserProfile/MyCV';
+import ManageFollowPage from '@/pages/manage-follow/ManageFollowPage';
 
 export const router = createBrowserRouter([
   {
@@ -92,6 +93,7 @@ export const router = createBrowserRouter([
       { path: MY_ROUTE.JOB, element: <JobPage /> },
       { path: MY_ROUTE.COMPANIES, element: <CompaniesPage /> },
       { path: MY_ROUTE.COMPANY, element: <CompanyPage /> },
+      { path: '/manage-follow', element: <ManageFollowPage /> },
     ],
   },
 

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import ArrowDownIcon from '../../../../public/assets/icons/down-arrow.tsx';
 import PhoneIcon from '../../../../public/assets/icons/phone.tsx';
 import ArrowRightIcon from '../../../../public/assets/icons/right-arrow.tsx';
+import NotificationBox from '../../../pages/home/components/NotificationBox.tsx';
 
 type HeaderMenuItemProps = {
   children?: any[];
@@ -530,6 +531,9 @@ const UserHeader = () => {
                 028 6273 3496
               </div>
             </div>
+          </Show>
+          <Show hideInMobile>
+            <NotificationBox />
           </Show>
           <Show hideInMobile>
             <Button className=' !text-primary-red !font-bold hover:!border-primary-red border-primary-red !bg-white-900 hover:!bg-red-300 !text-base !px-6 !h-11 !leading-[100%] rounded-[4px]'>

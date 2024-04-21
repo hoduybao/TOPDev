@@ -130,7 +130,6 @@
   "follow": "Follow",
   "getJobAlerts": "Get job alert for this search",
   "highlight": "Highlight",
-
   "greeting": "Hi,",
   "job.finding": "Open to Work",
   "job.finding.description.part1": "Turning on the 'Open to Work' status boosts your job search success rate by",
@@ -152,5 +151,12 @@
   "attract.step3": ", then ",
   "cv.complete": "Complete Topdev CV",
   "cv.create": "Create CV",
-  "cv.open": "Open to work"
+  "cv.open": "Open to work",
+  "notification": "Notification",
+  "markAllRead": "Mark all read",
+  "followJob": "Followed jobs",
+  "availableJob": "Available - Apply now",
+  "seenJob": "Seen jobs",
+  "saveJob": "Save job",
+  "savedJob": "Saved"
 }
