@@ -1,127 +1,18 @@
-import { hRAccountStatus as AccountStatus } from '@/+core/enums/accountStatus.enum';
+import { hRAccountStatus as AccountStatus } from '@/+core/enums/hRAccountStatus.enum';
 import { HRAccount } from '@/+core/utilities/types/admin.type';
 import ApprovedAccountTable from '@/components/global/Admin/AccountManagement/ApprovedAccountTable';
 import BannedAccountTable from '@/components/global/Admin/AccountManagement/BannedAccountTable';
 import PendingAccountTable from '@/components/global/Admin/AccountManagement/PendingAccountTable';
 import RejectedAccountTable from '@/components/global/Admin/AccountManagement/RejectedAccountTable';
+import { CheckOutlined, ClockCircleOutlined, CloseOutlined, StopOutlined } from '@ant-design/icons';
 import { Divider, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
-
-const mockData: HRAccount[] = [
-  {
-    id: '1',
-    companyName: 'Apple Inc.',
-    taxCode: 123456789,
-    displayName: 'Apple',
-    fields: ['Product Development', 'Marketing', 'Sales'],
-    address: '1 Apple Park Way, Cupertino, CA',
-    status: AccountStatus.Pending,
-  },
-  {
-    id: '2',
-    companyName: 'Microsoft Corporation',
-    taxCode: 987654321,
-    displayName: 'Microsoft',
-    fields: ['Software Development', 'Cloud Computing', 'Gaming'],
-    address: 'One Microsoft Way, Redmond, WA',
-    status: AccountStatus.Approved,
-  },
-  {
-    id: '3',
-    companyName: 'Amazon.com, Inc.',
-    taxCode: 2468101214,
-    displayName: 'Amazon',
-    fields: ['E-commerce', 'Cloud Services', 'Digital Streaming'],
-    address: '410 Terry Ave N, Seattle, WA',
-    status: AccountStatus.Rejected,
-  },
-  {
-    id: '4',
-    companyName: 'Tesla, Inc.',
-    taxCode: 1357924680,
-    displayName: 'Tesla',
-    fields: ['Electric Vehicles', 'Energy Storage', 'Solar Energy'],
-    address: '3500 Deer Creek Road, Palo Alto, CA',
-    status: AccountStatus.Rejected,
-  },
-  {
-    id: '5',
-    companyName: 'Google LLC',
-    taxCode: 246813579,
-    displayName: 'Google',
-    fields: ['Search Engine', 'Online Advertising', 'Cloud Computing'],
-    address: '1600 Amphitheatre Parkway, Mountain View, CA',
-    status: AccountStatus.Approved,
-  },
-  {
-    id: '6',
-    companyName: 'Facebook, Inc.',
-    taxCode: 135792468,
-    displayName: 'Facebook',
-    fields: ['Social Networking', 'Digital Advertising', 'Virtual Reality'],
-    address: '1 Hacker Way, Menlo Park, CA',
-    status: AccountStatus.Approved,
-  },
-  {
-    id: '7',
-    companyName: 'Walmart Inc.',
-    taxCode: 975318642,
-    displayName: 'Walmart',
-    fields: ['Retail', 'E-commerce', 'Grocery'],
-    address: '702 SW 8th St, Bentonville, AR',
-    status: AccountStatus.Approved,
-  },
-  {
-    id: '8',
-    companyName: 'Toyota Motor Corporation',
-    taxCode: 864209753,
-    displayName: 'Toyota',
-    fields: ['Automobile Manufacturing', 'Hybrid Vehicles', 'Autonomous Driving'],
-    address: '1 Toyota-cho, Toyota City, Aichi Prefecture, Japan',
-    status: AccountStatus.Rejected,
-  },
-  {
-    id: '9',
-    companyName: 'Samsung Electronics Co., Ltd.',
-    taxCode: 579318642,
-    displayName: 'Samsung',
-    fields: ['Consumer Electronics', 'Semiconductors', 'Telecommunications'],
-    address: '129 Samsung-ro, Maetan-dong, Yeongtong-gu, Suwon-si, Gyeonggi-do, South Korea',
-    status: AccountStatus.Pending,
-  },
-  {
-    id: '10',
-    companyName: 'Intel Corporation',
-    taxCode: 426093871,
-    displayName: 'Intel',
-    fields: ['Semiconductors', 'Processors', 'Data Centers'],
-    address: '2200 Mission College Blvd, Santa Clara, CA',
-    status: AccountStatus.Approved,
-  },
-  {
-    id: '11',
-    companyName: 'Sony Corporation',
-    taxCode: 793642018,
-    displayName: 'Sony',
-    fields: ['Consumer Electronics', 'Entertainment', 'Gaming'],
-    address: '1-7-1 Konan, Minato-ku, Tokyo, Japan',
-    status: AccountStatus.Pending,
-  },
-  {
-    id: '12',
-    companyName: 'Nike, Inc.',
-    taxCode: 103857294,
-    displayName: 'Nike',
-    fields: ['Athletic Footwear', 'Apparel', 'Sports Equipment'],
-    address: '1 Bowerman Dr, Beaverton, OR',
-    status: AccountStatus.Approved,
-  },
-];
+import { mockHRAccountData } from './mockdata';
 
 const AccountManagementPage = () => {
-  const [allAccounts, setAllAccounts] = useState<HRAccount[]>(mockData);
+  const [allAccounts, setAllAccounts] = useState<HRAccount[]>(mockHRAccountData);
   const [displayedData, setDisplayedData] = useState<HRAccount[]>(
-    mockData.filter((data) => data.status == AccountStatus.Pending),
+    allAccounts.filter((data) => data.status == AccountStatus.Pending),
   );
   const [tabKey, setTabKey] = useState<string>('1');
 
@@ -187,7 +78,12 @@ const AccountManagementPage = () => {
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: 'Pending',
+      label: (
+        <div className='flex items-center'>
+          <ClockCircleOutlined />
+          <p className='text-lg'>Pending</p>
+        </div>
+      ),
       children: (
         <PendingAccountTable
           data={displayedData}
@@ -198,17 +94,32 @@ const AccountManagementPage = () => {
     },
     {
       key: '2',
-      label: 'Approved',
+      label: (
+        <div className='flex items-center'>
+          <CheckOutlined />
+          <p className='text-lg'>Approved</p>
+        </div>
+      ),
       children: <ApprovedAccountTable data={displayedData} banAccounts={handleBan} />,
     },
     {
       key: '3',
-      label: 'Rejected',
+      label: (
+        <div className='flex items-center'>
+          <CloseOutlined />
+          <p className='text-lg'>Rejected</p>
+        </div>
+      ),
       children: <RejectedAccountTable data={displayedData} reviewAccounts={handleReview} />,
     },
     {
       key: '4',
-      label: 'Banned',
+      label: (
+        <div className='flex items-center'>
+          <StopOutlined />
+          <p className='text-lg'>Banned</p>
+        </div>
+      ),
       children: <BannedAccountTable data={displayedData} unbanAccounts={handleUnban} />,
     },
   ];
@@ -225,22 +136,7 @@ const AccountManagementPage = () => {
     } else {
       setDisplayedData(allAccounts);
     }
-  }, [allAccounts]);
-
-  const onChangeTab = (key: string) => {
-    if (key === '1') {
-      setDisplayedData(allAccounts.filter((data) => data.status == AccountStatus.Pending));
-    } else if (key === '2') {
-      setDisplayedData(allAccounts.filter((data) => data.status == AccountStatus.Approved));
-    } else if (key === '3') {
-      setDisplayedData(allAccounts.filter((data) => data.status == AccountStatus.Rejected));
-    } else if (key === '4') {
-      setDisplayedData(allAccounts.filter((data) => data.status == AccountStatus.Banned));
-    } else {
-      setDisplayedData(allAccounts);
-    }
-    setTabKey(key);
-  };
+  }, [allAccounts, tabKey]);
 
   return (
     <>
@@ -259,7 +155,12 @@ const AccountManagementPage = () => {
           </div> */}
           {/* Content */}
           <div className='w-full p-2 border-solid border-[1.5px] border-gray-500 rounded'>
-            <Tabs size='large' defaultActiveKey='1' items={items} onChange={onChangeTab} />
+            <Tabs
+              size='large'
+              defaultActiveKey='1'
+              items={items}
+              onChange={(key) => setTabKey(key)}
+            />
           </div>
         </div>
       </div>

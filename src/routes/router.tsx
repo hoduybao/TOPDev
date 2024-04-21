@@ -19,6 +19,7 @@ import CompaniesPage from '../pages/company/Companies';
 import CompanyPage from '../pages/company/Company';
 import AccountManagementPage from '@/pages/admin/AccountManagementPage';
 import AdminLoginPage from '@/pages/admin/LoginPage';
+import JobManagementPage from '@/pages/admin/JobManagementPage';
 
 export const router = createBrowserRouter([
   // {
@@ -60,6 +61,11 @@ export const router = createBrowserRouter([
     path: MY_ROUTE.ADMIN_ACCOUNT_MANAGEMENT,
     element: <AdminLayout />,
     children: [{ path: MY_ROUTE.ADMIN_ACCOUNT_MANAGEMENT, element: <AccountManagementPage /> }],
+  },
+  {
+    path: MY_ROUTE.ADMIN_JOB_MANAGEMENT,
+    element: <AdminLayout />,
+    children: [{ path: MY_ROUTE.ADMIN_JOB_MANAGEMENT, element: <JobManagementPage /> }],
   },
   {
     path: '/login',

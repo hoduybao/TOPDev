@@ -6,6 +6,7 @@ export const MY_ROUTE = {
   RECRUITMENT_DETAIL: '/recruitment/:jobId/application/:applicationId',
   ADMIN: '/admin',
   ADMIN_ACCOUNT_MANAGEMENT: '/admin/manage-account',
+  ADMIN_JOB_MANAGEMENT: '/admin/manage-job',
   ADMIN_LOGIN: '/admin/login',
   JOB: 'jobs/:companyId/:jobId',
   COMPANY: 'companies/:companyId',

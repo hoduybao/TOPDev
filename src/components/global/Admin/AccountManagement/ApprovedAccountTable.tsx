@@ -4,12 +4,12 @@ import { Button, Input, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
 import { useEffect, useState } from 'react';
 
-interface PendingAccountTableProps {
+interface ApprovedAccountTableProps {
   data: HRAccount[];
   banAccounts: (accounts: HRAccount[]) => void;
 }
 
-const PendingAccountTable = (props: PendingAccountTableProps) => {
+const PendingAccountTable = (props: ApprovedAccountTableProps) => {
   const [data, setData] = useState<HRAccount[]>(props.data);
   const { Search } = Input;
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
