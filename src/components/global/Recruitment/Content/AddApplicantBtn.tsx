@@ -76,8 +76,8 @@ const AddApplicantBtn = (props: PropType) => {
           form={NewRecruitmentForm}
           name='create-new-job'
           className='mt-5 flex flex-col gap-5'
-          labelCol={{ span: 10 }}
-          wrapperCol={{ span: 14 }}
+          labelCol={{ span: 24 }} // 10
+          wrapperCol={{ span: 24 }} // 14
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           initialValues={{

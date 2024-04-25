@@ -1,24 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Dropdown, Input, Button } from 'antd';
+import { Button, Dropdown, Input } from 'antd';
 import type { MenuProps } from 'antd';
 import type { SearchProps } from 'antd/es/input/Search';
 
 import { UploadOutlined, SettingOutlined, CaretDownOutlined } from '@ant-design/icons';
 
-import AddApplicantBtn from '../Content/AddApplicantBtn';
-
-const { Search } = Input;
-
-interface PropType {
-  createNewDetailApplication: (title: string, name: string, phone: string, email: string) => void;
-}
-
-const ProcessSubHeader = (props: PropType) => {
-  const { createNewDetailApplication } = props;
-
+const DetailJobSubHeader = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const { Search } = Input;
 
   const actionsItems: MenuProps['items'] = [
     {
@@ -60,8 +52,7 @@ const ProcessSubHeader = (props: PropType) => {
   return (
     <div className='bg-[#fff] px-4 pt-2.5 pb-4 border-b border-gray-300 flex items-center justify-between'>
       <div className='flex items-center gap-3'>
-        <AddApplicantBtn createNewDetailApplication={createNewDetailApplication} />
-        <p className='text-[16px]'>{t('recruitmentApplicant')}</p>
+        <p className='text-[16px]'>{t('recruitmentDetailJob')}</p>
         <Dropdown menu={{ items: actionsItems }} trigger={['click']}>
           <div>
             <SettingOutlined />
@@ -98,4 +89,4 @@ const ProcessSubHeader = (props: PropType) => {
   );
 };
 
-export default ProcessSubHeader;
+export default DetailJobSubHeader;

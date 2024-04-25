@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { type FormProps } from 'antd';
 
-import SubHeader from '../../components/global/Recruitment/Header/SubHeader';
+import DetailJobSubHeader from '@/components/global/Recruitment/Header/DetailJobSubHeader';
 import TextContentEditor from '../../components/global/Recruitment/Content/TextContentEditor';
 
 import { JobType } from '@/+core/utilities/types/recruitment.type';
@@ -46,7 +46,6 @@ const DetailJobPage = () => {
 
   const params = useParams();
 
-  const [jobs, setJobs] = useState<JobType[]>([]);
   const [NewRecruitmentForm] = Form.useForm();
   const [interviewProcess, setInterviewProcess] = useState<string>('');
   const [description, setDescription] = useState<string>('');
@@ -150,18 +149,18 @@ const DetailJobPage = () => {
 
   return (
     <div className='flex flex-col'>
-      <SubHeader jobs={jobs} setJobs={setJobs} />
+      <DetailJobSubHeader />
       <div className='flex flex-wrap gap-3 px-4 py-2.5 rounded-md'>
         <Card
           title={`${t('recruitmentDetailJob')}: ${params?.jobId}`}
-          className='w-[100%] 2xl:w-[70%] h-[calc(100vh-46px-90px)] overflow-y-auto'
+          className='w-[100%] xl:w-[70%] h-[calc(100vh-46px-90px)] overflow-y-auto'
         >
           <Form
             form={NewRecruitmentForm}
             name='edit-job'
             className='w-[100%] mt-5 pr-5 flex flex-col gap-5'
-            labelCol={{ span: 5 }}
-            wrapperCol={{ span: 16 }}
+            labelCol={{ span: 24 }} // 5
+            wrapperCol={{ span: 24 }} // 16
             onFinish={onEditFinish}
             onFinishFailed={onEditFinishFailed}
             initialValues={{
@@ -311,7 +310,7 @@ const DetailJobPage = () => {
         </Card>
         <Card
           title={`Note`}
-          className='w-[100%] 2xl:w-[28%] h-[calc(100vh-46px-90px)] overflow-y-auto'
+          className='w-[100%] xl:w-[28%] h-[calc(100vh-46px-90px)] overflow-y-auto'
         >
           <Form
             form={jobNoteForm}

@@ -71,6 +71,7 @@
   "recruitmentFor": "For recruitment",
   "recruitmentViewDetailJob": "View detail job",
   "recruitmentViewApplicants": "View applicants",
+  "recruitmentAccept": "Accept",
   "recruitmentReject": "Reject",
   "recruitmentCreateApplicant": "Create a Applicant for job",
   "recruitmentViewApplication": "View application",
@@ -96,6 +97,7 @@
   "recruitmentDetailJob": "Detail job",
   "recruitmentEditJob": "Edit",
   "recruitmentJobNote": "Job note",
+  "recruitmentProfile": "Recruitment Profile",
   "allLocations": "All locations",
   "hcm": "Ho Chi Minh",
   "hn": "Ha Noi",
@@ -158,5 +160,6 @@
   "availableJob": "Available - Apply now",
   "seenJob": "Seen jobs",
   "saveJob": "Save job",
-  "savedJob": "Saved"
+  "savedJob": "Saved",
+  "back": "Back"
 }

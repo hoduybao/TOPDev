@@ -71,6 +71,7 @@
   "recruitmentFor": "Để tuyển dụng",
   "recruitmentViewDetailJob": "Xem chi tiết công việc",
   "recruitmentViewApplicants": "Xem ứng viên",
+  "recruitmentAccept": "Đồng ý",
   "recruitmentReject": "Từ chối",
   "recruitmentCreateApplicant": "Tạo một Ứng viên cho công việc",
   "recruitmentViewApplication": "Xem hồ sơ",
@@ -96,6 +97,7 @@
   "recruitmentDetailJob": "Chi tiết công việc",
   "recruitmentEditJob": "Chỉnh sửa",
   "recruitmentJobNote": "Ghi chú công việc",
+  "recruitmentProfile": "Hồ sơ nhà tuyển dụng",
   "allLocations": "Tất cả địa điểm",
   "hcm": "Hồ Chí Minh",
   "hn": "Hà Nội",
@@ -158,5 +160,6 @@
   "availableJob": "Còn hạn - Ứng tuyển ngay",
   "seenJob": "Việc đã xem",
   "saveJob": "Lưu việc",
-  "savedJob": "Đã lưu"
+  "savedJob": "Đã lưu",
+  "back": "Quay lại"
 }
