@@ -10,7 +10,7 @@ import MockApplicationData from '../../draft/application.json';
 
 const defaultApplicationsData: KanbanApplicationType[] = [
   {
-    columnId: 'new',
+    columnId: MockApplicationData ? MockApplicationData?.status : 'new',
     ...MockApplicationData,
   },
 ];

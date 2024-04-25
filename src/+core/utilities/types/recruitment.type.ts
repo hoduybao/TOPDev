@@ -27,7 +27,7 @@ export interface ApplicationType {
   cvUrl?: string;
   email?: string;
   phone?: string;
-  status?: string;
+  status?: string | any;
   rating?: number;
   note?: string;
 }
