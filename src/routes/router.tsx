@@ -1,4 +1,5 @@
 import { HomePage } from '@/pages/home/HomePage';
+import { ITJobs } from '@/pages/it-jobs/IT-Jobs';
 import { createBrowserRouter } from 'react-router-dom';
 import AdminLayout from '../components/global/layout/AdminLayout';
 import LoginLayout from '../components/global/layout/LoginLayout';
@@ -22,11 +23,11 @@ import AdminLoginPage from '@/pages/admin/LoginPage';
 import JobManagementPage from '@/pages/admin/JobManagementPage';
 
 export const router = createBrowserRouter([
-  // {
-  //   path: '/',
-  //   element: <Layout />,
-  //   children: [{ path: MY_ROUTE.HOME, element: <HomePage /> }],
-  // },
+  {
+    path: '/it-jobs',
+    element: <UserLayout />,
+    children: [{ path: MY_ROUTE.IT_JOBS, element: <ITJobs /> }],
+  },
   {
     path: '/recruitment',
     element: <RecruitmentLayout />,

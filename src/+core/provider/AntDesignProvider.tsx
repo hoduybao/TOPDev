@@ -4,11 +4,7 @@ export default function AntDesignProvider({ children }: { children: React.ReactN
   return (
     <ConfigProvider
       theme={{
-        token: {
-          //   colorPrimary: '#5599D6',
-          //   fontFamily: 'Inter, sans-serif',
-          //   borderRadius: 5,
-        },
+        token: {},
         components: {
           Form: {
             itemMarginBottom: 0,

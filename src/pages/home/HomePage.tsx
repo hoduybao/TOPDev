@@ -3,38 +3,14 @@ import SearchJob from './components/SearchJob';
 import ToolSection from './components/ToolSection';
 
 export function HomePage() {
-  const recommendations = [
-    'Java',
-    'C++',
-    'JavaScript',
-    'UI/UX',
-    'C#',
-    'Fresher',
-    'React',
-    'Angular',
-    'NodeJS',
-    'VueJS',
-  ];
-
   return (
-    <div className='w-full flex flex-col'>
-      <div className="bg-[url('https://c.topdevvn.com/v4/assets/images/bg-search.jpg')] flex justify-center pt-12 h-[470px]">
+    <div className="w-full flex flex-col bg-[url('https://c.topdevvn.com/v4/assets/images/bg-search.jpg')]">
+      <div className='flex justify-center py-12'>
         <div className='w-4/5 flex flex-col gap-4'>
           <SearchJob />
-          <div className='flex gap-4 items-center'>
-            <div className='text-base text-[#292929]'>Đề xuất từ khóa:</div>
-            {recommendations.map((recommendation, index) => (
-              <div
-                key={index}
-                className='px-3 py-2 border border-[#C2C2C2] text-base bg-white-900 rounded-[4px] hover:bg-[#F5F5F5] cursor-pointer'
-              >
-                {recommendation}
-              </div>
-            ))}
-          </div>
         </div>
       </div>
-      <div className='w-full bg-white-900 !rounded-t-[54px] -mt-12 flex justify-center'>
+      <div className='w-full bg-white-900 !rounded-t-[54px] mt-[140px] flex justify-center'>
         <div className='w-4/5 relative'>
           <ToolSection />
           <div className='mt-[150px] text-[36px] font-bold'>

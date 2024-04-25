@@ -139,7 +139,7 @@ const JobManagementPage = () => {
     <>
       <div className='w-full font-roboto px-4 bg-white-700'>
         <div className='py-2'>
-          <span className='font-bold text-xl text-black-400'>Account Manager</span>
+          <span className='font-bold text-xl text-black-400'>Job Manager</span>
         </div>
 
         <Divider
