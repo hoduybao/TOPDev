@@ -1,6 +1,7 @@
 export interface JobType {
   id?: string;
   companyId?: string;
+  companyName?: string;
   title?: string;
   salary?: string | number;
   responsibilities?: string[];
@@ -15,6 +16,8 @@ export interface JobType {
   techs?: string[];
   interviewProcess?: string[] | any;
   description?: string;
+  location?: string;
+  companyLogo?: string;
 }
 
 export interface ApplicationType {

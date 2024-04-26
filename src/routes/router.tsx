@@ -21,6 +21,14 @@ import DetailPage from '../pages/recruitment/DetailPage';
 import MainPage from '../pages/recruitment/MainPage';
 import ProcessPage from '../pages/recruitment/ProcessPage';
 import { MY_ROUTE } from './route.constant';
+import JobPage from '../pages/job/JobPageNew';
+import CompaniesPage from '../pages/company/Companies';
+import CompanyPage from '../pages/company/Company';
+import AccountManagementPage from '@/pages/admin/AccountManagementPage';
+import AdminLoginPage from '@/pages/admin/LoginPage';
+import JobManagement from '@/pages/job-management/JobManagement';
+import MyCV from '@/pages/UserProfile/MyCV';
+import ManageFollowPage from '@/pages/manage-follow/ManageFollowPage';
 
 export const router = createBrowserRouter([
   {
@@ -69,6 +77,16 @@ export const router = createBrowserRouter([
     children: [{ path: MY_ROUTE.RESET_PASSWORD, element: <ResetPasswordPage /> }],
   },
   {
+    path: MY_ROUTE.JOB_MANAGEMENT,
+    element: <UserLayout />,
+    children: [{ path: MY_ROUTE.JOB_MANAGEMENT, element: <JobManagement /> }],
+  },
+  {
+    path: MY_ROUTE.USER_PROFILE,
+    element: <UserLayout />,
+    children: [{ path: MY_ROUTE.USER_PROFILE, element: <MyCV /> }],
+  },
+  {
     path: '/',
     element: <UserLayout />,
     children: [
@@ -80,6 +98,7 @@ export const router = createBrowserRouter([
       { path: MY_ROUTE.JOB, element: <JobPage /> },
       { path: MY_ROUTE.COMPANIES, element: <CompaniesPage /> },
       { path: MY_ROUTE.COMPANY, element: <CompanyPage /> },
+      { path: '/manage-follow', element: <ManageFollowPage /> },
       { path: MY_ROUTE.MY_PAGES, element: <MyPages /> },
     ],
   },

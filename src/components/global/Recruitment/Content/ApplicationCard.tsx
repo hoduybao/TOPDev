@@ -32,14 +32,14 @@ const ApplicationCard = (props: PropType) => {
   ];
 
   return (
-    <Card className='w-[100%] sm:w-[500px]'>
-      <div className='w-[100%] flex items-start'>
+    <Card>
+      <div className='flex items-start'>
         <Rate count={1} defaultValue={1} />
         <div className='w-[100%] px-2'>
           <p className='font-semibold'>{job?.title}</p>
           <div className='flex items-center gap-2'>
             <MailOutlined />
-            <p>{job?.companyId}</p>
+            <p className='max-w-[150px] md:max-w-[200px] truncate'>{job?.companyId}</p>
           </div>
         </div>
         <Dropdown menu={{ items }} trigger={['click']} placement='bottomRight'>
@@ -48,7 +48,7 @@ const ApplicationCard = (props: PropType) => {
           </div>
         </Dropdown>
       </div>
-      <div className='pt-5 pb-10 flex justify-between items-center'>
+      <div className='pt-5 pb-10 flex flex-wrap gap-3 justify-between items-center'>
         <Link to={`/recruitment/${job?.id}/applications`}>
           <Button type='primary' danger>
             {newestAmount} {t('recruitmentNewApplicant')}
