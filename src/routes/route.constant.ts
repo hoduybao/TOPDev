@@ -15,6 +15,7 @@ export const MY_ROUTE = {
   RESET_PASSWORD: '/reset-password',
   JOB_MANAGEMENT: '/job-management',
   USER_PROFILE: '/user/profile',
+  MY_PAGES: '/users',
 };
 
 export const DEFAULT_ROUTE = MY_ROUTE.HOME;
