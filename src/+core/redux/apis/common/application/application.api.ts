@@ -1,14 +1,13 @@
 import { TAG_TYPES } from '../../../../../+core/constants/api.tagTypes';
 import { commonApi } from '../../common.api';
 
-export type FormValues = {
-  name: string;
+export type ApplicationFields = {
+  jobId: string;
+  fullName: string;
   email: string;
   phone: string;
-  intro: string;
-  cv: File;
   cvUrl: string;
-  jobId: string;
+  description: string;
 };
 
 const applicationApi = commonApi
@@ -16,8 +15,8 @@ const applicationApi = commonApi
   .injectEndpoints({
     endpoints: (build) => ({
       createApplication: build.mutation<any, any>({
-        query: (values: FormValues) => ({
-          url: `/applicationservice/create`,
+        query: (values: ApplicationFields) => ({
+          url: `/applications`,
           method: 'POST',
           body: values,
         }),
