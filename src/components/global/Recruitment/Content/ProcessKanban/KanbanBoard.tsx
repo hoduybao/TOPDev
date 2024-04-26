@@ -22,20 +22,12 @@ import { KanbanColumn, Id, KanbanApplicationType } from '@/+core/utilities/types
 
 const defaultCols: KanbanColumn[] = [
   {
-    id: 'new',
+    id: 'false',
     title: 'Mới',
   },
   {
-    id: 'expertise',
-    title: 'Thẩm định',
-  },
-  {
-    id: 'interview',
-    title: 'Phỏng vấn',
-  },
-  {
-    id: 'contract',
-    title: 'Đề xuất hợp đồng',
+    id: 'true',
+    title: 'Đã duyệt',
   },
 ];
 

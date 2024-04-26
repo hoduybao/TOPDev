@@ -5,7 +5,7 @@
   "cvUrl": "",
   "email": "123@gmail.com",
   "phone": "123456789",
-  "status": "new",
+  "status": "false",
   "rating": 3,
   "note": "this is note 1"
 }
