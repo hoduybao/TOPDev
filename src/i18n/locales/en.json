@@ -158,5 +158,15 @@
   "availableJob": "Available - Apply now",
   "seenJob": "Seen jobs",
   "saveJob": "Save job",
-  "savedJob": "Saved"
+  "savedJob": "Saved",
+  "applyJob": "Apply now",
+  "youApply": "You are applying for",
+  "at": "at",
+  "form.fullName": "Your full name",
+  "form.email": "Email",
+  "form.phone": "Your phone",
+  "form.cv": "Your CV",
+  "form.description": "Cover letter or portfolio link",
+  "form.cancel": "Cancel",
+  "form.submitcv": "Send CV"
 }

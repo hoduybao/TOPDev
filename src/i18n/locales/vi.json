@@ -158,5 +158,15 @@
   "availableJob": "Còn hạn - Ứng tuyển ngay",
   "seenJob": "Việc đã xem",
   "saveJob": "Lưu việc",
-  "savedJob": "Đã lưu"
+  "savedJob": "Đã lưu",
+  "applyJob": "Ứng tuyển ngay",
+  "youApply": "Bạn đang ứng tuyển",
+  "at": "tại",
+  "form.fullName": "Họ và tên",
+  "form.email": "Email",
+  "form.phone": "Số điện thoại",
+  "form.cv": "CV",
+  "form.description": "Đoạn giới thiệu bản thân hoặc link portfolio",
+  "form.cancel": "Hủy",
+  "form.submitcv": "Nộp CV"
 }

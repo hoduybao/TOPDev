@@ -1,6 +1,6 @@
 import Container from '../../components/global/Container/Container';
 import CompanyCard from '../../components/ui/card/CompanyCard';
-import JobSubmitModal from '../../components/ui/modal/JobSubmitModal';
+import JobSubmitModal from './components/JobSubmitModal';
 import UserSubmitButton from '../../components/ui/button/UserSubmitButton';
 import ShortDetail from '../../components/ui/description/ShortDetail';
 import { TAG_TYPES } from '../../components/ui/tag/SelectionTags';

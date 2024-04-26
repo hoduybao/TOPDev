@@ -2,7 +2,7 @@ import { TAG_TYPES } from '../../../../../+core/constants/api.tagTypes';
 import { commonApi } from '../../common.api';
 
 export type ApplicationFields = {
-  jobId: string;
+  // jobId: string;
   fullName: string;
   email: string;
   phone: string;
