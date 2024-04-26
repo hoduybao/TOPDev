@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { Button, Form, Input, InputNumber, Select, Card, Avatar } from 'antd';
+import { Button, Form, Input, InputNumber, Select, Card, Avatar, Spin } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
+import { useGetDetailJobByIdQuery } from '@/+core/redux/apis/common/recruitment/recruitment.api';
 
 import { type FormProps } from 'antd';
 
@@ -11,12 +12,13 @@ import TextContentEditor from '../../components/global/Recruitment/Content/TextC
 
 import { JobType } from '@/+core/utilities/types/recruitment.type';
 
-import job from '../../draft/job.json';
+// import job from '../../draft/job.json';
 
 const { Option } = Select;
 
 type FieldType = {
   companyName?: string;
+  jobId?: string;
   title?: string;
   level?: string;
   salary?: string;
@@ -25,6 +27,10 @@ type FieldType = {
   experienceYearsMax?: string;
   typeContract?: string;
   type?: string;
+  appliedCount?: string | number;
+  followedCount?: string | number;
+  createdAt?: string | number;
+  updatedAt?: string | number;
   jobDescription?: any;
   interviewProcess?: string[] | any;
 };
@@ -41,12 +47,21 @@ const getCurrentDay = () => {
   return date + '/' + month + '/' + year;
 };
 
+export const formatDateStr = (date: string) => {
+  const d = date.split('T')[0];
+  const t = date.split('T')[1].split('Z')[0];
+  return d + ' ' + t;
+};
+
 const DetailJobPage = () => {
   const { t } = useTranslation();
 
   const params = useParams();
 
+  const { data, isLoading } = useGetDetailJobByIdQuery(params?.jobId);
+
   const [NewRecruitmentForm] = Form.useForm();
+  const [job, setJob] = useState<JobType | null>(null);
   const [interviewProcess, setInterviewProcess] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
@@ -62,7 +77,7 @@ const DetailJobPage = () => {
     },
   ]);
 
-  const handleInitInterviewProcess = () => {
+  const handleInitInterviewProcess = (job: JobType) => {
     let processStr = '<ul>';
 
     job?.interviewProcess?.forEach((process: string) => {
@@ -74,7 +89,7 @@ const DetailJobPage = () => {
     setInterviewProcess(processStr);
   };
 
-  const handleInitJobDescription = () => {
+  const handleInitJobDescription = (job: JobType) => {
     let descriptionStr = '<h2>Responsibilities</h2><ul>';
     job?.responsibilities?.forEach((response: string) => {
       descriptionStr += `<li>${response}</li>`;
@@ -98,10 +113,8 @@ const DetailJobPage = () => {
 
   const onEditFinish: FormProps<FieldType>['onFinish'] = (values) => {
     const newJob: JobType = {
-      id: uuidv4(),
+      id: values?.jobId,
       title: values?.title,
-      companyId: uuidv4(),
-      companyName: values?.companyName,
       level: values?.level,
       salary: values?.salary,
       techs: values?.techs,
@@ -143,226 +156,318 @@ const DetailJobPage = () => {
   };
 
   useEffect(() => {
-    handleInitInterviewProcess();
-    handleInitJobDescription();
-  }, []);
+    if (!isLoading && data?.statusCode === 200) {
+      const job: JobType = data?.data;
+      setJob(job);
+
+      console.log('GET DETAIL JOB BY ID SUCCESSFULLY', job);
+
+      NewRecruitmentForm.setFieldsValue({
+        ['companyName']: job?.company?.name ? job?.company?.name : 'null',
+        ['jobId']: job?.id ? job?.id : 'null',
+        ['title']: job?.title ? job?.title : 'null',
+        ['level']: job?.level ? job?.level : 'null',
+        ['salary']: job?.salary ? job?.salary : 'null',
+        ['techs']: job?.techs ? job?.techs : 'null',
+        ['experienceYearsMin']: Number(job?.experienceYearsMin ? job?.experienceYearsMin : 0),
+        ['experienceYearsMax']: Number(job?.experienceYearsMax ? job?.experienceYearsMax : 0),
+        ['type']: job?.type ? job?.type : 'null',
+        ['typeContract']: job?.typeContract ? job?.typeContract : 'null',
+        ['appliedCount']: job?.appliedCount ? job?.appliedCount : 0,
+        ['followedCount']: job?.followedCount ? job?.followedCount : 0,
+        ['createdAt']: job?.createdAt ? formatDateStr(job?.createdAt) : 'null',
+        ['updatedAt']: job?.updatedAt ? formatDateStr(job?.updatedAt) : 'null',
+      });
+
+      handleInitInterviewProcess(job);
+      handleInitJobDescription(job);
+    }
+  }, [isLoading]);
 
   return (
     <div className='flex flex-col'>
       <DetailJobSubHeader />
-      <div className='flex flex-wrap gap-3 px-4 py-2.5 rounded-md'>
-        <Card
-          title={`${t('recruitmentDetailJob')}: ${params?.jobId}`}
-          className='w-[100%] xl:w-[70%] h-[calc(100vh-46px-90px)] overflow-y-auto'
-        >
-          <Form
-            form={NewRecruitmentForm}
-            name='edit-job'
-            className='w-[100%] mt-5 pr-5 flex flex-col gap-5'
-            labelCol={{ span: 24 }} // 5
-            wrapperCol={{ span: 24 }} // 16
-            onFinish={onEditFinish}
-            onFinishFailed={onEditFinishFailed}
-            initialValues={{
-              ['companyName']: 'DTS Software Viet Nam',
-              ['title']: job?.title,
-              ['level']: job?.level,
-              ['salary']: job?.salary,
-              ['techs']: job?.techs,
-              ['typeContract']: job?.typeContract,
-              ['experienceYearsMin']: Number(job?.experienceYearsMin),
-              ['experienceYearsMax']: Number(job?.experienceYearsMax),
-              ['type']: 'office',
-            }}
+      {isLoading ? (
+        <div className='flex justify-center mt-20'>
+          <Spin size='large' />
+        </div>
+      ) : (
+        <div className='flex flex-wrap gap-3 px-4 py-2.5 rounded-md'>
+          <Card
+            title={`${job?.title}`}
+            className='w-[100%] xl:w-[70%] h-[calc(100vh-46px-90px)] overflow-y-auto'
           >
-            <Form.Item<FieldType>
-              label={`${t('recruitmentCompanyName')}`}
-              name='companyName'
-              rules={[{ required: true, message: 'Please input company name!' }]}
+            <Form
+              form={NewRecruitmentForm}
+              name='edit-job'
+              className='w-[100%] mt-5 pr-5 flex flex-col gap-5'
+              labelCol={{ span: 24 }} // 5
+              wrapperCol={{ span: 24 }} // 16
+              onFinish={onEditFinish}
+              onFinishFailed={onEditFinishFailed}
+              // initialValues={{
+              //   ['companyName']: 'DTS Software Viet Nam',
+              //   ['title']: job?.title,
             >
-              <Input />
-            </Form.Item>
+              <Form.Item<FieldType>
+                label={`${t('recruitmentCompanyName')}`}
+                name='companyName'
+                rules={[{ required: true, message: 'Please input company name!' }]}
+              >
+                <Input disabled />
+              </Form.Item>
 
-            <Form.Item<FieldType>
-              label={`${t('recruitmentJobTitle')}`}
-              name='title'
-              rules={[{ required: true, message: 'Please input job title!' }]}
-            >
-              <Input />
-            </Form.Item>
+              <Form.Item<FieldType>
+                label={`${t('recruitmentJobId')}`}
+                name='jobId'
+                rules={[{ required: true, message: 'Please input job id!' }]}
+              >
+                <Input disabled />
+              </Form.Item>
 
-            <Form.Item<FieldType>
-              label={`${t('recruitmentLevel')}`}
-              name='level'
-              rules={[{ required: true, message: 'Please input job level!' }]}
-            >
-              <Select
-                style={{ width: 200 }}
-                options={[
-                  { value: 'all', label: 'All' },
-                  { value: 'intern', label: 'Intern' },
-                  { value: 'fresher', label: 'Fresher' },
-                  { value: 'junior', label: 'Junior' },
-                  { value: 'Middle', label: 'Middle' },
-                  { value: 'Senior', label: 'Senior' },
-                  { value: 'leader', label: 'Leader' },
-                  { value: 'project-manager', label: 'Project manager' },
+              <Form.Item<FieldType>
+                label={`${t('recruitmentJobTitle')}`}
+                name='title'
+                rules={[{ required: true, message: 'Please input job title!' }]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item<FieldType>
+                label={`${t('recruitmentLevel')}`}
+                name='level'
+                rules={[{ required: true, message: 'Please input job level!' }]}
+              >
+                <Select
+                  style={{ width: 200 }}
+                  options={[
+                    { value: 'all', label: 'All' },
+                    { value: 'intern', label: 'Intern' },
+                    { value: 'fresher', label: 'Fresher' },
+                    { value: 'junior', label: 'Junior' },
+                    { value: 'Middle', label: 'Middle' },
+                    { value: 'Senior', label: 'Senior' },
+                    { value: 'leader', label: 'Leader' },
+                    { value: 'project-manager', label: 'Project manager' },
+                  ]}
+                />
+              </Form.Item>
+
+              <Form.Item<FieldType>
+                label={`${t('recruitmentSalary')}`}
+                name='salary'
+                rules={[{ required: true, message: 'Please input job salary!' }]}
+              >
+                <InputNumber
+                  style={{ width: 200 }}
+                  addonAfter={
+                    <Select defaultValue='USD' style={{ width: 70 }}>
+                      <Option value='USD'>$</Option>
+                      <Option value='VND'>VND</Option>
+                    </Select>
+                  }
+                />
+              </Form.Item>
+
+              <Form.Item
+                label={`${t('recruitmentTechs')}`}
+                name='techs'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please select your favourite colors!',
+                    type: 'array',
+                  },
                 ]}
-              />
-            </Form.Item>
+              >
+                <Select mode='multiple' placeholder='Please select techs'>
+                  <Option value='c-plus-plus'>C++</Option>
+                  <Option value='react-js'>ReactJS</Option>
+                  <Option value='express-js'>ExpressJS</Option>
+                </Select>
+              </Form.Item>
 
-            <Form.Item<FieldType>
-              label={`${t('recruitmentSalary')}`}
-              name='salary'
-              rules={[{ required: true, message: 'Please input job salary!' }]}
-            >
-              <InputNumber
-                style={{ width: 200 }}
-                addonAfter={
-                  <Select defaultValue='USD' style={{ width: 70 }}>
-                    <Option value='USD'>$</Option>
-                    <Option value='VND'>VND</Option>
-                  </Select>
-                }
-              />
-            </Form.Item>
-
-            <Form.Item
-              label={`${t('recruitmentTechs')}`}
-              name='techs'
-              rules={[
-                { required: true, message: 'Please select your favourite colors!', type: 'array' },
-              ]}
-            >
-              <Select mode='multiple' placeholder='Please select techs'>
-                <Option value='c-plus-plus'>C++</Option>
-                <Option value='react-js'>ReactJS</Option>
-                <Option value='express-js'>ExpressJS</Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item
-              label={`${t('recruitmentMinExp')}`}
-              name='experienceYearsMin'
-              rules={[
-                {
-                  required: true,
-                  type: 'number',
-                  min: 0,
-                  message: 'Please input job experience years min!',
-                },
-              ]}
-            >
-              <InputNumber />
-            </Form.Item>
-
-            <Form.Item
-              label={`${t('recruitmentMaxExp')}`}
-              name='experienceYearsMax'
-              rules={[
-                {
-                  required: true,
-                  type: 'number',
-                  min: 0,
-                  message: 'Please input job experience years max!',
-                },
-              ]}
-            >
-              <InputNumber />
-            </Form.Item>
-
-            <Form.Item<FieldType> label={`${t('recruitmentContractType')}`} name='typeContract'>
-              <Select
-                style={{ width: 200 }}
-                options={[
-                  { value: 'fulltime', label: 'Full time' },
-                  { value: 'parttime', label: 'Part time' },
+              <Form.Item
+                label={`${t('recruitmentMinExp')}`}
+                name='experienceYearsMin'
+                rules={[
+                  {
+                    required: true,
+                    type: 'number',
+                    min: 0,
+                    message: 'Please input job experience years min!',
+                  },
                 ]}
-              />
-            </Form.Item>
+              >
+                <InputNumber />
+              </Form.Item>
 
-            <Form.Item<FieldType> label={`${t('recruitmentType')}`} name='type'>
-              <Select
-                style={{ width: 200 }}
-                options={[
-                  { value: 'office', label: 'Office' },
-                  { value: 'remote', label: 'Remote' },
+              <Form.Item
+                label={`${t('recruitmentMaxExp')}`}
+                name='experienceYearsMax'
+                rules={[
+                  {
+                    required: true,
+                    type: 'number',
+                    min: 0,
+                    message: 'Please input job experience years max!',
+                  },
                 ]}
-              />
-            </Form.Item>
+              >
+                <InputNumber />
+              </Form.Item>
 
-            <Form.Item<FieldType> label={`${t('recruitmentInterview')}`} name='interviewProcess'>
-              <TextContentEditor content={interviewProcess} setContent={setInterviewProcess} />
-            </Form.Item>
+              <Form.Item<FieldType> label={`${t('recruitmentType')}`} name='type'>
+                <Select
+                  style={{ width: 200 }}
+                  options={[
+                    { value: 'office', label: 'Office' },
+                    { value: 'remote', label: 'Remote' },
+                  ]}
+                />
+              </Form.Item>
 
-            <Form.Item<FieldType> label={`${t('recruitmentDesctiption')}`} name='jobDescription'>
-              <TextContentEditor content={description} setContent={setDescription} />
-            </Form.Item>
+              <Form.Item<FieldType> label={`${t('recruitmentContractType')}`} name='typeContract'>
+                <Select
+                  style={{ width: 200 }}
+                  options={[
+                    { value: 'fulltime', label: 'Full time' },
+                    { value: 'parttime', label: 'Part time' },
+                    { value: 'permanent', label: 'Permanent' },
+                  ]}
+                />
+              </Form.Item>
 
-            <Form.Item wrapperCol={{ span: 24 }}>
-              <div className='w-full border-t border-gray-300 mt-5 pt-4 flex items-center gap-2'>
-                <Button type='primary' htmlType='submit' danger>
-                  {t('recruitmentEditJob')}
-                </Button>
-              </div>
-            </Form.Item>
-          </Form>
-        </Card>
-        <Card
-          title={`Note`}
-          className='w-[100%] xl:w-[28%] h-[calc(100vh-46px-90px)] overflow-y-auto'
-        >
-          <Form
-            form={jobNoteForm}
-            name='create-job-note'
-            className='w-[100%] mt-5 pr-5 flex flex-col gap-5'
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            onFinish={onNoteFinish}
-            onFinishFailed={onNoteFinishFailed}
-          >
-            <Form.Item<NoteFieldType>
-              label={`${t('recruitmentJobNote')}`}
-              name='jobNote'
-              rules={[{ required: true, message: 'Please input job note!' }]}
-            >
-              <Input />
-            </Form.Item>
+              <Form.Item<FieldType> label={`${t('recruitmentContractType')}`} name='typeContract'>
+                <Select
+                  style={{ width: 200 }}
+                  options={[
+                    { value: 'fulltime', label: 'Full time' },
+                    { value: 'parttime', label: 'Part time' },
+                    { value: 'permanent', label: 'Permanent' },
+                  ]}
+                />
+              </Form.Item>
 
-            <Form.Item wrapperCol={{ span: 24 }}>
-              <div className='w-full border-t border-gray-300 mt-5 pt-4 flex items-center gap-2'>
-                <Button type='primary' htmlType='submit' danger>
-                  {t('recruitmentCreateJob')}
-                </Button>
-              </div>
-            </Form.Item>
-          </Form>
-          <div className='my-5 w-[100%] h-[1px]'></div>
-          <div className='flex flex-col gap-8'>
-            {notes?.map((note) => {
-              return (
-                <div key={note?.id} className='flex items-center gap-3'>
-                  <Avatar
-                    className='bg-primary-red'
-                    style={{ verticalAlign: 'middle' }}
-                    size='large'
-                    gap={3}
-                  >
-                    A
-                  </Avatar>
-                  <div className='w-[90%]'>
-                    <div className='flex items-center justify-between'>
-                      <p className='font-bold'>{note?.hrId}</p>
-                      <p className='text-gray-400'>{note?.timestamp}</p>
-                    </div>
-                    <p>{note?.jobNote}</p>
-                  </div>
+              <Form.Item
+                label={`${t('recruitmentAppliedCount')}`}
+                name='appliedCount'
+                rules={[
+                  {
+                    required: true,
+                    type: 'number',
+                    min: 0,
+                    message: 'Please input job applied count!',
+                  },
+                ]}
+              >
+                <InputNumber disabled />
+              </Form.Item>
+
+              <Form.Item
+                label={`${t('recruitmentFollowedCount')}`}
+                name='followedCount'
+                rules={[
+                  {
+                    required: true,
+                    type: 'number',
+                    min: 0,
+                    message: 'Please input job followed count!',
+                  },
+                ]}
+              >
+                <InputNumber disabled />
+              </Form.Item>
+
+              <Form.Item<FieldType>
+                label={`${t('recruitmentJobCreatedAt')}`}
+                name='createdAt'
+                rules={[{ required: true, message: 'Please input job created at!' }]}
+              >
+                <Input disabled />
+              </Form.Item>
+
+              <Form.Item<FieldType>
+                label={`${t('recruitmentJobUpdateAt')}`}
+                name='updatedAt'
+                rules={[{ required: true, message: 'Please input job update at!' }]}
+              >
+                <Input disabled />
+              </Form.Item>
+
+              <Form.Item<FieldType> label={`${t('recruitmentInterview')}`} name='interviewProcess'>
+                <TextContentEditor content={interviewProcess} setContent={setInterviewProcess} />
+              </Form.Item>
+
+              <Form.Item<FieldType> label={`${t('recruitmentDesctiption')}`} name='jobDescription'>
+                <TextContentEditor content={description} setContent={setDescription} />
+              </Form.Item>
+
+              <Form.Item wrapperCol={{ span: 24 }}>
+                <div className='w-full border-t border-gray-300 mt-5 pt-4 flex items-center gap-2'>
+                  <Button type='primary' htmlType='submit' danger>
+                    {t('recruitmentEditJob')}
+                  </Button>
                 </div>
-              );
-            })}
-          </div>
-        </Card>
-      </div>
+              </Form.Item>
+            </Form>
+          </Card>
+          <Card
+            title={`Note`}
+            className='w-[100%] xl:w-[28%] h-[calc(100vh-46px-90px)] overflow-y-auto'
+          >
+            <Form
+              form={jobNoteForm}
+              name='create-job-note'
+              className='w-[100%] mt-5 pr-5 flex flex-col gap-5'
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+              onFinish={onNoteFinish}
+              onFinishFailed={onNoteFinishFailed}
+            >
+              <Form.Item<NoteFieldType>
+                label={`${t('recruitmentJobNote')}`}
+                name='jobNote'
+                rules={[{ required: true, message: 'Please input job note!' }]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item wrapperCol={{ span: 24 }}>
+                <div className='w-full border-t border-gray-300 mt-5 pt-4 flex items-center gap-2'>
+                  <Button type='primary' htmlType='submit' danger>
+                    {t('recruitmentCreateJob')}
+                  </Button>
+                </div>
+              </Form.Item>
+            </Form>
+            <div className='my-5 w-[100%] h-[1px]'></div>
+            <div className='flex flex-col gap-8'>
+              {notes?.map((note) => {
+                return (
+                  <div key={note?.id} className='flex items-center gap-3'>
+                    <Avatar
+                      className='bg-primary-red'
+                      style={{ verticalAlign: 'middle' }}
+                      size='large'
+                      gap={3}
+                    >
+                      A
+                    </Avatar>
+                    <div className='w-[90%]'>
+                      <div className='flex items-center justify-between'>
+                        <p className='font-bold'>{note?.hrId}</p>
+                        <p className='text-gray-400'>{note?.timestamp}</p>
+                      </div>
+                      <p>{note?.jobNote}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,11 @@
+export interface CompanyType {
+  id?: string;
+  name?: string;
+}
+
 export interface JobType {
   id?: string;
+  company?: CompanyType;
   companyId?: string;
   companyName?: string;
   title?: string;
@@ -18,6 +24,12 @@ export interface JobType {
   description?: string;
   location?: string;
   companyLogo?: string;
+  appliedCount?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  createdBy?: string;
+  followedCount?: number;
+  status?: number | string;
 }
 
 export interface ApplicationType {
