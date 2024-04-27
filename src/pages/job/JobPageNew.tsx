@@ -17,7 +17,7 @@ const JobPage = () => {
 
   return (
     <Container>
-      <div className='flex flex-col lg:flex-row items-start w-full gap-2'>
+      <div className='flex flex-col lg:flex-row items-start w-full gap-4 mt-4'>
         <section className='w-full lg:w-[70%] flex flex-col gap-4 relative'>
           <section
             className={`flex items-start bg-white-900 rounded shadow-md p-4
