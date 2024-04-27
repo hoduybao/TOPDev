@@ -1,6 +1,15 @@
 export interface CompanyType {
   id?: string;
   name?: string;
+  phone?: string;
+  email?: string;
+  about?: string;
+  avatar?: string;
+  size?: string;
+  nation?: string;
+  technicals?: string[];
+  website?: string;
+  address?: string;
 }
 
 export interface JobType {

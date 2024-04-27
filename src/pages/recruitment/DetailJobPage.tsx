@@ -225,6 +225,7 @@ const DetailJobPage = () => {
               // initialValues={{
               //   ['companyName']: 'DTS Software Viet Nam',
               //   ['title']: job?.title,
+              // }}
             >
               <Form.Item<FieldType>
                 label={`${t('recruitmentCompanyName')}`}
