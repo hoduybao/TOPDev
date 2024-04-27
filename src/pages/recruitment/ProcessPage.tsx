@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { notification } from 'antd';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
@@ -29,10 +30,11 @@ import KanbanBoard from '../../components/global/Recruitment/Content/ProcessKanb
 
 const ProcessPage = () => {
   const JOB_ID: string = '6tmFCHf';
+  const params = useParams();
 
   const [api, contextHolder] = notification.useNotification();
 
-  const { data, isLoading } = useGetApplicationsByJobIdQuery(JOB_ID);
+  const { data, isLoading } = useGetApplicationsByJobIdQuery(params?.jobId);
   const [createNewApplication] = useCreateApplicationRecruitmentMutation();
 
   const [applications, setApplications] = useState<KanbanApplicationType[]>([]);
