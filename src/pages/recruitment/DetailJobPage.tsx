@@ -22,10 +22,11 @@ type FieldType = {
   title?: string;
   level?: string;
   salary?: string;
-  techs?: string[];
-  experienceYearsMin?: string;
-  experienceYearsMax?: string;
-  typeContract?: string;
+  technicals?: string[];
+  minExperience?: string;
+  maxExperience?: string;
+  contractType?: string;
+  workingPlace?: string;
   type?: string;
   appliedCount?: string | number;
   followedCount?: string | number;
@@ -78,37 +79,15 @@ const DetailJobPage = () => {
   ]);
 
   const handleInitInterviewProcess = (job: JobType) => {
-    let processStr = '<ul>';
-
-    job?.interviewProcess?.forEach((process: string) => {
-      processStr += `<li>${process}</li>`;
-    });
-
-    processStr += '</ul>';
-
-    setInterviewProcess(processStr);
+    if (job?.interviewProcess) {
+      setInterviewProcess(job?.interviewProcess);
+    }
   };
 
   const handleInitJobDescription = (job: JobType) => {
-    let descriptionStr = '<h2>Responsibilities</h2><ul>';
-    job?.responsibilities?.forEach((response: string) => {
-      descriptionStr += `<li>${response}</li>`;
-    });
-    descriptionStr += '</ul><br>';
-
-    descriptionStr += '<h2>Extends</h2><ul>';
-    job?.extends?.forEach((extend: string) => {
-      descriptionStr += `<li>${extend}</li>`;
-    });
-    descriptionStr += '</ul><br>';
-
-    descriptionStr += '<h2>Welfare</h2><ul>';
-    job?.welfare?.forEach((welfare: string) => {
-      descriptionStr += `<li>${welfare}</li>`;
-    });
-    descriptionStr += '</ul><br>';
-
-    setDescription(descriptionStr);
+    if (job?.jobDescription) {
+      setDescription(job?.jobDescription);
+    }
   };
 
   const onEditFinish: FormProps<FieldType>['onFinish'] = (values) => {
@@ -117,14 +96,13 @@ const DetailJobPage = () => {
       title: values?.title,
       level: values?.level,
       salary: values?.salary,
-      techs: values?.techs,
-      experienceYearsMin: values?.experienceYearsMin,
-      experienceYearsMax: values?.experienceYearsMax,
-      typeContract: values?.typeContract,
-      type: values?.type,
-
+      technicals: values?.technicals,
+      minExperience: values?.minExperience,
+      maxExperience: values?.maxExperience,
+      contractType: values?.contractType,
+      workingPlace: values?.workingPlace,
       interviewProcess: interviewProcess,
-      description: description,
+      jobDescription: description,
     };
 
     console.log('Success:', newJob);
@@ -168,11 +146,11 @@ const DetailJobPage = () => {
         ['title']: job?.title ? job?.title : 'null',
         ['level']: job?.level ? job?.level : 'null',
         ['salary']: job?.salary ? job?.salary : 'null',
-        ['techs']: job?.techs ? job?.techs : 'null',
-        ['experienceYearsMin']: Number(job?.experienceYearsMin ? job?.experienceYearsMin : 0),
-        ['experienceYearsMax']: Number(job?.experienceYearsMax ? job?.experienceYearsMax : 0),
-        ['type']: job?.type ? job?.type : 'null',
-        ['typeContract']: job?.typeContract ? job?.typeContract : 'null',
+        ['technicals']: job?.technicals ? job?.technicals : 'null',
+        ['minExperience']: Number(job?.minExperience ? job?.minExperience : 0),
+        ['maxExperience']: Number(job?.maxExperience ? job?.maxExperience : 0),
+        ['contractType']: job?.contractType ? job?.contractType : 'null',
+        ['workingPlace']: job?.workingPlace ? job?.workingPlace : 'null',
         ['appliedCount']: job?.appliedCount ? job?.appliedCount : 0,
         ['followedCount']: job?.followedCount ? job?.followedCount : 0,
         ['createdAt']: job?.createdAt ? formatDateStr(job?.createdAt) : 'null',
@@ -241,14 +219,14 @@ const DetailJobPage = () => {
                 <Select
                   style={{ width: 200 }}
                   options={[
-                    { value: 'all', label: 'All' },
-                    { value: 'intern', label: 'Intern' },
-                    { value: 'fresher', label: 'Fresher' },
-                    { value: 'junior', label: 'Junior' },
+                    { value: 'All', label: 'All' },
+                    { value: 'Intern', label: 'Intern' },
+                    { value: 'Fresher', label: 'Fresher' },
+                    { value: 'Junior', label: 'Junior' },
                     { value: 'Middle', label: 'Middle' },
                     { value: 'Senior', label: 'Senior' },
-                    { value: 'leader', label: 'Leader' },
-                    { value: 'project-manager', label: 'Project manager' },
+                    { value: 'Leader', label: 'Leader' },
+                    { value: 'Project manager', label: 'Project manager' },
                   ]}
                 />
               </Form.Item>
@@ -271,25 +249,25 @@ const DetailJobPage = () => {
 
               <Form.Item
                 label={`${t('recruitmentTechs')}`}
-                name='techs'
+                name='technicals'
                 rules={[
                   {
                     required: true,
-                    message: 'Please select your favourite colors!',
+                    message: 'Please select your technilcals!',
                     type: 'array',
                   },
                 ]}
               >
-                <Select mode='multiple' placeholder='Please select techs'>
-                  <Option value='c-plus-plus'>C++</Option>
-                  <Option value='react-js'>ReactJS</Option>
-                  <Option value='express-js'>ExpressJS</Option>
+                <Select mode='multiple' placeholder='Please select technicals'>
+                  <Option value='C++'>C++</Option>
+                  <Option value='ReactJS'>ReactJS</Option>
+                  <Option value='ExpressJS'>ExpressJS</Option>
                 </Select>
               </Form.Item>
 
               <Form.Item
                 label={`${t('recruitmentMinExp')}`}
-                name='experienceYearsMin'
+                name='minExperience'
                 rules={[
                   {
                     required: true,
@@ -304,7 +282,7 @@ const DetailJobPage = () => {
 
               <Form.Item
                 label={`${t('recruitmentMaxExp')}`}
-                name='experienceYearsMax'
+                name='maxExperience'
                 rules={[
                   {
                     required: true,
@@ -317,34 +295,24 @@ const DetailJobPage = () => {
                 <InputNumber />
               </Form.Item>
 
-              <Form.Item<FieldType> label={`${t('recruitmentType')}`} name='type'>
+              <Form.Item<FieldType> label={`${t('recruitmentContractType')}`} name='contractType'>
                 <Select
                   style={{ width: 200 }}
                   options={[
-                    { value: 'office', label: 'Office' },
-                    { value: 'remote', label: 'Remote' },
+                    { value: 'Full time', label: 'Full time' },
+                    { value: 'Part time', label: 'Part time' },
+                    { value: 'Permanent', label: 'Permanent' },
                   ]}
                 />
               </Form.Item>
 
-              <Form.Item<FieldType> label={`${t('recruitmentContractType')}`} name='typeContract'>
+              <Form.Item<FieldType> label={`${t('recruitmentWorkingPlace')}`} name='workingPlace'>
                 <Select
                   style={{ width: 200 }}
                   options={[
-                    { value: 'fulltime', label: 'Full time' },
-                    { value: 'parttime', label: 'Part time' },
-                    { value: 'permanent', label: 'Permanent' },
-                  ]}
-                />
-              </Form.Item>
-
-              <Form.Item<FieldType> label={`${t('recruitmentContractType')}`} name='typeContract'>
-                <Select
-                  style={{ width: 200 }}
-                  options={[
-                    { value: 'fulltime', label: 'Full time' },
-                    { value: 'parttime', label: 'Part time' },
-                    { value: 'permanent', label: 'Permanent' },
+                    { value: 'Hồ Chí Minh', label: 'Hồ Chí Minh' },
+                    { value: 'Hà Nội', label: 'Hà Nội' },
+                    { value: 'Đà Nẵng', label: 'Đà Nẵng' },
                   ]}
                 />
               </Form.Item>

@@ -92,6 +92,7 @@
   "recruitmentMaxExp": "Số năm kinh nghiệm tối đa",
   "recruitmentContractType": "Loại hợp đồng",
   "recruitmentType": "Loại công việc",
+  "recruitmentWorkingPlace": "Địa điểm làm việc",
   "recruitmentAppliedCount": "Số lượng ứng tuyển",
   "recruitmentFollowedCount": "Số lượng theo dõi",
   "recruitmentJobCreatedAt": "Ngày tạo công việc",

@@ -11,7 +11,13 @@ import AddApplicantBtn from '../Content/AddApplicantBtn';
 const { Search } = Input;
 
 interface PropType {
-  createNewDetailApplication: (title: string, name: string, phone: string, email: string) => void;
+  createNewDetailApplication: (
+    name: string,
+    phone: string,
+    email: string,
+    cvUrl: string,
+    description: string,
+  ) => void;
 }
 
 const ProcessSubHeader = (props: PropType) => {

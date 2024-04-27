@@ -92,6 +92,7 @@
   "recruitmentMaxExp": "Max experience years",
   "recruitmentContractType": "Contract type",
   "recruitmentType": "Job type",
+  "recruitmentWorkingPlace": "Working place",
   "recruitmentAppliedCount": "Applied count",
   "recruitmentFollowedCount": "Followed count",
   "recruitmentJobCreatedAt": "Job created at",

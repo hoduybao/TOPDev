@@ -12,6 +12,7 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { v4 as uuidv4 } from 'uuid';
+import { useUpdateApplicationProcessMutation } from '@/+core/redux/apis/common/recruitment/recruitment.api';
 
 import { PlusCircleOutlined } from '@ant-design/icons';
 
@@ -22,11 +23,11 @@ import { KanbanColumn, Id, KanbanApplicationType } from '@/+core/utilities/types
 
 const defaultCols: KanbanColumn[] = [
   {
-    id: 'false',
+    id: false,
     title: 'Mới',
   },
   {
-    id: 'true',
+    id: true,
     title: 'Đã duyệt',
   },
 ];
@@ -38,6 +39,8 @@ interface PropType {
 
 const KanbanBoard = (props: PropType) => {
   const { applications, setApplications } = props;
+
+  const [updateApplicationProcess] = useUpdateApplicationProcessMutation();
 
   const [columns, setColumns] = useState<KanbanColumn[]>(defaultCols);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]); // Use for dnd-kit
@@ -55,7 +58,7 @@ const KanbanBoard = (props: PropType) => {
 
   const createApplication = (columnId: Id) => {
     const newApplication: KanbanApplicationType = {
-      id: uuidv4(),
+      jobId: uuidv4(),
       columnId,
       name: `Applicant ${applications.length + 1}`,
       rating: 1,
@@ -70,6 +73,8 @@ const KanbanBoard = (props: PropType) => {
     const updateApplication = { ...otherProperties };
 
     console.log('Update Application API', updateApplication);
+    const res = await updateApplicationProcess(updateApplication?.id).unwrap();
+    console.log('RES', res);
   };
 
   const deleteApplication = (id: Id) => {
@@ -177,6 +182,7 @@ const KanbanBoard = (props: PropType) => {
 
           // Update Application status
           applications[activeIndex].status = applications[overIndex].columnId;
+          applications[activeIndex].isApprove = applications[overIndex].columnId;
 
           return arrayMove(applications, activeIndex, overIndex - 1);
         }
@@ -196,6 +202,7 @@ const KanbanBoard = (props: PropType) => {
 
         // Update Application status
         applications[activeIndex].status = overId;
+        applications[activeIndex].isApprove = overId;
 
         // console.log('DROPPING APPLICATION OVER COLUMN', { activeIndex });
         return arrayMove(applications, activeIndex, activeIndex);
