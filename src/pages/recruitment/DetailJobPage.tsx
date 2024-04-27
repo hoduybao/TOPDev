@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { Button, Form, Input, InputNumber, Select, Card, Avatar, Spin } from 'antd';
+import { Button, Form, Input, InputNumber, Select, Card, Avatar, Spin, notification } from 'antd';
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
-import { useGetDetailJobByIdQuery } from '@/+core/redux/apis/common/recruitment/recruitment.api';
+import {
+  useGetDetailJobByIdQuery,
+  useUpdateJobMutation,
+} from '@/+core/redux/apis/common/recruitment/recruitment.api';
 
 import { type FormProps } from 'antd';
 
@@ -58,8 +62,10 @@ const DetailJobPage = () => {
   const { t } = useTranslation();
 
   const params = useParams();
+  const [api, contextHolder] = notification.useNotification();
 
   const { data, isLoading } = useGetDetailJobByIdQuery(params?.jobId);
+  const [updateJob, { isLoading: editJobLoading }] = useUpdateJobMutation();
 
   const [NewRecruitmentForm] = Form.useForm();
   const [job, setJob] = useState<JobType | null>(null);
@@ -90,8 +96,8 @@ const DetailJobPage = () => {
     }
   };
 
-  const onEditFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    const newJob: JobType = {
+  const onEditFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+    const job: JobType = {
       id: values?.jobId,
       title: values?.title,
       level: values?.level,
@@ -105,7 +111,35 @@ const DetailJobPage = () => {
       jobDescription: description,
     };
 
-    console.log('Success:', newJob);
+    // console.log('Success:', job);
+
+    // eslint-disable-next-line unused-imports/no-unused-vars
+    const { id, ...otherProperties } = job;
+    const jobNoneId = { ...otherProperties };
+
+    const res = await updateJob({ id: job?.id, job: jobNoneId }).unwrap();
+
+    console.log(res);
+
+    if (res?.statusCode === 200) {
+      handleGetDetailJobById();
+
+      api.open({
+        message: 'Notification',
+        icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+        description: 'Update job successfully',
+        duration: 5,
+        placement: 'bottomLeft',
+      });
+    } else {
+      api.open({
+        message: 'Notification',
+        icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+        description: 'Update job failed',
+        duration: 5,
+        placement: 'bottomLeft',
+      });
+    }
   };
 
   const onEditFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
@@ -133,37 +167,42 @@ const DetailJobPage = () => {
     console.log('Failed:', errorInfo);
   };
 
+  const handleGetDetailJobById = async () => {
+    const job: JobType = data?.data;
+    setJob(job);
+
+    console.log('GET DETAIL JOB BY ID SUCCESSFULLY', job);
+
+    NewRecruitmentForm.setFieldsValue({
+      ['companyName']: job?.company?.name ? job?.company?.name : 'null',
+      ['jobId']: job?.id ? job?.id : 'null',
+      ['title']: job?.title ? job?.title : 'null',
+      ['level']: job?.level ? job?.level : 'null',
+      ['salary']: job?.salary ? job?.salary : 'null',
+      ['technicals']: job?.technicals ? job?.technicals : 'null',
+      ['minExperience']: Number(job?.minExperience ? job?.minExperience : 0),
+      ['maxExperience']: Number(job?.maxExperience ? job?.maxExperience : 0),
+      ['contractType']: job?.contractType ? job?.contractType : 'null',
+      ['workingPlace']: job?.workingPlace ? job?.workingPlace : 'null',
+      ['appliedCount']: job?.appliedCount ? job?.appliedCount : 0,
+      ['followedCount']: job?.followedCount ? job?.followedCount : 0,
+      ['createdAt']: job?.createdAt ? formatDateStr(job?.createdAt) : 'null',
+      ['updatedAt']: job?.updatedAt ? formatDateStr(job?.updatedAt) : 'null',
+    });
+
+    handleInitInterviewProcess(job);
+    handleInitJobDescription(job);
+  };
+
   useEffect(() => {
     if (!isLoading && data?.statusCode === 200) {
-      const job: JobType = data?.data;
-      setJob(job);
-
-      console.log('GET DETAIL JOB BY ID SUCCESSFULLY', job);
-
-      NewRecruitmentForm.setFieldsValue({
-        ['companyName']: job?.company?.name ? job?.company?.name : 'null',
-        ['jobId']: job?.id ? job?.id : 'null',
-        ['title']: job?.title ? job?.title : 'null',
-        ['level']: job?.level ? job?.level : 'null',
-        ['salary']: job?.salary ? job?.salary : 'null',
-        ['technicals']: job?.technicals ? job?.technicals : 'null',
-        ['minExperience']: Number(job?.minExperience ? job?.minExperience : 0),
-        ['maxExperience']: Number(job?.maxExperience ? job?.maxExperience : 0),
-        ['contractType']: job?.contractType ? job?.contractType : 'null',
-        ['workingPlace']: job?.workingPlace ? job?.workingPlace : 'null',
-        ['appliedCount']: job?.appliedCount ? job?.appliedCount : 0,
-        ['followedCount']: job?.followedCount ? job?.followedCount : 0,
-        ['createdAt']: job?.createdAt ? formatDateStr(job?.createdAt) : 'null',
-        ['updatedAt']: job?.updatedAt ? formatDateStr(job?.updatedAt) : 'null',
-      });
-
-      handleInitInterviewProcess(job);
-      handleInitJobDescription(job);
+      handleGetDetailJobById();
     }
   }, [isLoading]);
 
   return (
     <div className='flex flex-col'>
+      {contextHolder}
       <DetailJobSubHeader />
       {isLoading ? (
         <div className='flex justify-center mt-20'>
@@ -373,7 +412,12 @@ const DetailJobPage = () => {
 
               <Form.Item wrapperCol={{ span: 24 }}>
                 <div className='w-full border-t border-gray-300 mt-5 pt-4 flex items-center gap-2'>
-                  <Button type='primary' htmlType='submit' danger>
+                  <Button
+                    type='primary'
+                    htmlType='submit'
+                    danger
+                    disabled={editJobLoading ? true : false}
+                  >
                     {t('recruitmentEditJob')}
                   </Button>
                 </div>

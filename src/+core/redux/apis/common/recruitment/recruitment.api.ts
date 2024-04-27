@@ -48,6 +48,14 @@ const jobApi = commonApi.enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB] }).inje
         body: newApp,
       }),
     }),
+    // Update job by job Id
+    updateJob: build.mutation<any, any>({
+      query: (data) => ({
+        url: `/jobs/${data?.id}`,
+        method: 'PATCH',
+        body: data.job,
+      }),
+    }),
   }),
 });
 
@@ -58,4 +66,5 @@ export const {
   useGetApplicationsByJobIdQuery,
   useUpdateApplicationProcessMutation,
   useCreateApplicationRecruitmentMutation,
+  useUpdateJobMutation,
 } = jobApi;
