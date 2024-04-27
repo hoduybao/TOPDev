@@ -240,16 +240,15 @@ const ApplicationForm = ({ closeModal }: { closeModal: () => void }) => {
 
 const JobSubmitModal = () => {
   const { t } = useTranslation();
-  const { companyId, jobId } = useParams<{ companyId: string; jobId: string }>();
-  const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
+  const { jobId } = useParams<{ jobId: string }>();
   const { data: jobResponse, isLoading: isLoadingJob } = useGetJobByIdQuery(jobId);
 
   // modal handlers ui
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   return (
-    <Spin spinning={isLoadingJob || isLoadingCompany}>
-      {jobResponse && companyResponse && (
+    <Spin spinning={isLoadingJob}>
+      {jobResponse && (
         <div className='mb-2'>
           <UserSubmitButton name={t('applyJob')} onClick={() => setIsModalOpen(true)} isFilled />
           <Modal
@@ -259,7 +258,7 @@ const JobSubmitModal = () => {
               <div className='text-xl'>
                 {t('youApply')}
                 <span className='text-orange-600'> {jobResponse.data.title} </span>
-                {t('at')} {companyResponse.data.name}
+                {t('at')} {jobResponse?.data?.company?.name}
               </div>
             }
             open={isModalOpen}
