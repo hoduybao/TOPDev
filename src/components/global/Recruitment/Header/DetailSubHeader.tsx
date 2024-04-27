@@ -25,7 +25,7 @@ const DetailSubHeader = () => {
   ];
 
   return (
-    <div className='bg-white px-4 pt-2.5 pb-4 border-b border-gray-300 flex items-center justify-between'>
+    <div className='bg-[#fff] px-4 pt-2.5 pb-4 border-b border-gray-300 flex items-center justify-between'>
       <div className='flex items-center gap-3'>
         <div className='flex items-center gap-3'>
           <p className='text-[16px] font-semibold text-primary-red'>{t('recruitmentApplicant')}</p>

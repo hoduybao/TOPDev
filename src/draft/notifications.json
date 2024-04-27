@@ -1,0 +1,50 @@
+[
+  {
+    "id": "noti-1",
+    "title": "Tìm việc an toàn cùng TopDev",
+    "description": "TopDev hướng dẫn bạn nâng cao cảnh giác trước các hành vi tiếp cận, lừa đảo thông qua hoạt động tuyển dụng, click tại đây",
+    "timestamp": "16/4/2024 16:02:00",
+    "isSeen": false,
+    "url": "/"
+  },
+  {
+    "id": "noti-2",
+    "title": "Nộp hồ sơ thành công",
+    "description": "Hồ sơ cho công việc front-end đã được gửi cho nhà tuyển dụng",
+    "timestamp": "5/4/2024 16:02:00",
+    "isSeen": true,
+    "url": "/"
+  },
+  {
+    "id": "noti-3",
+    "title": "Ứng tuyển thành công",
+    "description": "Hồ sơ cho công việc back-end đã được nhận & đang chờ duyệt",
+    "timestamp": "20/3/2024 10:12:00",
+    "isSeen": false,
+    "url": "/"
+  },
+  {
+    "id": "noti-4",
+    "title": "Ứng tuyển thành công",
+    "description": "Hồ sơ cho công việc back-end đã được nhận & đang chờ duyệt",
+    "timestamp": "20/3/2024 08:20:00",
+    "isSeen": false,
+    "url": "/"
+  },
+  {
+    "id": "noti-5",
+    "title": "Ứng tuyển thất bại",
+    "description": "Hồ sơ cho công việc full-stack không hợp lệ",
+    "timestamp": "5/2/2024 14:37:00",
+    "isSeen": true,
+    "url": "/"
+  },
+  {
+    "id": "noti-6",
+    "title": "Việc mới hôm nay - Click ngay kẻo lỡ",
+    "description": "TopDev có nhiều cơ hội việc làm IT mới nhất cho các lập trình viên, nhanh tay đăng ký để nhận được các việc làm hấp dẫn, thu nhập cao",
+    "timestamp": "5/2/2024 11:50:00",
+    "isSeen": false,
+    "url": "/"
+  }
+]
