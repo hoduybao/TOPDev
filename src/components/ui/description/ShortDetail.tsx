@@ -53,12 +53,12 @@ const ShortDetail = () => {
                 <div className='opacity-80 capitalize'>{jobResponse.data.level}</div>
               </DetailSession>
             </GridChildren>
-            <GridChildren>
+            {/* <GridChildren>
               <DetailSession hideBottomLine>
                 <DetailHeader title='Loại hình' />
                 <div className='opacity-80 capitalize'>{jobResponse.data.type}</div>
               </DetailSession>
-            </GridChildren>
+            </GridChildren> */}
             <GridChildren>
               <DetailSession hideBottomLine>
                 <DetailHeader title='Loại hợp đồng' />
