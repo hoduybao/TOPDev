@@ -168,5 +168,6 @@
   "form.cv": "CV",
   "form.description": "Đoạn giới thiệu bản thân hoặc link portfolio",
   "form.cancel": "Hủy",
-  "form.submitcv": "Nộp CV"
+  "form.submitcv": "Nộp CV",
+  "years": "năm"
 }

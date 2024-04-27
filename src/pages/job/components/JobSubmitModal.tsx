@@ -1,11 +1,7 @@
 import React from 'react';
 import { Button, Form, Input, Modal, notification, Spin, Upload, UploadProps } from 'antd';
-import companyData from '../../../draft/company-new.json';
-import jobData from '../../../draft/jsob-new.json';
 import UserSubmitButton from '../../../components/ui/button/UserSubmitButton';
 import { useParams } from 'react-router-dom';
-// import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
-// import { useGetCompanyByIdQuery } from '../../../+core/redux/apis/common/company/company.api';
 import firebaseApp from '../../../config/firebase';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import {
@@ -16,6 +12,8 @@ import { FormInstance, Rule } from 'antd/es/form';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useTranslation } from 'react-i18next';
+import { useGetCompanyByIdQuery } from '@/+core/redux/apis/common/company/company.api';
+import { useGetJobByIdQuery } from '@/+core/redux/apis/common/job/job.api';
 type CustomInputType = {
   label: string;
   name?: string;
@@ -242,21 +240,15 @@ const ApplicationForm = ({ closeModal }: { closeModal: () => void }) => {
 
 const JobSubmitModal = () => {
   const { t } = useTranslation();
-  // const { jobId, companyId } = useParams<{ jobId: string; companyId: string }>();
-  // const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
-  // const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
-  // console.log(companyId); // To build
-
-  const isLoading = false;
-  const isLoadingCompany = false;
-  const jobResponse = { data: jobData };
-  const companyResponse = { data: companyData };
+  const { companyId, jobId } = useParams<{ companyId: string; jobId: string }>();
+  const { data: companyResponse, isLoading: isLoadingCompany } = useGetCompanyByIdQuery(companyId);
+  const { data: jobResponse, isLoading: isLoadingJob } = useGetJobByIdQuery(jobId);
 
   // modal handlers ui
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   return (
-    <Spin spinning={isLoading || isLoadingCompany}>
+    <Spin spinning={isLoadingJob || isLoadingCompany}>
       {jobResponse && companyResponse && (
         <div className='mb-2'>
           <UserSubmitButton name={t('applyJob')} onClick={() => setIsModalOpen(true)} isFilled />

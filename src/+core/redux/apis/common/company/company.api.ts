@@ -7,7 +7,7 @@ const companyApi = commonApi
     endpoints: (build) => ({
       getCompanyById: build.query<any, any>({
         query: (id: string) => ({
-          url: `/companyservice/company/${id}`,
+          url: `/jobs/companies/${id}`,
           method: 'GET',
         }),
       }),

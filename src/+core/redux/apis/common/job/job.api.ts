@@ -12,7 +12,7 @@ const jobApi = commonApi.enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB] }).inje
     }),
     getJobById: build.query<any, any>({
       query: (id: string) => ({
-        url: `/jobservice/job/${id}`,
+        url: `/jobs/${id}`,
         method: 'GET',
       }),
     }),

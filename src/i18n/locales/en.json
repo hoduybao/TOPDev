@@ -168,5 +168,6 @@
   "form.cv": "Your CV",
   "form.description": "Cover letter or portfolio link",
   "form.cancel": "Cancel",
-  "form.submitcv": "Send CV"
+  "form.submitcv": "Send CV",
+  "years": "years"
 }

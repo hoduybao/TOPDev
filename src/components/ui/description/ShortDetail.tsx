@@ -1,8 +1,10 @@
 // import { useParams } from 'react-router-dom';
-import jobData from '../../../draft/jsob-new.json';
+import { useParams } from 'react-router-dom';
 import DetailSession, { DetailHeader } from './Session';
 // import { useGetJobByIdQuery } from '../../../+core/redux/apis/common/job/job.api';
 import { Spin } from 'antd';
+import { useGetJobByIdQuery } from '@/+core/redux/apis/common/job/job.api';
+import { useTranslation } from 'react-i18next';
 
 const ListTechs = ({ data }: { data: string[] }) => {
   return (
@@ -23,10 +25,9 @@ const GridChildren = ({ children }: { children: React.ReactNode }) => {
 };
 
 const ShortDetail = () => {
-  // const { jobId } = useParams<{ jobId: string }>();
-  // const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
-  const jobResponse = { data: jobData };
-  const isLoading = false;
+  const { jobId } = useParams<{ jobId: string }>();
+  const { data: jobResponse, isLoading } = useGetJobByIdQuery(jobId);
+  const { t } = useTranslation();
 
   return (
     <Spin spinning={isLoading}>
@@ -39,7 +40,11 @@ const ShortDetail = () => {
             <GridChildren>
               <DetailSession hideBottomLine>
                 <DetailHeader title='Năm kinh nghiệm tối thiểu' />
-                <div className='opacity-80'>Tất cả kinh nhiệm</div>
+                <div className='opacity-80'>
+                  {jobResponse.data.minExperience ? jobResponse.data.minExperience : 0} -{' '}
+                  {jobResponse.data.maxExperience ? jobResponse.data.maxExperience : null}
+                  {' ' + t('years')}
+                </div>
               </DetailSession>
             </GridChildren>
             <GridChildren>
@@ -57,13 +62,13 @@ const ShortDetail = () => {
             <GridChildren>
               <DetailSession hideBottomLine>
                 <DetailHeader title='Loại hợp đồng' />
-                <div className='opacity-80 capitalize'>{jobResponse.data.typeContract}</div>
+                <div className='opacity-80 capitalize'>{jobResponse.data.contractType}</div>
               </DetailSession>
             </GridChildren>
             <GridChildren>
               <DetailSession hideBottomLine>
                 <DetailHeader title='Các công nghệ sử dụng' />
-                <ListTechs data={jobResponse.data.techs} />
+                <ListTechs data={jobResponse.data.technicals} />
               </DetailSession>
             </GridChildren>
           </div>
