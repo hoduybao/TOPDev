@@ -1,27 +1,29 @@
-import { useParams } from 'react-router-dom';
-import { useGetJobByIdQuery } from '@/+core/redux/apis/common/job/job.api';
-import { Spin } from 'antd';
+import { CustomJobResponse } from '@/+core/redux/apis/common/job/job.types';
+import { JobResponse } from '@/+core/redux/apis/common/job/job.response';
 
-const CompanyCard = ({ isSticky }: { isSticky: boolean }) => {
-  const { jobId } = useParams<{ jobId: string }>();
-  const { data: jobResponse, isLoading: isLoadingJob } = useGetJobByIdQuery(jobId);
-
+const CompanyCard = ({
+  isSticky,
+  data,
+}: {
+  isSticky: boolean;
+  data: CustomJobResponse<JobResponse> | undefined;
+}) => {
   return (
     <>
-      {jobResponse ? (
+      {data ? (
         <>
           <div className={`mr-4 p-2 w-[16.67%] ${isSticky ? 'hidden' : ''}`}>
-            <img className='min-w-[70px]' src={jobResponse?.data?.company?.image} alt='' />
+            <img className='min-w-[70px]' src={data?.data?.company?.image} alt='' />
           </div>
 
           <div className={` ${isSticky ? 'w-[100%]' : 'w-[83.33%]'}`}>
-            <div className='font-bold text-2xl'>{jobResponse && jobResponse.data.title}</div>
+            <div className='font-bold text-2xl'>{data && data.data.title}</div>
             <div className='uppercase opacity-70 font-bold text-lg'>
-              {jobResponse?.data?.company?.name}
+              {data?.data?.company?.name}
             </div>
-            <div className={`mt-2 text-base opacity-70`}>{jobResponse?.data?.company?.address}</div>
+            <div className={`mt-2 text-base opacity-70`}>{data?.data?.company?.address}</div>
             <div className={`mt-2 text-base text-orange-600 font-semibold`}>
-              {jobResponse?.data?.salary} $
+              {data?.data?.salary} $
             </div>
           </div>
         </>

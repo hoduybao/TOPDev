@@ -12,8 +12,8 @@ import { FormInstance, Rule } from 'antd/es/form';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useTranslation } from 'react-i18next';
-import { useGetCompanyByIdQuery } from '@/+core/redux/apis/common/company/company.api';
-import { useGetJobByIdQuery } from '@/+core/redux/apis/common/job/job.api';
+import { CustomJobResponse } from '@/+core/redux/apis/common/job/job.types';
+import { JobResponse } from '@/+core/redux/apis/common/job/job.response';
 type CustomInputType = {
   label: string;
   name?: string;
@@ -238,17 +238,21 @@ const ApplicationForm = ({ closeModal }: { closeModal: () => void }) => {
   );
 };
 
-const JobSubmitModal = () => {
+const JobSubmitModal = ({
+  data,
+  isLoading,
+}: {
+  data: CustomJobResponse<JobResponse> | undefined;
+  isLoading: boolean;
+}) => {
   const { t } = useTranslation();
-  const { jobId } = useParams<{ jobId: string }>();
-  const { data: jobResponse, isLoading: isLoadingJob } = useGetJobByIdQuery(jobId);
 
   // modal handlers ui
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   return (
-    <Spin spinning={isLoadingJob}>
-      {jobResponse && (
+    <Spin spinning={isLoading}>
+      {data && (
         <div className='mb-2'>
           <UserSubmitButton name={t('applyJob')} onClick={() => setIsModalOpen(true)} isFilled />
           <Modal
@@ -257,8 +261,8 @@ const JobSubmitModal = () => {
             title={
               <div className='text-xl'>
                 {t('youApply')}
-                <span className='text-orange-600'> {jobResponse.data.title} </span>
-                {t('at')} {jobResponse?.data?.company?.name}
+                <span className='text-orange-600'> {data.data.title} </span>
+                {t('at')} {data?.data?.company?.name}
               </div>
             }
             open={isModalOpen}

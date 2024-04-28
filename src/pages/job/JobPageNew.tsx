@@ -9,11 +9,16 @@ import JobDescription from '../../components/ui/description/JobDescription';
 import CompanyDescription from '../../components/ui/description/CompanyDescription';
 import { useTranslation } from 'react-i18next';
 import SelectionTags from '../../components/ui/tag/SelectionTags';
+import { useParams } from 'react-router-dom';
+import { useGetJobByIdQuery } from '@/+core/redux/apis/common/job/job.api';
 
 const JobPage = () => {
   const jdRef = React.useRef<HTMLDivElement>(null);
   const companyRef = React.useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
+
+  const { jobId } = useParams<{ jobId: string }>();
+  const { data, isLoading } = useGetJobByIdQuery(jobId);
 
   return (
     <Container>
@@ -24,7 +29,7 @@ const JobPage = () => {
             sticky top-0 z-10
             `}
           >
-            <CompanyCard isSticky={false} />
+            <CompanyCard isSticky={false} data={data} />
           </section>
           <section>
             <SelectionTags
@@ -42,18 +47,18 @@ const JobPage = () => {
               ]}
             />
             <div ref={jdRef}>
-              <JobDescription />
+              <JobDescription data={data} isLoading={isLoading} />
             </div>
             <div ref={companyRef}>
-              <CompanyDescription />
+              <CompanyDescription data={data} isLoading={isLoading} />
             </div>
           </section>
         </section>
 
         <section className='w-full lg:w-[30%] sticky top-0 z-10'>
-          <JobSubmitModal />
+          <JobSubmitModal data={data} isLoading={isLoading} />
           <UserSubmitButton name='Tạo CV để ứng tuyển' onClick={() => {}} />
-          <ShortDetail />
+          <ShortDetail data={data} isLoading={isLoading} />
         </section>
       </div>
     </Container>
