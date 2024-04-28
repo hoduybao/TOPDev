@@ -12,7 +12,7 @@ export function HomePage() {
         <div className='w-4/5 flex flex-col gap-4'>
           <SearchJob
             onSubmit={(values) => {
-              navigate(`/it-jobs${values.keywords && 'keywords=' + values.keywords}`);
+              navigate(`/it-jobs${values.keywords && '?keywords=' + values.keywords}`);
             }}
           />
         </div>
