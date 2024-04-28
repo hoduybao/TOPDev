@@ -6,8 +6,7 @@ export const MY_ROUTE = {
   //RecruitmentProcessLayout
   RECRUITMENT_PROCESS: '/recruitment/:jobId/applications',
   RECRUITMENT_DETAIL: '/recruitment/:jobId/application/:applicationId',
-
-  //AdminLayout
+  RECRUITMENT_PROFILE: '/recruitment/profile',
   ADMIN: '/admin',
   ADMIN_LOGIN: '/admin/login',
   ADMIN_ACCOUNT_MANAGEMENT: '/admin/manage-account',

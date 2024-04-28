@@ -1,12 +1,13 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Dropdown } from 'antd';
+import { Dropdown, Button } from 'antd';
 import type { MenuProps } from 'antd';
 
 import { UploadOutlined, SettingOutlined } from '@ant-design/icons';
 
 const DetailSubHeader = () => {
   const params = useParams();
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
 
@@ -38,7 +39,17 @@ const DetailSubHeader = () => {
         </Dropdown>
       </div>
       <div></div>
-      <div></div>
+      <div>
+        <Button
+          type='primary'
+          danger
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          {t('back')}
+        </Button>
+      </div>
     </div>
   );
 };

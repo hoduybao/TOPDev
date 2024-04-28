@@ -9,6 +9,9 @@ export default function AntDesignProvider({ children }: { children: React.ReactN
           Form: {
             itemMarginBottom: 0,
           },
+          Spin: {
+            colorPrimary: '#dd3f24',
+          },
         },
       }}
     >
