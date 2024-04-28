@@ -25,6 +25,7 @@ export const MY_ROUTE = {
   COMPANY: 'companies/:companyId',
   IT_JOBS: '/it-jobs',
   MANAGE_FOLLOW: '/manage-follow',
+  MY_PAGES: '/users',
 };
 
 // export const DEFAULT_ROUTE = MY_ROUTE.HOME;

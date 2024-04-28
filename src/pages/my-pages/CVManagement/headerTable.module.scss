@@ -1,0 +1,12 @@
+.headerTable {
+  :global .ant-table-thead {
+    th {
+      @apply text-[16px] font-bold leading-[19px] text-[#393e46] bg-[#EFEFEF] before:bg-gray-200 text-center  border-[#979797] #{!important};
+    }
+  }
+  :global .ant-table-tbody {
+    td {
+      @apply border-[#979797] border-b break-all border-x-0 border-t-0 border-solid font-normal text-[16px] text-[#393e46] leading-[19px] #{!important};
+    }
+  }
+}

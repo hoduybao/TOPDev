@@ -1,5 +1,9 @@
+import AccountManagementPage from '@/pages/admin/AccountManagementPage';
+import AdminLoginPage from '@/pages/admin/LoginPage';
 import { HomePage } from '@/pages/home/HomePage';
 import { ITJobs } from '@/pages/it-jobs/IT-Jobs';
+import { MyPages } from '@/pages/my-pages/MyPages';
+import DetailJobPage from '@/pages/recruitment/DetailJobPage';
 import { createBrowserRouter } from 'react-router-dom';
 import AdminLayout from '../components/global/layout/AdminLayout';
 import LoginLayout from '../components/global/layout/LoginLayout';
@@ -7,12 +11,14 @@ import RecruitmentLayout from '../components/global/layout/RecruitmentLayout';
 import RecruitmentProcessLayout from '../components/global/layout/RecruitmentProcessLayout';
 import UserLayout from '../components/global/layout/UserLayout';
 import AdminMainPage from '../pages/admin/MainPage';
+import CompaniesPage from '../pages/company/Companies';
+import CompanyPage from '../pages/company/Company';
+import JobPage from '../pages/job/JobPageNew';
 import LoginPage from '../pages/login/LoginPage';
 import ResetPasswordPage from '../pages/login/ResetPasswordPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import DetailPage from '../pages/recruitment/DetailPage';
 import MainPage from '../pages/recruitment/MainPage';
-import DetailJobPage from '@/pages/recruitment/DetailJobPage';
 import ProcessPage from '../pages/recruitment/ProcessPage';
 import { MY_ROUTE } from './route.constant';
 import JobPage from '../pages/job/JobPageNew';
@@ -65,11 +71,16 @@ export const router = createBrowserRouter([
       { path: MY_ROUTE.USER_PROFILE, element: <MyCV /> },
       { path: MY_ROUTE.JOB_MANAGEMENT, element: <JobManagement /> },
       { path: MY_ROUTE.HOME, element: <HomePage /> },
+      {
+        path: MY_ROUTE.IT_JOBS,
+        element: <ITJobs />,
+      },
       { path: MY_ROUTE.JOB, element: <JobPage /> },
       { path: MY_ROUTE.COMPANIES, element: <CompaniesPage /> },
       { path: MY_ROUTE.COMPANY, element: <CompanyPage /> },
       { path: MY_ROUTE.MANAGE_FOLLOW, element: <ManageFollowPage /> },
       { path: MY_ROUTE.IT_JOBS, element: <ITJobs /> },
+      { path: MY_ROUTE.MY_PAGES, element: <MyPages /> },
     ],
   },
 
