@@ -45,7 +45,8 @@ export const Jobs = ({
                   <a
                     className='block h-[7.5rem] w-[10rem]'
                     target='_blank'
-                    href='/detail-jobs/back-end-developer-java-mysql-spring-lg-cns-viet-nam-2032998'
+                    href={`/jobs/${job.id}`}
+                    rel='noreferrer'
                   >
                     <img
                       alt='LG CNS Việt Nam'
@@ -64,7 +65,8 @@ export const Jobs = ({
                     <a
                       target='_blank'
                       className='text-lg font-bold transition-all text-primary-red hover:text-primary-red'
-                      href='/detail-jobs/back-end-developer-java-mysql-spring-lg-cns-viet-nam-2032998'
+                      href={`/jobs/${job.id}`}
+                      rel='noreferrer'
                     >
                       {job?.title}
                     </a>
@@ -73,7 +75,8 @@ export const Jobs = ({
                     <a
                       target='_blank'
                       className='text-[#424242] transition-all hover:text-primary-red'
-                      href='/detail-jobs/back-end-developer-java-mysql-spring-lg-cns-viet-nam-2032998'
+                      href={`/jobs/${job.id}`}
+                      rel='noreferrer'
                     >
                       {job?.company?.name}
                     </a>

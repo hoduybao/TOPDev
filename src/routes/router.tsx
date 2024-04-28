@@ -7,6 +7,7 @@ import JobManagement from '@/pages/job-management/JobManagement';
 import ManageFollowPage from '@/pages/manage-follow/ManageFollowPage';
 import { MyPages } from '@/pages/my-pages/MyPages';
 import DetailJobPage from '@/pages/recruitment/DetailJobPage';
+import ProfilePage from '@/pages/recruitment/ProfilePage';
 import { createBrowserRouter } from 'react-router-dom';
 import AdminLayout from '../components/global/layout/AdminLayout';
 import LoginLayout from '../components/global/layout/LoginLayout';
@@ -24,7 +25,6 @@ import DetailPage from '../pages/recruitment/DetailPage';
 import MainPage from '../pages/recruitment/MainPage';
 import ProcessPage from '../pages/recruitment/ProcessPage';
 import { MY_ROUTE } from './route.constant';
-import ProfilePage from '@/pages/recruitment/ProfilePage';
 
 export const router = createBrowserRouter([
   {
@@ -59,14 +59,6 @@ export const router = createBrowserRouter([
   },
   {
     path: '/',
-    element: <LoginLayout />,
-    children: [
-      { path: MY_ROUTE.LOGIN, element: <LoginPage /> },
-      { path: MY_ROUTE.RESET_PASSWORD, element: <ResetPasswordPage /> },
-    ],
-  },
-  {
-    path: '/',
     element: <UserLayout />,
     children: [
       { path: MY_ROUTE.USER_PROFILE, element: <MyCV /> },
@@ -82,6 +74,14 @@ export const router = createBrowserRouter([
       { path: MY_ROUTE.MANAGE_FOLLOW, element: <ManageFollowPage /> },
       { path: MY_ROUTE.IT_JOBS, element: <ITJobs /> },
       { path: MY_ROUTE.MY_PAGES, element: <MyPages /> },
+    ],
+  },
+  {
+    path: '/',
+    element: <LoginLayout />,
+    children: [
+      { path: MY_ROUTE.LOGIN, element: <LoginPage /> },
+      { path: MY_ROUTE.RESET_PASSWORD, element: <ResetPasswordPage /> },
     ],
   },
 

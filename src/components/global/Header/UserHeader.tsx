@@ -16,7 +16,7 @@ const HeaderMenuItem = ({ items }: { items: any }) => {
   const [children, setChildren] = useState<HeaderMenuItemProps | null>(null);
 
   return (
-    <div className='h-full group cursor-pointer relative z-10'>
+    <div className='h-full group cursor-pointer relative z-20'>
       <div className='flex justify-between items-center gap-3 px-8 h-full' onClick={items.onClick}>
         <div className='text-base font-bold group-hover:text-primary-red'>{items.title}</div>
         {items.children && (
