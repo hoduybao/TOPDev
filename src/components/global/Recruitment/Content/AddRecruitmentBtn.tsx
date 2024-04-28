@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useSize from '@/hooks/useSize';
 import { Button, Modal, Form, Input, InputNumber, Select, notification } from 'antd';
-// import { Space } from 'antd';
+import { useCreateJobMutation } from '@/+core/redux/apis/common/recruitment/recruitment.api';
 
 import { type FormProps } from 'antd';
-import { v4 as uuidv4 } from 'uuid';
 
 // import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
@@ -25,11 +24,11 @@ type FieldType = {
   title?: string;
   level?: string;
   salary?: string;
-  techs?: string[];
-  experienceYearsMin?: string;
-  experienceYearsMax?: string;
-  typeContract?: string;
-  type?: string;
+  technicals?: string[];
+  minExperience?: string;
+  maxExperience?: string;
+  contractType?: string;
+  workingPlace?: string;
   jobDescription?: any;
   interviewProcess?: string[] | any;
 };
@@ -41,6 +40,7 @@ const AddRecruitmentBtn = (props: PropType) => {
   const windowsize = useSize();
 
   const [api, contextHolder] = notification.useNotification();
+  const [createNewJob, { isLoading: createJobLoading }] = useCreateJobMutation();
 
   const [NewRecruitmentForm] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -62,40 +62,61 @@ const AddRecruitmentBtn = (props: PropType) => {
     NewRecruitmentForm.resetFields();
   };
 
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+    if (interviewProcess === '' || description === '') {
+      api.open({
+        message: 'Notification',
+        icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+        description: 'Create new job failed',
+        duration: 5,
+        placement: 'bottomLeft',
+      });
+
+      return;
+    }
+
     const newJob: JobType = {
-      id: uuidv4(),
       title: values?.title,
-      companyId: uuidv4(),
-      companyName: values?.companyName,
       level: values?.level,
       salary: values?.salary,
-      techs: values?.techs,
-      experienceYearsMin: values?.experienceYearsMin,
-      experienceYearsMax: values?.experienceYearsMax,
-      typeContract: values?.typeContract,
-      type: values?.type,
-      // interviewProcess: values?.interviewProcess?.map((p: any) => {
-      //   return p?.title;
-      // }),
+      technicals: values?.technicals,
+      minExperience: values?.minExperience,
+      maxExperience: values?.maxExperience,
+      contractType: values?.contractType,
+      workingPlace: values?.workingPlace,
       interviewProcess: interviewProcess,
-      description: description,
+      jobDescription: description,
     };
 
-    console.log('Success:', newJob);
-    setJobs([...jobs, newJob]);
+    // console.log('Success:', newJob);
+
+    const res = await createNewJob(newJob).unwrap();
+    console.log('Create job res:', res);
+
+    if (res?.statusCode === 200 && res?.data) {
+      const jobResData: JobType = res?.data;
+      setJobs([...jobs, jobResData]);
+
+      api.open({
+        message: 'Notification',
+        icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+        description: 'Create new job successfully',
+        duration: 5,
+        placement: 'bottomLeft',
+      });
+    } else {
+      api.open({
+        message: 'Notification',
+        icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+        description: 'Create new job failed',
+        duration: 5,
+        placement: 'bottomLeft',
+      });
+    }
 
     setInterviewProcess('');
     setDescription('');
     handleOk();
-
-    api.open({
-      message: 'Notification',
-      icon: <CheckCircleOutlined style={{ color: 'green' }} />,
-      description: 'Create new job successfully',
-      duration: 5,
-      placement: 'bottomLeft',
-    });
   };
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
@@ -139,9 +160,9 @@ const AddRecruitmentBtn = (props: PropType) => {
           onFinishFailed={onFinishFailed}
           initialValues={{
             ['companyName']: 'DTS Software Viet Nam',
-            ['level']: 'all',
-            ['typeContract']: 'fulltime',
-            ['type']: 'office',
+            ['level']: 'All',
+            ['contractType']: 'Full time',
+            ['workingPlace']: 'Hồ Chí Minh',
           }}
         >
           <Form.Item<FieldType>
@@ -149,7 +170,7 @@ const AddRecruitmentBtn = (props: PropType) => {
             name='companyName'
             rules={[{ required: true, message: 'Please input company name!' }]}
           >
-            <Input />
+            <Input disabled />
           </Form.Item>
 
           <Form.Item<FieldType>
@@ -168,14 +189,14 @@ const AddRecruitmentBtn = (props: PropType) => {
             <Select
               style={{ width: 200 }}
               options={[
-                { value: 'all', label: 'All' },
-                { value: 'intern', label: 'Intern' },
-                { value: 'fresher', label: 'Fresher' },
-                { value: 'junior', label: 'Junior' },
+                { value: 'All', label: 'All' },
+                { value: 'Intern', label: 'Intern' },
+                { value: 'Fresher', label: 'Fresher' },
+                { value: 'Junior', label: 'Junior' },
                 { value: 'Middle', label: 'Middle' },
                 { value: 'Senior', label: 'Senior' },
-                { value: 'leader', label: 'Leader' },
-                { value: 'project-manager', label: 'Project manager' },
+                { value: 'Leader', label: 'Leader' },
+                { value: 'Project manager', label: 'Project manager' },
               ]}
             />
           </Form.Item>
@@ -198,21 +219,19 @@ const AddRecruitmentBtn = (props: PropType) => {
 
           <Form.Item
             label={`${t('recruitmentTechs')}`}
-            name='techs'
-            rules={[
-              { required: true, message: 'Please select your favourite colors!', type: 'array' },
-            ]}
+            name='technicals'
+            rules={[{ required: true, message: 'Please select your technicals!', type: 'array' }]}
           >
-            <Select mode='multiple' placeholder='Please select techs'>
-              <Option value='c-plus-plus'>C++</Option>
-              <Option value='react-js'>ReactJS</Option>
-              <Option value='express-js'>ExpressJS</Option>
+            <Select mode='multiple' placeholder='Please select technicals'>
+              <Option value='C++'>C++</Option>
+              <Option value='ReactJS'>ReactJS</Option>
+              <Option value='ExpressJS'>ExpressJS</Option>
             </Select>
           </Form.Item>
 
           <Form.Item
             label={`${t('recruitmentMinExp')}`}
-            name='experienceYearsMin'
+            name='minExperience'
             rules={[
               {
                 required: true,
@@ -227,7 +246,7 @@ const AddRecruitmentBtn = (props: PropType) => {
 
           <Form.Item
             label={`${t('recruitmentMaxExp')}`}
-            name='experienceYearsMax'
+            name='maxExperience'
             rules={[
               {
                 required: true,
@@ -240,52 +259,27 @@ const AddRecruitmentBtn = (props: PropType) => {
             <InputNumber />
           </Form.Item>
 
-          <Form.Item<FieldType> label={`${t('recruitmentContractType')}`} name='typeContract'>
+          <Form.Item<FieldType> label={`${t('recruitmentContractType')}`} name='contractType'>
             <Select
               style={{ width: 200 }}
               options={[
-                { value: 'fulltime', label: 'Full time' },
-                { value: 'parttime', label: 'Part time' },
+                { value: 'Full time', label: 'Full time' },
+                { value: 'Part time', label: 'Part time' },
+                { value: 'Permanent', label: 'Permanent' },
               ]}
             />
           </Form.Item>
 
-          <Form.Item<FieldType> label={`${t('recruitmentType')}`} name='type'>
+          <Form.Item<FieldType> label={`${t('recruitmentWorkingPlace')}`} name='workingPlace'>
             <Select
               style={{ width: 200 }}
               options={[
-                { value: 'office', label: 'Office' },
-                { value: 'remote', label: 'Remote' },
+                { value: 'Hồ Chí Minh', label: 'Hồ Chí Minh' },
+                { value: 'Hà Nội', label: 'Hà Nội' },
+                { value: 'Đà Nẵng', label: 'Đà Nẵng' },
               ]}
             />
           </Form.Item>
-
-          {/* <Form.Item<FieldType> label={`${t('recruitmentInterview')}`} name='interviewProcess'>
-            <Form.List name='interviewProcess'>
-              {(fields, { add, remove }) => (
-                <>
-                  {fields.map(({ key, name, ...restField }) => (
-                    <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align='baseline'>
-                      <Form.Item
-                        className='w-[300px] lg:w-[600px]'
-                        {...restField}
-                        name={[name, 'title']}
-                        rules={[{ required: true, message: 'Missing process title' }]}
-                      >
-                        <Input placeholder='Nội dung quy trình' />
-                      </Form.Item>
-                      <MinusCircleOutlined onClick={() => remove(name)} />
-                    </Space>
-                  ))}
-                  <Form.Item>
-                    <Button type='dashed' onClick={() => add()} block icon={<PlusOutlined />}>
-                      Thêm quy trình
-                    </Button>
-                  </Form.Item>
-                </>
-              )}
-            </Form.List>
-          </Form.Item> */}
 
           <Form.Item<FieldType> label={`${t('recruitmentInterview')}`} name='interviewProcess'>
             <TextContentEditor content={interviewProcess} setContent={setInterviewProcess} />
@@ -297,7 +291,12 @@ const AddRecruitmentBtn = (props: PropType) => {
 
           <Form.Item wrapperCol={{ span: 24 }}>
             <div className='w-full border-t border-gray-300 mt-5 pt-4 flex items-center gap-2'>
-              <Button type='primary' htmlType='submit' danger>
+              <Button
+                type='primary'
+                htmlType='submit'
+                danger
+                disabled={createJobLoading ? true : false}
+              >
                 {t('recruitmentCreateJob')}
               </Button>
               <Button onClick={handleCancel}>{t('recruitmentCancelJob')}</Button>

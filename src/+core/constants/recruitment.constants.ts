@@ -33,6 +33,6 @@ export const HeaderUserMenu = [
   { name: 'Hỗ trợ', url: '/recruitment' },
   { name: 'Phím tắt', url: '/recruitment', description: 'CTRL + K' },
   { name: 'Dark mode' },
-  { name: 'Thông tin của tôi', url: '/recruitment' },
+  { name: 'Thông tin của tôi', url: '/recruitment/profile' },
   { name: 'Cơ sở dữ liệu của tôi', url: '/recruitment' },
 ];
