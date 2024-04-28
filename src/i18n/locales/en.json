@@ -195,5 +195,7 @@
   "jobTitle": "Job title",
   "company": "Company",
   "appliedAt": "Applied at",
-  "latestStatus": "Lastest status"
+  "latestStatus": "Lastest status",
+  "loginToViewSalary": "Login to view salary",
+  "companyInformation": "Company information"
 }

@@ -195,5 +195,7 @@
   "jobTitle": "Tên vị trí",
   "company": "Tên công ty",
   "appliedAt": "Ngày ứng tuyển",
-  "latestStatus": "Trạng thái gần nhất"
+  "latestStatus": "Trạng thái gần nhất",
+  "loginToViewSalary": "Đăng nhập để xem mức lương",
+  "companyInformation": "Thông tin công ty"
 }

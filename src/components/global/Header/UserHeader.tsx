@@ -2,10 +2,10 @@ import { IMAGES } from '@/config/images';
 import { Button, Image } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import ArrowDownIcon from '../../../../public/assets/icons/down-arrow.tsx';
 import PhoneIcon from '../../../../public/assets/icons/phone.tsx';
 import ArrowRightIcon from '../../../../public/assets/icons/right-arrow.tsx';
-import NotificationBox from '../../../pages/home/components/NotificationBox.tsx';
 
 type HeaderMenuItemProps = {
   children?: any[];
@@ -17,10 +17,10 @@ const HeaderMenuItem = ({ items }: { items: any }) => {
 
   return (
     <div className='h-full group cursor-pointer relative z-10'>
-      <div className='flex justify-between items-center gap-3 p-8'>
+      <div className='flex justify-between items-center gap-3 px-8 h-full' onClick={items.onClick}>
         <div className='text-base font-bold group-hover:text-primary-red'>{items.title}</div>
         {items.children && (
-          <ArrowDownIcon className='transform group-hover:rotate-180 transition-transform duration-500 stroke-black-900  group-hover:stroke-primary-red' />
+          <ArrowDownIcon className='!hidden md:!block transform group-hover:rotate-180 transition-transform duration-500 stroke-black-900  group-hover:stroke-primary-red' />
         )}
       </div>
       {items.children && items.children.length > 0 && (
@@ -65,338 +65,342 @@ const HeaderMenuItem = ({ items }: { items: any }) => {
     </div>
   );
 };
+export const JobItems = (): any => {
+  const navigate = useNavigate();
+  return {
+    title: 'Việc làm IT',
+    onClick: () => {
+      navigate('/it-jobs');
+    },
+    children: [
+      {
+        title: 'Theo câp bậc',
+        children: [
+          {
+            title: 'Intern',
+            onClick: () => {},
+          },
+          {
+            title: 'Fresher',
+            onClick: () => {},
+          },
+          {
+            title: 'Junior',
+            onClick: () => {},
+          },
+          {
+            title: 'Middle',
+            onClick: () => {},
+          },
+          {
+            title: 'Senior',
+            onClick: () => {},
+          },
+          {
+            title: 'Trưởng nhóm',
+            onClick: () => {},
+          },
+          {
+            title: 'Trưởng phòng',
+            onClick: () => {},
+          },
+          {
+            title: 'All Levels',
+            onClick: () => {},
+          },
+        ],
+      },
+      {
+        title: 'Theo loại hình',
+        children: [
+          {
+            title: 'In Office',
+            onClick: () => {},
+          },
+          {
+            title: 'Hybrid',
+            onClick: () => {},
+          },
+          {
+            title: 'Remote',
+            onClick: () => {},
+          },
+          {
+            title: 'Oversea',
+            onClick: () => {},
+          },
+        ],
+      },
+      {
+        title: 'Theo địa điểm',
+        children: [
+          {
+            title: 'Hà Nội',
+            onClick: () => {},
+          },
+          {
+            title: 'Hồ Chí Minh',
+            onClick: () => {},
+          },
+          {
+            title: 'Đà Nẵng',
+            onClick: () => {},
+          },
+          {
+            title: 'Cần Thơ',
+            onClick: () => {},
+          },
+          {
+            title: 'Khác',
+            onClick: () => {},
+          },
+        ],
+      },
+      {
+        title: 'Theo kỹ năng',
+        grid: true,
+        children: [
+          {
+            title: 'Javascript',
+            onClick: () => {},
+          },
+          {
+            title: 'Flutter',
+            onClick: () => {},
+          },
+          {
+            title: 'Game',
+            onClick: () => {},
+          },
+          {
+            title: 'Java',
+            onClick: () => {},
+          },
+          {
+            title: 'React Native',
+            onClick: () => {},
+          },
+          {
+            title: 'Designer',
+            onClick: () => {},
+          },
+          {
+            title: '.NET',
+            onClick: () => {},
+          },
+          {
+            title: 'Tester',
+            onClick: () => {},
+          },
+          {
+            title: 'Golang',
+            onClick: () => {},
+          },
+          {
+            title: 'C#',
+            onClick: () => {},
+          },
+          {
+            title: 'Product Manager',
+            onClick: () => {},
+          },
+          {
+            title: 'AWS',
+            onClick: () => {},
+          },
+          {
+            title: 'PHP',
+            onClick: () => {},
+          },
+          {
+            title: 'Business Analyst',
+            onClick: () => {},
+          },
+          {
+            title: 'Azure',
+            onClick: () => {},
+          },
+          {
+            title: 'Python',
+            onClick: () => {},
+          },
+          {
+            title: 'Product Manager',
+            onClick: () => {},
+          },
+          {
+            title: 'Cloud',
+            onClick: () => {},
+          },
+          {
+            title: 'C++',
+            onClick: () => {},
+          },
+          {
+            title: 'System admin',
+            onClick: () => {},
+          },
+          {
+            title: 'UI/UX',
+            onClick: () => {},
+          },
+          {
+            title: 'iOS',
+            onClick: () => {},
+          },
+          {
+            title: 'DevOps',
+            onClick: () => {},
+          },
+          {
+            title: 'Android',
+            onClick: () => {},
+          },
+          {
+            title: 'System Engineer',
+            onClick: () => {},
+          },
+          {
+            title: 'Data Analyst',
+            onClick: () => {},
+          },
+        ],
+      },
+      {
+        title: 'Theo kỹ năng',
+        grid: true,
+        children: [
+          {
+            title: 'HTML',
+            onClick: () => {},
+          },
 
-const jobItems = {
-  title: 'Việc làm IT',
-  onClick: () => {},
-  children: [
-    {
-      title: 'Theo câp bậc',
-      children: [
-        {
-          title: 'Intern',
-          onClick: () => {},
-        },
-        {
-          title: 'Fresher',
-          onClick: () => {},
-        },
-        {
-          title: 'Junior',
-          onClick: () => {},
-        },
-        {
-          title: 'Middle',
-          onClick: () => {},
-        },
-        {
-          title: 'Senior',
-          onClick: () => {},
-        },
-        {
-          title: 'Trưởng nhóm',
-          onClick: () => {},
-        },
-        {
-          title: 'Trưởng phòng',
-          onClick: () => {},
-        },
-        {
-          title: 'All Levels',
-          onClick: () => {},
-        },
-      ],
-    },
-    {
-      title: 'Theo loại hình',
-      children: [
-        {
-          title: 'In Office',
-          onClick: () => {},
-        },
-        {
-          title: 'Hybrid',
-          onClick: () => {},
-        },
-        {
-          title: 'Remote',
-          onClick: () => {},
-        },
-        {
-          title: 'Oversea',
-          onClick: () => {},
-        },
-      ],
-    },
-    {
-      title: 'Theo địa điểm',
-      children: [
-        {
-          title: 'Hà Nội',
-          onClick: () => {},
-        },
-        {
-          title: 'Hồ Chí Minh',
-          onClick: () => {},
-        },
-        {
-          title: 'Đà Nẵng',
-          onClick: () => {},
-        },
-        {
-          title: 'Cần Thơ',
-          onClick: () => {},
-        },
-        {
-          title: 'Khác',
-          onClick: () => {},
-        },
-      ],
-    },
-    {
-      title: 'Theo kỹ năng',
-      grid: true,
-      children: [
-        {
-          title: 'Javascript',
-          onClick: () => {},
-        },
-        {
-          title: 'Flutter',
-          onClick: () => {},
-        },
-        {
-          title: 'Game',
-          onClick: () => {},
-        },
-        {
-          title: 'Java',
-          onClick: () => {},
-        },
-        {
-          title: 'React Native',
-          onClick: () => {},
-        },
-        {
-          title: 'Designer',
-          onClick: () => {},
-        },
-        {
-          title: '.NET',
-          onClick: () => {},
-        },
-        {
-          title: 'Tester',
-          onClick: () => {},
-        },
-        {
-          title: 'Golang',
-          onClick: () => {},
-        },
-        {
-          title: 'C#',
-          onClick: () => {},
-        },
-        {
-          title: 'Product Manager',
-          onClick: () => {},
-        },
-        {
-          title: 'AWS',
-          onClick: () => {},
-        },
-        {
-          title: 'PHP',
-          onClick: () => {},
-        },
-        {
-          title: 'Business Analyst',
-          onClick: () => {},
-        },
-        {
-          title: 'Azure',
-          onClick: () => {},
-        },
-        {
-          title: 'Python',
-          onClick: () => {},
-        },
-        {
-          title: 'Product Manager',
-          onClick: () => {},
-        },
-        {
-          title: 'Cloud',
-          onClick: () => {},
-        },
-        {
-          title: 'C++',
-          onClick: () => {},
-        },
-        {
-          title: 'System admin',
-          onClick: () => {},
-        },
-        {
-          title: 'UI/UX',
-          onClick: () => {},
-        },
-        {
-          title: 'iOS',
-          onClick: () => {},
-        },
-        {
-          title: 'DevOps',
-          onClick: () => {},
-        },
-        {
-          title: 'Android',
-          onClick: () => {},
-        },
-        {
-          title: 'System Engineer',
-          onClick: () => {},
-        },
-        {
-          title: 'Data Analyst',
-          onClick: () => {},
-        },
-      ],
-    },
-    {
-      title: 'Theo kỹ năng',
-      grid: true,
-      children: [
-        {
-          title: 'HTML',
-          onClick: () => {},
-        },
+          {
+            title: 'Front-End',
+            onClick: () => {},
+          },
+          {
+            title: 'AngularJS',
+            onClick: () => {},
+          },
 
-        {
-          title: 'Front-End',
-          onClick: () => {},
-        },
-        {
-          title: 'AngularJS',
-          onClick: () => {},
-        },
-
-        {
-          title: 'Unity',
-          onClick: () => {},
-        },
-        {
-          title: 'Back-End',
-          onClick: () => {},
-        },
-        {
-          title: 'SAP',
-          onClick: () => {},
-        },
-        {
-          title: 'Kotlin',
-          onClick: () => {},
-        },
-        {
-          title: 'QA/QC',
-          onClick: () => {},
-        },
-        {
-          title: 'Magento',
-          onClick: () => {},
-        },
-        {
-          title: 'IT Security',
-          onClick: () => {},
-        },
-        {
-          title: 'NodeJS',
-          onClick: () => {},
-        },
-        {
-          title: 'Wordpress',
-          onClick: () => {},
-        },
-        {
-          title: 'IT Support',
-          onClick: () => {},
-        },
-        {
-          title: 'ReactJS',
-          onClick: () => {},
-        },
-        {
-          title: 'Network',
-          onClick: () => {},
-        },
-        {
-          title: 'IT helpdesk',
-          onClick: () => {},
-        },
-        {
-          title: 'VueJS',
-          onClick: () => {},
-        },
-        {
-          title: 'Embedded',
-          onClick: () => {},
-        },
-        {
-          title: 'ERP',
-          onClick: () => {},
-        },
-        {
-          title: 'SQL',
-          onClick: () => {},
-        },
-        {
-          title: 'Solution Architect',
-          onClick: () => {},
-        },
-        {
-          title: 'Laravel',
-          onClick: () => {},
-        },
-        {
-          title: 'Database',
-          onClick: () => {},
-        },
-        {
-          title: 'ASP.NET',
-          onClick: () => {},
-        },
-        {
-          title: 'Xamarin',
-          onClick: () => {},
-        },
-        {
-          title: 'Angular',
-          onClick: () => {},
-        },
-      ],
-    },
-    {
-      title: 'TopDev',
-      children: [
-        {
-          title: 'Đăng tin tuyển dụng',
-          onClick: () => {},
-        },
-        {
-          title: 'Thương hiệu tuyển dụng',
-          onClick: () => {},
-        },
-        {
-          title: 'IT Headhunt',
-          onClick: () => {},
-        },
-        {
-          title: 'Báo cáo thị trường IT',
-          onClick: () => {},
-        },
-      ],
-    },
-  ],
+          {
+            title: 'Unity',
+            onClick: () => {},
+          },
+          {
+            title: 'Back-End',
+            onClick: () => {},
+          },
+          {
+            title: 'SAP',
+            onClick: () => {},
+          },
+          {
+            title: 'Kotlin',
+            onClick: () => {},
+          },
+          {
+            title: 'QA/QC',
+            onClick: () => {},
+          },
+          {
+            title: 'Magento',
+            onClick: () => {},
+          },
+          {
+            title: 'IT Security',
+            onClick: () => {},
+          },
+          {
+            title: 'NodeJS',
+            onClick: () => {},
+          },
+          {
+            title: 'Wordpress',
+            onClick: () => {},
+          },
+          {
+            title: 'IT Support',
+            onClick: () => {},
+          },
+          {
+            title: 'ReactJS',
+            onClick: () => {},
+          },
+          {
+            title: 'Network',
+            onClick: () => {},
+          },
+          {
+            title: 'IT helpdesk',
+            onClick: () => {},
+          },
+          {
+            title: 'VueJS',
+            onClick: () => {},
+          },
+          {
+            title: 'Embedded',
+            onClick: () => {},
+          },
+          {
+            title: 'ERP',
+            onClick: () => {},
+          },
+          {
+            title: 'SQL',
+            onClick: () => {},
+          },
+          {
+            title: 'Solution Architect',
+            onClick: () => {},
+          },
+          {
+            title: 'Laravel',
+            onClick: () => {},
+          },
+          {
+            title: 'Database',
+            onClick: () => {},
+          },
+          {
+            title: 'ASP.NET',
+            onClick: () => {},
+          },
+          {
+            title: 'Xamarin',
+            onClick: () => {},
+          },
+          {
+            title: 'Angular',
+            onClick: () => {},
+          },
+        ],
+      },
+      {
+        title: 'TopDev',
+        children: [
+          {
+            title: 'Đăng tin tuyển dụng',
+            onClick: () => {},
+          },
+          {
+            title: 'Thương hiệu tuyển dụng',
+            onClick: () => {},
+          },
+          {
+            title: 'IT Headhunt',
+            onClick: () => {},
+          },
+          {
+            title: 'Báo cáo thị trường IT',
+            onClick: () => {},
+          },
+        ],
+      },
+    ],
+  };
 };
 
 const itCompany = {
@@ -512,12 +516,21 @@ const Show = ({
 
 const UserHeader = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   return (
     <div className='w-full bg-white-900 shadow-md lg:px-3 flex justify-center h-[5.25rem]'>
       <div className='flex justify-between items-center w-full'>
-        <div className='flex gap-2 items-center h-full'>
-          <Image alt='logo' src={IMAGES.logoTopDev} preview={false} />
-          <HeaderMenuItem items={jobItems} />
+        <div className='flex gap-1 items-center h-full'>
+          <Image
+            className='cursor-pointer'
+            alt='logo'
+            src={IMAGES.logoTopDev}
+            preview={false}
+            onClick={() => {
+              navigate('/');
+            }}
+          />
+          <HeaderMenuItem items={JobItems()} />
           <HeaderMenuItem items={itCompany} />
           <HeaderMenuItem items={tools} />
           <HeaderMenuItem items={itBlog} />
@@ -532,9 +545,9 @@ const UserHeader = () => {
               </div>
             </div>
           </Show>
-          <Show hideInMobile>
+          {/* <Show hideInMobile>
             <NotificationBox />
-          </Show>
+          </Show> */}
           <Show hideInMobile>
             <Button className=' !text-primary-red !font-bold hover:!border-primary-red border-primary-red !bg-white-900 hover:!bg-red-300 !text-base !px-6 !h-11 !leading-[100%] rounded-[4px]'>
               {t('employer')}

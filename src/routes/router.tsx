@@ -1,7 +1,10 @@
+import MyCV from '@/pages/UserProfile/MyCV';
 import AccountManagementPage from '@/pages/admin/AccountManagementPage';
 import AdminLoginPage from '@/pages/admin/LoginPage';
 import { HomePage } from '@/pages/home/HomePage';
 import { ITJobs } from '@/pages/it-jobs/IT-Jobs';
+import JobManagement from '@/pages/job-management/JobManagement';
+import ManageFollowPage from '@/pages/manage-follow/ManageFollowPage';
 import { MyPages } from '@/pages/my-pages/MyPages';
 import DetailJobPage from '@/pages/recruitment/DetailJobPage';
 import { createBrowserRouter } from 'react-router-dom';
@@ -21,14 +24,6 @@ import DetailPage from '../pages/recruitment/DetailPage';
 import MainPage from '../pages/recruitment/MainPage';
 import ProcessPage from '../pages/recruitment/ProcessPage';
 import { MY_ROUTE } from './route.constant';
-import JobPage from '../pages/job/JobPageNew';
-import CompaniesPage from '../pages/company/Companies';
-import CompanyPage from '../pages/company/Company';
-import AccountManagementPage from '@/pages/admin/AccountManagementPage';
-import AdminLoginPage from '@/pages/admin/LoginPage';
-import JobManagement from '@/pages/job-management/JobManagement';
-import MyCV from '@/pages/UserProfile/MyCV';
-import ManageFollowPage from '@/pages/manage-follow/ManageFollowPage';
 import ProfilePage from '@/pages/recruitment/ProfilePage';
 
 export const router = createBrowserRouter([

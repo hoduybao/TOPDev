@@ -1,14 +1,13 @@
-import Container from '../../components/global/Container/Container';
-import CompanyCard from '../../components/ui/card/CompanyCard';
-import JobSubmitModal from '../../components/ui/modal/JobSubmitModal';
-import UserSubmitButton from '../../components/ui/button/UserSubmitButton';
-import ShortDetail from '../../components/ui/description/ShortDetail';
-import { TAG_TYPES } from '../../components/ui/tag/SelectionTags';
 import React from 'react';
-import JobDescription from '../../components/ui/description/JobDescription';
-import CompanyDescription from '../../components/ui/description/CompanyDescription';
 import { useTranslation } from 'react-i18next';
-import SelectionTags from '../../components/ui/tag/SelectionTags';
+import Container from '../../components/global/Container/Container';
+import UserSubmitButton from '../../components/ui/button/UserSubmitButton';
+import CompanyCard from '../../components/ui/card/CompanyCard';
+import CompanyDescription from '../../components/ui/description/CompanyDescription';
+import JobDescription from '../../components/ui/description/JobDescription';
+import ShortDetail from '../../components/ui/description/ShortDetail';
+import JobSubmitModal from '../../components/ui/modal/JobSubmitModal';
+import SelectionTags, { TAG_TYPES } from '../../components/ui/tag/SelectionTags';
 
 const JobPage = () => {
   const jdRef = React.useRef<HTMLDivElement>(null);
