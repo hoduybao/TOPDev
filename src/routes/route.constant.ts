@@ -19,7 +19,7 @@ export const MY_ROUTE = {
   USER_PROFILE: '/user/profile',
   JOB_MANAGEMENT: '/job-management',
   HOME: '',
-  JOB: 'jobs/:companyId/:jobId',
+  JOB: 'jobs/:jobId',
   COMPANIES: 'companies',
   COMPANY: 'companies/:companyId',
   IT_JOBS: '/it-jobs',
