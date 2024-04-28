@@ -39,7 +39,6 @@ export function useFilter<T>({ initialFilter }: PagingFiletrType<T>) {
     if (!params.page || !params.limit) {
       params = { ...params, page: 1, limit: 10 };
     }
-    console.log(params);
 
     setFilter(params as T);
   }, [searchParams]);

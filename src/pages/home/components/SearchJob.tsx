@@ -1,4 +1,4 @@
-import { GetListJobsTypeREQ } from '@/+core/redux/apis/common/job-service/job-service.request';
+import { FilterJobsTypeREQ } from '@/+core/redux/apis/common/job-service/job-service.request';
 import { Show } from '@/components/ui/Show';
 import { FilterFilled, SearchOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
@@ -27,8 +27,8 @@ const recommendations = [
 ];
 
 type SearchJobProps = {
-  filter?: GetListJobsTypeREQ;
-  onSubmit: (values: GetListJobsTypeREQ, searchValue?: string[]) => void;
+  filter?: FilterJobsTypeREQ;
+  onSubmit: (values: FilterJobsTypeREQ, searchValue?: string[]) => void;
 };
 
 export default function SearchJob({ onSubmit, filter }: SearchJobProps) {

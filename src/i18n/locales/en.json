@@ -182,5 +182,6 @@
   "company": "Company",
   "appliedAt": "Applied at",
   "latestStatus": "Lastest status",
-  "loginToViewSalary": "Login to view salary"
+  "loginToViewSalary": "Login to view salary",
+  "companyInformation": "Company information"
 }

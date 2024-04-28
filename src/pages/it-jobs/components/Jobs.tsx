@@ -1,9 +1,9 @@
-import { ListJobsResponse } from '@/+core/redux/apis/common/job-service/job-service.response';
+import { ListJobsRES } from '@/+core/redux/apis/common/job-service/job-service.response';
 import { Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 type JobsProps = {
-  data?: ListJobsResponse[];
+  data?: ListJobsRES[];
   page: number;
   limit: number;
   total?: number;
@@ -160,11 +160,11 @@ export const Jobs = ({
 
         <button
           onClick={() => {
-            handleFilterChange && handleFilterChange({ page: 1, limit: limit * (page + 1) });
+            handleFilterChange && handleFilterChange({ page: 1, limit: limit + 10 });
           }}
           type='button'
           className={`${
-            limit * page >= (total || 10) && 'hidden'
+            limit >= (total || 10) && 'hidden'
           } inline-flex items-center justify-center gap-1 border border-solid text-sm transition-all disabled:cursor-not-allowed lg:gap-3 lg:text-base border-primary-red bg-transparent text-primary-red hover:bg-[#FEEEEB] dark:border-white-900 dark:text-white-900 undefined h-9 rounded px-4 font-semibold lg:h-12 lg:px-6 w-full lg:w-[238px]`}
         >
           <span className=''>{t('view_more')}</span>

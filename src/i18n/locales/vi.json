@@ -182,5 +182,6 @@
   "company": "Tên công ty",
   "appliedAt": "Ngày ứng tuyển",
   "latestStatus": "Trạng thái gần nhất",
-  "loginToViewSalary": "Đăng nhập để xem mức lương"
+  "loginToViewSalary": "Đăng nhập để xem mức lương",
+  "companyInformation": "Thông tin công ty"
 }

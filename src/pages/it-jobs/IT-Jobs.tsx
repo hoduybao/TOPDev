@@ -1,5 +1,8 @@
-import { useGetListJobsQuery } from '@/+core/redux/apis/common/job-service/job-service.api';
-import { GetListJobsTypeREQ } from '@/+core/redux/apis/common/job-service/job-service.request';
+import {
+  useGetListCompaniesQuery,
+  useGetListJobsQuery,
+} from '@/+core/redux/apis/common/job-service/job-service.api';
+import { FilterJobsTypeREQ } from '@/+core/redux/apis/common/job-service/job-service.request';
 import { Show } from '@/components/ui/Show';
 import { useFilter } from '@/hooks/useFilter';
 import { Spin } from 'antd';
@@ -15,21 +18,25 @@ export function ITJobs() {
   const [tab, setTab] = useState<string>('all');
   const [searchValues, setSearchValues] = useState<string[]>([]);
 
-  const { filter, handleFilterChange } = useFilter<GetListJobsTypeREQ>({
+  const { filter, handleFilterChange } = useFilter<FilterJobsTypeREQ>({
     initialFilter: {
       page: 1,
       limit: 10,
     },
   });
 
-  const { data, isFetching } = useGetListJobsQuery(filter, { refetchOnMountOrArgChange: true });
+  const { data: jobs, isFetching: isFetchingJobs } = useGetListJobsQuery(filter, {
+    refetchOnMountOrArgChange: true,
+  });
+  const { data: companies, isFetching: isFetchingCompanies } = useGetListCompaniesQuery(filter, {
+    refetchOnMountOrArgChange: true,
+  });
 
   const onFinish = (values: any, searchValues?: string[]) => {
     let keywords = searchValues?.join('-');
     if (values.keywords !== '' && !keywords?.split('-').some((item) => item === values.keywords)) {
       keywords = keywords ? keywords + '-' + values.keywords : values.keywords;
     }
-    console.log(keywords);
     setSearchValues(keywords && keywords !== '' ? keywords?.split('-') : []);
     handleFilterChange({
       ...values,
@@ -38,7 +45,7 @@ export function ITJobs() {
   };
 
   return (
-    <Spin spinning={isFetching}>
+    <Spin spinning={isFetchingJobs || isFetchingCompanies}>
       <div className="bg-[url('https://c.topdevvn.com/v4/assets/images/bg-search.jpg')]  w-full flex flex-col mb-10">
         <div className='flex justify-center py-12'>
           <div className='w-4/5 flex flex-col gap-4'>
@@ -100,14 +107,20 @@ export function ITJobs() {
                   <Jobs
                     page={filter.page || 1}
                     limit={filter.limit || 10}
-                    total={data?.total}
-                    data={data?.data}
+                    total={jobs?.total}
+                    data={jobs?.data}
                     keywords={searchValues}
                     handleFilterChange={handleFilterChange}
                   />
                 </Show>
                 <Show isShow={tab === 'all' || tab === 'companies'}>
-                  <Companies />
+                  <Companies
+                    page={filter.page || 1}
+                    limit={filter.limit || 10}
+                    total={companies?.total}
+                    data={companies?.data}
+                    handleFilterChange={handleFilterChange}
+                  />
                 </Show>
               </div>
               <JobHighlight />
