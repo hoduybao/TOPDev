@@ -12,6 +12,7 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { v4 as uuidv4 } from 'uuid';
+import { useUpdateApplicationProcessMutation } from '@/+core/redux/apis/common/recruitment/recruitment.api';
 
 import { PlusCircleOutlined } from '@ant-design/icons';
 
@@ -22,20 +23,12 @@ import { KanbanColumn, Id, KanbanApplicationType } from '@/+core/utilities/types
 
 const defaultCols: KanbanColumn[] = [
   {
-    id: 'new',
+    id: false,
     title: 'Mới',
   },
   {
-    id: 'expertise',
-    title: 'Thẩm định',
-  },
-  {
-    id: 'interview',
-    title: 'Phỏng vấn',
-  },
-  {
-    id: 'contract',
-    title: 'Đề xuất hợp đồng',
+    id: true,
+    title: 'Đã duyệt',
   },
 ];
 
@@ -46,6 +39,8 @@ interface PropType {
 
 const KanbanBoard = (props: PropType) => {
   const { applications, setApplications } = props;
+
+  const [updateApplicationProcess] = useUpdateApplicationProcessMutation();
 
   const [columns, setColumns] = useState<KanbanColumn[]>(defaultCols);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]); // Use for dnd-kit
@@ -63,7 +58,7 @@ const KanbanBoard = (props: PropType) => {
 
   const createApplication = (columnId: Id) => {
     const newApplication: KanbanApplicationType = {
-      id: uuidv4(),
+      jobId: uuidv4(),
       columnId,
       name: `Applicant ${applications.length + 1}`,
       rating: 1,
@@ -72,14 +67,15 @@ const KanbanBoard = (props: PropType) => {
     setApplications([...applications, newApplication]);
   };
 
-  //   const updateApplication = (id: Id, content: string) => {
-  //     const newApplications = applications.map((a) => {
-  //       if (a.id !== id) return a;
-  //       return { ...a, content };
-  //     });
+  const updateApplicationAPI = async (application: KanbanApplicationType) => {
+    // eslint-disable-next-line unused-imports/no-unused-vars
+    const { columnId, ...otherProperties } = application;
+    const updateApplication = { ...otherProperties };
 
-  //     setApplications(newApplications);
-  //   };
+    console.log('Update Application API', updateApplication);
+    const res = await updateApplicationProcess(updateApplication?.id).unwrap();
+    console.log('RES', res);
+  };
 
   const deleteApplication = (id: Id) => {
     const newApplications = applications.filter((a) => a.id !== id);
@@ -134,12 +130,22 @@ const KanbanBoard = (props: PropType) => {
     const activeId = active.id;
     const overId = over.id;
 
+    if (active.data.current?.type === 'Application') {
+      const activeIndex = applications.findIndex((a) => a.id === activeId);
+      const newApplicationIndex = applications[activeIndex];
+
+      // console.log('DROP APPLICATION END', newApplicationIndex, applications);
+
+      // Update Application API
+      updateApplicationAPI(newApplicationIndex);
+    }
+
     if (activeId === overId) return;
 
     const isActiveAColumn = active.data.current?.type === 'Column';
     if (!isActiveAColumn) return;
 
-    console.log('DRAG COLUMN END', applications);
+    console.log('DROP COLUMN END', applications);
 
     setColumns((columns) => {
       const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
@@ -173,6 +179,11 @@ const KanbanBoard = (props: PropType) => {
         if (applications[activeIndex].columnId != applications[overIndex].columnId) {
           // Fix introduced after video recording
           applications[activeIndex].columnId = applications[overIndex].columnId;
+
+          // Update Application status
+          applications[activeIndex].status = applications[overIndex].columnId;
+          applications[activeIndex].isApprove = applications[overIndex].columnId;
+
           return arrayMove(applications, activeIndex, overIndex - 1);
         }
 
@@ -188,12 +199,17 @@ const KanbanBoard = (props: PropType) => {
         const activeIndex = applications.findIndex((a) => a.id === activeId);
 
         applications[activeIndex].columnId = overId;
+
+        // Update Application status
+        applications[activeIndex].status = overId;
+        applications[activeIndex].isApprove = overId;
+
         // console.log('DROPPING APPLICATION OVER COLUMN', { activeIndex });
         return arrayMove(applications, activeIndex, activeIndex);
       });
     }
 
-    console.log('DRAG APPLICATION END', applications);
+    // console.log('DRAGING APPLICATION', applications);
   };
 
   return (

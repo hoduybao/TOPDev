@@ -7,8 +7,10 @@ import MockApplicationData from '../../../../draft/application.json';
 const { Option } = Select;
 
 const layout = {
-  labelCol: { lg: { span: 10 } },
-  wrapperCol: { lg: { span: 12 } },
+  // labelCol: { lg: { span: 10 } },
+  // wrapperCol: { lg: { span: 12 } },
+  labelCol: { span: 24 },
+  wrapperCol: { span: 24 },
 };
 
 type FieldType = {
@@ -45,14 +47,17 @@ const DetailApplicationContainer = () => {
 
   return (
     <div className='p-4 h-auto'>
-      <Button type='primary' danger>
-        {t('recruitmentReject')}
-      </Button>
+      <div className='flex items-center gap-3'>
+        <Button type='primary' danger>
+          {t('recruitmentAccept')}
+        </Button>
+        <Button>{t('recruitmentReject')}</Button>
+      </div>
       <Form
         {...layout}
         form={NewRecruitmentForm}
         name='create-new-job'
-        className='bg-white p-4 rounded-md mt-5 flex flex-col gap-5'
+        className='bg-[#fff] p-4 rounded-md mt-5 flex flex-col gap-5'
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         initialValues={{

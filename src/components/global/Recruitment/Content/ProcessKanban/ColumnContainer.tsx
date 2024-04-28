@@ -46,7 +46,7 @@ const ColumnContainer = (props: PropType) => {
       <div
         ref={setNodeRef}
         style={style}
-        className='bg-gray-300 opacity-40 border-2 border-primary-red w-[350px] h-[500px] max-h-[500px]
+        className='bg-gray-300 opacity-40 border-2 border-primary-red w-[350px] h-[calc(100vh-46px-100px)] max-h-[calc(100vh-100px)]
                     rounded-md flexflex-col'
       ></div>
     );
@@ -56,7 +56,7 @@ const ColumnContainer = (props: PropType) => {
     <div
       ref={setNodeRef}
       style={style}
-      className='bg-[#fff] w-[350px] h-[500px] max-h-[500px] rounded-md flex flex-col'
+      className='bg-[#fff] w-[350px] h-[calc(100vh-46px-100px)] max-h-[calc(100vh-100px)] rounded-md flex flex-col'
     >
       {/* Column title */}
       <div

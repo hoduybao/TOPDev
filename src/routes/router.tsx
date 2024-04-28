@@ -29,12 +29,18 @@ import AdminLoginPage from '@/pages/admin/LoginPage';
 import JobManagement from '@/pages/job-management/JobManagement';
 import MyCV from '@/pages/UserProfile/MyCV';
 import ManageFollowPage from '@/pages/manage-follow/ManageFollowPage';
+import ProfilePage from '@/pages/recruitment/ProfilePage';
 
 export const router = createBrowserRouter([
   {
     path: '/recruitment',
     element: <RecruitmentLayout />,
     children: [{ path: MY_ROUTE.RECRUITMENT, element: <MainPage /> }],
+  },
+  {
+    path: '/recruitment/profile',
+    element: <RecruitmentLayout />,
+    children: [{ path: MY_ROUTE.RECRUITMENT_PROFILE, element: <ProfilePage /> }],
   },
   {
     path: '/recruitment/:jobId',

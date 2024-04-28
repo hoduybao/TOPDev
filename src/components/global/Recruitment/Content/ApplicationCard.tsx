@@ -55,11 +55,11 @@ const ApplicationCard = (props: PropType) => {
           </Button>
         </Link>
         <div>
-          <Link to={`/recruitment/${job?.id}/applications`}>
+          {/* <Link to={`/recruitment/${job?.id}/applications`}>
             <p className='text-red-500 font-bold hover:text-red-400 hover:cursor-pointer'>
               {recentAmount} {t('recruitmentFor')}
             </p>
-          </Link>
+          </Link> */}
           <p>
             {recentAmount} {t('recruitmentApplicant')}
           </p>
