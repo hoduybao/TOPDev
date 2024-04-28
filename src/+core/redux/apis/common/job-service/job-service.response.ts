@@ -1,0 +1,43 @@
+export type ListJobsResponse = {
+  id: string;
+  createdBy: string;
+  title: string;
+  jobDescription: string;
+  level: string;
+  salary: number;
+  technicals: string[];
+  minExperience: number;
+  maxExperience: number;
+  contractType: string;
+  workingPlace: string;
+  interviewProcess: string;
+  followedCount: number;
+  appliedCount: number;
+  status: number;
+  createdAt: string;
+  updatedAt: string;
+  companyId: string;
+  company: CompanyInformationResponse;
+};
+
+export type CompanyInformationResponse = {
+  id: string;
+  name: string;
+  address: string;
+  url: string;
+  companySize: string;
+  skills: string[];
+  nations: string;
+  benefits: string[];
+  fields: string[];
+  about: string;
+  status: number;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
+  followedCount: number;
+  cover: string;
+  images: string[];
+  slogan: string;
+  products: any[];
+};

@@ -1,7 +1,8 @@
+import { GetListJobsTypeREQ } from '@/+core/redux/apis/common/job-service/job-service.request';
 import { Show } from '@/components/ui/Show';
 import { FilterFilled, SearchOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
@@ -25,7 +26,12 @@ const recommendations = [
   'VueJS',
 ];
 
-export default function SearchJob() {
+type SearchJobProps = {
+  filter?: GetListJobsTypeREQ;
+  onSubmit: (values: GetListJobsTypeREQ, searchValue?: string[]) => void;
+};
+
+export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
   const { t } = useTranslation();
   const citys: ValueType[] = [
     {
@@ -33,15 +39,15 @@ export default function SearchJob() {
       lable: t('allLocations'),
     },
     {
-      value: 'HCM',
+      value: 'Hồ Chí Minh',
       lable: t('hcm'),
     },
     {
-      value: 'HN',
+      value: 'Hà Nội',
       lable: t('hn'),
     },
     {
-      value: 'DN',
+      value: 'Đà Nẵng',
       lable: t('dn'),
     },
   ];
@@ -122,14 +128,11 @@ export default function SearchJob() {
 
   const [currentSelect, setCurrentSelect] = useState<FilterType | undefined>(undefined);
 
-  const onFinish = (values: any) => {
-    if (values.keyword) {
-      setSearchValue((prev) => [...prev, values.keyword]);
+  useEffect(() => {
+    if (filter) {
+      setSearchValue(filter.keywords && filter.keywords !== '' ? filter.keywords.split('-') : []);
     }
-    form.setFieldsValue({
-      keyword: '',
-    });
-  };
+  }, [filter]);
 
   return (
     <>
@@ -139,7 +142,24 @@ export default function SearchJob() {
           Javascript
         </div>
       </div>
-      <Form form={form} onFinish={onFinish} autoComplete='off' labelAlign='left'>
+      <Form
+        form={form}
+        onFinish={(values) => {
+          onSubmit(
+            {
+              keywords: values.keywords,
+              workingPlace: address.value,
+              levels: level.map((i) => i.value).join('-'),
+              contractTypes: contractType.map((i) => i.value).join('-'),
+              // type: jobType.map((i) => i.value).join('-'),
+            },
+            searchValue,
+          );
+          form.setFieldValue('keywords', '');
+        }}
+        autoComplete='off'
+        labelAlign='left'
+      >
         <div className='relative rounded border border-solid border-white bg-white-900 p-2 shadow-sm'>
           <div className='flex items-center gap-2'>
             <div className='flex-1 flex flex-wrap items-center pl-2 gap-2'>
@@ -151,7 +171,7 @@ export default function SearchJob() {
                       <span
                         className='transition-all group-hover/tw-chip:max-w-none cursor-pointer max-w-none overflow-auto mt-1'
                         onClick={() => {
-                          setSearchValue((prev) => prev.filter((_, i) => i !== index));
+                          setSearchValue((prev) => prev.filter((item) => item !== value));
                         }}
                       >
                         <svg
@@ -175,7 +195,7 @@ export default function SearchJob() {
                   </li>
                 ))}
               </ul>
-              <Form.Item name='keyword' className='flex-1'>
+              <Form.Item name='keywords' className='flex-1'>
                 <Input
                   type='text'
                   className='!w-full min-w-[10rem] flex-1 border-none text-sm outline-none focus:border-none focus:outline-none focus:ring-0 lg:text-base'

@@ -1,13 +1,20 @@
+import { useNavigate } from 'react-router-dom';
 import FeaturedCompany from './components/FeaturedCompany';
 import SearchJob from './components/SearchJob';
 import ToolSection from './components/ToolSection';
 
 export function HomePage() {
+  const navigate = useNavigate();
+
   return (
     <div className="w-full flex flex-col bg-[url('https://c.topdevvn.com/v4/assets/images/bg-search.jpg')]">
       <div className='flex justify-center py-12'>
         <div className='w-4/5 flex flex-col gap-4'>
-          <SearchJob />
+          <SearchJob
+            onSubmit={(values) => {
+              navigate(`/it-jobs${values.keywords && 'keywords=' + values.keywords}`);
+            }}
+          />
         </div>
       </div>
       <div className='w-full bg-white-900 !rounded-t-[54px] mt-[140px] flex justify-center'>
