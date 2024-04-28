@@ -4,6 +4,7 @@ import { Button, Modal, Form, Input, Select } from 'antd';
 import { type FormProps } from 'antd';
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 const prefixSelector = (
   <Form.Item name='prefix' noStyle>
@@ -16,18 +17,31 @@ const prefixSelector = (
 );
 
 type FieldType = {
-  title?: string;
+  id?: string;
+  jobId?: string;
   name?: string;
   email?: string;
   phone?: string;
+  cvUrl?: string;
+  description?: string;
 };
 
 interface PropType {
-  createNewDetailApplication: (title: string, name: string, phone: string, email: string) => void;
+  createNewDetailApplication: (
+    name: string,
+    phone: string,
+    email: string,
+    cvUrl: string,
+    description: string,
+  ) => void;
 }
 
 const AddApplicantBtn = (props: PropType) => {
   const { createNewDetailApplication } = props;
+
+  const JOB_ID: string = '6tmFCHf';
+  const MOCK_PDF_URL =
+    'https://piwwbijgpwvzynpsplfn.supabase.co/storage/v1/object/public/uploads/files/CTDT%20K20%20KTPM.pdf';
 
   const { t } = useTranslation();
 
@@ -49,9 +63,16 @@ const AddApplicantBtn = (props: PropType) => {
   };
 
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-    if (values?.title && values?.name && values?.phone && values?.email) {
-      createNewDetailApplication(values?.title, values?.name, values?.phone, values?.email);
+    // console.log('Success:', values);
+
+    if (values?.name && values?.phone && values?.email && values?.cvUrl && values?.description) {
+      createNewDetailApplication(
+        values?.name,
+        values?.phone,
+        values?.email,
+        values?.cvUrl,
+        values?.description,
+      );
     }
     handleOk();
   };
@@ -76,20 +97,22 @@ const AddApplicantBtn = (props: PropType) => {
           form={NewRecruitmentForm}
           name='create-new-job'
           className='mt-5 flex flex-col gap-5'
-          labelCol={{ span: 10 }}
-          wrapperCol={{ span: 14 }}
+          labelCol={{ span: 24 }} // 10
+          wrapperCol={{ span: 24 }} // 14
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           initialValues={{
+            ['jobId']: JOB_ID,
+            ['cvUrl']: MOCK_PDF_URL,
             prefix: '84',
           }}
         >
           <Form.Item<FieldType>
-            label={`${t('recruitmentTitle')}`}
-            name='title'
-            rules={[{ required: true, message: 'Please input job title!' }]}
+            label={`${t('recruitmentJobId')}`}
+            name='jobId'
+            rules={[{ required: true, message: 'Please input job id!' }]}
           >
-            <Input />
+            <Input disabled />
           </Form.Item>
 
           <Form.Item<FieldType>
@@ -114,6 +137,22 @@ const AddApplicantBtn = (props: PropType) => {
             rules={[{ required: true, message: 'Please input applicant phone number!' }]}
           >
             <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+          </Form.Item>
+
+          <Form.Item<FieldType>
+            label='CV URL'
+            name='cvUrl'
+            rules={[{ required: true, message: 'Please input cv url!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item<FieldType>
+            label='Description'
+            name='description'
+            rules={[{ required: true, message: 'Please input description!' }]}
+          >
+            <TextArea rows={4} />
           </Form.Item>
 
           <Form.Item wrapperCol={{ span: 24 }}>

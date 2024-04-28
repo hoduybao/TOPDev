@@ -24,12 +24,18 @@ import DetailPage from '../pages/recruitment/DetailPage';
 import MainPage from '../pages/recruitment/MainPage';
 import ProcessPage from '../pages/recruitment/ProcessPage';
 import { MY_ROUTE } from './route.constant';
+import ProfilePage from '@/pages/recruitment/ProfilePage';
 
 export const router = createBrowserRouter([
   {
     path: '/recruitment',
     element: <RecruitmentLayout />,
     children: [{ path: MY_ROUTE.RECRUITMENT, element: <MainPage /> }],
+  },
+  {
+    path: '/recruitment/profile',
+    element: <RecruitmentLayout />,
+    children: [{ path: MY_ROUTE.RECRUITMENT_PROFILE, element: <ProfilePage /> }],
   },
   {
     path: '/recruitment/:jobId',
