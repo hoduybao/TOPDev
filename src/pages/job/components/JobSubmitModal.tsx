@@ -131,7 +131,7 @@ const CustomInputTextArea = (props: CustomInputType) => {
 const ApplicationForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
-  // const { jobId } = useParams<{ jobId: string }>();
+  const { jobId } = useParams<{ jobId: string }>();
   const [addNewApplication] = useCreateApplicationMutation();
 
   // logic handlers
@@ -139,7 +139,7 @@ const ApplicationForm = ({ closeModal }: { closeModal: () => void }) => {
     console.log('handle onFinish');
 
     const value = form.getFieldsValue();
-    value.jobId = '6tmFCHf';
+    value.jobId = jobId;
 
     console.log(value);
 
