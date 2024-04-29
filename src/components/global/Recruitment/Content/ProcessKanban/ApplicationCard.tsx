@@ -113,8 +113,12 @@ const ApplicationCard = (props: PropType) => {
       }}
     >
       <div className='flex flex-col gap-3'>
-        <p className='max-w-[230px] truncate font-semibold'>{application.jobId}</p>
-        <p className='max-w-[230px] truncate'>{application.name}</p>
+        <p className='max-w-[230px] truncate font-semibold'>
+          {application?.jobId ? application?.jobId : 'Job ID'}
+        </p>
+        <p className='max-w-[230px] truncate'>
+          {application?.fullName ? application?.fullName : 'Applicant name'}
+        </p>
         <Rate
           value={rateValue}
           onChange={(value: number) => {

@@ -1,6 +1,8 @@
 import { Job } from '@/+core/utilities/types/admin.type';
 import { TAG_TYPES } from '../../../../../+core/constants/api.tagTypes';
 import { commonApi } from '../../common.api';
+import { JobResponse } from './job.response';
+import { CustomJobResponse } from './job.types';
 
 const jobApi = commonApi.enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB] }).injectEndpoints({
   endpoints: (build) => ({
@@ -11,9 +13,9 @@ const jobApi = commonApi.enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB] }).inje
       }),
       providesTags: [TAG_TYPES.JOB],
     }),
-    getJobById: build.query<any, any>({
+    getJobById: build.query<CustomJobResponse<JobResponse>, any>({
       query: (id: string) => ({
-        url: `/jobservice/job/${id}`,
+        url: `/jobs/${id}`,
         method: 'GET',
       }),
     }),
