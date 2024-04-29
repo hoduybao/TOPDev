@@ -7,9 +7,12 @@ export const MY_ROUTE = {
   RECRUITMENT_PROCESS: '/recruitment/:jobId/applications',
   RECRUITMENT_DETAIL: '/recruitment/:jobId/application/:applicationId',
   RECRUITMENT_PROFILE: '/recruitment/profile',
+
+  // Admin
   ADMIN: '/admin',
-  ADMIN_LOGIN: '/admin/login',
   ADMIN_ACCOUNT_MANAGEMENT: '/admin/manage-account',
+  ADMIN_JOB_MANAGEMENT: '/admin/manage-job',
+  ADMIN_LOGIN: '/admin/login',
 
   // LoginLayout
   LOGIN: '/login',

@@ -25,6 +25,7 @@ import DetailPage from '../pages/recruitment/DetailPage';
 import MainPage from '../pages/recruitment/MainPage';
 import ProcessPage from '../pages/recruitment/ProcessPage';
 import { MY_ROUTE } from './route.constant';
+import JobManagementPage from '@/pages/admin/JobManagementPage';
 
 export const router = createBrowserRouter([
   {
@@ -55,6 +56,7 @@ export const router = createBrowserRouter([
       { path: MY_ROUTE.ADMIN, element: <AdminMainPage /> },
       { path: MY_ROUTE.ADMIN_LOGIN, element: <AdminLoginPage /> },
       { path: MY_ROUTE.ADMIN_ACCOUNT_MANAGEMENT, element: <AccountManagementPage /> },
+      { path: MY_ROUTE.ADMIN_JOB_MANAGEMENT, element: <JobManagementPage /> },
     ],
   },
   {
