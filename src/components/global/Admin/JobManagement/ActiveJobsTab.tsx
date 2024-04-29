@@ -1,4 +1,4 @@
-import { Job } from '@/+core/utilities/types/admin.type';
+import { CompanyInfo, Job } from '@/+core/utilities/types/admin.type';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Input, Modal, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
@@ -43,11 +43,11 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
   const columns: TableProps<Job>['columns'] = [
     {
       title: 'Company Name',
-      dataIndex: 'companyName',
-      key: 'name',
-      sorter: (a, b) => a.companyName.localeCompare(b.companyName),
+      dataIndex: 'company',
+      key: 'company',
+      sorter: (a, b) => a.company.name.localeCompare(b.company.name),
       showSorterTooltip: false,
-      // render: (text) => <a>{text}</a>,
+      render: (text: CompanyInfo) => <p>{text?.name}</p>,
     },
     {
       title: 'Title',
@@ -65,9 +65,9 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
     },
     {
       title: 'Technology',
-      key: 'techs',
-      dataIndex: 'techs',
-      render: (_, { techs }) => (
+      key: 'technicals',
+      dataIndex: 'technicals',
+      render: (_, { technicals: techs }) => (
         <div className='max-w-64'>
           {techs?.map((tech) => {
             return (
@@ -80,34 +80,41 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
       ),
     },
     {
-      title: 'Job Type',
-      dataIndex: 'typeContract',
-      key: 'typeContract',
-      sorter: (a, b) => a.typeContract.localeCompare(b.typeContract),
+      title: 'Contract Type',
+      dataIndex: 'contractType',
+      key: 'contractType',
+      sorter: (a, b) => a.contractType.localeCompare(b.contractType),
       showSorterTooltip: false,
     },
     {
-      title: 'Start Date',
-      dataIndex: 'startDate',
-      key: 'startDate',
-      render: (date) => <p>{moment(date).format('DD/MM/YYYY')}</p>,
-      sorter: (a, b) => moment(a.startDate).unix() - moment(b.startDate).unix(),
+      title: 'Place',
+      dataIndex: 'workingPlace',
+      key: 'workingPlace',
+      sorter: (a, b) => a.workingPlace.localeCompare(b.workingPlace),
       showSorterTooltip: false,
     },
-    {
-      title: 'End Date',
-      dataIndex: 'endDate',
-      key: 'endDate',
-      render: (date) => <p>{moment(date).format('DD/MM/YYYY')}</p>,
-      sorter: (a, b) => moment(a.endDate).unix() - moment(b.endDate).unix(),
-      showSorterTooltip: false,
-    },
+    // {
+    //   title: 'Start Date',
+    //   dataIndex: 'startDate',
+    //   key: 'startDate',
+    //   render: (date) => <p>{moment(date).format('DD/MM/YYYY')}</p>,
+    //   sorter: (a, b) => moment(a.startDate).unix() - moment(b.startDate).unix(),
+    //   showSorterTooltip: false,
+    // },
+    // {
+    //   title: 'End Date',
+    //   dataIndex: 'endDate',
+    //   key: 'endDate',
+    //   render: (date) => <p>{moment(date).format('DD/MM/YYYY')}</p>,
+    //   sorter: (a, b) => moment(a.endDate).unix() - moment(b.endDate).unix(),
+    //   showSorterTooltip: false,
+    // },
     {
       title: 'Submitted Date',
-      dataIndex: 'submittedDate',
-      key: 'submittedDate',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
       render: (date) => <p>{moment(date).format('DD/MM/YYYY')}</p>,
-      sorter: (a, b) => moment(a.submittedDate).unix() - moment(b.submittedDate).unix(),
+      sorter: (a, b) => moment(a.createdAt).unix() - moment(b.createdAt).unix(),
       showSorterTooltip: false,
     },
     {
@@ -120,10 +127,12 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
               onClick={() => handleViewJobDetails(record)}
               className='text-blue-500 border border-white-900'
             >
-              {' '}
               View Details
             </Button>
           </Tooltip>
+          {/* <Tooltip placement='top' title={'Reject'}>
+            <Button icon={<CloseOutlined />}></Button>
+          </Tooltip> */}
         </Space>
       ),
     },
@@ -132,11 +141,11 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
   const onSearch: SearchProps['onSearch'] = (value, _e, info) => {
     const newData = props.data.filter(
       (item) =>
-        item.companyName.toLowerCase().includes(value.toLowerCase()) ||
+        item.company.name.toLowerCase().includes(value.toLowerCase()) ||
         item.title.toString().toLowerCase().includes(value) ||
-        item.typeContract.toLowerCase().includes(value.toLowerCase()) ||
-        item.techs.some((field) => field.toLowerCase().includes(value.toLowerCase())) ||
-        item.type.toLowerCase().includes(value.toLowerCase()) ||
+        item.contractType.toLowerCase().includes(value.toLowerCase()) ||
+        item.technicals.some((field) => field.toLowerCase().includes(value.toLowerCase())) ||
+        item.workingPlace.toLowerCase().includes(value.toLowerCase()) ||
         item.level.toLowerCase().includes(value.toLowerCase()),
     );
 

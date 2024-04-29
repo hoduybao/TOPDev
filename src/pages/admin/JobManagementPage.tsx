@@ -3,44 +3,41 @@ import PendingJobsTab from '@/components/global/Admin/JobManagement/PendingJobsT
 import { Divider, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
 import { jobStatus } from '@/+core/enums/jobStatus.enum';
-import { mockJobData } from './mockdata';
 import moment from 'moment';
 import ActiveJobsTab from '@/components/global/Admin/JobManagement/ActiveJobsTab';
-import ComingJobsTab from '@/components/global/Admin/JobManagement/ComingJobsTab';
 import RejectedJobsTab from '@/components/global/Admin/JobManagement/RejectedJobsTab';
-import ExpiredJobsTab from '@/components/global/Admin/JobManagement/ExpiredJobsTab';
+import {
+  useApproveJobsMutation,
+  useGetJobsQuery,
+  useRefuseJobsMutation,
+} from '@/+core/redux/apis/admin/job-management/job-service.request';
 
 const JobManagementPage = () => {
-  const [allJobs, setAllJobs] = useState<Job[]>(mockJobData);
+  const { data, isLoading, isFetching, isError } = useGetJobsQuery({});
+  const [approveJobs, approveResult] = useApproveJobsMutation();
+  const [rejectJobs, rejectResult] = useRefuseJobsMutation();
+  const [allJobs, setAllJobs] = useState<Job[]>([]);
   const [tabKey, setTabKey] = useState<string>('pending');
   const [displayedData, setDisplayedData] = useState<Job[]>(
     allJobs.filter((data) => data.status == jobStatus.Pending),
   );
 
+  useEffect(() => {
+    if (data?.data.jobs) setAllJobs(data?.data.jobs);
+  }, [data]);
+
   const today = moment();
 
   const handleApprove = (jobs: Job[]) => {
-    const updatedData = [...allJobs];
-    jobs.forEach((job) => {
-      const index = updatedData.findIndex((item) => item.id === job.id);
-      if (index !== -1) {
-        updatedData[index].status = jobStatus.Approved;
-      }
-    });
+    const jobIds = jobs.map((job) => job.id);
 
-    setAllJobs(updatedData);
+    approveJobs(jobIds);
   };
 
   const handleReject = (jobs: Job[]) => {
-    const updatedData = [...allJobs];
-    jobs.forEach((job) => {
-      const index = updatedData.findIndex((item) => item.id === job.id);
-      if (index !== -1) {
-        updatedData[index].status = jobStatus.Rejected;
-      }
-    });
+    const jobIds = jobs.map((job) => job.id);
 
-    setAllJobs(updatedData);
+    rejectJobs(jobIds);
   };
 
   const items: TabsProps['items'] = [
@@ -65,31 +62,31 @@ const JobManagementPage = () => {
       label: (
         <div className='flex items-center'>
           {/* <EyeOutlined /> */}
-          <p>Active</p>
+          <p>Approved</p>
         </div>
       ),
       children: <ActiveJobsTab data={displayedData} />,
     },
-    {
-      key: 'coming',
-      label: (
-        <div className='flex items-center'>
-          {/* <FireOutlined /> */}
-          <p>Coming Up</p>
-        </div>
-      ),
-      children: <ComingJobsTab data={displayedData} />,
-    },
-    {
-      key: 'expired',
-      label: (
-        <div className='flex items-center'>
-          {/* <ContainerOutlined /> */}
-          <p>Expired</p>
-        </div>
-      ),
-      children: <ExpiredJobsTab data={displayedData} />,
-    },
+    // {
+    //   key: 'coming',
+    //   label: (
+    //     <div className='flex items-center'>
+    //       {/* <FireOutlined /> */}
+    //       <p>Coming Up</p>
+    //     </div>
+    //   ),
+    //   children: <ComingJobsTab data={displayedData} />,
+    // },
+    // {
+    //   key: 'expired',
+    //   label: (
+    //     <div className='flex items-center'>
+    //       {/* <ContainerOutlined /> */}
+    //       <p>Expired</p>
+    //     </div>
+    //   ),
+    //   children: <ExpiredJobsTab data={displayedData} />,
+    // },
     {
       key: 'rejected',
       label: (
@@ -104,28 +101,26 @@ const JobManagementPage = () => {
 
   useEffect(() => {
     if (tabKey === 'pending') {
-      console.log(allJobs.filter((data) => data.status == jobStatus.Pending));
       setDisplayedData(allJobs.filter((data) => data.status == jobStatus.Pending));
     } else if (tabKey === 'active') {
       setDisplayedData(
         allJobs.filter(
-          (data) =>
-            data.status == jobStatus.Approved &&
-            today.isBetween(data.startDate, data.endDate, 'day', '[]'),
+          (data) => data.status == jobStatus.Approved,
+          // && today.isBetween(data.startDate, data.endDate, 'day', '[]'),
         ),
       );
     } else if (tabKey === 'expired') {
       setDisplayedData(
         allJobs.filter(
-          (data) =>
-            data.status == jobStatus.Approved && moment(data.endDate).isBefore(today, 'day'),
+          (data) => data.status == jobStatus.Approved,
+          // && moment(data.endDate).isBefore(today, 'day'),
         ),
       );
     } else if (tabKey === 'coming') {
       setDisplayedData(
         allJobs.filter(
-          (data) =>
-            data.status == jobStatus.Approved && today.isBefore(moment(data.startDate), 'day'),
+          (data) => data.status == jobStatus.Approved,
+          // && today.isBefore(moment(data.startDate), 'day'),
         ),
       );
     } else if (tabKey === 'rejected') {

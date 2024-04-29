@@ -13,19 +13,44 @@ export interface HRAccount {
 
 export interface Job {
   id: string;
-  companyName: string;
+  createdBy: string;
   title: string;
+  jobDescription: string;
   level: string;
-  salary: string;
-  techs: string[];
-  experienceYearsMin?: string;
-  experienceYearsMax?: string;
-  typeContract: string;
-  type: string;
-  jobDescription?: any;
-  interviewProcess?: string[] | any;
-  submittedDate: Date;
-  startDate: Date;
-  endDate: Date;
-  status: jobStatus;
+  salary: number;
+  technicals: string[];
+  minExperience: number;
+  maxExperience: number;
+  contractType: string;
+  workingPlace: string;
+  interviewProcess: string;
+  followedCount: number;
+  appliedCount: number;
+  status: number;
+  createdAt: string;
+  updatedAt: string;
+  companyId: string;
+  company: CompanyInfo;
+}
+
+export interface CompanyInfo {
+  id: string;
+  name: string;
+  address: string;
+  url: string;
+  companySize: string;
+  skills: string[];
+  nations: string;
+  benefits: string[];
+  fields: string[];
+  about: string;
+  status: number;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
+  followedCount: number;
+  cover: string;
+  images: string[];
+  slogan: string;
+  products: any[];
 }
