@@ -1,6 +1,6 @@
 import { Job } from '@/+core/utilities/types/admin.type';
 import PendingJobsTab from '@/components/global/Admin/JobManagement/PendingJobsTab';
-import { Divider, Tabs, TabsProps } from 'antd';
+import { Divider, Spin, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
 import { jobStatus } from '@/+core/enums/jobStatus.enum';
 import moment from 'moment';
@@ -13,9 +13,9 @@ import {
 } from '@/+core/redux/apis/admin/job-management/job-service.request';
 
 const JobManagementPage = () => {
-  const { data, isLoading, isFetching, isError } = useGetJobsQuery({});
-  const [approveJobs, approveResult] = useApproveJobsMutation();
-  const [rejectJobs, rejectResult] = useRefuseJobsMutation();
+  const { data: jobsData, isFetching: isFetchingJobs } = useGetJobsQuery({});
+  const [approveJobs, { isLoading: isFetchingApprove }] = useApproveJobsMutation();
+  const [rejectJobs, { isLoading: isFetchingReject }] = useRefuseJobsMutation();
   const [allJobs, setAllJobs] = useState<Job[]>([]);
   const [tabKey, setTabKey] = useState<string>('pending');
   const [displayedData, setDisplayedData] = useState<Job[]>(
@@ -23,8 +23,9 @@ const JobManagementPage = () => {
   );
 
   useEffect(() => {
-    if (data?.data.jobs) setAllJobs(data?.data.jobs);
-  }, [data]);
+    console.log('refetch');
+    if (jobsData?.data.jobs) setAllJobs(jobsData?.data.jobs);
+  }, [jobsData]);
 
   const today = moment();
 
@@ -132,30 +133,32 @@ const JobManagementPage = () => {
 
   return (
     <>
-      <div className='w-full font-roboto px-4 bg-white-700'>
-        <div className='py-2'>
-          <span className='font-bold text-xl text-black-400'>Job Manager</span>
-        </div>
+      <Spin spinning={isFetchingJobs || isFetchingApprove || isFetchingReject}>
+        <div className='w-full font-roboto px-4 bg-white-700'>
+          <div className='py-2'>
+            <span className='font-bold text-xl text-black-400'>Job Manager</span>
+          </div>
 
-        <Divider
-          className='font-bold bg-orange-500 my-2'
-          style={{ borderBlockStart: '3px solid rgba(5, 5, 5, 0.06)' }}
-        />
-        <div className='mt-2 mb-4 w-full flex gap-2'>
-          {/* <div className='w-[250px] flex items-center justify-center border-solid border-[1.5px] border-gray-500 rounded '>
+          <Divider
+            className='font-bold bg-orange-500 my-2'
+            style={{ borderBlockStart: '3px solid rgba(5, 5, 5, 0.06)' }}
+          />
+          <div className='mt-2 mb-4 w-full flex gap-2'>
+            {/* <div className='w-[250px] flex items-center justify-center border-solid border-[1.5px] border-gray-500 rounded '>
             <h1>Filter</h1>
           </div> */}
-          {/* Content */}
-          <div className='w-full p-2 border-solid border-[1.5px] border-gray-500 rounded'>
-            <Tabs
-              size='large'
-              defaultActiveKey='1'
-              items={items}
-              onChange={(key) => setTabKey(key)}
-            />
+            {/* Content */}
+            <div className='w-full p-2 border-solid border-[1.5px] border-gray-500 rounded'>
+              <Tabs
+                size='large'
+                defaultActiveKey='1'
+                items={items}
+                onChange={(key) => setTabKey(key)}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </Spin>
     </>
   );
 };

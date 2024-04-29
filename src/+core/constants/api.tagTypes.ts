@@ -5,6 +5,3 @@ export enum TAG_TYPES {
   APPLICATION = 'application',
 }
 
-export enum ADMIN_TAG_TYPES {
-  GET_LIST = 'get-jobs',
-}
