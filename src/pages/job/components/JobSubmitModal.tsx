@@ -23,7 +23,6 @@ type CustomInputType = {
 
 const CustomInputFile = (props: CustomInputType) => {
   const { label, rules, form } = props;
-  const { companyId } = useParams<{ jobId: string; companyId: string }>();
 
   const uploadProps: UploadProps = {
     name: 'file',
@@ -35,12 +34,9 @@ const CustomInputFile = (props: CustomInputType) => {
       const handleImageUpload = async () => {
         try {
           const fileName = new Date().getTime() + '-' + file.name;
-          // can not pass `file` variable direct to uploadBytesResumable func (occur warning of not suitable type), so need to create a new Blob file
-          const blobFile = new Blob([file.originFileObj as BlobPart], { type: file.type });
-
           const storage = getStorage(firebaseApp);
-          const storageRef = ref(storage, `company/${companyId}/cv/${fileName}`);
-          const uploadTask = uploadBytesResumable(storageRef, blobFile);
+          const storageRef = ref(storage, `company/cv/${fileName}`);
+          const uploadTask = uploadBytesResumable(storageRef, file);
 
           await new Promise<void>((resolve, reject) => {
             uploadTask.on(
