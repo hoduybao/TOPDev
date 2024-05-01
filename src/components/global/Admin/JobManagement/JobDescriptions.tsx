@@ -1,27 +1,11 @@
 import { Job } from '@/+core/utilities/types/admin.type';
 import { Descriptions, DescriptionsProps, Tag } from 'antd';
-import moment from 'moment';
-import ReactHtmlParser from 'react-html-parser';
+import dayjs from 'dayjs';
 
 interface JobDescriptionsProps {
   data: Job;
 }
 
-// companyName: string;
-//   title: string;
-//   level: string;
-//   salary: string;
-//   techs: string[];
-//   experienceYearsMin?: string;
-//   experienceYearsMax?: string;
-//   typeContract: string;
-//   type: string;
-//   jobDescription?: any;
-//   interviewProcess?: string[] | any;
-//   submittedDate: Date;
-//   startDate: Date;
-//   endDate: Date;
-//   status: jobStatus;
 const JobDescriptions = ({ data }: JobDescriptionsProps) => {
   const items: DescriptionsProps['items'] = [
     {
@@ -87,7 +71,14 @@ const JobDescriptions = ({ data }: JobDescriptionsProps) => {
     {
       key: 'description',
       label: 'Job Description',
-      children: <div>{ReactHtmlParser(data.jobDescription)}</div>,
+      children: (
+        <div
+          className='prose'
+          dangerouslySetInnerHTML={{
+            __html: data.jobDescription,
+          }}
+        ></div>
+      ),
       span: 3,
     },
     // {
@@ -103,7 +94,7 @@ const JobDescriptions = ({ data }: JobDescriptionsProps) => {
     {
       key: 'createdAt',
       label: 'Submitted Date',
-      children: <p>{moment(data.createdAt).format('DD/MM/YYYY')}</p>,
+      children: <p>{dayjs(data.createdAt).format('DD/MM/YYYY')}</p>,
     },
   ];
 
