@@ -4,4 +4,3 @@ export enum TAG_TYPES {
   COMPANY = 'company',
   APPLICATION = 'application',
 }
-
