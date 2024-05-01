@@ -1,19 +1,59 @@
-import { Link } from 'react-router-dom';
+import { MY_ROUTE } from '@/routes/route.constant';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import Text from 'antd/es/typography/Text';
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-const Header = () => {
+interface HeaderProps {
+  onCollapseNavigation: (collapsed: boolean) => void;
+}
+
+const Header = ({ onCollapseNavigation }: HeaderProps) => {
+  const location = useLocation();
+  console.log(location);
+  // const menuItems = HeaderMenu();
+  const [collapsed, setCollapsed] = useState(false);
+
+  const handleCollapseNavigation = () => {
+    onCollapseNavigation(!collapsed);
+    setCollapsed(!collapsed);
+  };
+
   return (
     <header>
-      <nav className='z-10 w-full h-[46px] fixed bg-white-900 px-4 py-2.5 flex gap-5 items-center justify-between'>
+      <nav className='z-10 fixed w-full h-[46px] bg-white px-4 py-2.5 flex gap-5 items-center justify-between'>
         <div className='flex gap-3 items-center'>
-          <Link to={`/admin`} className='flex items-center gap-3'>
-            <div className='w-[80px] hover:cursor-pointer'>
-              <img className='w-[100%]' src='../assets/logo/td-logo.png' alt='td-logo' />
+          <Button
+            type='text'
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={handleCollapseNavigation}
+            style={{
+              fontSize: '16px',
+              width: 50,
+              height: 50,
+            }}
+          />
+
+          <Link to={`/recruitment`}>
+            <div className='w-[131px] hover:cursor-pointer'>
+              <img className='w-[100%]' src='../../../assets/logo/td-logo.png' alt='td-logo' />
             </div>
-            <p className='text-xl text-primary-red font-bold'>ADMIN</p>
           </Link>
-          {/* <div className='hidden md:flex list-none'>Menu</div> */}
+          {/* <ul className='hidden md:flex list-none'>
+            {menuItems.map((menu) => {
+              return <HeaderDropdown key={uuidv4()} menu={menu} />;
+            })}
+          </ul> */}
+          {(location.pathname === MY_ROUTE.ADMIN_ACCOUNT_MANAGEMENT ||
+            location.pathname === MY_ROUTE.ADMIN) && (
+            <Text style={{ fontSize: '25px', fontWeight: '600' }}>Manage Accounts </Text>
+          )}
+
+          {location.pathname === MY_ROUTE.ADMIN_JOB_MANAGEMENT && (
+            <Text style={{ fontSize: '25px', fontWeight: '600' }}>Manage Jobs </Text>
+          )}
         </div>
-        <div className='flex items-center gap-5 md:gap-3'>User</div>
       </nav>
     </header>
   );

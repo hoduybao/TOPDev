@@ -549,7 +549,12 @@ const UserHeader = () => {
             <NotificationBox />
           </Show> */}
           <Show hideInMobile>
-            <Button className=' !text-primary-red !font-bold hover:!border-primary-red border-primary-red !bg-white-900 hover:!bg-red-300 !text-base !px-6 !h-11 !leading-[100%] rounded-[4px]'>
+            <Button
+              onClick={() => {
+                navigate('/recruitment');
+              }}
+              className=' !text-primary-red !font-bold hover:!border-primary-red border-primary-red !bg-white-900 hover:!bg-red-300 !text-base !px-6 !h-11 !leading-[100%] rounded-[4px]'
+            >
               {t('employer')}
             </Button>
           </Show>

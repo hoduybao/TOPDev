@@ -14,7 +14,7 @@ export const Companies = ({ data, page, limit, total, handleFilterChange }: Comp
   return (
     <div className='flex flex-col w-full'>
       <h2 className='text-3xl font-bold'>{t('companyInformation')}</h2>
-      <div className='mt-4 flex flex-col items-center'>
+      <div className='mt-4 flex flex-col items-center gap-4'>
         {data?.map((company, index) => (
           <div key={index} className='mt-4 first:mt-0 w-full'>
             <div className='group flex max-w-[832px] cursor-pointer items-start gap-4 rounded border border-white-900 bg-white-900 p-4 transition-all hover:border-[#FFBCB0] hover:bg-[#FEEEEB] hover:shadow-md'>
@@ -47,16 +47,13 @@ export const Companies = ({ data, page, limit, total, handleFilterChange }: Comp
                   <ul className=' text-base capitalize text-[#5C5B5B]'></ul>
                 </a>
                 <div className='mt-3 line-clamp-1'>
-                  <a className='mr-2 inline-block' href='/it-jobs/c-plus-plus-kt19'>
-                    {company.skills.map((skill, index) => (
-                      <span
-                        key={index}
-                        className='whitespace-nowrap rounded border border-solid font-normal transition-all inline-flex items-center justify-center border-[#EDFBFF] text-[#1047B2] bg-[#EDFBFF] hover:border-[#1047B2] h-[1.625rem] px-2 text-xs md:h-7 md:px-2 md:text-sm'
-                      >
+                  {company.skills.map((skill, index) => (
+                    <a key={index} className='mr-2 inline-block' href='/'>
+                      <span className='whitespace-nowrap rounded border border-solid font-normal transition-all inline-flex items-center justify-center border-[#EDFBFF] text-[#1047B2] bg-[#EDFBFF] hover:border-[#1047B2] h-[1.625rem] px-2 text-xs md:h-7 md:px-2 md:text-sm'>
                         {skill}
                       </span>
-                    ))}
-                  </a>
+                    </a>
+                  ))}
                 </div>
                 <div className='mt-2'></div>
               </div>

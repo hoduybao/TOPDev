@@ -147,7 +147,7 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
         onFinish={(values) => {
           onSubmit(
             {
-              keywords: values.keywords,
+              keywords: values.keywords.trim(),
               workingPlace: address.value,
               levels: level.map((i) => i.value).join('-'),
               contractTypes: contractType.map((i) => i.value).join('-'),
