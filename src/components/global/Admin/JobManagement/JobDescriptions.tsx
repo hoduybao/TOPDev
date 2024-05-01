@@ -51,7 +51,7 @@ const JobDescriptions = ({ data }: JobDescriptionsProps) => {
       key: 'techs',
       label: 'Technicals',
       children: (
-        <>
+        <div className='word-breaks'>
           {data.technicals.map((tech) => {
             return (
               <Tag color={'geekblue'} key={tech}>
@@ -59,7 +59,7 @@ const JobDescriptions = ({ data }: JobDescriptionsProps) => {
               </Tag>
             );
           })}
-        </>
+        </div>
       ),
       span: 3,
     },

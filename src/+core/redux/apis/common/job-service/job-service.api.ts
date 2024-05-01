@@ -16,7 +16,7 @@ const jobServiceApi = commonApi
         query: (params) => ({
           url: '/jobs',
           method: 'GET',
-          params: params,
+          params: { ...params, status: 1 },
         }),
         transformResponse: transformJobsResponse,
         providesTags: [TAG_TYPES.JOB],
