@@ -76,7 +76,7 @@
   "recruitmentCreateApplicant": "Create a Applicant for job",
   "recruitmentViewApplication": "View application",
   "recruitmentDelete": "Delete",
-  "recruitmentTitle": "Title / Resume",
+  "recruitmentTitle": "Job Title",
   "recruitmentApplicantName": "Applicant name",
   "recruitmentPhone": "Phone",
   "recruitmentRating": "Rating",
@@ -208,5 +208,7 @@
   "appliedAt": "Applied at",
   "latestStatus": "Lastest status",
   "loginToViewSalary": "Login to view salary",
-  "companyInformation": "Company information"
+  "companyInformation": "Company information",
+  "approved": "Approved",
+  "rejected": "Rejected"
 }

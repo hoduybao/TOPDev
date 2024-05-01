@@ -1,5 +1,6 @@
 import MyCV from '@/pages/UserProfile/MyCV';
 import AccountManagementPage from '@/pages/admin/AccountManagementPage';
+import JobManagementPage from '@/pages/admin/JobManagementPage';
 import AdminLoginPage from '@/pages/admin/LoginPage';
 import { HomePage } from '@/pages/home/HomePage';
 import { ITJobs } from '@/pages/it-jobs/IT-Jobs';
@@ -14,7 +15,6 @@ import LoginLayout from '../components/global/layout/LoginLayout';
 import RecruitmentLayout from '../components/global/layout/RecruitmentLayout';
 import RecruitmentProcessLayout from '../components/global/layout/RecruitmentProcessLayout';
 import UserLayout from '../components/global/layout/UserLayout';
-import AdminMainPage from '../pages/admin/MainPage';
 import CompaniesPage from '../pages/company/Companies';
 import CompanyPage from '../pages/company/Company';
 import JobPage from '../pages/job/JobPageNew';
@@ -25,7 +25,6 @@ import DetailPage from '../pages/recruitment/DetailPage';
 import MainPage from '../pages/recruitment/MainPage';
 import ProcessPage from '../pages/recruitment/ProcessPage';
 import { MY_ROUTE } from './route.constant';
-import JobManagementPage from '@/pages/admin/JobManagementPage';
 
 export const router = createBrowserRouter([
   {

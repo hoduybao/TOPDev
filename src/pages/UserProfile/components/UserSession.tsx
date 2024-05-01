@@ -1,5 +1,5 @@
-import { DownloadOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
-import { Button, Image } from 'antd';
+import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import UserProfileModal from './UserProfileModal';
 
@@ -75,10 +75,10 @@ const UserInformation = ({
         </div>
         <div>
           <UserProfileModal
-            createNewDetailApplication={() => {
-              // handle profile data
-              console.log('createNewDetailApplication');
-            }}
+          // createNewDetailApplication={() => {
+          //   // handle profile data
+          //   console.log('createNewDetailApplication');
+          // }}
           />
         </div>
       </div>

@@ -1,5 +1,4 @@
 import { Image } from 'antd';
-import React from 'react';
 import { Link } from 'react-router-dom';
 import QuickTips from './QuickTips';
 

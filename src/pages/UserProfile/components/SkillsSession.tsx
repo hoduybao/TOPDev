@@ -1,4 +1,3 @@
-import React from 'react';
 import SkillsModal from './SkillsModal';
 
 const SkillsList = ({ skills, title }: { title: string; skills: string[] }) => {

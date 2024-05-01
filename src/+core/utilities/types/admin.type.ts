@@ -1,5 +1,4 @@
 import { hRAccountStatus as accountStatus } from '@/+core/enums/hRAccountStatus.enum';
-import { jobStatus } from '@/+core/enums/jobStatus.enum';
 
 export interface HRAccount {
   id: string;

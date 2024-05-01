@@ -1,9 +1,9 @@
-import React from 'react';
-import { Other } from './OthersSession';
+import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal } from 'antd';
+import React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Other } from './OthersSession';
 
 type ModalProps = {
   initValue?: Other;
@@ -15,7 +15,7 @@ interface FormFields extends Other {}
 
 const OtherForm = ({ initValue, onCancel }: { initValue?: Other; onCancel: () => void }) => {
   const [otherForm] = Form.useForm();
-  const [value, setValue] = React.useState('');
+  // const [value, setValue] = React.useState('');
 
   return (
     <Form
@@ -46,10 +46,10 @@ const OtherForm = ({ initValue, onCancel }: { initValue?: Other; onCancel: () =>
           theme='snow'
           style={{ width: '100%', height: '100px', maxHeight: '100px', marginBottom: '50px' }}
           value={initValue?.description}
-          onChange={(value) => {
-            console.log(value);
-            setValue(value);
-          }}
+          // onChange={(value) => {
+          //   // console.log(value);
+          //   // setValue(value);
+          // }}
         />
       </Form.Item>
 
@@ -81,7 +81,7 @@ const OtherForm = ({ initValue, onCancel }: { initValue?: Other; onCancel: () =>
 };
 
 const OtherModal = (props: ModalProps) => {
-  const { initValue, isEdit, handleChange } = props;
+  const { initValue, isEdit } = props;
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
   return (

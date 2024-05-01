@@ -1,4 +1,3 @@
-import React from 'react';
 import SummaryModal from './SummaryModal';
 
 const SummarySession = () => {

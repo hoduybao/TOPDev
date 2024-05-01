@@ -1,11 +1,11 @@
 import { EditOutlined } from '@ant-design/icons';
 import { Button, Checkbox, DatePicker, Form, FormInstance, Input, Modal, Select } from 'antd';
 import React from 'react';
-import { YOEProps } from './ExpSession';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import AddProjectForm, { AddProjectFormField } from './AddProjectForm';
 import { v4 as uuidv4 } from 'uuid';
+import AddProjectForm, { AddProjectFormField } from './AddProjectForm';
+import { YOEProps } from './ExpSession';
 
 interface FormFields extends YOEProps {}
 
@@ -18,15 +18,15 @@ const JobForm = ({
   instance: FormInstance<any>;
   onFinish: (value: any) => void;
 }) => {
-  const [value, setValue] = React.useState('');
+  // const [value, setValue] = React.useState('');
   const {
     appliedSkills,
     companyName,
     position,
-    timeBegin,
-    timeEnd,
+    // timeBegin,
+    // timeEnd,
     description,
-    isDoing = false,
+    // isDoing = false,
     projects,
   } = initData;
 
@@ -116,10 +116,10 @@ const JobForm = ({
               theme='snow'
               style={{ width: '100%', height: '100px', maxHeight: '100px', marginBottom: '50px' }}
               value={description}
-              onChange={(value) => {
-                console.log(value);
-                setValue(value);
-              }}
+              // onChange={(value) => {
+              //   // console.log(value);
+              //   // setValue(value);
+              // }}
             />
           </Form.Item>
 

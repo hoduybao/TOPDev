@@ -1,8 +1,8 @@
-import React from 'react';
-import { Activity } from './ActivitiesSession';
-import { v4 as uuidv4 } from 'uuid';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
+import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { Activity } from './ActivitiesSession';
 import ActivityModal from './ActivityModal';
 
 const data: Activity[] = [
@@ -23,7 +23,7 @@ const data: Activity[] = [
 ];
 
 const ListItem = ({ act }: { act: Activity }) => {
-  const { name, description, endDate, isWorking, startDate } = act;
+  const { name, description, endDate, startDate } = act;
   return (
     <div className='flex justify-between bg-gray-100 p-4 rounded'>
       <div>

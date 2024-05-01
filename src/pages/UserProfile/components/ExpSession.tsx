@@ -1,8 +1,7 @@
-import React from 'react';
-import ExpModal from './ExpModal';
+import { FileTextOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
 import { AddProjectFormField } from './AddProjectForm';
-import { FileTextOutlined } from '@ant-design/icons';
+import ExpModal from './ExpModal';
 
 export type YOEProps = {
   timeBegin: string;

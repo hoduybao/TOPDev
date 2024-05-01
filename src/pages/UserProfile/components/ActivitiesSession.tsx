@@ -1,4 +1,3 @@
-import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import ActivitiesModal from './ActivitiesModal';
 
@@ -28,7 +27,7 @@ const data: Activity[] = [
 ];
 
 const ActivityItem = ({ activity }: { activity: Activity }) => {
-  const { name, description, endDate, isWorking, startDate } = activity;
+  const { name, description, endDate, startDate } = activity;
   return (
     <div className='flex gap-4'>
       <div className='w-[20%]'>

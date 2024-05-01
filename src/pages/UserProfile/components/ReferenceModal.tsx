@@ -1,7 +1,7 @@
-import React from 'react';
-import { Reference } from './ReferencesSession';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal } from 'antd';
+import React from 'react';
+import { Reference } from './ReferencesSession';
 
 type ModalProps = {
   initValue?: Reference;
@@ -90,7 +90,7 @@ const RefForm = ({ initValue, onCancel }: { initValue?: Reference; onCancel: () 
 };
 
 const ReferenceModal = (props: ModalProps) => {
-  const { initValue, isEdit, handleChange } = props;
+  const { initValue, isEdit } = props;
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
   return (

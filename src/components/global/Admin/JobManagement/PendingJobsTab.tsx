@@ -1,12 +1,11 @@
+import { useGetJobByIdQuery } from '@/+core/redux/apis/admin/job-management/job-service.request';
 import { CompanyInfo, Job } from '@/+core/utilities/types/admin.type';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Input, Modal, Space, Table, TableProps, Tag, Tooltip } from 'antd';
-import { useEffect, useState } from 'react';
-import moment from 'moment';
-import JobDescriptions from './JobDescriptions';
 import { SearchProps } from 'antd/es/input';
-import { Company } from '@/pages/company/components/CompanyTypes';
-import { useGetJobByIdQuery } from '@/+core/redux/apis/admin/job-management/job-service.request';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import JobDescriptions from './JobDescriptions';
 
 interface PendingJobTabProps {
   data: Job[];
@@ -29,7 +28,7 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
   const [isJobDetailOpen, setIsJobDetailOpen] = useState<boolean>(false);
   const [viewedJob, setViewedJob] = useState<Job>();
   const [viewedJobId, setViewedJobId] = useState<string>('');
-  const { data: JobDetailData, error, refetch } = useGetJobByIdQuery(viewedJobId);
+  const { data: JobDetailData } = useGetJobByIdQuery(viewedJobId);
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
@@ -148,7 +147,7 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
     },
   ];
 
-  const onSearch: SearchProps['onSearch'] = (value, _e, info) => {
+  const onSearch: SearchProps['onSearch'] = (value, _e) => {
     const newData = props.data.filter(
       (item) =>
         item.company.name.toLowerCase().includes(value.toLowerCase()) ||

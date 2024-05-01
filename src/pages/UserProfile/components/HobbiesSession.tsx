@@ -1,4 +1,3 @@
-import React from 'react';
 import HobbiesModal from './HobbiesModal';
 
 const data = '<p>hello</p>';

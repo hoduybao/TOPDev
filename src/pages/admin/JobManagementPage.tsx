@@ -1,16 +1,15 @@
-import { Job } from '@/+core/utilities/types/admin.type';
-import PendingJobsTab from '@/components/global/Admin/JobManagement/PendingJobsTab';
-import { Divider, Spin, Tabs, TabsProps } from 'antd';
-import { useEffect, useState } from 'react';
 import { jobStatus } from '@/+core/enums/jobStatus.enum';
-import moment from 'moment';
-import ActiveJobsTab from '@/components/global/Admin/JobManagement/ActiveJobsTab';
-import RejectedJobsTab from '@/components/global/Admin/JobManagement/RejectedJobsTab';
 import {
   useApproveJobsMutation,
   useGetJobsQuery,
   useRefuseJobsMutation,
 } from '@/+core/redux/apis/admin/job-management/job-service.request';
+import { Job } from '@/+core/utilities/types/admin.type';
+import ActiveJobsTab from '@/components/global/Admin/JobManagement/ActiveJobsTab';
+import PendingJobsTab from '@/components/global/Admin/JobManagement/PendingJobsTab';
+import RejectedJobsTab from '@/components/global/Admin/JobManagement/RejectedJobsTab';
+import { Divider, Spin, Tabs, TabsProps } from 'antd';
+import { useEffect, useState } from 'react';
 
 const JobManagementPage = () => {
   const { data: jobsData, isFetching: isFetchingJobs } = useGetJobsQuery({});
@@ -26,8 +25,6 @@ const JobManagementPage = () => {
     console.log('refetch');
     if (jobsData?.data.jobs) setAllJobs(jobsData?.data.jobs);
   }, [jobsData]);
-
-  const today = moment();
 
   const handleApprove = (jobs: Job[]) => {
     const jobIds = jobs.map((job) => job.id);

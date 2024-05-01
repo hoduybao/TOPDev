@@ -1,13 +1,13 @@
 import { DeleteOutlined, EditOutlined, FileTextOutlined } from '@ant-design/icons';
-import { Button, Form, Modal } from 'antd';
+import { Button, Modal } from 'antd';
 import React from 'react';
-import { YOEProps } from './ExpSession';
-import ManageJobModal from './ManageJobModal';
 import { v4 as uuidv4 } from 'uuid';
 import { AddProjectFormField } from './AddProjectForm';
+import { YOEProps } from './ExpSession';
+import ManageJobModal from './ManageJobModal';
 
 const JobItem = ({ data }: { data: YOEProps }) => {
-  const { timeBegin, projects, companyName, position, timeEnd, description } = data;
+  const { timeBegin, projects, companyName, position, timeEnd } = data;
   return (
     <div className='bg-gray-100'>
       <div className='flex gap-4 justify-between  p-4'>

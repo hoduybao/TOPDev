@@ -1,9 +1,9 @@
-import React from 'react';
-import { Certificate } from './CertificatesSession';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, DatePicker, Form, Input, Modal } from 'antd';
+import React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { Certificate } from './CertificatesSession';
 
 type ModalProps = {
   initValue?: Certificate;
@@ -15,7 +15,7 @@ interface FormFields extends Certificate {}
 
 const CertForm = ({ initValue, onCancel }: { initValue?: Certificate; onCancel: () => void }) => {
   const [certForm] = Form.useForm();
-  const [value, setValue] = React.useState('');
+  // const [value, setValue] = React.useState('');
 
   return (
     <Form
@@ -56,10 +56,10 @@ const CertForm = ({ initValue, onCancel }: { initValue?: Certificate; onCancel: 
           theme='snow'
           style={{ width: '100%', height: '100px', maxHeight: '100px', marginBottom: '50px' }}
           value={initValue?.description}
-          onChange={(value) => {
-            console.log(value);
-            setValue(value);
-          }}
+          // onChange={(value) => {
+          //   // console.log(value);
+          //   // setValue(value);
+          // }}
         />
       </Form.Item>
 
@@ -91,7 +91,7 @@ const CertForm = ({ initValue, onCancel }: { initValue?: Certificate; onCancel: 
 };
 
 const CertModal = (props: ModalProps) => {
-  const { initValue, isEdit, handleChange } = props;
+  const { initValue, isEdit } = props;
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
   return (

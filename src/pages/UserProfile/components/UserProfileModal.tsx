@@ -11,12 +11,11 @@ import {
   Select,
   SelectProps,
 } from 'antd';
-import React, { useState, useTransition } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 
-interface PropType {
-  createNewDetailApplication: (title: string, name: string, phone: string, email: string) => void;
-}
+// interface PropType {
+//   createNewDetailApplication: (title: string, name: string, phone: string, email: string) => void;
+// }
 
 type FieldType = {
   fullname: string;
@@ -32,11 +31,9 @@ type FieldType = {
   githubLink: string;
   skills: string[];
 };
+// const UserProfileModal = (props: PropType) => {
 
-const UserProfileModal = (props: PropType) => {
-  const { createNewDetailApplication } = props;
-  const { t } = useTranslation();
-
+const UserProfileModal = () => {
   const [ProfileForm] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -58,9 +55,9 @@ const UserProfileModal = (props: PropType) => {
 
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
     console.log('Success:', values);
-    if (values?.title && values?.name && values?.phone && values?.email) {
-      createNewDetailApplication(values?.title, values?.name, values?.phone, values?.email);
-    }
+    // if (values?.title && values?.name && values?.phone && values?.email) {
+    //   createNewDetailApplication(values?.title, values?.name, values?.phone, values?.email);
+    // }
     //handleOk();
   };
 

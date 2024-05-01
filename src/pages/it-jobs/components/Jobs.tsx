@@ -11,14 +11,7 @@ type JobsProps = {
   handleFilterChange?: (values: any) => void;
 };
 
-export const Jobs = ({
-  data,
-  page = 1,
-  limit = 10,
-  total,
-  keywords,
-  handleFilterChange,
-}: JobsProps) => {
+export const Jobs = ({ data, limit = 10, total, keywords, handleFilterChange }: JobsProps) => {
   const { t } = useTranslation();
   return (
     <div className='flex flex-col w-full'>

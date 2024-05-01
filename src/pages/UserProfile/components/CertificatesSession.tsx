@@ -1,4 +1,3 @@
-import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import CertsModal from './CertsModal';
 
@@ -22,7 +21,7 @@ const data: Certificate[] = [
 ];
 
 const CertItem = ({ cert }: { cert: Certificate }) => {
-  const { name, description, time } = cert;
+  const { name, time } = cert;
   return (
     <div className='flex gap-4'>
       <div>{time}</div>

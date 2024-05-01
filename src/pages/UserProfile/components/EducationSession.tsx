@@ -1,6 +1,5 @@
-import React from 'react';
-import EducationModal, { Scholl } from './EducationModal';
 import { v4 as uuidv4 } from 'uuid';
+import EducationModal, { Scholl } from './EducationModal';
 
 const scholls: Scholl[] = [
   {

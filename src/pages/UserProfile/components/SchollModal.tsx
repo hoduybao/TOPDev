@@ -1,15 +1,15 @@
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Checkbox, DatePicker, Form, Input, Modal } from 'antd';
 import React from 'react';
-import { Scholl } from './EducationModal';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { Scholl } from './EducationModal';
 
 interface FormFields extends Scholl {}
 
 const SchollForm = ({ initValue, onCancel }: { initValue?: Scholl; onCancel: () => void }) => {
   const [SchollForm] = Form.useForm();
-  const [value, setValue] = React.useState('');
+  // const [value, setValue] = React.useState('');
 
   return (
     <Form
@@ -89,10 +89,10 @@ const SchollForm = ({ initValue, onCancel }: { initValue?: Scholl; onCancel: () 
           theme='snow'
           style={{ width: '100%', height: '100px', maxHeight: '100px', marginBottom: '50px' }}
           value={initValue?.description}
-          onChange={(value) => {
-            console.log(value);
-            setValue(value);
-          }}
+          // onChange={(value) => {
+          //   console.log(value);
+          //   setValue(value);
+          // }}
         />
       </Form.Item>
 
@@ -129,7 +129,7 @@ type ModalProps = {
   handleChange: (value: Scholl) => void;
 };
 const SchollModal = (props: ModalProps) => {
-  const { initValue, isEdit, handleChange } = props;
+  const { initValue, isEdit } = props;
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
   return (

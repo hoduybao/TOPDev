@@ -1,6 +1,5 @@
-import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export type Company = {
   alias: string;

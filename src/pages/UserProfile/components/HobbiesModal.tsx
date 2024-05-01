@@ -10,7 +10,7 @@ type FormFields = {
 
 const HobbiesForm = ({ initValue, onCancel }: { initValue?: FormFields; onCancel: () => void }) => {
   const [langForm] = Form.useForm();
-  const [value, setValue] = React.useState('');
+  // const [value, setValue] = React.useState('');
 
   return (
     <Form name='hobbies-form' form={langForm} onFinish={() => {}}>
@@ -26,10 +26,10 @@ const HobbiesForm = ({ initValue, onCancel }: { initValue?: FormFields; onCancel
           theme='snow'
           style={{ width: '100%', height: '100px', maxHeight: '100px', marginBottom: '50px' }}
           value={initValue?.hobbies}
-          onChange={(value) => {
-            console.log(value);
-            setValue(value);
-          }}
+          // onChange={(value) => {
+          //   // console.log(value);
+          //   // setValue(value);
+          // }}
         />
       </Form.Item>
 

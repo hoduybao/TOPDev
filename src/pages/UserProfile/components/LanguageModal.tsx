@@ -1,13 +1,12 @@
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Form, Modal, Select } from 'antd';
 import React from 'react';
 import { Language } from './LanguagesSession';
-import { Button, Form, Modal, Select } from 'antd';
 
 interface FormFields extends Language {}
 
 const LangForm = ({ initValue, onCancel }: { initValue?: Language; onCancel: () => void }) => {
   const [langForm] = Form.useForm();
-  const [value, setValue] = React.useState('');
 
   return (
     <Form name='project-form' form={langForm} onFinish={() => {}}>
@@ -66,7 +65,7 @@ type ModalProps = {
   handleChange: (value: Language) => void;
 };
 const LanguageModal = (props: ModalProps) => {
-  const { initValue, isEdit, handleChange } = props;
+  const { initValue, isEdit } = props;
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
   return (

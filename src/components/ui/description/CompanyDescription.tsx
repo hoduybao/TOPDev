@@ -1,9 +1,8 @@
-import { Link, useParams } from 'react-router-dom';
-import DetailSession, { DetailHeader } from './Session';
-import { useGetCompanyByIdQuery } from '@/+core/redux/apis/common/company/company.api';
-import { Spin } from 'antd';
-import { CustomJobResponse } from '@/+core/redux/apis/common/job/job.types';
 import { JobResponse } from '@/+core/redux/apis/common/job/job.response';
+import { CustomJobResponse } from '@/+core/redux/apis/common/job/job.types';
+import { Spin } from 'antd';
+import { Link } from 'react-router-dom';
+import DetailSession, { DetailHeader } from './Session';
 
 const ListItem = ({ title, data, size }: { title: string; data?: string[]; size?: string }) => {
   return (

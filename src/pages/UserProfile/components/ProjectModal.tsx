@@ -1,9 +1,9 @@
-import React from 'react';
-import { Project } from './ProjectsSession';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal } from 'antd';
+import React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { Project } from './ProjectsSession';
 
 type ModalProps = {
   initValue?: Project;
@@ -15,7 +15,7 @@ interface FormFields extends Project {}
 
 const ProjectForm = ({ initValue, onCancel }: { initValue?: Project; onCancel: () => void }) => {
   const [projectForm] = Form.useForm();
-  const [value, setValue] = React.useState('');
+  // const [value, setValue] = React.useState('');
 
   return (
     <Form
@@ -67,10 +67,10 @@ const ProjectForm = ({ initValue, onCancel }: { initValue?: Project; onCancel: (
           theme='snow'
           style={{ width: '100%', height: '100px', maxHeight: '100px', marginBottom: '50px' }}
           value={initValue?.description}
-          onChange={(value) => {
-            console.log(value);
-            setValue(value);
-          }}
+          // onChange={(value) => {
+          //   console.log(value);
+          //   setValue(value);
+          // }}
         />
       </Form.Item>
 
@@ -102,7 +102,7 @@ const ProjectForm = ({ initValue, onCancel }: { initValue?: Project; onCancel: (
 };
 
 const ProjectModal = (props: ModalProps) => {
-  const { initValue, isEdit, handleChange } = props;
+  const { initValue, isEdit } = props;
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
   return (

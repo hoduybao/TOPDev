@@ -1,10 +1,9 @@
+import { Button, Form, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { Button, Form, Input, Select, Rate } from 'antd';
-import { type FormProps } from 'antd';
 
-import MockApplicationData from '../../../../draft/application.json';
-
-const { Option } = Select;
+import { useUpdateApplicationProcessMutation } from '@/+core/redux/apis/common/recruitment/recruitment.api';
+import { ApplicationDetailTypeRES } from '@/+core/redux/apis/common/recruitment/recruitment.response';
+import { useEffect } from 'react';
 
 const layout = {
   // labelCol: { lg: { span: 10 } },
@@ -21,60 +20,61 @@ type FieldType = {
   rating?: number;
 };
 
-const DetailApplicationContainer = () => {
-  const [NewRecruitmentForm] = Form.useForm();
+type DetailApplicationContainerProps = {
+  data?: ApplicationDetailTypeRES;
+};
+
+const DetailApplicationContainer = ({ data }: DetailApplicationContainerProps) => {
+  const [form] = Form.useForm();
 
   const { t } = useTranslation();
 
-  const prefixSelector = (
-    <Form.Item name='prefix' noStyle>
-      <Select style={{ width: 70 }} disabled>
-        <Option value='84'>+84</Option>
-      </Select>
-    </Form.Item>
-  );
+  const [updateApplicationProcess, { isLoading }] = useUpdateApplicationProcessMutation();
 
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-    if (values?.title && values?.name && values?.phone && values?.email) {
-      //
+  useEffect(() => {
+    if (data) {
+      form.setFieldsValue({
+        title: data?.jobDetail.title,
+        name: data?.fullName,
+        email: data?.email,
+        phone: data?.phone,
+      });
     }
-  };
-
-  const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
+  }, [data]);
 
   return (
     <div className='p-4 h-auto'>
       <div className='flex items-center gap-3'>
-        <Button type='primary' danger>
-          {t('recruitmentAccept')}
-        </Button>
-        <Button>{t('recruitmentReject')}</Button>
+        {!data?.isApprove ? (
+          <>
+            <Button
+              loading={isLoading}
+              type='primary'
+              danger
+              onClick={() => {
+                updateApplicationProcess(data?.id as string);
+              }}
+            >
+              {t('recruitmentAccept')}
+            </Button>
+            <Button>{t('recruitmentReject')}</Button>
+          </>
+        ) : (
+          <div className='text-lg font-semibold text-primary-red'>{t('approved')}</div>
+        )}
       </div>
       <Form
         {...layout}
-        form={NewRecruitmentForm}
+        form={form}
         name='create-new-job'
         className='bg-[#fff] p-4 rounded-md mt-5 flex flex-col gap-5'
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        initialValues={{
-          ['title']: MockApplicationData?.id,
-          ['name']: MockApplicationData?.name,
-          ['email']: MockApplicationData?.email,
-          ['phone']: MockApplicationData?.phone,
-          ['rating']: MockApplicationData?.rating,
-          prefix: '84',
-        }}
       >
         <Form.Item<FieldType>
           label={`${t('recruitmentTitle')}`}
           name='title'
           rules={[{ required: true, message: 'Please input job title!' }]}
         >
-          <Input />
+          <Input readOnly />
         </Form.Item>
 
         <Form.Item<FieldType>
@@ -82,7 +82,7 @@ const DetailApplicationContainer = () => {
           name='name'
           rules={[{ required: true, message: 'Please input applicant name!' }]}
         >
-          <Input />
+          <Input readOnly />
         </Form.Item>
 
         <Form.Item<FieldType>
@@ -90,7 +90,7 @@ const DetailApplicationContainer = () => {
           name='email'
           rules={[{ required: true, message: 'Please input applicant email!' }]}
         >
-          <Input />
+          <Input readOnly />
         </Form.Item>
 
         <Form.Item
@@ -98,25 +98,7 @@ const DetailApplicationContainer = () => {
           name='phone'
           rules={[{ required: true, message: 'Please input applicant phone number!' }]}
         >
-          <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-        </Form.Item>
-
-        <Form.Item<FieldType>
-          label={`${t('recruitmentRating')}`}
-          name='rating'
-          rules={[{ required: true, message: 'Please input applicant rating!' }]}
-        >
-          <Rate />
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ span: 24 }}>
-          <div className='w-full border-t border-gray-300 mt-5 pt-4 flex items-center gap-2'>
-            <Button type='primary' htmlType='submit' danger>
-              {t('recruitmentSend')}
-            </Button>
-            <Button htmlType='button'>{t('recruitmentEvaluate')}</Button>
-            <Button htmlType='button'>{t('recruitmentActivity')}</Button>
-          </div>
+          <Input style={{ width: '100%' }} readOnly />
         </Form.Item>
       </Form>
     </div>

@@ -84,7 +84,7 @@ export const Columns = (): (ColumnGroupType<DataType> | ColumnType<DataType>)[] 
       dataIndex: 'action',
       width: 200,
       align: 'center',
-      render: (_, record) => (
+      render: () => (
         <div className='flex gap-2 justify-center'>
           <EyeOutlined style={{ fontSize: '24px' }} />
           <EditOutlined style={{ fontSize: '24px' }} />

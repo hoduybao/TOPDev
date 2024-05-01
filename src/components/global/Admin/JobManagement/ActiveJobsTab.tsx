@@ -1,10 +1,9 @@
 import { CompanyInfo, Job } from '@/+core/utilities/types/admin.type';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Input, Modal, Space, Table, TableProps, Tag, Tooltip } from 'antd';
-import { useEffect, useState } from 'react';
-import moment from 'moment';
-import JobDescriptions from './JobDescriptions';
 import { SearchProps } from 'antd/es/input';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import JobDescriptions from './JobDescriptions';
 
 interface ActiveJobsTabProps {
   data: Job[];
@@ -20,16 +19,16 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
   const [data, setData] = useState<Job[]>(props.data);
   const { Search } = Input;
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [selectedRows, setSelectedRows] = useState<Job[]>([]);
+  // const [selectedRows, setSelectedRows] = useState<Job[]>([]);
 
   const [isJobDetailOpen, setIsJobDetailOpen] = useState<boolean>(false);
   const [viewedJob, setViewedJob] = useState<Job>();
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
-    const DataWithKeys = addKeyToData(data);
-    const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
-    setSelectedRows(newSelectedRows);
+    // const DataWithKeys = addKeyToData(data);
+    // const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
+    // setSelectedRows(newSelectedRows);
   };
   const rowSelection = {
     selectedRowKeys,
@@ -138,7 +137,7 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
     },
   ];
 
-  const onSearch: SearchProps['onSearch'] = (value, _e, info) => {
+  const onSearch: SearchProps['onSearch'] = (value, _e) => {
     const newData = props.data.filter(
       (item) =>
         item.company.name.toLowerCase().includes(value.toLowerCase()) ||

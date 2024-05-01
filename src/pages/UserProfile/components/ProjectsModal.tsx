@@ -1,9 +1,9 @@
-import React from 'react';
-import { Project } from './ProjectsSession';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import ProjectModal from './ProjectModal';
+import { Project } from './ProjectsSession';
 
 const projects: Project[] = [
   {
@@ -21,7 +21,7 @@ const projects: Project[] = [
 ];
 
 const ProjectItem = ({ project }: { project: Project }) => {
-  const { name, description, position, timeline } = project;
+  const { name, position, timeline } = project;
   return (
     <div className='flex justify-between bg-gray-100 p-4 rounded'>
       <div>

@@ -1,9 +1,9 @@
-import React from 'react';
-import { Activity } from './ActivitiesSession';
+import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
+import React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Activity } from './ActivitiesSession';
 
 type ModalProps = {
   initValue?: Activity;
@@ -15,7 +15,7 @@ interface FormFields extends Activity {}
 
 const ActivityForm = ({ initValue, onCancel }: { initValue?: Activity; onCancel: () => void }) => {
   const [actForm] = Form.useForm();
-  const [value, setValue] = React.useState('');
+  // const [value, setValue] = React.useState('');
 
   return (
     <Form
@@ -63,10 +63,10 @@ const ActivityForm = ({ initValue, onCancel }: { initValue?: Activity; onCancel:
           theme='snow'
           style={{ width: '100%', height: '100px', maxHeight: '100px', marginBottom: '50px' }}
           value={initValue?.description}
-          onChange={(value) => {
-            console.log(value);
-            setValue(value);
-          }}
+          // onChange={(value) => {
+          //   // console.log(value);
+          //   // setValue(value);
+          // }}
         />
       </Form.Item>
 
@@ -98,7 +98,7 @@ const ActivityForm = ({ initValue, onCancel }: { initValue?: Activity; onCancel:
 };
 
 const ActivityModal = (props: ModalProps) => {
-  const { initValue, isEdit, handleChange } = props;
+  const { initValue, isEdit } = props;
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
   return (

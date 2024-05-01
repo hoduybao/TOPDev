@@ -76,7 +76,7 @@
   "recruitmentCreateApplicant": "Tạo một Ứng viên cho công việc",
   "recruitmentViewApplication": "Xem hồ sơ",
   "recruitmentDelete": "Xóa",
-  "recruitmentTitle": "Tiêu đề / Hồ sơ ứng tuyển",
+  "recruitmentTitle": "Tên công việc",
   "recruitmentApplicantName": "Tên ứng viên",
   "recruitmentPhone": "Điện thoại",
   "recruitmentRating": "Đánh giá",
@@ -208,5 +208,7 @@
   "appliedAt": "Ngày ứng tuyển",
   "latestStatus": "Trạng thái gần nhất",
   "loginToViewSalary": "Đăng nhập để xem mức lương",
-  "companyInformation": "Thông tin công ty"
+  "companyInformation": "Thông tin công ty",
+  "approved": "Đã duyệt",
+  "rejected": "Đã từ chối"
 }

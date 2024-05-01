@@ -106,7 +106,7 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
     },
   ];
 
-  const onSearch: SearchProps['onSearch'] = (value, _e, info) => {
+  const onSearch: SearchProps['onSearch'] = (value, _e) => {
     const newData = props.data.filter(
       (item) =>
         item.companyName.toLowerCase().includes(value.toLowerCase()) ||

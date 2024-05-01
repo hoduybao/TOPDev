@@ -4,25 +4,25 @@ import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
-// https://react-pdf-viewer.dev
+type ViewPdfContainerProps = {
+  fileUrl?: string;
+};
 
-const ViewPdfContainer = () => {
+const ViewPdfContainer = ({ fileUrl }: ViewPdfContainerProps) => {
   const PDFJS_VERSION = '3.4.120';
-  const MOCK_PDF_URL =
-    'https://piwwbijgpwvzynpsplfn.supabase.co/storage/v1/object/public/uploads/files/CTDT%20K20%20KTPM.pdf';
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
-  return (
+  return fileUrl ? (
     <Worker workerUrl={`https://unpkg.com/pdfjs-dist@${PDFJS_VERSION}/build/pdf.worker.min.js`}>
       <Viewer
-        fileUrl={`${MOCK_PDF_URL}`}
+        fileUrl={fileUrl || ''}
         plugins={[
           // Register plugins
           defaultLayoutPluginInstance,
         ]}
       />
     </Worker>
-  );
+  ) : null;
 };
 
 export default ViewPdfContainer;

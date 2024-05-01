@@ -9,7 +9,7 @@ type CompaniesProps = {
   total?: number;
   handleFilterChange?: (values: any) => void;
 };
-export const Companies = ({ data, page, limit, total, handleFilterChange }: CompaniesProps) => {
+export const Companies = ({ data, limit, total, handleFilterChange }: CompaniesProps) => {
   const { t } = useTranslation();
   return (
     <div className='flex flex-col w-full'>
