@@ -1,9 +1,9 @@
 import { CompanyInfo, Job } from '@/+core/utilities/types/admin.type';
 import { Button, Input, Modal, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
-import moment from 'moment';
 import { useEffect, useState } from 'react';
 import JobDescriptions from './JobDescriptions';
+import dayjs from 'dayjs';
 
 interface ComingJobsTabProps {
   data: Job[];
@@ -112,8 +112,8 @@ const ComingJobsTab = (props: ComingJobsTabProps) => {
       title: 'Submitted Date',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (date) => <p>{moment(date).format('DD/MM/YYYY')}</p>,
-      sorter: (a, b) => moment(a.createdAt).unix() - moment(b.createdAt).unix(),
+      render: (date) => <p>{dayjs(date).format('DD/MM/YYYY')}</p>,
+      // sorter: (a, b) => moment(a.createdAt).unix() - moment(b.createdAt).unix(),
       showSorterTooltip: false,
     },
     {

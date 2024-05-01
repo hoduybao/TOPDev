@@ -3,9 +3,9 @@ import { CompanyInfo, Job } from '@/+core/utilities/types/admin.type';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Input, Modal, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
-import moment from 'moment';
 import { useEffect, useState } from 'react';
 import JobDescriptions from './JobDescriptions';
+import dayjs from 'dayjs';
 
 interface PendingJobTabProps {
   data: Job[];
@@ -122,8 +122,8 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
       title: 'Submitted Date',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (date) => <p>{moment(date).format('DD/MM/YYYY')}</p>,
-      sorter: (a, b) => moment(a.createdAt).unix() - moment(b.createdAt).unix(),
+      render: (date) => <p>{dayjs(date).format('DD/MM/YYYY')}</p>,
+      // sorter: (a, b) => moment(a.createdAt).unix() - moment(b.createdAt).unix(),
       showSorterTooltip: false,
     },
     {
