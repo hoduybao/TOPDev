@@ -185,7 +185,7 @@ const RejectedJobsTab = (props: RejectedJobsTabProps) => {
         rowSelection={rowSelection}
         columns={columns}
         dataSource={addKeyToData(data)}
-        pagination={{ pageSize: 5 }}
+        pagination={false}
       />
 
       <Modal

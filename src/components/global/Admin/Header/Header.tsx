@@ -11,7 +11,6 @@ interface HeaderProps {
 
 const Header = ({ onCollapseNavigation }: HeaderProps) => {
   const location = useLocation();
-  console.log(location);
   // const menuItems = HeaderMenu();
   const [collapsed, setCollapsed] = useState(false);
 
@@ -22,37 +21,83 @@ const Header = ({ onCollapseNavigation }: HeaderProps) => {
 
   return (
     <header>
-      <nav className='z-10 fixed w-full h-[46px] bg-white px-4 py-2.5 flex gap-5 items-center justify-between'>
-        <div className='flex gap-3 items-center'>
+      <nav className='z-10 w-full h-[74px] bg-white-900 flex gap-5 items-center'>
+        <div className='w-[330px] px-6 flex items-center justify-between'>
           <Button
             type='text'
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            icon={
+              collapsed ? (
+                <svg
+                  fill='none'
+                  viewBox='0 0 24 16'
+                  height='16'
+                  width='24'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path
+                    xmlns='http://www.w3.org/2000/svg'
+                    d='M0.75 15.5H23.25V13H0.75V15.5ZM0.75 9.25H23.25V6.75H0.75V9.25ZM0.75 0.5V3H23.25V0.5H0.75Z'
+                    fill='#393E46'
+                  ></path>
+                </svg>
+              ) : (
+                <svg
+                  fill='none'
+                  viewBox='0 0 24 16'
+                  height='16'
+                  width='24'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path
+                    xmlns='http://www.w3.org/2000/svg'
+                    d='M23.25 15.5H7V13H23.25V15.5ZM23.25 9.25H10.75V6.75H23.25V9.25ZM23.25 0.5V3H7V0.5H23.25ZM0.75 12.4875L5.225 8L0.75 3.5125L2.5125 1.75L8.7625 8L2.5125 14.25L0.75 12.4875Z'
+                    fill='#393E46'
+                  ></path>
+                </svg>
+              )
+            }
             onClick={handleCollapseNavigation}
             style={{
               fontSize: '16px',
               width: 50,
               height: 50,
+              marginRight: 5,
             }}
           />
 
-          <Link to={`/recruitment`}>
-            <div className='w-[131px] hover:cursor-pointer'>
-              <img className='w-[100%]' src='../../../assets/logo/td-logo.png' alt='td-logo' />
-            </div>
-          </Link>
-          {/* <ul className='hidden md:flex list-none'>
+          <div className='w-[131px] hover:cursor-pointer'>
+            <img className='w-[100%]' src='../../../assets/logo/td-logo.png' alt='td-logo' />
+          </div>
+        </div>
+
+        {/* <ul className='hidden md:flex list-none'>
             {menuItems.map((menu) => {
               return <HeaderDropdown key={uuidv4()} menu={menu} />;
             })}
           </ul> */}
+        <div className='flex w-full pr-4 justify-between items-center'>
           {(location.pathname === MY_ROUTE.ADMIN_ACCOUNT_MANAGEMENT ||
             location.pathname === MY_ROUTE.ADMIN) && (
-            <Text style={{ fontSize: '25px', fontWeight: '600' }}>Manage Accounts </Text>
+            <h1 className='text-[25px] font-semibold text-black-400'>Manage Accounts </h1>
           )}
 
           {location.pathname === MY_ROUTE.ADMIN_JOB_MANAGEMENT && (
-            <Text style={{ fontSize: '25px', fontWeight: '600' }}>Manage Jobs </Text>
+            <h1 className='text-2xl font-bold text-black-400'>Manage Jobs </h1>
           )}
+
+          <svg
+            fill='none'
+            viewBox='0 0 26 26'
+            height='26'
+            width='26'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path
+              xmlns='http://www.w3.org/2000/svg'
+              d='M13 0.5C6.1 0.5 0.5 6.1 0.5 13C0.5 19.9 6.1 25.5 13 25.5C19.9 25.5 25.5 19.9 25.5 13C25.5 6.1 19.9 0.5 13 0.5ZM6.8375 20.85C7.375 19.725 10.65 18.625 13 18.625C15.35 18.625 18.6375 19.725 19.1625 20.85C17.4625 22.2 15.325 23 13 23C10.675 23 8.5375 22.2 6.8375 20.85ZM20.95 19.0375C19.1625 16.8625 14.825 16.125 13 16.125C11.175 16.125 6.8375 16.8625 5.05 19.0375C3.775 17.3625 3 15.275 3 13C3 7.4875 7.4875 3 13 3C18.5125 3 23 7.4875 23 13C23 15.275 22.225 17.3625 20.95 19.0375ZM13 5.5C10.575 5.5 8.625 7.45 8.625 9.875C8.625 12.3 10.575 14.25 13 14.25C15.425 14.25 17.375 12.3 17.375 9.875C17.375 7.45 15.425 5.5 13 5.5ZM13 11.75C11.9625 11.75 11.125 10.9125 11.125 9.875C11.125 8.8375 11.9625 8 13 8C14.0375 8 14.875 8.8375 14.875 9.875C14.875 10.9125 14.0375 11.75 13 11.75Z'
+              fill='#393E46'
+            ></path>
+          </svg>
         </div>
       </nav>
     </header>

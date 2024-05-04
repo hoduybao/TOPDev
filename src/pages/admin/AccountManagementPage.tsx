@@ -5,9 +5,10 @@ import BannedAccountTable from '@/components/global/Admin/AccountManagement/Bann
 import PendingAccountTable from '@/components/global/Admin/AccountManagement/PendingAccountTable';
 import RejectedAccountTable from '@/components/global/Admin/AccountManagement/RejectedAccountTable';
 import { CheckOutlined, ClockCircleOutlined, CloseOutlined, StopOutlined } from '@ant-design/icons';
-import { Divider, Tabs, TabsProps } from 'antd';
+import { Pagination, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
 import { mockHRAccountData } from './mockdata';
+import '../../styles/admin/ManagementPage.css';
 
 const AccountManagementPage = () => {
   const [allAccounts, setAllAccounts] = useState<HRAccount[]>(mockHRAccountData);
@@ -81,7 +82,7 @@ const AccountManagementPage = () => {
       label: (
         <div className='flex items-center'>
           <ClockCircleOutlined />
-          <p className='text-lg'>Pending</p>
+          <p>Pending</p>
         </div>
       ),
       children: (
@@ -97,7 +98,7 @@ const AccountManagementPage = () => {
       label: (
         <div className='flex items-center'>
           <CheckOutlined />
-          <p className='text-lg'>Approved</p>
+          <p>Approved</p>
         </div>
       ),
       children: <ApprovedAccountTable data={displayedData} banAccounts={handleBan} />,
@@ -107,7 +108,7 @@ const AccountManagementPage = () => {
       label: (
         <div className='flex items-center'>
           <CloseOutlined />
-          <p className='text-lg'>Rejected</p>
+          <p>Rejected</p>
         </div>
       ),
       children: <RejectedAccountTable data={displayedData} reviewAccounts={handleReview} />,
@@ -117,7 +118,7 @@ const AccountManagementPage = () => {
       label: (
         <div className='flex items-center'>
           <StopOutlined />
-          <p className='text-lg'>Banned</p>
+          <p>Banned</p>
         </div>
       ),
       children: <BannedAccountTable data={displayedData} unbanAccounts={handleUnban} />,
@@ -138,17 +139,21 @@ const AccountManagementPage = () => {
     }
   }, [allAccounts, tabKey]);
 
+  const handleChangePage = (page: number, pageSize: number) => {
+    console.log(page, ' ', pageSize);
+  };
+
   return (
     <>
-      <div className='w-full font-roboto px-4 bg-white-700'>
-        <div className='py-2'>
+      <div className='w-full h-screen font-roboto px-4 bg-white-700'>
+        {/* <div className='py-2'>
           <span className='font-bold text-xl text-black-400'>Account Manager</span>
         </div>
 
         <Divider
           className='font-bold bg-orange-500 my-2'
           style={{ borderBlockStart: '3px solid rgba(5, 5, 5, 0.06)' }}
-        />
+        /> */}
         <div className='mt-2 mb-4 w-full flex gap-2'>
           {/* <div className='w-[250px] flex items-center justify-center border-solid border-[1.5px] border-gray-500 rounded '>
             <h1>Filter</h1>
@@ -161,6 +166,17 @@ const AccountManagementPage = () => {
               items={items}
               onChange={(key) => setTabKey(key)}
             />
+            <div className='flex justify-end'>
+              {' '}
+              {/* Thêm class "justify-end" để căn phải */}
+              <Pagination
+                className='mt-5'
+                defaultCurrent={1}
+                total={allAccounts.length}
+                pageSize={5}
+                onChange={handleChangePage}
+              />
+            </div>
           </div>
         </div>
       </div>

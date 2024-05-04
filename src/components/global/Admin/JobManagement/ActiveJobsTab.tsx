@@ -44,7 +44,7 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
       title: 'Company Name',
       dataIndex: 'company',
       key: 'company',
-      sorter: (a, b) => a.company.name.localeCompare(b.company.name),
+      // sorter: (a, b) => a.company.name.localeCompare(b.company.name),
       showSorterTooltip: false,
       render: (text: CompanyInfo) => <p>{text?.name}</p>,
     },
@@ -52,14 +52,14 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
-      sorter: (a, b) => a.title.localeCompare(b.title),
+      // sorter: (a, b) => a.title.localeCompare(b.title),
       showSorterTooltip: false,
     },
     {
       title: 'Level',
       dataIndex: 'level',
       key: 'level',
-      sorter: (a, b) => a.level.localeCompare(b.level),
+      // sorter: (a, b) => a.level.localeCompare(b.level),
       showSorterTooltip: false,
     },
     {
@@ -82,37 +82,21 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
       title: 'Contract Type',
       dataIndex: 'contractType',
       key: 'contractType',
-      sorter: (a, b) => a.contractType.localeCompare(b.contractType),
+      // sorter: (a, b) => a.contractType.localeCompare(b.contractType),
       showSorterTooltip: false,
     },
     {
       title: 'Place',
       dataIndex: 'workingPlace',
       key: 'workingPlace',
-      sorter: (a, b) => a.workingPlace.localeCompare(b.workingPlace),
+      // sorter: (a, b) => a.workingPlace.localeCompare(b.workingPlace),
       showSorterTooltip: false,
     },
-    // {
-    //   title: 'Start Date',
-    //   dataIndex: 'startDate',
-    //   key: 'startDate',
-    //   render: (date) => <p>{moment(date).format('DD/MM/YYYY')}</p>,
-    //   sorter: (a, b) => moment(a.startDate).unix() - moment(b.startDate).unix(),
-    //   showSorterTooltip: false,
-    // },
-    // {
-    //   title: 'End Date',
-    //   dataIndex: 'endDate',
-    //   key: 'endDate',
-    //   render: (date) => <p>{moment(date).format('DD/MM/YYYY')}</p>,
-    //   sorter: (a, b) => moment(a.endDate).unix() - moment(b.endDate).unix(),
-    //   showSorterTooltip: false,
-    // },
     {
       title: 'Submitted Date',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (date) => <p>{dayjs(date).format('DD/MM/YYYY')}</p>,
+      // render: (date) => <p>{dayjs(date).format('DD/MM/YYYY')}</p>,
       showSorterTooltip: false,
     },
     {
@@ -128,9 +112,6 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
               View Details
             </Button>
           </Tooltip>
-          {/* <Tooltip placement='top' title={'Reject'}>
-            <Button icon={<CloseOutlined />}></Button>
-          </Tooltip> */}
         </Space>
       ),
     },
@@ -184,7 +165,7 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
         rowSelection={rowSelection}
         columns={columns}
         dataSource={addKeyToData(data)}
-        pagination={{ pageSize: 5 }}
+        pagination={false}
       />
 
       <Modal

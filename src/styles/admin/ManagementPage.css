@@ -1,0 +1,17 @@
+.ant-tabs-tab.ant-tabs-tab-active p{
+  font-weight: 600;
+  color: #d34127;
+}
+
+:where(.css-dev-only-do-not-override-1vnzv01).ant-tabs .ant-tabs-tab:hover {
+  color: #d34127;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active svg{
+  filter: invert(29%) sepia(100%) saturate(1433%) hue-rotate(349deg) brightness(90%) contrast(84%);
+  stroke-width: 2;
+}
+
+.ant-tabs-ink-bar.ant-tabs-ink-bar-animated{
+  background: #d34127;
+}

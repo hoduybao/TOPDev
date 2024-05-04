@@ -1,0 +1,16 @@
+th.ant-descriptions-item{
+  padding-bottom: 4px !important;
+}
+
+.ant-descriptions-item-label{
+  color: black !important;
+  font-weight: 600 !important;
+}
+
+.ant-descriptions-item-label::after {
+  display: none;
+}
+
+.ant-descriptions-item-content p{
+  color: #5e5957;
+}

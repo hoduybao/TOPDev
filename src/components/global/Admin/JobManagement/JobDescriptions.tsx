@@ -1,7 +1,6 @@
 import { Job } from '@/+core/utilities/types/admin.type';
 import { Descriptions, DescriptionsProps, Tag } from 'antd';
-import dayjs from 'dayjs';
-
+import '../../../../styles/admin/JobDescriptions.css';
 interface JobDescriptionsProps {
   data: Job;
 }
@@ -9,31 +8,29 @@ interface JobDescriptionsProps {
 const JobDescriptions = ({ data }: JobDescriptionsProps) => {
   const items: DescriptionsProps['items'] = [
     {
-      key: 'companyName',
-      label: 'Company',
-      children: <p>{data.company?.name}</p>,
-      span: 3,
-    },
-    {
       key: 'title',
-      label: 'Title',
+      label: <p>Title</p>,
       children: <p>{data.title}</p>,
       span: 3,
     },
     {
+      key: 'companyName',
+      label: <p>Company</p>,
+      children: <p>{data.company?.name}</p>,
+    },
+    {
       key: 'level',
-      label: 'Level',
+      label: <p>Level</p>,
       children: <p>{data.level}</p>,
     },
     {
       key: 'salary',
-      label: 'Salary',
+      label: <p>Salary</p>,
       children: <p>{data.salary}</p>,
-      span: 2,
     },
     {
       key: 'techs',
-      label: 'Technicals',
+      label: <p>Technicals</p>,
       children: (
         <div className='break-words'>
           {data.technicals.map((tech) => {
@@ -49,31 +46,29 @@ const JobDescriptions = ({ data }: JobDescriptionsProps) => {
     },
     {
       key: 'experience',
-      label: 'Experience (year)',
+      label: <p>Experience (year)</p>,
       children: (
         <p>
           <span>{data.minExperience}</span> - <span>{data.maxExperience}</span>
         </p>
       ),
-      span: 3,
     },
     {
       key: 'contractType',
-      label: 'Contract Type',
+      label: <p>Contract Type</p>,
       children: <p>{data.contractType}</p>,
     },
     {
-      key: 'type',
-      label: 'Working Place',
+      key: 'place',
+      label: <p>Location</p>,
       children: <p>{data.workingPlace}</p>,
-      span: 2,
     },
     {
       key: 'description',
-      label: 'Job Description',
+      label: <p>Job Description</p>,
       children: (
         <div
-          className='prose'
+          className='prose p-3 mr-1 border-solid border border-gray-800 rounded'
           dangerouslySetInnerHTML={{
             __html: data.jobDescription,
           }}
@@ -91,14 +86,15 @@ const JobDescriptions = ({ data }: JobDescriptionsProps) => {
     //   label: 'End Date',
     //   children: <p>{moment(data.endDate).format('DD/MM/YYYY')}</p>,
     // },
-    {
-      key: 'createdAt',
-      label: 'Submitted Date',
-      children: <p>{dayjs(data.createdAt).format('DD/MM/YYYY')}</p>,
-    },
+
+    // {
+    //   key: 'createdAt',
+    //   label: 'Submitted Date',
+    //   children: <p>{dayjs(data.createdAt).format('DD/MM/YYYY')}</p>,
+    // },
   ];
 
-  return <Descriptions items={items} />;
+  return <Descriptions items={items} layout='vertical' />;
 };
 
 export default JobDescriptions;

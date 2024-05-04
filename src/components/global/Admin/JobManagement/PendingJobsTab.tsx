@@ -1,4 +1,4 @@
-import { useGetJobByIdQuery } from '@/+core/redux/apis/admin/job-management/job-service.request';
+import { useGetJobByIdQuery } from '@/+core/redux/apis/admin/job-management/job-service.api';
 import { CompanyInfo, Job } from '@/+core/utilities/types/admin.type';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Input, Modal, Space, Table, TableProps, Tag, Tooltip } from 'antd';
@@ -220,7 +220,7 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
         rowSelection={rowSelection}
         columns={columns}
         dataSource={addKeyToData(data)}
-        pagination={{ pageSize: 5 }}
+        pagination={false}
       />
 
       <Modal
