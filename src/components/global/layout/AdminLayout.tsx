@@ -11,18 +11,16 @@ export default function AdminLayout() {
 
   const handleCollapseNav = (isCollapsed: boolean) => {
     setIsCollapsedNav(isCollapsed);
-    console.log(isCollapsedNav);
   };
   return (
-    <LayoutAntDesign className='bg-white'>
+    <LayoutAntDesign className='bg-white h-screen'>
       <Header onCollapseNavigation={handleCollapseNav} />
-      <LayoutAntDesign
-        className={`bg-primary-white duration-500 mt-[46px] ease-in-out`}
-        style={{ height: 'calc(100vh - 46px)' }}
-      >
-        <NavBar isCollapsed={isCollapsedNav} />
+      <LayoutAntDesign className='bg-primary-white duration-500 ease-in-out flex flex-row h-screen'>
+        <div className='h-screen'>
+          <NavBar isCollapsed={isCollapsedNav} />
+        </div>
 
-        <Content className='transition w-full'>
+        <Content className='transition w-full h-screen'>
           <Outlet />
         </Content>
       </LayoutAntDesign>

@@ -3,13 +3,16 @@ import {
   useApproveJobsMutation,
   useGetJobsQuery,
   useRefuseJobsMutation,
-} from '@/+core/redux/apis/admin/job-management/job-service.request';
+} from '@/+core/redux/apis/admin/job-management/job-service.api';
 import { Job } from '@/+core/utilities/types/admin.type';
 import ActiveJobsTab from '@/components/global/Admin/JobManagement/ActiveJobsTab';
 import PendingJobsTab from '@/components/global/Admin/JobManagement/PendingJobsTab';
 import RejectedJobsTab from '@/components/global/Admin/JobManagement/RejectedJobsTab';
-import { Divider, Spin, Tabs, TabsProps } from 'antd';
+import { Pagination, Spin, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
+import '../../styles/admin/ManagementPage.css';
+import ClosedJobsTab from '@/components/global/Admin/JobManagement/ClosedJobsTab';
+import { CheckOutlined, ClockCircleOutlined, CloseOutlined } from '@ant-design/icons';
 
 const JobManagementPage = () => {
   const { data: jobsData, isFetching: isFetchingJobs } = useGetJobsQuery({});
@@ -43,7 +46,7 @@ const JobManagementPage = () => {
       key: 'pending',
       label: (
         <div className='flex items-center'>
-          {/* <ClockCircleOutlined /> */}
+          <ClockCircleOutlined />
           <p>Pending</p>
         </div>
       ),
@@ -59,7 +62,7 @@ const JobManagementPage = () => {
       key: 'active',
       label: (
         <div className='flex items-center'>
-          {/* <EyeOutlined /> */}
+          <CheckOutlined />
           <p>Approved</p>
         </div>
       ),
@@ -75,25 +78,25 @@ const JobManagementPage = () => {
     //   ),
     //   children: <ComingJobsTab data={displayedData} />,
     // },
-    // {
-    //   key: 'expired',
-    //   label: (
-    //     <div className='flex items-center'>
-    //       {/* <ContainerOutlined /> */}
-    //       <p>Expired</p>
-    //     </div>
-    //   ),
-    //   children: <ExpiredJobsTab data={displayedData} />,
-    // },
     {
       key: 'rejected',
       label: (
         <div className='flex items-center'>
-          {/* <CloseOutlined /> */}
+          <CloseOutlined />
           <p>Rejected</p>
         </div>
       ),
       children: <RejectedJobsTab data={displayedData} />,
+    },
+    {
+      key: 'closed',
+      label: (
+        <div className='flex items-center'>
+          {/* <ContainerOutlined /> */}
+          <p>Closed</p>
+        </div>
+      ),
+      children: <ClosedJobsTab data={displayedData} />,
     },
   ];
 
@@ -128,18 +131,14 @@ const JobManagementPage = () => {
     }
   }, [allJobs, tabKey]);
 
+  const handleChangePage = (page: number, pageSize: number) => {
+    console.log(page, ' ', pageSize);
+  };
+
   return (
     <>
       <Spin spinning={isFetchingJobs || isFetchingApprove || isFetchingReject}>
-        <div className='w-full font-roboto px-4 bg-white-700'>
-          <div className='py-2'>
-            <span className='font-bold text-xl text-black-400'>Job Manager</span>
-          </div>
-
-          <Divider
-            className='font-bold bg-orange-500 my-2'
-            style={{ borderBlockStart: '3px solid rgba(5, 5, 5, 0.06)' }}
-          />
+        <div className='w-full h-screen font-roboto px-4 bg-white-700'>
           <div className='mt-2 mb-4 w-full flex gap-2'>
             {/* <div className='w-[250px] flex items-center justify-center border-solid border-[1.5px] border-gray-500 rounded '>
             <h1>Filter</h1>
@@ -152,6 +151,15 @@ const JobManagementPage = () => {
                 items={items}
                 onChange={(key) => setTabKey(key)}
               />
+              <div className='flex justify-end'>
+                <Pagination
+                  className='mt-5'
+                  defaultCurrent={1}
+                  total={allJobs.length}
+                  pageSize={5}
+                  onChange={handleChangePage}
+                />
+              </div>
             </div>
           </div>
         </div>

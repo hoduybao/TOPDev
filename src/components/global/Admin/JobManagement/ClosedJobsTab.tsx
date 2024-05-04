@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import JobDescriptions from './JobDescriptions';
 import dayjs from 'dayjs';
 
-interface ExpiredJobsTabProps {
+interface ClosedJobsTabProps {
   data: Job[];
 }
 
@@ -15,7 +15,7 @@ function addKeyToData(data: Job[]) {
   });
 }
 
-const ExpiredJobsTab = (props: ExpiredJobsTabProps) => {
+const ExpiredJobsTab = (props: ClosedJobsTabProps) => {
   const [data, setData] = useState<Job[]>(props.data);
   const { Search } = Input;
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);

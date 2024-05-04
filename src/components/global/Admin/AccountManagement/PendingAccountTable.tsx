@@ -165,7 +165,7 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
         rowSelection={rowSelection}
         columns={columns}
         dataSource={addKeyToData(data)}
-        pagination={{ pageSize: 5 }}
+        pagination={false}
       />
     </>
   );
