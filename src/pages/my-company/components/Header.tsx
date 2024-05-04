@@ -7,7 +7,6 @@ interface HeaderProps {
 }
 
 const Header = ({ onCollapseNavigation, textHeader }: HeaderProps) => {
-  // const menuItems = HeaderMenu();
   const [collapsed, setCollapsed] = useState(false);
 
   const handleCollapseNavigation = () => {

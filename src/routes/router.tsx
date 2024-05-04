@@ -6,14 +6,13 @@ import { HomePage } from '@/pages/home/HomePage';
 import { ITJobs } from '@/pages/it-jobs/IT-Jobs';
 import JobManagement from '@/pages/job-management/JobManagement';
 import ManageFollowPage from '@/pages/manage-follow/ManageFollowPage';
+import { CompanyProfile } from '@/pages/my-company/pages/company-profile/page';
+import { ManageJobs } from '@/pages/my-company/pages/manage-jobs/page';
 import { MyPages } from '@/pages/my-pages/MyPages';
-import DetailJobPage from '@/pages/recruitment/DetailJobPage';
-import ProfilePage from '@/pages/recruitment/ProfilePage';
 import { createBrowserRouter } from 'react-router-dom';
 import AdminLayout from '../components/global/layout/AdminLayout';
+import CompanyLayout from '../components/global/layout/CompanyLayout';
 import LoginLayout from '../components/global/layout/LoginLayout';
-import RecruitmentLayout from '../components/global/layout/RecruitmentLayout';
-import RecruitmentProcessLayout from '../components/global/layout/RecruitmentProcessLayout';
 import UserLayout from '../components/global/layout/UserLayout';
 import CompaniesPage from '../pages/company/Companies';
 import CompanyPage from '../pages/company/Company';
@@ -21,33 +20,30 @@ import JobPage from '../pages/job/JobPageNew';
 import LoginPage from '../pages/login/LoginPage';
 import ResetPasswordPage from '../pages/login/ResetPasswordPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
-import DetailPage from '../pages/recruitment/DetailPage';
-import MainPage from '../pages/recruitment/MainPage';
-import ProcessPage from '../pages/recruitment/ProcessPage';
 import { MY_ROUTE } from './route.constant';
 
 export const router = createBrowserRouter([
   {
-    path: '/recruitment',
-    element: <RecruitmentLayout />,
+    path: '/company',
+    element: <CompanyLayout />,
     children: [
-      { path: MY_ROUTE.RECRUITMENT, element: <MainPage /> },
-      { path: MY_ROUTE.RECRUITMENT_DETAIL_JOB, element: <DetailJobPage /> },
+      { path: MY_ROUTE.COMPANY, element: <CompanyProfile /> },
+      { path: MY_ROUTE.COMPANY_JOB_MANAGEMENT, element: <ManageJobs /> },
     ],
   },
-  {
-    path: '/recruitment/profile',
-    element: <RecruitmentLayout />,
-    children: [{ path: MY_ROUTE.RECRUITMENT_PROFILE, element: <ProfilePage /> }],
-  },
-  {
-    path: '/recruitment/:jobId',
-    element: <RecruitmentProcessLayout />,
-    children: [
-      { path: MY_ROUTE.RECRUITMENT_PROCESS, element: <ProcessPage /> },
-      { path: MY_ROUTE.RECRUITMENT_DETAIL, element: <DetailPage /> },
-    ],
-  },
+  // {
+  //   path: '/recruitment/profile',
+  //   element: <CompanyLayout />,
+  //   children: [{ path: MY_ROUTE.RECRUITMENT_PROFILE, element: <ProfilePage /> }],
+  // },
+  // {
+  //   path: '/recruitment/:jobId',
+  //   element: <RecruitmentProcessLayout />,
+  //   children: [
+  //     { path: MY_ROUTE.RECRUITMENT_PROCESS, element: <ProcessPage /> },
+  //     { path: MY_ROUTE.RECRUITMENT_DETAIL, element: <DetailPage /> },
+  //   ],
+  // },
   {
     path: '/admin',
     element: <AdminLayout />,
@@ -71,7 +67,7 @@ export const router = createBrowserRouter([
       },
       { path: MY_ROUTE.JOB, element: <JobPage /> },
       { path: MY_ROUTE.COMPANIES, element: <CompaniesPage /> },
-      { path: MY_ROUTE.COMPANY, element: <CompanyPage /> },
+      { path: MY_ROUTE.COMPANY_DETAILs, element: <CompanyPage /> },
       { path: MY_ROUTE.MANAGE_FOLLOW, element: <ManageFollowPage /> },
       { path: MY_ROUTE.IT_JOBS, element: <ITJobs /> },
       { path: MY_ROUTE.MY_PAGES, element: <MyPages /> },

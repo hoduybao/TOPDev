@@ -1,16 +1,20 @@
 export const MY_ROUTE = {
-  // RecruitmentLayout
-  RECRUITMENT: '/recruitment',
-  RECRUITMENT_DETAIL_JOB: '/recruitment/:jobId',
+  //Company
+  COMPANY: '/company',
+  COMPANY_JOB_MANAGEMENT: '/company/manage-jobs',
 
-  //RecruitmentProcessLayout
-  RECRUITMENT_PROCESS: '/recruitment/:jobId/applications',
-  RECRUITMENT_DETAIL: '/recruitment/:jobId/application/:applicationId',
-  RECRUITMENT_PROFILE: '/recruitment/profile',
+  // // RecruitmentLayout
+  // RECRUITMENT: '/recruitment',
+  // RECRUITMENT_DETAIL_JOB: '/recruitment/:jobId',
+
+  // //RecruitmentProcessLayout
+  // RECRUITMENT_PROCESS: '/recruitment/:jobId/applications',
+  // RECRUITMENT_DETAIL: '/recruitment/:jobId/application/:applicationId',
+  // RECRUITMENT_PROFILE: '/recruitment/profile',
 
   // Admin
   ADMIN: '/admin',
-  ADMIN_ACCOUNT_MANAGEMENT: '/admin/manage-account',
+  ADMIN_ACCOUNT_MANAGEMENT: '/admin',
   ADMIN_JOB_MANAGEMENT: '/admin/manage-job',
   ADMIN_LOGIN: '/admin/login',
 
@@ -24,7 +28,7 @@ export const MY_ROUTE = {
   HOME: '',
   JOB: 'jobs/:jobId',
   COMPANIES: 'companies',
-  COMPANY: 'companies/:companyId',
+  COMPANY_DETAILs: 'companies/:companyId',
   IT_JOBS: '/it-jobs',
   MANAGE_FOLLOW: '/manage-follow',
   MY_PAGES: '/users',

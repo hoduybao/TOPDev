@@ -1,33 +1,20 @@
+import Header from '@/pages/my-company/components/Header';
 import { MY_ROUTE } from '@/routes/route.constant';
+import { ProfileOutlined } from '@ant-design/icons';
 import { Layout as LayoutAntDesign } from 'antd';
 import { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import Header from '../Admin/Header/Header';
 import NavBar from '../Admin/NavBar/NavBar';
 
 const { Content } = LayoutAntDesign;
 const items = [
   {
-    key: MY_ROUTE.ADMIN_ACCOUNT_MANAGEMENT,
-    icon: (
-      <svg
-        fill='none'
-        viewBox='0 0 20 26'
-        height='26'
-        width='20'
-        xmlns='http://www.w3.org/2000/svg'
-      >
-        <path
-          xmlns='http://www.w3.org/2000/svg'
-          d='M17.5 0.0742188C18.163 0.0742188 18.7989 0.341785 19.2678 0.818056C19.7366 1.29433 20 1.94029 20 2.61384V22.9308C20 23.6044 19.7366 24.2503 19.2678 24.7266C18.7989 25.2029 18.163 25.4704 17.5 25.4704H2.5C1.83696 25.4704 1.20107 25.2029 0.732233 24.7266C0.263392 24.2503 0 23.6044 0 22.9308V2.61384C0 1.94029 0.263392 1.29433 0.732233 0.818056C1.20107 0.341785 1.83696 0.0742188 2.5 0.0742188H17.5ZM17.5 2.61384H11.25V8.96289L8.125 6.04233L5 8.96289V2.61384H2.5V22.9308H17.5M11.25 11.5025C11.7445 11.5025 12.2278 11.6515 12.6389 11.9305C13.05 12.2096 13.3705 12.6062 13.5597 13.0703C13.7489 13.5343 13.7984 14.045 13.702 14.5376C13.6055 15.0302 13.3674 15.4827 13.0178 15.8379C12.6681 16.1931 12.2227 16.435 11.7377 16.533C11.2528 16.6309 10.7501 16.5807 10.2933 16.3884C9.83648 16.1962 9.44603 15.8707 9.17133 15.4531C8.89662 15.0354 8.75 14.5444 8.75 14.0421C8.75 13.3686 9.01339 12.7226 9.48223 12.2464C9.95107 11.7701 10.587 11.5025 11.25 11.5025ZM16.25 21.661H6.25V20.3912C6.25 18.7023 9.5875 17.8516 11.25 17.8516C12.9125 17.8516 16.25 18.7023 16.25 20.3912V21.661Z'
-          fill='#393E46'
-        ></path>
-      </svg>
-    ),
-    label: 'Manage Accounts',
+    key: MY_ROUTE.COMPANY,
+    icon: <ProfileOutlined />,
+    label: 'Company Profile',
   },
   {
-    key: MY_ROUTE.ADMIN_JOB_MANAGEMENT,
+    key: MY_ROUTE.COMPANY_JOB_MANAGEMENT,
     icon: (
       <svg
         fill='none'
@@ -46,11 +33,11 @@ const items = [
     label: 'Manage Jobs',
   },
 ];
-export default function AdminLayout() {
+export default function CompanyLayout() {
   const [isCollapsedNav, setIsCollapsedNav] = useState(false);
   const route = useLocation().pathname;
   const [textHeader, setTextHeader] = useState(
-    items.find((item) => item.key === route)?.label || 'Manage Accounts',
+    items.find((item) => item.key === route)?.label || '',
   );
 
   const handleCollapseNav = (isCollapsed: boolean) => {
@@ -59,19 +46,18 @@ export default function AdminLayout() {
   return (
     <LayoutAntDesign className='bg-white h-screen'>
       <Header textHeader={textHeader} onCollapseNavigation={handleCollapseNav} />
-      <LayoutAntDesign className='bg-primary-white duration-500 ease-in-out flex flex-row h-screen mt-[74px]'>
+      <LayoutAntDesign className='bg-gray-100 duration-500 ease-in-out flex flex-row !h-full mt-[74px]'>
         <div className='h-screen'>
           <NavBar
             setTextHeader={setTextHeader}
             route={route}
             items={items}
             isCollapsed={isCollapsedNav}
-          />
+          />{' '}
         </div>
-
         <Content
-          className={`w-full h-screen transition-all duration-300 ease-in-out ${
-            isCollapsedNav ? 'ml-[104px]' : 'ml-[265px]'
+          className={`w-full h-screen transition-all duration-300 ease-in-out !bg-white-900 my-2 mr-2 rounded-sm ${
+            isCollapsedNav ? 'ml-[112px]' : 'ml-[273px]'
           }`}
         >
           <Outlet />
