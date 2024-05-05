@@ -8,7 +8,7 @@ import { CheckOutlined, ClockCircleOutlined, CloseOutlined, StopOutlined } from 
 import { Pagination, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
 import { mockHRAccountData } from './mockdata';
-import '../../styles/admin/ManagementPage.css';
+import '../../styles/admin/management-page.css';
 
 const AccountManagementPage = () => {
   const [allAccounts, setAllAccounts] = useState<HRAccount[]>(mockHRAccountData);

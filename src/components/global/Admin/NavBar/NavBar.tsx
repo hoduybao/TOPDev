@@ -1,7 +1,7 @@
 import { MY_ROUTE } from '@/routes/route.constant';
 import { Menu } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../../../../styles/admin/NavBar.css';
+import '../../../../styles/admin/nav-bar.css';
 
 interface NavBarProps {
   isCollapsed: boolean;

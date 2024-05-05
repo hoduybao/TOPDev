@@ -11,6 +11,7 @@ interface PendingJobTabProps {
   data: Job[];
   approveJobs: (accounts: Job[]) => void;
   rejectJobs: (accounts: Job[]) => void;
+  onSearch: (keyword: string) => void;
 }
 
 function addKeyToData(data: Job[]) {
@@ -20,7 +21,7 @@ function addKeyToData(data: Job[]) {
 }
 
 const PendingJobsTab = (props: PendingJobTabProps) => {
-  const [data, setData] = useState<Job[]>(props.data);
+  const { data, approveJobs, rejectJobs, onSearch } = props;
   const { Search } = Input;
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [selectedRows, setSelectedRows] = useState<Job[]>([]);
@@ -40,10 +41,6 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
     selectedRowKeys,
     onChange: onSelectChange,
   };
-
-  useEffect(() => {
-    setData(props.data);
-  }, [props]);
 
   useEffect(() => {
     setViewedJob(JobDetailData?.data);
@@ -103,14 +100,6 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
       showSorterTooltip: false,
     },
     // {
-    //   title: 'Start Date',
-    //   dataIndex: 'startDate',
-    //   key: 'startDate',
-    //   render: (date) => <p>{moment(date).format('DD/MM/YYYY')}</p>,
-    //   sorter: (a, b) => moment(a.startDate).unix() - moment(b.startDate).unix(),
-    //   showSorterTooltip: false,
-    // },
-    // {
     //   title: 'End Date',
     //   dataIndex: 'endDate',
     //   key: 'endDate',
@@ -139,35 +128,22 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
               View Details
             </Button>
           </Tooltip>
-          {/* <Tooltip placement='top' title={'Reject'}>
-            <Button icon={<CloseOutlined />}></Button>
-          </Tooltip> */}
         </Space>
       ),
     },
   ];
 
-  const onSearch: SearchProps['onSearch'] = (value, _e) => {
-    const newData = props.data.filter(
-      (item) =>
-        item.company.name.toLowerCase().includes(value.toLowerCase()) ||
-        item.title.toString().toLowerCase().includes(value) ||
-        item.contractType.toLowerCase().includes(value.toLowerCase()) ||
-        item.technicals.some((field) => field.toLowerCase().includes(value.toLowerCase())) ||
-        item.workingPlace.toLowerCase().includes(value.toLowerCase()) ||
-        item.level.toLowerCase().includes(value.toLowerCase()),
-    );
-
-    setData(newData);
+  const handleSearch: SearchProps['onSearch'] = (value, _e) => {
+    onSearch(value);
   };
 
   const handleApproveSelections = () => {
-    props.approveJobs(selectedRows);
+    approveJobs(selectedRows);
     setSelectedRowKeys([]);
   };
 
   const handleRejectSelections = () => {
-    props.rejectJobs(selectedRows);
+    rejectJobs(selectedRows);
     setSelectedRowKeys([]);
   };
 
@@ -183,14 +159,14 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
 
   const handleApproveModal = () => {
     if (viewedJob) {
-      props.approveJobs([viewedJob]);
+      approveJobs([viewedJob]);
     }
     handleCancel();
   };
 
   const handleRejectModal = () => {
     if (viewedJob) {
-      props.rejectJobs([viewedJob]);
+      rejectJobs([viewedJob]);
     }
     handleCancel();
   };
@@ -213,7 +189,7 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
           </Button>
         </div>
 
-        <Search placeholder='Input search text' onSearch={onSearch} style={{ width: 200 }} />
+        <Search placeholder='Input search text' onSearch={handleSearch} style={{ width: 200 }} />
       </div>
       <Table
         className='mt-2'
