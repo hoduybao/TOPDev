@@ -210,5 +210,16 @@
   "loginToViewSalary": "Đăng nhập để xem mức lương",
   "companyInformation": "Thông tin công ty",
   "approved": "Đã duyệt",
-  "rejected": "Đã từ chối"
+  "rejected": "Đã từ chối",
+  "companyProfile": "Hồ Sơ Công Ty",
+  "contactInformation": "Thông Tin Liên Hệ",
+  "companyName": "Tên Công Ty",
+  "companyTagline": "Giới Thiệu Công Ty",
+  "nationality": "Quốc Gia",
+  "companySize": "Quy Mô Công Ty",
+  "introduction": "Giới Thiệu",
+  "industry": "Ngành Nghề Kinh Doanh",
+  "techStack": "Công Nghệ Sử dụng",
+  "cancelCompanyProfile": "Hủy Bỏ",
+  "saveCompanyProfile": "Lưu & Xem Trang Công Ty"
 }
