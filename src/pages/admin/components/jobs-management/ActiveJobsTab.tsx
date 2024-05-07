@@ -128,7 +128,6 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
   return (
     <>
       <div className='flex justify-end'>
-
         <Search placeholder='Input search text' onSearch={handleSearch} style={{ width: 200 }} />
       </div>
       <Table

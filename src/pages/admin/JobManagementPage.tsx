@@ -4,13 +4,13 @@ import {
   useRefuseJobsMutation,
 } from '@/+core/redux/apis/admin/job-management/job-service.api';
 import { Job } from '@/+core/utilities/types/admin.type';
-import ActiveJobsTab from '@/components/global/Admin/JobManagement/ActiveJobsTab';
-import PendingJobsTab from '@/components/global/Admin/JobManagement/PendingJobsTab';
-import RejectedJobsTab from '@/components/global/Admin/JobManagement/RejectedJobsTab';
+import ActiveJobsTab from '@/pages/admin/components/jobs-management/ActiveJobsTab';
+import PendingJobsTab from '@/pages/admin/components/jobs-management/PendingJobsTab';
+import RejectedJobsTab from '@/pages/admin/components/jobs-management/RejectedJobsTab';
 import { Pagination, Spin, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
 import '../../styles/admin/management-page.css';
-import ClosedJobsTab from '@/components/global/Admin/JobManagement/ClosedJobsTab';
+import ClosedJobsTab from '@/pages/admin/components/jobs-management/ClosedJobsTab';
 import { CheckOutlined, ClockCircleOutlined, CloseOutlined } from '@ant-design/icons';
 import { FilterJobsTypeREQ } from '@/+core/redux/apis/admin/job-management/job-service.request';
 
