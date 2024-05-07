@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { countries } from 'countries-list';
 import { Form, Input, Button, Select } from 'antd';
 import { type FormProps } from 'antd';
+import {
+  FacebookOutlined,
+  GlobalOutlined,
+  LinkedinOutlined,
+  YoutubeOutlined,
+} from '@ant-design/icons';
 
 import UploadFileInput from './UploadFileInput';
-import TextContentEditor from '../../../../../components/global/Recruitment/Content/TextContentEditor';
+import TextEditor from './TextEditor';
 
 const { Option } = Select;
 
@@ -17,6 +24,11 @@ type FieldType = {
   introduction?: string;
   industry?: string;
   techStack?: string;
+  website?: string;
+  facebook?: string;
+  linkedin?: string;
+  youtube?: string;
+  link?: string;
 };
 
 const Profile = () => {
@@ -24,6 +36,9 @@ const Profile = () => {
 
   const [CompanyProfileForm] = Form.useForm();
 
+  const [nationalityOption, setNationalityOption] = useState<{ value: string; label: string }[]>(
+    [],
+  );
   const [introduction, setIntroduction] = useState<string>('');
 
   const onEditFinish: FormProps<FieldType>['onFinish'] = async (values) => {
@@ -33,6 +48,21 @@ const Profile = () => {
   const onEditFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
+
+  const handleGetNationality = () => {
+    const options = [];
+    for (const [key, value] of Object.entries(countries)) {
+      if (key) {
+        const option = { value: value?.native, label: value?.native };
+        options.push(option);
+      }
+    }
+    setNationalityOption(options);
+  };
+
+  useEffect(() => {
+    handleGetNationality();
+  }, []);
 
   return (
     <Form
@@ -62,7 +92,7 @@ const Profile = () => {
               rules={[{ required: true, message: 'Please input company name!' }]}
             >
               <Input
-                className='h-[40px]'
+                size='large'
                 placeholder='Enter a shortened & recognizable name (Eg. TopDev)'
               />
             </Form.Item>
@@ -73,7 +103,7 @@ const Profile = () => {
               rules={[{ required: true, message: 'Please input company tagline!' }]}
             >
               <Input
-                className='h-[40px]'
+                size='large'
                 placeholder='Enter your company Tagline (Eg. Top IT Jobs For Developers in Vietnam)'
               />
             </Form.Item>
@@ -84,10 +114,7 @@ const Profile = () => {
               name='nationality'
               rules={[{ required: true, message: 'Please input company nationality!' }]}
             >
-              <Select
-                className='h-[40px]'
-                options={[{ value: 'United States', label: 'United States' }]}
-              />
+              <Select size='large' options={nationalityOption} />
             </Form.Item>
 
             <Form.Item<FieldType>
@@ -96,7 +123,7 @@ const Profile = () => {
               rules={[{ required: true, message: 'Please input company size!' }]}
             >
               <Select
-                className='h-[40px]'
+                size='large'
                 options={[
                   { value: 'Less than 10', label: 'Less than 10' },
                   { value: '10-24', label: '10-24' },
@@ -124,7 +151,7 @@ const Profile = () => {
               Tell job seekers about your company. Your description will appear in the About company
               tab
             </p>
-            <TextContentEditor content={introduction} setContent={setIntroduction} />
+            <TextEditor height={400} content={introduction} setContent={setIntroduction} />
           </div>
         </Form.Item>
 
@@ -135,7 +162,7 @@ const Profile = () => {
             rules={[{ required: true, message: 'Please input company industry!' }]}
           >
             <Select
-              className='h-[40px]'
+              size='large'
               options={[
                 { value: 'Thiết kế chế tạo', label: 'Thiết kế chế tạo' },
                 { value: 'Thương mại dịch vụ', label: 'Thương mại dịch vụ' },
@@ -157,7 +184,7 @@ const Profile = () => {
               },
             ]}
           >
-            <Select className='h-[40px]' mode='multiple'>
+            <Select size='large' mode='multiple'>
               <Option value='C++'>C++</Option>
               <Option value='ReactJS'>ReactJS</Option>
               <Option value='ExpressJS'>ExpressJS</Option>
@@ -165,8 +192,46 @@ const Profile = () => {
               <Option value='Unity 3d'>Unity 3d</Option>
             </Select>
           </Form.Item>
+
+          <Form.Item<FieldType>
+            label={<p className='text-[15px] font-semibold'>Website</p>}
+            name='website'
+          >
+            <Input size='large' addonBefore={<GlobalOutlined />} placeholder='Website' />
+          </Form.Item>
+
+          <div className='flex flex-col gap-4'>
+            <Form.Item<FieldType>
+              label={<p className='text-[15px] font-semibold'>Social media</p>}
+              name='facebook'
+            >
+              <Input
+                size='large'
+                addonBefore={<FacebookOutlined />}
+                placeholder='Eg. https://facebook.com/topdevvietnam'
+              />
+            </Form.Item>
+
+            <Form.Item<FieldType> name='linkedin'>
+              <Input
+                size='large'
+                addonBefore={<LinkedinOutlined />}
+                placeholder='Eg. https://www.linkedin.com/company/topdev-vn'
+              />
+            </Form.Item>
+
+            <Form.Item<FieldType> name='youtube'>
+              <Input
+                size='large'
+                addonBefore={<YoutubeOutlined />}
+                placeholder='Eg. https://www.youtube.com/channel'
+              />
+            </Form.Item>
+          </div>
         </div>
       </section>
+
+      <div className='mt-10 w-[100%] h-[1px] bg-gray-200'></div>
 
       <section className='mt-10 flex flex-wrap gap-4 items-center justify-between'>
         <div className='text-[15px] flex items-center gap-1'>
