@@ -36,7 +36,7 @@ const UploadFileInput = (props: CustomInputType) => {
         try {
           const fileName = new Date().getTime() + '-' + file.name;
           const storage = getStorage(firebaseApp);
-          const storageRef = ref(storage, `company/cv/${fileName}`);
+          const storageRef = ref(storage, `company/profile/${fileName}`);
           const uploadTask = uploadBytesResumable(storageRef, file);
 
           await new Promise<void>((resolve, reject) => {
