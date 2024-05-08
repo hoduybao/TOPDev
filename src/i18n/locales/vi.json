@@ -220,6 +220,11 @@
   "introduction": "Giới Thiệu",
   "industry": "Ngành Nghề Kinh Doanh",
   "techStack": "Công Nghệ Sử dụng",
+  "addresses": "Địa chỉ",
+  "city": "Thành phố/ Tỉnh",
+  "district": "Huyện",
+  "ward": "Phường",
+  "street": "Đường",
   "cancelCompanyProfile": "Hủy Bỏ",
   "saveCompanyProfile": "Lưu & Xem Trang Công Ty"
 }

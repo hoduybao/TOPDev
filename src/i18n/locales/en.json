@@ -220,6 +220,11 @@
   "introduction": "Introduction",
   "industry": "Industry",
   "techStack": "Tech Stack",
+  "addresses": "Addresses",
+  "city": "City/Province",
+  "district": "District",
+  "ward": "Ward",
+  "street": "Street",
   "cancelCompanyProfile": "Cancel",
   "saveCompanyProfile": "Save & View Company Site"
 }

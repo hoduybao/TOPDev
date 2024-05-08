@@ -1,17 +1,25 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { countries } from 'countries-list';
+import { v4 as uuidv4 } from 'uuid';
 import { Form, Input, Button, Select } from 'antd';
 import { type FormProps } from 'antd';
 import {
+  DeleteOutlined,
+  EditOutlined,
   FacebookOutlined,
   GlobalOutlined,
+  LinkOutlined,
   LinkedinOutlined,
+  PlusOutlined,
+  UnorderedListOutlined,
   YoutubeOutlined,
 } from '@ant-design/icons';
+import { industries, techStack } from '@/+core/constants/company.profile';
 
 import UploadFileInput from './UploadFileInput';
 import TextEditor from './TextEditor';
+import AddAddressModal from './AddAddressModal';
 
 const { Option } = Select;
 
@@ -29,6 +37,7 @@ type FieldType = {
   linkedin?: string;
   youtube?: string;
   link?: string;
+  addresses?: string[];
 };
 
 const Profile = () => {
@@ -40,9 +49,18 @@ const Profile = () => {
     [],
   );
   const [introduction, setIntroduction] = useState<string>('');
+  const [addLink, setAddLink] = useState<boolean>(false);
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState<boolean>(false);
+  const [addresses, setAddresses] = useState<string[]>([]);
+  const [editAddress, setEditAddress] = useState<{ value: string; index: number | null }>({
+    value: '',
+    index: null,
+  });
 
   const onEditFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     console.log('Success:', values);
+    console.log('Success introduction:', introduction);
+    console.log('Success addresses:', addresses);
   };
 
   const onEditFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
@@ -58,6 +76,26 @@ const Profile = () => {
       }
     }
     setNationalityOption(options);
+  };
+
+  const showAddressModal = () => {
+    setIsAddressModalOpen(true);
+  };
+
+  const handleAddressOk = () => {
+    setIsAddressModalOpen(false);
+  };
+
+  const handleAddressCancel = () => {
+    setIsAddressModalOpen(false);
+  };
+
+  const handleDeleteAddress = (value: number) => {
+    const filterAddr = addresses?.filter((addr, index) => {
+      if (index !== value) return addr;
+    });
+
+    setAddresses(filterAddr);
   };
 
   useEffect(() => {
@@ -151,7 +189,7 @@ const Profile = () => {
               Tell job seekers about your company. Your description will appear in the About company
               tab
             </p>
-            <TextEditor height={400} content={introduction} setContent={setIntroduction} />
+            <TextEditor height={420} content={introduction} setContent={setIntroduction} />
           </div>
         </Form.Item>
 
@@ -161,16 +199,7 @@ const Profile = () => {
             name='industry'
             rules={[{ required: true, message: 'Please input company industry!' }]}
           >
-            <Select
-              size='large'
-              options={[
-                { value: 'Thiết kế chế tạo', label: 'Thiết kế chế tạo' },
-                { value: 'Thương mại dịch vụ', label: 'Thương mại dịch vụ' },
-                { value: 'Công nghệ thông tin', label: 'Công nghệ thông tin' },
-                { value: 'Giải trí/ Game', label: 'Giải trí/ Game' },
-                { value: 'Giáo dục', label: 'Giáo dục' },
-              ]}
-            />
+            <Select size='large' options={industries} />
           </Form.Item>
 
           <Form.Item
@@ -185,11 +214,13 @@ const Profile = () => {
             ]}
           >
             <Select size='large' mode='multiple'>
-              <Option value='C++'>C++</Option>
-              <Option value='ReactJS'>ReactJS</Option>
-              <Option value='ExpressJS'>ExpressJS</Option>
-              <Option value='Docker'>Docker</Option>
-              <Option value='Unity 3d'>Unity 3d</Option>
+              {techStack?.map((item) => {
+                return (
+                  <Option key={uuidv4()} value={`${item?.value}`}>
+                    {item?.label}
+                  </Option>
+                );
+              })}
             </Select>
           </Form.Item>
 
@@ -227,11 +258,118 @@ const Profile = () => {
                 placeholder='Eg. https://www.youtube.com/channel'
               />
             </Form.Item>
+
+            {addLink ? (
+              <div className='flex items-center justify-between gap-4'>
+                <Form.Item<FieldType> name='link' className='w-full'>
+                  <Input
+                    size='large'
+                    addonBefore={<LinkOutlined />}
+                    placeholder='Eg. https://www.link'
+                  />
+                </Form.Item>
+                <div
+                  className='hover:cursor-pointer'
+                  onClick={() => {
+                    setAddLink(false);
+                  }}
+                >
+                  <DeleteOutlined className='text-2xl' />
+                </div>
+              </div>
+            ) : (
+              <Button
+                size='large'
+                onClick={() => {
+                  setAddLink(true);
+                }}
+                danger
+              >
+                <p className='font-semibold'>
+                  <PlusOutlined /> ADD LINK
+                </p>
+              </Button>
+            )}
           </div>
         </div>
       </section>
 
-      <div className='mt-10 w-[100%] h-[1px] bg-gray-200'></div>
+      <div className='my-5 w-[100%] h-[1px] bg-gray-200'></div>
+
+      <section>
+        <Form.Item<FieldType>
+          label={
+            <h1 className='text-xl font-bold flex items-center gap-1'>
+              <p className='text-sm text-red-500'>*</p>
+              {t('addresses')}
+            </h1>
+          }
+          name='addresses'
+          // rules={[{ required: true, message: 'Please input company address!' }]}
+        >
+          <div>
+            <div className='flex items-center justify-between'>
+              <p>Add your company addresses</p>
+              <Button
+                size='large'
+                onClick={() => {
+                  showAddressModal();
+                }}
+                danger
+              >
+                <p className='font-semibold'>
+                  <PlusOutlined /> ADD
+                </p>
+              </Button>
+            </div>
+
+            <AddAddressModal
+              isModalOpen={isAddressModalOpen}
+              handleOk={handleAddressOk}
+              handleCancel={handleAddressCancel}
+              addresses={addresses}
+              setAddresses={setAddresses}
+              editValue={editAddress}
+            />
+
+            <div className='my-5 flex flex-col gap-3'>
+              {addresses?.map((addr: string, index) => {
+                return (
+                  <div key={uuidv4()} className='flex items-center justify-between'>
+                    <div className='flex items-center gap-5'>
+                      <UnorderedListOutlined className='text-2xl' />
+                      <p className='text-[15px]'>{addr}</p>
+                    </div>
+                    <div className='flex items-center gap-5'>
+                      <div
+                        className='hover:cursor-pointer hover:text-blue-500'
+                        onClick={() => {
+                          setEditAddress({ value: addr, index: index });
+                          showAddressModal();
+                        }}
+                      >
+                        <EditOutlined className='text-2xl' />
+                      </div>
+                      <div
+                        className='hover:cursor-pointer hover:text-blue-500'
+                        onClick={() => {
+                          handleDeleteAddress(index);
+                        }}
+                      >
+                        <DeleteOutlined className='text-2xl' />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <p className='text-red-500'>Addresses field must have at least 1 items</p>
+          </div>
+        </Form.Item>
+      </section>
+
+      <div className='my-5 w-[100%] h-[1px] bg-gray-200'></div>
 
       <section className='mt-10 flex flex-wrap gap-4 items-center justify-between'>
         <div className='text-[15px] flex items-center gap-1'>
