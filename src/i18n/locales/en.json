@@ -225,6 +225,9 @@
   "district": "District",
   "ward": "Ward",
   "street": "Street",
+  "companyBenefits": "Company Benefits",
+  "companyImage": "Company Image",
+  "topConcerns": "Top Concerns",
   "cancelCompanyProfile": "Cancel",
   "saveCompanyProfile": "Save & View Company Site"
 }

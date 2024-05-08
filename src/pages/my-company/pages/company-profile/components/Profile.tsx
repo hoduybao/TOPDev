@@ -5,15 +5,20 @@ import { v4 as uuidv4 } from 'uuid';
 import { Form, Input, Button, Select } from 'antd';
 import { type FormProps } from 'antd';
 import {
+  CheckOutlined,
   DeleteOutlined,
+  DollarOutlined,
   EditOutlined,
   FacebookOutlined,
   GlobalOutlined,
   LinkOutlined,
   LinkedinOutlined,
   PlusOutlined,
-  UnorderedListOutlined,
+  SketchOutlined,
+  MenuOutlined,
   YoutubeOutlined,
+  QuestionCircleOutlined,
+  MessageOutlined,
 } from '@ant-design/icons';
 import { industries, techStack } from '@/+core/constants/company.profile';
 
@@ -38,6 +43,10 @@ type FieldType = {
   youtube?: string;
   link?: string;
   addresses?: string[];
+  benefits?: any;
+  coverPhotoUrl?: string;
+  galleriesUrl?: string;
+  topConcerns?: any;
 };
 
 const Profile = () => {
@@ -337,7 +346,7 @@ const Profile = () => {
                 return (
                   <div key={uuidv4()} className='flex items-center justify-between'>
                     <div className='flex items-center gap-5'>
-                      <UnorderedListOutlined className='text-2xl' />
+                      <MenuOutlined className='text-2xl' />
                       <p className='text-[15px]'>{addr}</p>
                     </div>
                     <div className='flex items-center gap-5'>
@@ -364,12 +373,168 @@ const Profile = () => {
               })}
             </div>
 
-            <p className='text-red-500'>Addresses field must have at least 1 items</p>
+            {addresses?.length === 0 && (
+              <p className='text-red-500'>Addresses field must have at least 1 items</p>
+            )}
           </div>
         </Form.Item>
       </section>
 
       <div className='my-5 w-[100%] h-[1px] bg-gray-200'></div>
+
+      <section>
+        <h1 className='text-xl font-bold flex items-center gap-1'>
+          <p className='text-sm text-red-500'>*</p>
+          {t('companyBenefits')}
+        </h1>
+        <p className='mt-5'>Add company benefits</p>
+        <div className='mt-5'>
+          <Form.List name='benefits'>
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <div key={key} className='flex items-center gap-3 my-5'>
+                    <MenuOutlined className='text-2xl' />
+
+                    <Form.Item
+                      {...restField}
+                      className='w-[20%]'
+                      name={[name, 'icon']}
+                      rules={[{ required: true, message: 'Missing benefit icon' }]}
+                    >
+                      <Select
+                        placeholder='Pick an icon'
+                        options={[
+                          {
+                            value: '<CheckOutlined />',
+                            label: (
+                              <>
+                                <CheckOutlined /> Check
+                              </>
+                            ),
+                          },
+                          {
+                            value: '<PlusOutlined />',
+                            label: (
+                              <>
+                                <PlusOutlined /> Plus
+                              </>
+                            ),
+                          },
+                          {
+                            value: '<DollarOutlined />',
+                            label: (
+                              <>
+                                <DollarOutlined /> Dollar
+                              </>
+                            ),
+                          },
+                          {
+                            value: '<SketchOutlined />',
+                            label: (
+                              <>
+                                <SketchOutlined /> Diamond
+                              </>
+                            ),
+                          },
+                        ]}
+                      />
+                    </Form.Item>
+
+                    <Form.Item
+                      {...restField}
+                      className='w-[80%]'
+                      name={[name, 'description']}
+                      rules={[{ required: true, message: 'Missing benefit description' }]}
+                    >
+                      <Input placeholder='Add benefit description' />
+                    </Form.Item>
+
+                    <DeleteOutlined className='text-xl' onClick={() => remove(name)} />
+                  </div>
+                ))}
+                <Form.Item>
+                  <Button type='dashed' danger onClick={() => add()} block icon={<PlusOutlined />}>
+                    ADD
+                  </Button>
+                </Form.Item>
+                {fields?.length === 0 && (
+                  <p className='mt-5 text-red-500'>
+                    Company Benefits field must have at least 1 items
+                  </p>
+                )}
+              </>
+            )}
+          </Form.List>
+        </div>
+      </section>
+
+      <div className='my-5 w-[100%] h-[1px] bg-gray-200'></div>
+
+      <section>
+        <h1 className='text-xl font-bold'>{t('companyImage')}</h1>
+        <div className='mt-5 grid xl:grid-cols-3 gap-x-[50px] gap-y-4'>
+          <div>
+            <UploadFileInput
+              label={'Cover photo'}
+              form={CompanyProfileForm}
+              name='coverPhotoUrl'
+              description='Types: png, jpg, jpeg. <5MB'
+              rules={[{ required: false }]}
+            />
+          </div>
+          <div className='xl:col-span-2 flex flex-col gap-4'>
+            <UploadFileInput
+              label={'Galleries'}
+              form={CompanyProfileForm}
+              name='galleriesUrl'
+              description='Types: png, jpg, jpeg. <5MB'
+              rules={[{ required: false }]}
+            />
+          </div>
+        </div>
+      </section>
+
+      <div className='my-5 w-[100%] h-[1px] bg-gray-200'></div>
+
+      <section>
+        <h1 className='text-xl font-bold flex items-center gap-1'>{t('topConcerns')}</h1>
+        <p className='mt-5'>
+          Add the frequently ask questions (FAQs) to help job seekers know more about company &
+          other processes
+        </p>
+        <div className='mt-5'>
+          <Form.List name='topConcerns'>
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <div key={key} className='flex items-center gap-3 my-5'>
+                    <div className='w-[100%] flex flex-col gap-3'>
+                      <Form.Item {...restField} className='w-[100%]' name={[name, 'question']}>
+                        <Input
+                          addonBefore={<QuestionCircleOutlined />}
+                          placeholder='Add question'
+                        />
+                      </Form.Item>
+
+                      <Form.Item {...restField} className='w-[100%]' name={[name, 'answer']}>
+                        <Input addonBefore={<MessageOutlined />} placeholder='Add answer' />
+                      </Form.Item>
+                    </div>
+
+                    <DeleteOutlined className='text-xl' onClick={() => remove(name)} />
+                  </div>
+                ))}
+                <Form.Item>
+                  <Button type='dashed' danger onClick={() => add()} block icon={<PlusOutlined />}>
+                    ADD
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
+        </div>
+      </section>
 
       <section className='mt-10 flex flex-wrap gap-4 items-center justify-between'>
         <div className='text-[15px] flex items-center gap-1'>

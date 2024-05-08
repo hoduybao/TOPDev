@@ -8,22 +8,22 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/
 
 const { Dragger } = Upload;
 
-type CompanyProfileFields = {
-  logoUrl?: string;
-  coverPhotoUrl?: string;
-  galleriesUrl?: string;
-};
+// type CompanyProfileFields = {
+//   logoUrl?: string;
+//   coverPhotoUrl?: string;
+//   galleriesUrl?: string;
+// };
 
 type CustomInputType = {
-  name?: string;
+  name: string;
   label: string;
   rules: Rule[];
-  form?: FormInstance<CompanyProfileFields>;
+  form?: FormInstance<any>;
   description: string;
 };
 
 const UploadFileInput = (props: CustomInputType) => {
-  const { label, rules, form, description } = props;
+  const { name, label, rules, form, description } = props;
 
   const uploadProps: UploadProps = {
     name: 'file',
@@ -64,7 +64,13 @@ const UploadFileInput = (props: CustomInputType) => {
                   .then((downloadURL) => {
                     onSuccess('Ok');
                     console.log('File available at', downloadURL);
-                    form?.setFieldsValue({ logoUrl: downloadURL });
+
+                    if (name === 'logoUrl') form?.setFieldsValue({ logoUrl: downloadURL });
+                    if (name === 'coverPhotoUrl')
+                      form?.setFieldsValue({ coverPhotoUrl: downloadURL });
+                    if (name === 'galleriesUrl')
+                      form?.setFieldsValue({ galleriesUrl: downloadURL });
+
                     resolve();
                   })
                   .catch((err) => {
@@ -85,9 +91,9 @@ const UploadFileInput = (props: CustomInputType) => {
   };
 
   return (
-    <Form.Item<CompanyProfileFields>
+    <Form.Item<any>
       label={<p className='text-[15px] font-semibold'>{label}</p>}
-      name='logoUrl'
+      name={name}
       rules={rules}
       initialValue={null}
     >

@@ -225,6 +225,9 @@
   "district": "Huyện",
   "ward": "Phường",
   "street": "Đường",
+  "companyBenefits": "Phúc Lợi Công Ty",
+  "companyImage": "Hình Ảnh Công Ty",
+  "topConcerns": "Mối quan tâm hàng đầu",
   "cancelCompanyProfile": "Hủy Bỏ",
   "saveCompanyProfile": "Lưu & Xem Trang Công Ty"
 }
