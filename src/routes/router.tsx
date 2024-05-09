@@ -21,6 +21,8 @@ import LoginPage from '../pages/login/LoginPage';
 import ResetPasswordPage from '../pages/login/ResetPasswordPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import { MY_ROUTE } from './route.constant';
+import ApplicationsPage from '@/pages/manage-application/ApplicationsPage';
+import ApplicationDetail from '@/pages/application-detail/ApplicationDetail';
 
 export const router = createBrowserRouter([
   {
@@ -44,6 +46,14 @@ export const router = createBrowserRouter([
   //     { path: MY_ROUTE.RECRUITMENT_DETAIL, element: <DetailPage /> },
   //   ],
   // },
+  {
+    path: '/recruitment',
+    // element: <AdminLayout />,
+    children: [
+      { path: MY_ROUTE.RECRUITMENT_PROCESS, element: <ApplicationsPage /> },
+      { path: MY_ROUTE.RECRUITMENT_DETAIL, element: <ApplicationDetail /> },
+    ],
+  },
   {
     path: '/admin',
     element: <AdminLayout />,
