@@ -15,7 +15,7 @@ const ApplicationsPage = () => {
       <div>
         <Filter />
         <div className='mt-8'>
-          <SubFilter />
+          <SubFilter total={data?.data?.data?.length} />
         </div>
       </div>
       <Container>
