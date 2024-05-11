@@ -234,5 +234,7 @@
   "productPhoto": "Ảnh Sản Phẩm",
   "productDescription": "Mô Tả Sản Phẩm",
   "cancelCompanyProfile": "Hủy Bỏ",
-  "saveCompanyProfile": "Lưu & Xem Trang Công Ty"
+  "saveCompanyProfile": "Lưu & Xem Trang Công Ty",
+  "emailAddress": "Địa Chỉ Email",
+  "phone": "Điện Thoại"
 }

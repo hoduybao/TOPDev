@@ -234,5 +234,7 @@
   "productPhoto": "Photo",
   "productDescription": "Description",
   "cancelCompanyProfile": "Cancel",
-  "saveCompanyProfile": "Save & View Company Site"
+  "saveCompanyProfile": "Save & View Company Site",
+  "emailAddress": "Email Address",
+  "phone": "Phone"
 }
