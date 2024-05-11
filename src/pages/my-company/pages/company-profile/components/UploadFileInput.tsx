@@ -70,6 +70,7 @@ const UploadFileInput = (props: CustomInputType) => {
                       form?.setFieldsValue({ coverPhotoUrl: downloadURL });
                     if (name === 'galleriesUrl')
                       form?.setFieldsValue({ galleriesUrl: downloadURL });
+                    if (name === 'photoUrl') form?.setFieldsValue({ photoUrl: downloadURL });
 
                     resolve();
                   })

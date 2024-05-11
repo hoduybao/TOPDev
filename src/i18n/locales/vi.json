@@ -228,6 +228,11 @@
   "companyBenefits": "Phúc Lợi Công Ty",
   "companyImage": "Hình Ảnh Công Ty",
   "topConcerns": "Mối quan tâm hàng đầu",
+  "companyProduct": "Sản Phẩm Công Ty",
+  "productName": "Tên Sản Phẩm",
+  "productLink": "Đường Liên Kết",
+  "productPhoto": "Ảnh Sản Phẩm",
+  "productDescription": "Mô Tả Sản Phẩm",
   "cancelCompanyProfile": "Hủy Bỏ",
   "saveCompanyProfile": "Lưu & Xem Trang Công Ty"
 }

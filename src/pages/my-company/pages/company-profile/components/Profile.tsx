@@ -25,8 +25,17 @@ import { industries, techStack } from '@/+core/constants/company.profile';
 import UploadFileInput from './UploadFileInput';
 import TextEditor from './TextEditor';
 import AddAddressModal from './AddAddressModal';
+import AddProductModal from './AddProductModal';
 
 const { Option } = Select;
+
+interface CompanyProductType {
+  id?: string;
+  name?: string;
+  link?: string;
+  photo?: string;
+  description?: string;
+}
 
 type FieldType = {
   logoUrl?: string;
@@ -47,6 +56,7 @@ type FieldType = {
   coverPhotoUrl?: string;
   galleriesUrl?: string;
   topConcerns?: any;
+  companyProduct?: any;
 };
 
 const Profile = () => {
@@ -65,11 +75,36 @@ const Profile = () => {
     value: '',
     index: null,
   });
+  const [isProductModalOpen, setIsProductModalOpen] = useState<boolean>(false);
+  const [products, setProducts] = useState<CompanyProductType[]>([]);
+  const [editProduct, setEditProduct] = useState<{
+    name: string;
+    link: string;
+    photoUrl: string;
+    description: string;
+    index: number | null;
+  }>({
+    name: '',
+    link: '',
+    photoUrl: '',
+    description: '',
+    index: null,
+  });
 
   const onEditFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    console.log('Success:', values);
-    console.log('Success introduction:', introduction);
-    console.log('Success addresses:', addresses);
+    // console.log('Success:', values);
+    // console.log('Success introduction:', introduction);
+    // console.log('Success addresses:', addresses);
+    // console.log('Success products:', products);
+
+    const CompanyProfile = {
+      ...values,
+      introduction: introduction,
+      addresses: addresses,
+      products: products,
+    };
+
+    console.log('Success:', CompanyProfile);
   };
 
   const onEditFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
@@ -105,6 +140,18 @@ const Profile = () => {
     });
 
     setAddresses(filterAddr);
+  };
+
+  const showProductModal = () => {
+    setIsProductModalOpen(true);
+  };
+
+  const handleProductOk = () => {
+    setIsProductModalOpen(false);
+  };
+
+  const handleProductCancel = () => {
+    setIsProductModalOpen(false);
   };
 
   useEffect(() => {
@@ -339,6 +386,7 @@ const Profile = () => {
               addresses={addresses}
               setAddresses={setAddresses}
               editValue={editAddress}
+              setEditValue={setEditAddress}
             />
 
             <div className='my-5 flex flex-col gap-3'>
@@ -534,6 +582,95 @@ const Profile = () => {
             )}
           </Form.List>
         </div>
+      </section>
+
+      <div className='my-5 w-[100%] h-[1px] bg-gray-200'></div>
+
+      <section>
+        <Form.Item<FieldType>
+          label={
+            <h1 className='text-xl font-bold flex items-center gap-1'>{t('companyProduct')}</h1>
+          }
+          name='companyProduct'
+        >
+          <div>
+            <div className='flex items-center justify-between'>
+              <p>Add company product information</p>
+              <Button
+                size='large'
+                onClick={() => {
+                  showProductModal();
+                }}
+                danger
+              >
+                <p className='font-semibold'>
+                  <PlusOutlined /> ADD
+                </p>
+              </Button>
+            </div>
+
+            <AddProductModal
+              isModalOpen={isProductModalOpen}
+              handleOk={handleProductOk}
+              handleCancel={handleProductCancel}
+              products={products}
+              setProducts={setProducts}
+              editValue={editProduct}
+              setEditValue={setEditProduct}
+            />
+
+            <div className='my-5 flex flex-col gap-3'>
+              {products?.map((product: CompanyProductType, index) => {
+                return (
+                  <div key={uuidv4()} className='flex items-center justify-between'>
+                    <div className='flex items-center gap-5'>
+                      <div className='flex flex-col gap-3'>
+                        <h1 className='text-[15px] font-bold'>{product?.name}</h1>
+                        <p className='text-[15px]'>{product?.description}</p>
+                        {product?.photo && <img className='w-[150px]' src={product?.photo} />}
+                        {product?.link && (
+                          <div className='flex items-center gap-3'>
+                            <LinkOutlined className='text-xl' />
+                            <a href={product?.link}>{product?.link}</a>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className='flex items-center gap-5'>
+                      <div
+                        className='hover:cursor-pointer hover:text-blue-500'
+                        onClick={() => {
+                          console.log(product);
+
+                          if (product?.name) {
+                            setEditProduct({
+                              name: product?.name,
+                              link: product?.link ? product?.link : '',
+                              photoUrl: product?.photo ? product?.photo : '',
+                              description: product?.description ? product?.description : '',
+                              index: index,
+                            });
+                            showProductModal();
+                          }
+                        }}
+                      >
+                        <EditOutlined className='text-2xl' />
+                      </div>
+                      <div
+                        className='hover:cursor-pointer hover:text-blue-500'
+                        onClick={() => {
+                          handleDeleteAddress(index);
+                        }}
+                      >
+                        <DeleteOutlined className='text-2xl' />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </Form.Item>
       </section>
 
       <section className='mt-10 flex flex-wrap gap-4 items-center justify-between'>

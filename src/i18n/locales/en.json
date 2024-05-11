@@ -228,6 +228,11 @@
   "companyBenefits": "Company Benefits",
   "companyImage": "Company Image",
   "topConcerns": "Top Concerns",
+  "companyProduct": "Company Product",
+  "productName": "Product Name",
+  "productLink": "Link",
+  "productPhoto": "Photo",
+  "productDescription": "Description",
   "cancelCompanyProfile": "Cancel",
   "saveCompanyProfile": "Save & View Company Site"
 }

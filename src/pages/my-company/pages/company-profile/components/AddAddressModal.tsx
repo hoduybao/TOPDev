@@ -12,6 +12,7 @@ interface PropType {
   addresses: string[];
   setAddresses: Dispatch<SetStateAction<string[]>>;
   editValue?: { value: string; index: number | null };
+  setEditValue: any;
 }
 
 type FieldType = {
@@ -22,7 +23,8 @@ type FieldType = {
 };
 
 const AddAddressModal = (props: PropType) => {
-  const { isModalOpen, handleOk, handleCancel, addresses, setAddresses, editValue } = props;
+  const { isModalOpen, handleOk, handleCancel, addresses, setAddresses, editValue, setEditValue } =
+    props;
 
   const { t } = useTranslation();
 
@@ -46,6 +48,11 @@ const AddAddressModal = (props: PropType) => {
         setAddresses(newAddresses);
       }
     }
+
+    setEditValue({
+      value: '',
+      index: null,
+    });
 
     CompanyAddressForm.resetFields();
     handleOk();
