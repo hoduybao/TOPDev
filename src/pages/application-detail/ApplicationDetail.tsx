@@ -3,22 +3,34 @@ import PDFSession from './components/PDFSession';
 import ProfileSession from './components/ProfileSession';
 import CVStatus from './components/CVStatus';
 import CandateCode from './components/CandateCode';
+import { useParams } from 'react-router-dom';
+import { useGetApplicationQuery } from '@/+core/redux/apis/common/application/application.api';
+import { Spin } from 'antd';
 
 const ApplicationDetail = () => {
-  return (
-    <Container>
-      <div className='grid grid-cols-3'>
-        <div className='col-span-2'>
-          <PDFSession />
-        </div>
+  const { applicationId } = useParams<{ applicationId: string }>();
+  const { data, isLoading } = useGetApplicationQuery(applicationId);
 
-        <div className='col-span-1 px-4 py-2'>
-          <ProfileSession />
-          <CVStatus />
-          <CandateCode />
+  return (
+    <Spin spinning={isLoading}>
+      <Container>
+        <div className='grid grid-cols-3'>
+          <div className='col-span-2'>
+            <PDFSession fileUrl={data?.data?.cvUrl} />
+          </div>
+
+          <div className='col-span-1 px-4 py-2'>
+            <ProfileSession
+              name={data?.data?.fullName}
+              email={data?.data?.email}
+              phone={data?.data?.phone}
+            />
+            <CVStatus status={data?.data?.status} />
+            <CandateCode />
+          </div>
         </div>
-      </div>
-    </Container>
+      </Container>
+    </Spin>
   );
 };
 

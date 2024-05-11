@@ -13,12 +13,7 @@ type FormFields = {
 const FilterForm = () => {
   const [filterForm] = Form.useForm();
   return (
-    <Form
-      name='ref-form'
-      form={filterForm}
-      onFinish={() => {}}
-      className='overflow-y-scroll max-h-[60vh]'
-    >
+    <Form name='ref-form' form={filterForm} onFinish={() => {}}>
       <div className='grid grid-cols-8 gap-2'>
         <div className='col-span-2'>
           <Form.Item<FormFields> labelCol={{ span: 24 }} wrapperCol={{ span: 24 }} name='keywork'>
@@ -51,7 +46,7 @@ const FilterForm = () => {
 
 const Filter = () => {
   return (
-    <div className='mt-8'>
+    <div className='mt-8 mx-4'>
       <FilterForm />
     </div>
   );

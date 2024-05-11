@@ -1,5 +1,6 @@
 import { TAG_TYPES } from '../../../../../+core/constants/api.tagTypes';
 import { commonApi } from '../../common.api';
+// import { CustomApplicationResponse } from './response.type';
 
 export type ApplicationFields = {
   // jobId: string;
@@ -21,7 +22,23 @@ const applicationApi = commonApi
           body: values,
         }),
       }),
+      getApplication: build.query<any, any>({
+        query: (id: string) => ({
+          url: `/applications/${id}`,
+          method: 'GET',
+        }),
+      }),
+      getApplicationsByCompanyId: build.query<any, any>({
+        query: (id: string) => ({
+          url: `/applications/list-apply/${id}`,
+          method: 'GET',
+        }),
+      }),
     }),
   });
 
-export const { useCreateApplicationMutation } = applicationApi;
+export const {
+  useCreateApplicationMutation,
+  useGetApplicationQuery,
+  useGetApplicationsByCompanyIdQuery,
+} = applicationApi;

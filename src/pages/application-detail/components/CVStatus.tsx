@@ -2,7 +2,7 @@ import React from 'react';
 import mockData from './mockData';
 import { Button } from 'antd';
 
-const CVStatus = () => {
+const CVStatus = ({ status }: { status: string }) => {
   return (
     <div>
       <h3 className='font-bold text-base'>Trạng thái CV</h3>
@@ -12,7 +12,7 @@ const CVStatus = () => {
           Trạng thái
         </div>
         <div className='flex-1 text-sm text-blue-400 font-semibold border border-r-1 border-gray-200 p-2'>
-          {mockData.cv.status}
+          {status}
         </div>
       </div>
 

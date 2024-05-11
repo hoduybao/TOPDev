@@ -1,36 +1,28 @@
 import Container from '@/components/global/Container/Container';
 import { Button, Table } from 'antd';
 import React from 'react';
+import moment from 'moment';
 
 import type { TableColumnsType } from 'antd';
 import {
   DownSquareOutlined,
+  EyeOutlined,
   FieldTimeOutlined,
   MailOutlined,
   PhoneOutlined,
   RightSquareOutlined,
 } from '@ant-design/icons';
+import { Application } from '@/+core/redux/apis/common/application/application.response';
+import { useNavigate, useParams } from 'react-router-dom';
 
-interface ApplicationType {
-  key: React.Key;
-  name: string;
-  campaign: string;
-  insights: {
-    title: string;
-    date: string;
-    position: string;
-  };
-  contact: {
-    email: string;
-    phone: string;
-  };
-  status: string;
-}
-
-const columns: TableColumnsType<ApplicationType> = [
+const columns: TableColumnsType<Application> = [
+  {
+    title: 'Mã hồ sơ',
+    dataIndex: 'id',
+  },
   {
     title: 'Ứng viên',
-    dataIndex: 'name',
+    dataIndex: 'fullName',
   },
   {
     title: 'Chiến dịch',
@@ -38,18 +30,19 @@ const columns: TableColumnsType<ApplicationType> = [
   },
   {
     title: 'Thông tin liên hệ',
-    dataIndex: 'contact',
-    render(value) {
+    render(record) {
+      console.log(record);
+
       return (
         <div>
           <div>
             <MailOutlined className='m-2 text-green-400' />
-            <span>{value.email}</span>
+            <span>{record.email}</span>
           </div>
 
           <div>
             <PhoneOutlined className='m-2 text-green-400' />
-            <span>{value.phone}</span>
+            <span>{record.phone}</span>
           </div>
         </div>
       );
@@ -57,21 +50,21 @@ const columns: TableColumnsType<ApplicationType> = [
   },
   {
     title: 'Insights',
-    dataIndex: 'insights',
     render(value) {
       return (
         <div>
-          <div>
+          {/* <div>
             <RightSquareOutlined className='m-2 text-green-400' />
             <span>{value?.title}</span>
-          </div>
+          </div> */}
           <div>
-            <FieldTimeOutlined className='m-2 text-green-400' /> <span>{value?.date}</span>
+            <FieldTimeOutlined className='m-2 text-green-400' />{' '}
+            <span>{moment(value?.createdAt).format('MMMM D YYYY')}</span>
           </div>
-          <div>
+          {/* <div>
             <DownSquareOutlined className='m-2 text-green-400' />
             <span>{value?.position}</span>
-          </div>
+          </div> */}
         </div>
       );
     },
@@ -116,37 +109,41 @@ const columns: TableColumnsType<ApplicationType> = [
     title: '',
     render() {
       return (
-        <Button className='font-bold rounded-full bg-gray-200 w-8 h-8 flex justify-center'>
-          ...
+        <Button
+          onClick={() => {}}
+          className='font-bold rounded-full bg-gray-200 w-8 h-8 flex justify-center'
+        >
+          <EyeOutlined />
         </Button>
       );
     },
   },
 ];
 
-const data: ApplicationType[] = [];
-for (let i = 0; i < 46; i++) {
-  data.push({
-    key: i,
-    name: `Edward King ${i}`,
-    campaign: 'Campaign 1',
-    insights: {
-      title: 'Title',
-      date: '2022-02-02',
-      position: 'Position',
-    },
-    contact: {
-      email: '123@gmail.com',
-      phone: '0123456789',
-    },
-    status: ['PENDING', 'VIEWING', 'APPROVED', 'REJECTED'][Math.floor(Math.random() * 4)],
-  });
-}
+const CVList = ({ data }: { data: Application[] }) => {
+  const navigate = useNavigate();
+  const { jobId } = useParams<{ jobId: string }>();
 
-const CVList = () => {
+  const dataSource = data?.map((item) => ({
+    ...item,
+    key: item.id,
+  }));
   return (
     <div className='mt-8'>
-      <Table columns={columns} dataSource={data} />;
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+        onRow={(record) => {
+          return {
+            onClick: () => {
+              console.log(record);
+              navigate(`/recruitment/${jobId}/application/${record.id}`);
+              console.log('click');
+            },
+          };
+        }}
+      />
+      ;
     </div>
   );
 };

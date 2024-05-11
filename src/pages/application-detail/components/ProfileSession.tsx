@@ -3,7 +3,14 @@ import React from 'react';
 import mockData from './mockData';
 import { Image } from 'antd';
 
-const ProfileSession = () => {
+type Props = {
+  name: string;
+  email: string;
+  phone: string;
+};
+
+const ProfileSession = (props: Props) => {
+  const { name, email, phone } = props;
   return (
     <div className='w-full'>
       <div className='flex gap-2'>
@@ -16,9 +23,9 @@ const ProfileSession = () => {
           />
         </div>
         <div className='flex-1 flex flex-col justify-between'>
-          <h4 className='font-semibold text-base'>{mockData.profile.name}</h4>
+          <h4 className='font-semibold text-base'>{name}</h4>
           <span className='text-sm'>
-            {mockData.profile.email} | {mockData.profile.phone}
+            {email} | {phone}
           </span>
         </div>
       </div>
