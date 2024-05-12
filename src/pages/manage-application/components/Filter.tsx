@@ -1,5 +1,4 @@
 import { Form, Input, Select } from 'antd';
-import React from 'react';
 import mockdata from './mockdata';
 import { SearchOutlined } from '@ant-design/icons';
 
@@ -46,7 +45,7 @@ const FilterForm = () => {
 
 const Filter = () => {
   return (
-    <div className='mt-8 mx-4'>
+    <div className='mt-8 mx-8'>
       <FilterForm />
     </div>
   );

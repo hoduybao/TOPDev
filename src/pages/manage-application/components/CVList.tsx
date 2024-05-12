@@ -2,7 +2,13 @@ import { Button, Table } from 'antd';
 import moment from 'moment';
 
 import type { TableColumnsType } from 'antd';
-import { EyeOutlined, FieldTimeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
+import {
+  EyeOutlined,
+  FieldTimeOutlined,
+  MailOutlined,
+  PhoneOutlined,
+  RightSquareOutlined,
+} from '@ant-design/icons';
 import { Application } from '@/+core/redux/apis/common/application/application.response';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -25,8 +31,17 @@ const CVList = ({ data }: { data: Application[] }) => {
       dataIndex: 'fullName',
     },
     {
-      title: 'Chiến dịch',
-      dataIndex: 'campaign',
+      title: 'Tin Tuyển Dụng',
+      render(value) {
+        return (
+          <div>
+            <div>
+              <RightSquareOutlined className='m-2 text-green-400' />
+              <span>{value?.title}</span>
+            </div>
+          </div>
+        );
+      },
     },
     {
       title: 'Thông tin liên hệ',
@@ -49,22 +64,14 @@ const CVList = ({ data }: { data: Application[] }) => {
       },
     },
     {
-      title: 'Insights',
+      title: 'Ngày Ứng Tuyển',
       render(value) {
         return (
           <div>
-            {/* <div>
-              <RightSquareOutlined className='m-2 text-green-400' />
-              <span>{value?.title}</span>
-            </div> */}
             <div>
               <FieldTimeOutlined className='m-2 text-green-400' />{' '}
               <span>{moment(value?.createdAt).format('MMMM D YYYY')}</span>
             </div>
-            {/* <div>
-              <DownSquareOutlined className='m-2 text-green-400' />
-              <span>{value?.position}</span>
-            </div> */}
           </div>
         );
       },

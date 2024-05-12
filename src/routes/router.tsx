@@ -48,7 +48,7 @@ export const router = createBrowserRouter([
   // },
   {
     path: '/recruitment',
-    // element: <AdminLayout />,
+    element: <CompanyLayout />,
     children: [
       { path: MY_ROUTE.RECRUITMENT_PROCESS, element: <ApplicationsPage /> },
       { path: MY_ROUTE.RECRUITMENT_DETAIL, element: <ApplicationDetail /> },
