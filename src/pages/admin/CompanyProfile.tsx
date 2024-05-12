@@ -146,7 +146,7 @@ const CompanyProfile = () => {
 
           <div
             id='stickyElement'
-            className='sticky flex top-[10px] p-3 m-4 gap-10 bg-white-900 rounded border boder-solid border-gray-600 z-50'
+            className='sticky flex top-[76px] p-3 m-4 gap-10 bg-white-900 rounded border boder-solid border-gray-600 z-50'
             style={{
               visibility: isVisible ? 'visible' : 'hidden',
             }}
@@ -237,8 +237,8 @@ const CompanyProfile = () => {
           </div>
         </div>
 
-        <div className='basis-1/3 rounded self-start'>
-          <div className='w-full bg-white-900'>
+        <div className='basis-1/3 self-start'>
+          <div className='w-full bg-white-900 rounded'>
             <div className='p-4'>
               <h2 className='text-[18px] font-bold'>General Information</h2>
             </div>
@@ -275,7 +275,7 @@ const CompanyProfile = () => {
             </div>
           </div>
 
-          <div className='w-full mt-4 bg-white-900'>
+          <div className='w-full mt-4 bg-white-900 rounded'>
             <div className='p-4'>
               <h2 className='text-[18px] font-bold'>General Information</h2>
             </div>
@@ -301,10 +301,6 @@ const CompanyProfile = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className='h-[300px] flex items-center justify-center bg-white-900 text-gray-300 text-lg mt-4 rounded'>
-        hello
       </div>
 
       <div className='h-24 flex items-center justify-center bg-white-900 text-gray-300 text-lg mt-4 rounded'>

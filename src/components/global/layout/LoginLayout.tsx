@@ -1,7 +1,7 @@
+import { faBars, faBook, faBriefcase, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Layout as LayoutAntDesign } from 'antd';
 import { Outlet } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faBook, faBriefcase, faPhone } from '@fortawesome/free-solid-svg-icons';
 import colors from '../../../+core/themes/colors';
 
 const { Content } = LayoutAntDesign;
@@ -94,7 +94,7 @@ export default function LoginLayout() {
               alt=''
               className='img-fluid logo-white w-20 sm:w-32'
             />
-            <p className='inline text-2xl text-white-900 hidden sm:block'>
+            <p className='text-2xl text-white-900 hidden sm:block'>
               <span className='text-orange-500'>Việc Làm IT </span>
               Hàng Đầu
             </p>
