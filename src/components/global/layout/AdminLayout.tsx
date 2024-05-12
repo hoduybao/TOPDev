@@ -13,14 +13,14 @@ export default function AdminLayout() {
     setIsCollapsedNav(isCollapsed);
   };
   return (
-    <LayoutAntDesign className='bg-white h-screen'>
+    <LayoutAntDesign className='bg-white'>
       <Header onCollapseNavigation={handleCollapseNav} />
-      <LayoutAntDesign className='bg-primary-white duration-500 ease-in-out flex flex-row h-screen'>
-        <div className='h-screen'>
+      <LayoutAntDesign className='bg-primary-white duration-500 ease-in-out flex flex-row'>
+        <div>
           <NavBar isCollapsed={isCollapsedNav} />
         </div>
 
-        <Content className='transition w-full h-screen'>
+        <Content className='transition w-full'>
           <Outlet />
         </Content>
       </LayoutAntDesign>
