@@ -53,7 +53,9 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
       key: 'company',
       sorter: (a, b) => a.company.name.localeCompare(b.company.name),
       showSorterTooltip: false,
-      render: (text: CompanyInfo) => <p>{text?.name}</p>,
+      render: (company: CompanyInfo) => (
+        <a href={`/admin/company/${company.id}`}>{company?.name}</a>
+      ),
     },
     {
       title: 'Title',
