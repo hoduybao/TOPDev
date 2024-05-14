@@ -57,9 +57,9 @@ export default function AdminLayout() {
     setIsCollapsedNav(isCollapsed);
   };
   return (
-    <LayoutAntDesign className='bg-white h-screen'>
+    <LayoutAntDesign className='bg-white'>
       <Header textHeader={textHeader} onCollapseNavigation={handleCollapseNav} />
-      <LayoutAntDesign className='bg-primary-white duration-500 ease-in-out flex flex-row h-screen mt-[74px]'>
+      <LayoutAntDesign className='bg-primary-white duration-500 ease-in-out flex flex-row mt-[74px]'>
         <div className='h-screen'>
           <NavBar
             setTextHeader={setTextHeader}
@@ -70,7 +70,7 @@ export default function AdminLayout() {
         </div>
 
         <Content
-          className={`w-full h-screen transition-all duration-300 ease-in-out ${
+          className={`w-full transition-all duration-300 ease-in-out  bg-[#E0ECFD] ${
             isCollapsedNav ? 'ml-[104px]' : 'ml-[265px]'
           }`}
         >

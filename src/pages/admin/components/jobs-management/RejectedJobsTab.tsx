@@ -1,16 +1,13 @@
-import { useGetJobByIdQuery } from '@/+core/redux/apis/admin/job-management/job-service.api';
 import { CompanyInfo, Job } from '@/+core/utilities/types/admin.type';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Input, Modal, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import JobDescriptions from './JobDescriptions';
 import dayjs from 'dayjs';
 
-interface PendingJobTabProps {
+interface RejectedJobsTabProps {
   data: Job[];
-  approveJobs: (accounts: Job[]) => void;
-  rejectJobs: (accounts: Job[]) => void;
+  onSearch: (keyword: string) => void;
 }
 
 function addKeyToData(data: Job[]) {
@@ -19,35 +16,25 @@ function addKeyToData(data: Job[]) {
   });
 }
 
-const PendingJobsTab = (props: PendingJobTabProps) => {
-  const [data, setData] = useState<Job[]>(props.data);
+const RejectedJobsTab = (props: RejectedJobsTabProps) => {
+  const { data, onSearch } = props;
   const { Search } = Input;
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [selectedRows, setSelectedRows] = useState<Job[]>([]);
+  // const [selectedRows, setSelectedRows] = useState<Job[]>([]);
 
   const [isJobDetailOpen, setIsJobDetailOpen] = useState<boolean>(false);
   const [viewedJob, setViewedJob] = useState<Job>();
-  const [viewedJobId, setViewedJobId] = useState<string>('');
-  const { data: JobDetailData } = useGetJobByIdQuery(viewedJobId);
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
-    const DataWithKeys = addKeyToData(data);
-    const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
-    setSelectedRows(newSelectedRows);
+    // const DataWithKeys = addKeyToData(data);
+    // const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
+    // setSelectedRows(newSelectedRows);
   };
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
   };
-
-  useEffect(() => {
-    setData(props.data);
-  }, [props]);
-
-  useEffect(() => {
-    setViewedJob(JobDetailData?.data);
-  }, [JobDetailData]);
 
   const columns: TableProps<Job>['columns'] = [
     {
@@ -103,14 +90,6 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
       showSorterTooltip: false,
     },
     // {
-    //   title: 'Start Date',
-    //   dataIndex: 'startDate',
-    //   key: 'startDate',
-    //   render: (date) => <p>{moment(date).format('DD/MM/YYYY')}</p>,
-    //   sorter: (a, b) => moment(a.startDate).unix() - moment(b.startDate).unix(),
-    //   showSorterTooltip: false,
-    // },
-    // {
     //   title: 'End Date',
     //   dataIndex: 'endDate',
     //   key: 'endDate',
@@ -139,40 +118,16 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
               View Details
             </Button>
           </Tooltip>
-          {/* <Tooltip placement='top' title={'Reject'}>
-            <Button icon={<CloseOutlined />}></Button>
-          </Tooltip> */}
         </Space>
       ),
     },
   ];
 
-  const onSearch: SearchProps['onSearch'] = (value, _e) => {
-    const newData = props.data.filter(
-      (item) =>
-        item.company.name.toLowerCase().includes(value.toLowerCase()) ||
-        item.title.toString().toLowerCase().includes(value) ||
-        item.contractType.toLowerCase().includes(value.toLowerCase()) ||
-        item.technicals.some((field) => field.toLowerCase().includes(value.toLowerCase())) ||
-        item.workingPlace.toLowerCase().includes(value.toLowerCase()) ||
-        item.level.toLowerCase().includes(value.toLowerCase()),
-    );
-
-    setData(newData);
-  };
-
-  const handleApproveSelections = () => {
-    props.approveJobs(selectedRows);
-    setSelectedRowKeys([]);
-  };
-
-  const handleRejectSelections = () => {
-    props.rejectJobs(selectedRows);
-    setSelectedRowKeys([]);
+  const handleSearch: SearchProps['onSearch'] = (value, _e) => {
+    onSearch(value);
   };
 
   const handleViewJobDetails = (job: Job) => {
-    setViewedJobId(job.id);
     setViewedJob(job);
     setIsJobDetailOpen(true);
   };
@@ -181,39 +136,10 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
     setIsJobDetailOpen(false);
   };
 
-  const handleApproveModal = () => {
-    if (viewedJob) {
-      props.approveJobs([viewedJob]);
-    }
-    handleCancel();
-  };
-
-  const handleRejectModal = () => {
-    if (viewedJob) {
-      props.rejectJobs([viewedJob]);
-    }
-    handleCancel();
-  };
-
   return (
     <>
-      <div className='flex justify-between'>
-        <div>
-          <Button
-            onClick={handleApproveSelections}
-            type='primary'
-            danger
-            className='mr-2'
-            icon={<CheckOutlined />}
-          >
-            Approve
-          </Button>
-          <Button onClick={handleRejectSelections} icon={<CloseOutlined />}>
-            Reject
-          </Button>
-        </div>
-
-        <Search placeholder='Input search text' onSearch={onSearch} style={{ width: 200 }} />
+      <div className='flex justify-end'>
+        <Search placeholder='Input search text' onSearch={handleSearch} style={{ width: 200 }} />
       </div>
       <Table
         className='mt-2'
@@ -228,16 +154,7 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
         className='max-w-[60vw] min-w-[40vw]'
         open={isJobDetailOpen}
         onCancel={handleCancel}
-        footer={
-          <div>
-            <Button onClick={handleRejectModal} className='mr-2' icon={<CloseOutlined />}>
-              Reject
-            </Button>
-            <Button onClick={handleApproveModal} type='primary' danger icon={<CheckOutlined />}>
-              Approve
-            </Button>
-          </div>
-        }
+        footer={<></>}
       >
         <div className='max-h-[65vh] overflow-y-auto'>
           {viewedJob && <JobDescriptions data={viewedJob} />}
@@ -247,4 +164,4 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
   );
 };
 
-export default PendingJobsTab;
+export default RejectedJobsTab;

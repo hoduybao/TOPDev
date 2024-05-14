@@ -1,33 +1,45 @@
-import { jobStatus } from '@/+core/enums/jobStatus.enum';
 import {
   useApproveJobsMutation,
   useGetJobsQuery,
   useRefuseJobsMutation,
 } from '@/+core/redux/apis/admin/job-management/job-service.api';
 import { Job } from '@/+core/utilities/types/admin.type';
-import ActiveJobsTab from '@/components/global/Admin/JobManagement/ActiveJobsTab';
-import PendingJobsTab from '@/components/global/Admin/JobManagement/PendingJobsTab';
-import RejectedJobsTab from '@/components/global/Admin/JobManagement/RejectedJobsTab';
+import ActiveJobsTab from '@/pages/admin/components/jobs-management/ActiveJobsTab';
+import PendingJobsTab from '@/pages/admin/components/jobs-management/PendingJobsTab';
+import RejectedJobsTab from '@/pages/admin/components/jobs-management/RejectedJobsTab';
 import { Pagination, Spin, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
-import '../../styles/admin/ManagementPage.css';
-import ClosedJobsTab from '@/components/global/Admin/JobManagement/ClosedJobsTab';
+import '../../styles/admin/management-page.css';
+import ClosedJobsTab from '@/pages/admin/components/jobs-management/ClosedJobsTab';
 import { CheckOutlined, ClockCircleOutlined, CloseOutlined } from '@ant-design/icons';
+import { FilterJobsTypeREQ } from '@/+core/redux/apis/admin/job-management/job-service.request';
 
 const JobManagementPage = () => {
-  const { data: jobsData, isFetching: isFetchingJobs } = useGetJobsQuery({});
+  const [filter, setFilter] = useState<FilterJobsTypeREQ>({
+    page: 1,
+    limit: 5,
+  });
+  const {
+    data: jobsData,
+    isFetching: isFetchingJobs,
+    refetch,
+  } = useGetJobsQuery(filter, {
+    refetchOnMountOrArgChange: true,
+  });
   const [approveJobs, { isLoading: isFetchingApprove }] = useApproveJobsMutation();
   const [rejectJobs, { isLoading: isFetchingReject }] = useRefuseJobsMutation();
-  const [allJobs, setAllJobs] = useState<Job[]>([]);
+  const [jobList, setJobList] = useState<Job[]>([]);
   const [tabKey, setTabKey] = useState<string>('pending');
-  const [displayedData, setDisplayedData] = useState<Job[]>(
-    allJobs.filter((data) => data.status == jobStatus.Pending),
-  );
 
   useEffect(() => {
-    console.log('refetch');
-    if (jobsData?.data.jobs) setAllJobs(jobsData?.data.jobs);
+    if (jobsData?.data.jobs) setJobList(jobsData?.data.jobs);
+    console.log('fetch');
   }, [jobsData]);
+
+  useEffect(() => {
+    console.log(filter);
+    refetch();
+  }, [filter]);
 
   const handleApprove = (jobs: Job[]) => {
     const jobIds = jobs.map((job) => job.id);
@@ -41,6 +53,14 @@ const JobManagementPage = () => {
     rejectJobs(jobIds);
   };
 
+  const handleSearch = (keyword: string) => {
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      keywords: keyword,
+      page: 1,
+    }));
+  };
+
   const items: TabsProps['items'] = [
     {
       key: 'pending',
@@ -52,9 +72,10 @@ const JobManagementPage = () => {
       ),
       children: (
         <PendingJobsTab
-          data={displayedData}
+          data={jobList}
           approveJobs={handleApprove}
           rejectJobs={handleReject}
+          onSearch={handleSearch}
         />
       ),
     },
@@ -66,7 +87,7 @@ const JobManagementPage = () => {
           <p>Approved</p>
         </div>
       ),
-      children: <ActiveJobsTab data={displayedData} />,
+      children: <ActiveJobsTab data={jobList} onSearch={handleSearch} />,
     },
     // {
     //   key: 'coming',
@@ -86,7 +107,7 @@ const JobManagementPage = () => {
           <p>Rejected</p>
         </div>
       ),
-      children: <RejectedJobsTab data={displayedData} />,
+      children: <RejectedJobsTab data={jobList} onSearch={handleSearch} />,
     },
     {
       key: 'closed',
@@ -96,43 +117,23 @@ const JobManagementPage = () => {
           <p>Closed</p>
         </div>
       ),
-      children: <ClosedJobsTab data={displayedData} />,
+      children: <ClosedJobsTab data={jobList} onSearch={handleSearch} />,
     },
   ];
 
   useEffect(() => {
-    if (tabKey === 'pending') {
-      setDisplayedData(allJobs.filter((data) => data.status == jobStatus.Pending));
-    } else if (tabKey === 'active') {
-      setDisplayedData(
-        allJobs.filter(
-          (data) => data.status == jobStatus.Approved,
-          // && today.isBetween(data.startDate, data.endDate, 'day', '[]'),
-        ),
-      );
-    } else if (tabKey === 'expired') {
-      setDisplayedData(
-        allJobs.filter(
-          (data) => data.status == jobStatus.Approved,
-          // && moment(data.endDate).isBefore(today, 'day'),
-        ),
-      );
-    } else if (tabKey === 'coming') {
-      setDisplayedData(
-        allJobs.filter(
-          (data) => data.status == jobStatus.Approved,
-          // && today.isBefore(moment(data.startDate), 'day'),
-        ),
-      );
-    } else if (tabKey === 'rejected') {
-      setDisplayedData(allJobs.filter((data) => data.status == jobStatus.Rejected));
-    } else {
-      setDisplayedData(allJobs);
-    }
-  }, [allJobs, tabKey]);
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      status: tabKey,
+    }));
+  }, [tabKey]);
 
   const handleChangePage = (page: number, pageSize: number) => {
-    console.log(page, ' ', pageSize);
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: page,
+      limit: pageSize,
+    }));
   };
 
   return (
@@ -155,7 +156,7 @@ const JobManagementPage = () => {
                 <Pagination
                   className='mt-5'
                   defaultCurrent={1}
-                  total={allJobs.length}
+                  total={jobList.length}
                   pageSize={5}
                   onChange={handleChangePage}
                 />
