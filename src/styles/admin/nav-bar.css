@@ -10,6 +10,7 @@
 
 li.ant-menu-item{
   padding-left: 24px !important;
+  padding-right: 24px !important;
   display: flex !important;
   align-items: center;
   margin-bottom: 12px !important;

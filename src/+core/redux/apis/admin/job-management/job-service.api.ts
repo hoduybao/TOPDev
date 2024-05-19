@@ -1,13 +1,15 @@
 import { TAG_TYPES } from '@/+core/constants/api.tagTypes';
 import { commonApi } from '../../common.api';
-import { JobActionResponse, JobListResponse } from './job.response';
+import { JobActionResponse, JobListResponse } from './job-service.response';
+import { FilterJobsTypeREQ } from './job-service.request';
 
 const jobApi = commonApi.enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB] }).injectEndpoints({
   endpoints: (build) => ({
-    getJobs: build.query<JobListResponse, any>({
-      query: () => ({
+    getJobs: build.query<JobListResponse, FilterJobsTypeREQ>({
+      query: (params) => ({
         url: '/jobs',
         method: 'GET',
+        params: params,
       }),
       providesTags: [TAG_TYPES.JOB],
     }),

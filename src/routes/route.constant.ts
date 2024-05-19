@@ -9,8 +9,8 @@ export const MY_ROUTE = {
   // RECRUITMENT_DETAIL_JOB: '/recruitment/:jobId',
 
   // //RecruitmentProcessLayout
-  // RECRUITMENT_PROCESS: '/recruitment/:jobId/applications',
-  // RECRUITMENT_DETAIL: '/recruitment/:jobId/application/:applicationId',
+  RECRUITMENT_PROCESS: '/recruitment/:jobId/applications',
+  RECRUITMENT_DETAIL: '/recruitment/:jobId/application/:applicationId',
   // RECRUITMENT_PROFILE: '/recruitment/profile',
 
   // Admin
@@ -18,6 +18,8 @@ export const MY_ROUTE = {
   ADMIN_ACCOUNT_MANAGEMENT: '/admin',
   ADMIN_JOB_MANAGEMENT: '/admin/manage-job',
   ADMIN_LOGIN: '/admin/login',
+  ADMIN_COMPANY_PROFILE: '/admin/company/:companyId',
+  ADMIN_CANDIDATE_PROFILE: '/admin/candidate/:candidateId',
 
   // LoginLayout
   LOGIN: '/login',

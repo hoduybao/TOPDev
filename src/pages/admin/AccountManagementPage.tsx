@@ -1,14 +1,14 @@
 import { hRAccountStatus as AccountStatus } from '@/+core/enums/hRAccountStatus.enum';
 import { HRAccount } from '@/+core/utilities/types/admin.type';
-import ApprovedAccountTable from '@/components/global/Admin/AccountManagement/ApprovedAccountTable';
-import BannedAccountTable from '@/components/global/Admin/AccountManagement/BannedAccountTable';
-import PendingAccountTable from '@/components/global/Admin/AccountManagement/PendingAccountTable';
-import RejectedAccountTable from '@/components/global/Admin/AccountManagement/RejectedAccountTable';
+import ApprovedAccountTable from '@/pages/admin/components/accounts-management/ApprovedAccountTable';
+import BannedAccountTable from '@/pages/admin/components/accounts-management/BannedAccountTable';
+import PendingAccountTable from '@/pages/admin/components/accounts-management/PendingAccountTable';
+import RejectedAccountTable from '@/pages/admin/components/accounts-management/RejectedAccountTable';
 import { CheckOutlined, ClockCircleOutlined, CloseOutlined, StopOutlined } from '@ant-design/icons';
 import { Pagination, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
 import { mockHRAccountData } from './mockdata';
-import '../../styles/admin/ManagementPage.css';
+import '../../styles/admin/management-page.css';
 
 const AccountManagementPage = () => {
   const [allAccounts, setAllAccounts] = useState<HRAccount[]>(mockHRAccountData);

@@ -1,0 +1,35 @@
+.profile-label{
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.profile-description{
+    margin-bottom: 32px;
+}
+
+.ant-modal {
+    max-width: unset;
+    margin: unset;
+    position:absolute !important;
+    top:0px !important;
+    right:0px !important;
+    bottom:0px !important;
+    width: 88% !important;
+
+    left: 50% !important; 
+    transform: translate(-50%, 0) !important;
+}
+
+.ant-modal-content{
+    background-color:transparent !important;
+    box-shadow: none !important;
+    height: 100% !important;
+}
+
+.ant-modal-body{
+    height: 100%;
+}
+  
+
+

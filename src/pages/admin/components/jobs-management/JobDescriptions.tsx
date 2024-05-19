@@ -1,6 +1,6 @@
 import { Job } from '@/+core/utilities/types/admin.type';
 import { Descriptions, DescriptionsProps, Tag } from 'antd';
-import '../../../../styles/admin/JobDescriptions.css';
+import '../../../../styles/admin/job-descriptions.css';
 interface JobDescriptionsProps {
   data: Job;
 }
