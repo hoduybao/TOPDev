@@ -9,7 +9,7 @@ import PendingJobsTab from '@/pages/admin/components/jobs-management/PendingJobs
 import RejectedJobsTab from '@/pages/admin/components/jobs-management/RejectedJobsTab';
 import { Pagination, Spin, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
-import '../../styles/admin/management-page.css';
+import '../../styles/admin/management-page.module.scss';
 import ClosedJobsTab from '@/pages/admin/components/jobs-management/ClosedJobsTab';
 import { CheckOutlined, ClockCircleOutlined, CloseOutlined } from '@ant-design/icons';
 import { FilterJobsTypeREQ } from '@/+core/redux/apis/admin/job-management/job-service.request';

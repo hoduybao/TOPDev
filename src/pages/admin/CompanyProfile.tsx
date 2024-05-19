@@ -1,12 +1,11 @@
-import { useParams } from 'react-router-dom';
-import '../../styles/admin/company-profile.css';
-import { Button, Divider, Modal, Tag } from 'antd';
 import { Company, CompanyDetailResponse } from '@/+core/redux/apis/admin/company/company.response';
-import { useEffect, useState } from 'react';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import 'react-image-gallery/styles/css/image-gallery.css';
+import { Button, Divider, Modal, Tag } from 'antd';
+import { useEffect, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
-
+import 'react-image-gallery/styles/css/image-gallery.css';
+import { useParams } from 'react-router-dom';
+import '../../styles/admin/company-profile.module.scss';
 const data: CompanyDetailResponse = {
   statusCode: 200,
   data: {

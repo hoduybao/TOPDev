@@ -1,10 +1,10 @@
-import { useTranslation } from 'react-i18next';
-import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
+import { Tabs } from 'antd';
+import { useTranslation } from 'react-i18next';
 import './style.scss';
 
-import Profile from './components/Profile';
 import ContactInformation from './components/ContactInformation';
+import Profile from './components/Profile';
 
 export const CompanyProfile = () => {
   const { t } = useTranslation();
@@ -27,7 +27,7 @@ export const CompanyProfile = () => {
   };
 
   return (
-    <div className='p-6'>
+    <div className='p-6 bg-white-900'>
       <Tabs
         defaultActiveKey='company-profile'
         items={items}
