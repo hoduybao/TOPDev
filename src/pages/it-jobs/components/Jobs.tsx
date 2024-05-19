@@ -1,3 +1,11 @@
+import {
+  JobTypeEnum,
+  JobTypeTranslation,
+  LevelEnum,
+  LevelTranslation,
+  TechnicalsEnum,
+  TechnicalsEnumTranslation,
+} from '@/+core/enums/job.enum';
 import { ListJobsRES } from '@/+core/redux/apis/common/job-service/job-service.response';
 import { Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +21,7 @@ type JobsProps = {
 
 export const Jobs = ({ data, limit = 10, total, keywords, handleFilterChange }: JobsProps) => {
   const { t } = useTranslation();
+  console.log(data);
   return (
     <div className='flex flex-col w-full'>
       <h1 className='text-sm font-bold lg:text-xl'>
@@ -96,17 +105,21 @@ export const Jobs = ({ data, limit = 10, total, keywords, handleFilterChange }: 
                       </svg>
                     </div>
                     <div>
-                      <p className='text-[#5C5B5B]'>{job.level}</p>
+                      <p className='text-[#5C5B5B]'>
+                        {job.level?.map((item) => LevelTranslation[item as LevelEnum]).join(', ')}
+                      </p>
                     </div>
                   </div>
                   <div className='flex flex-wrap items-end gap-2 text-[#5C5B5B]'>
-                    <p>{job.workingPlace}</p>
+                    <p>
+                      {`${job.addressDetails} (${JobTypeTranslation[job.jobType as JobTypeEnum]})`}{' '}
+                    </p>
                     {/* <p>{job.}</p> */}
                   </div>
                   <div className='mt-2'>
                     <div
                       className=' text-[#424242] line-clamp-3'
-                      dangerouslySetInnerHTML={{ __html: job.jobDescription }}
+                      dangerouslySetInnerHTML={{ __html: job.jobDescription || '' }}
                     ></div>
                   </div>
                   <hr className='mt-2 h-px w-full bg-[#DBDBDB]' />
@@ -115,7 +128,7 @@ export const Jobs = ({ data, limit = 10, total, keywords, handleFilterChange }: 
                       {job.technicals.map((technical, index) => (
                         <a key={index} className='mr-2 inline-block' href='/it-jobs/java-kt21'>
                           <span className='whitespace-nowrap rounded border border-solid font-normal transition-all inline-flex items-center justify-center border- text-[#1047B2] bg-[#EDFBFF] hover:border-[#1047B2] h-[1.625rem] px-2 text-xs md:h-7 md:px-2 md:text-sm'>
-                            {technical}
+                            {TechnicalsEnumTranslation[technical as TechnicalsEnum]}
                           </span>
                         </a>
                       ))}

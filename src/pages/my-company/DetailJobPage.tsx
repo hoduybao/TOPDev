@@ -486,3 +486,6 @@ const DetailJobPage = () => {
 };
 
 export default DetailJobPage;
+
+
+

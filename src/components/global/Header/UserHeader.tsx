@@ -305,7 +305,7 @@ export const JobItems = (): any => {
             onClick: () => {},
           },
           {
-            title: 'Magento',
+            title: 'Magento Developer',
             onClick: () => {},
           },
           {

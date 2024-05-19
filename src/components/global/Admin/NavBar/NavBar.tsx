@@ -22,7 +22,7 @@ const NavBar = ({ isCollapsed, items, route, setTextHeader }: NavBarProps) => {
         theme='light'
         mode='inline'
         inlineCollapsed={isCollapsed}
-        defaultSelectedKeys={items[0].key === route ? [items[0].key] : [route]}
+        defaultSelectedKeys={[items.find((item) => route.includes(item.key))?.key || items[0].key]}
         onClick={(e) => {
           setTextHeader(items.find((item) => item.key === e.key)?.label || '');
           handleSelect(e.key);

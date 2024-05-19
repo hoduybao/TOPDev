@@ -236,5 +236,18 @@
   "cancelCompanyProfile": "Hủy Bỏ",
   "saveCompanyProfile": "Lưu & Xem Trang Công Ty",
   "emailAddress": "Địa Chỉ Email",
-  "phone": "Điện Thoại"
+  "phone": "Điện Thoại",
+  "public": "Đang hiển thị",
+  "pending": "Đang xét duyệt",
+  "hide": "Không công khai",
+  "expried": "Hết hạn hiển thị",
+  "isRejected": "Bị từ chối",
+  "placeHolderFindPost": "Tìm kiếm tin tuyển dụng theo tiêu đề",
+  "jobPosting": "Tin tuyển dụng",
+  "numberOfCandidates": "Số lượng ứng viên",
+  "createdAt": "Ngày tạo",
+  "expirationDate": "Hạn hiển thị",
+  "edit": "Chỉnh sửa",
+  "stopShowing": "Dừng hiển thị",
+  "show": "Hiển thị"
 }

@@ -37,17 +37,17 @@ export default function CompanyLayout() {
   const [isCollapsedNav, setIsCollapsedNav] = useState(false);
   const route = useLocation().pathname;
   const [textHeader, setTextHeader] = useState(
-    items.find((item) => item.key === route)?.label || '',
+    items.find((item) => route.includes(item.key))?.label || '',
   );
 
   const handleCollapseNav = (isCollapsed: boolean) => {
     setIsCollapsedNav(isCollapsed);
   };
   return (
-    <LayoutAntDesign className='bg-white h-screen'>
+    <LayoutAntDesign className='bg-white min-h-screen'>
       <Header textHeader={textHeader} onCollapseNavigation={handleCollapseNav} />
-      <LayoutAntDesign className='bg-gray-100 duration-500 ease-in-out flex flex-row !h-full mt-[74px]'>
-        <div className='h-screen'>
+      <LayoutAntDesign className='bg-[#e8edf2] duration-500 ease-in-out flex flex-row !h-full mt-[60px]'>
+        <div className='min-h-screen'>
           <NavBar
             setTextHeader={setTextHeader}
             route={route}
@@ -56,7 +56,7 @@ export default function CompanyLayout() {
           />{' '}
         </div>
         <Content
-          className={`w-full h-screen transition-all duration-300 ease-in-out !bg-white-900 my-2 mr-2 rounded-sm ${
+          className={`flex justify-center !w-full min-h-screen transition-all duration-300 ease-in-out my-2 mr-2 rounded-sm ${
             isCollapsedNav ? 'ml-[112px]' : 'ml-[273px]'
           }`}
         >
