@@ -4,13 +4,20 @@ export default function AntDesignProvider({ children }: { children: React.ReactN
   return (
     <ConfigProvider
       theme={{
-        token: {},
+        token: {
+          colorPrimary: '#dd3f24',
+          borderRadius: 5,
+        },
         components: {
           Form: {
             itemMarginBottom: 0,
           },
           Spin: {
             colorPrimary: '#dd3f24',
+          },
+          Badge: {
+            textFontSize: 14,
+            indicatorHeight: 18,
           },
         },
       }}

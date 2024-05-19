@@ -59,7 +59,7 @@ export default function AdminLayout() {
   return (
     <LayoutAntDesign className='bg-white h-screen'>
       <Header textHeader={textHeader} onCollapseNavigation={handleCollapseNav} />
-      <LayoutAntDesign className='bg-primary-white duration-500 ease-in-out flex flex-row h-screen mt-[74px]'>
+      <LayoutAntDesign className='bg-primary-white duration-500 ease-in-out flex flex-row h-screen mt-[60px]'>
         <div className='h-screen'>
           <NavBar
             setTextHeader={setTextHeader}

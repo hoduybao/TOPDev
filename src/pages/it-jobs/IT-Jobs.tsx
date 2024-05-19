@@ -22,6 +22,7 @@ export function ITJobs() {
     initialFilter: {
       page: 1,
       limit: 10,
+      status: 'PUBLIC',
     },
   });
 

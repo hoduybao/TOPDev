@@ -1,6 +1,6 @@
-export type ListResponseJobs<T> = {
+export type ListResponse<T> = {
   data: {
-    jobs: T[];
+    data: T[];
     paging: {
       limit: number;
       page: number;
@@ -9,15 +9,9 @@ export type ListResponseJobs<T> = {
   };
   message: string;
 };
-export type ListResponseCompany<T> = {
-  data: {
-    companies: T[];
-    paging: {
-      limit: number;
-      page: number;
-      total: number;
-    };
-  };
+
+export type BaseResponse<T> = {
+  data: T;
   message: string;
 };
 
@@ -26,16 +20,9 @@ export type ListResponseData<T> = {
   total: number;
 };
 
-export const transformJobsResponse = <T>(res: ListResponseJobs<T>): ListResponseData<T> => {
+export const transformResponse = <T>(res: ListResponse<T>): ListResponseData<T> => {
   return {
-    data: res.data.jobs || [],
-    total: res.data.paging?.total || 0,
-  };
-};
-
-export const transformCompaniesResponse = <T>(res: ListResponseCompany<T>): ListResponseData<T> => {
-  return {
-    data: res.data.companies || [],
+    data: res.data.data || [],
     total: res.data.paging?.total || 0,
   };
 };

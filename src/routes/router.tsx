@@ -7,6 +7,7 @@ import { ITJobs } from '@/pages/it-jobs/IT-Jobs';
 import JobManagement from '@/pages/job-management/JobManagement';
 import ManageFollowPage from '@/pages/manage-follow/ManageFollowPage';
 import { CompanyProfile } from '@/pages/my-company/pages/company-profile/page';
+import { CreateJob } from '@/pages/my-company/pages/manage-jobs/create/page';
 import { ManageJobs } from '@/pages/my-company/pages/manage-jobs/page';
 import { MyPages } from '@/pages/my-pages/MyPages';
 import { createBrowserRouter } from 'react-router-dom';
@@ -28,7 +29,11 @@ export const router = createBrowserRouter([
     element: <CompanyLayout />,
     children: [
       { path: MY_ROUTE.COMPANY, element: <CompanyProfile /> },
-      { path: MY_ROUTE.COMPANY_JOB_MANAGEMENT, element: <ManageJobs /> },
+      {
+        path: MY_ROUTE.COMPANY_JOB_MANAGEMENT,
+        element: <ManageJobs />,
+      },
+      { path: MY_ROUTE.COMPANY_CREATE_JOB, element: <CreateJob /> },
     ],
   },
   // {

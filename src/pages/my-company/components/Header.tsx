@@ -1,5 +1,8 @@
+import { LanguageSelector } from '@/components/global/Header/UserHeader';
+import { EditOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   onCollapseNavigation: (collapsed: boolean) => void;
@@ -8,6 +11,7 @@ interface HeaderProps {
 
 const Header = ({ onCollapseNavigation, textHeader }: HeaderProps) => {
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
 
   const handleCollapseNavigation = () => {
     onCollapseNavigation(!collapsed);
@@ -16,7 +20,7 @@ const Header = ({ onCollapseNavigation, textHeader }: HeaderProps) => {
 
   return (
     <header>
-      <nav className='z-10 w-full h-[74px] bg-white-900 flex gap-5 items-center fixed'>
+      <nav className='z-10 w-full h-[60px] bg-white-900 flex gap-5 items-center fixed'>
         <div className='w-[330px] px-6 flex items-center justify-between'>
           <Button
             type='text'
@@ -72,19 +76,37 @@ const Header = ({ onCollapseNavigation, textHeader }: HeaderProps) => {
           </ul> */}
         <div className='flex w-full pr-4 justify-between items-center'>
           <h1 className='text-[25px] font-semibold text-black-400'>{textHeader} </h1>
-          <svg
-            fill='none'
-            viewBox='0 0 26 26'
-            height='26'
-            width='26'
-            xmlns='http://www.w3.org/2000/svg'
-          >
-            <path
+          <div className='flex justify-end items-center gap-4'>
+            <Button
+              onClick={() => navigate('/company/manage-jobs/create')}
+              type='primary'
+              className='bg-primary-red text-base !h-10 !rounded-[20px]'
+              icon={
+                <EditOutlined
+                  style={{
+                    fontSize: '17px',
+                  }}
+                />
+              }
+            >
+              Post job
+            </Button>
+            <LanguageSelector />
+
+            <svg
+              fill='none'
+              viewBox='0 0 26 26'
+              height='26'
+              width='26'
               xmlns='http://www.w3.org/2000/svg'
-              d='M13 0.5C6.1 0.5 0.5 6.1 0.5 13C0.5 19.9 6.1 25.5 13 25.5C19.9 25.5 25.5 19.9 25.5 13C25.5 6.1 19.9 0.5 13 0.5ZM6.8375 20.85C7.375 19.725 10.65 18.625 13 18.625C15.35 18.625 18.6375 19.725 19.1625 20.85C17.4625 22.2 15.325 23 13 23C10.675 23 8.5375 22.2 6.8375 20.85ZM20.95 19.0375C19.1625 16.8625 14.825 16.125 13 16.125C11.175 16.125 6.8375 16.8625 5.05 19.0375C3.775 17.3625 3 15.275 3 13C3 7.4875 7.4875 3 13 3C18.5125 3 23 7.4875 23 13C23 15.275 22.225 17.3625 20.95 19.0375ZM13 5.5C10.575 5.5 8.625 7.45 8.625 9.875C8.625 12.3 10.575 14.25 13 14.25C15.425 14.25 17.375 12.3 17.375 9.875C17.375 7.45 15.425 5.5 13 5.5ZM13 11.75C11.9625 11.75 11.125 10.9125 11.125 9.875C11.125 8.8375 11.9625 8 13 8C14.0375 8 14.875 8.8375 14.875 9.875C14.875 10.9125 14.0375 11.75 13 11.75Z'
-              fill='#393E46'
-            ></path>
-          </svg>
+            >
+              <path
+                xmlns='http://www.w3.org/2000/svg'
+                d='M13 0.5C6.1 0.5 0.5 6.1 0.5 13C0.5 19.9 6.1 25.5 13 25.5C19.9 25.5 25.5 19.9 25.5 13C25.5 6.1 19.9 0.5 13 0.5ZM6.8375 20.85C7.375 19.725 10.65 18.625 13 18.625C15.35 18.625 18.6375 19.725 19.1625 20.85C17.4625 22.2 15.325 23 13 23C10.675 23 8.5375 22.2 6.8375 20.85ZM20.95 19.0375C19.1625 16.8625 14.825 16.125 13 16.125C11.175 16.125 6.8375 16.8625 5.05 19.0375C3.775 17.3625 3 15.275 3 13C3 7.4875 7.4875 3 13 3C18.5125 3 23 7.4875 23 13C23 15.275 22.225 17.3625 20.95 19.0375ZM13 5.5C10.575 5.5 8.625 7.45 8.625 9.875C8.625 12.3 10.575 14.25 13 14.25C15.425 14.25 17.375 12.3 17.375 9.875C17.375 7.45 15.425 5.5 13 5.5ZM13 11.75C11.9625 11.75 11.125 10.9125 11.125 9.875C11.125 8.8375 11.9625 8 13 8C14.0375 8 14.875 8.8375 14.875 9.875C14.875 10.9125 14.0375 11.75 13 11.75Z'
+                fill='#393E46'
+              ></path>
+            </svg>
+          </div>
         </div>
       </nav>
     </header>

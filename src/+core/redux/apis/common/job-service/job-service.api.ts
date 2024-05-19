@@ -1,12 +1,13 @@
 import { TAG_TYPES } from '@/+core/constants/api.tagTypes';
 import { commonApi } from '../../common.api';
-import { FilterCompanyTypeREQ, FilterJobsTypeREQ } from './job-service.request';
-import { ListCompanyRES, ListJobsRES } from './job-service.response';
 import {
-  ListResponseData,
-  transformCompaniesResponse,
-  transformJobsResponse,
-} from './response.type';
+  CreateJobREQ,
+  FilterCompanyTypeREQ,
+  FilterJobsTypeREQ,
+  FilterPostCompanyTypeREQ,
+} from './job-service.request';
+import { JobDetailResponse, ListCompanyRES, ListJobsRES } from './job-service.response';
+import { BaseResponse, ListResponseData, transformResponse } from './response.type';
 
 const jobServiceApi = commonApi
   .enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB, TAG_TYPES.COMPANY] })
@@ -16,9 +17,9 @@ const jobServiceApi = commonApi
         query: (params) => ({
           url: '/jobs',
           method: 'GET',
-          params: { ...params, status: 1 },
+          params: { ...params, status: params.status || 'PUBLIC' },
         }),
-        transformResponse: transformJobsResponse,
+        transformResponse: transformResponse,
         providesTags: [TAG_TYPES.JOB],
       }),
       getListCompanies: build.query<ListResponseData<ListCompanyRES>, FilterCompanyTypeREQ>({
@@ -27,10 +28,51 @@ const jobServiceApi = commonApi
           method: 'GET',
           params: params,
         }),
-        transformResponse: transformCompaniesResponse,
+        transformResponse: transformResponse,
         providesTags: [TAG_TYPES.COMPANY],
+      }),
+      createJob: build.mutation<any, CreateJobREQ>({
+        query: (data) => ({
+          url: '/jobs',
+          method: 'POST',
+          body: data,
+        }),
+        invalidatesTags: [TAG_TYPES.JOB],
+      }),
+      updateJob: build.mutation<any, { id: string; body: CreateJobREQ }>({
+        query: (data) => ({
+          url: `/jobs/${data.id}`,
+          method: 'PATCH',
+          body: data.body,
+        }),
+        invalidatesTags: [TAG_TYPES.JOB],
+      }),
+      getJobsByCompanyId: build.query<ListResponseData<ListJobsRES>, FilterPostCompanyTypeREQ>({
+        query: (params) => ({
+          url: `/jobs/companies/dLuxLT43mvYY/jobs`,
+          method: 'GET',
+          params: {
+            ...params,
+            status: !params.status || params.status === 'ALL' ? undefined : params.status,
+          },
+        }),
+        transformResponse: transformResponse,
+        providesTags: [TAG_TYPES.JOB],
+      }),
+      getJobDetail: build.query<BaseResponse<JobDetailResponse>, string>({
+        query: (id) => ({
+          url: `/jobs/${id}`,
+          method: 'GET',
+        }),
       }),
     }),
   });
 
-export const { useGetListJobsQuery, useGetListCompaniesQuery } = jobServiceApi;
+export const {
+  useGetListJobsQuery,
+  useGetJobsByCompanyIdQuery,
+  useGetListCompaniesQuery,
+  useCreateJobMutation,
+  useGetJobDetailQuery,
+  useUpdateJobMutation,
+} = jobServiceApi;

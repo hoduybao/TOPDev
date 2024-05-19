@@ -210,5 +210,18 @@
   "loginToViewSalary": "Login to view salary",
   "companyInformation": "Company information",
   "approved": "Approved",
-  "rejected": "Rejected"
+  "rejected": "Rejected",
+  "pending": "Pending",
+  "public": "Showing",
+  "hide": "Not public",
+  "expried": "Expried",
+  "isRejected": "Rejected",
+  "placeHolderFindPost": "Search for job postings by title",
+  "jobPosting": "Job posting",
+  "numberOfCandidates": "Number of applicants",
+  "createdAt": "Created at",
+  "expirationDate": "Expiration date",
+  "edit": "Edit",
+  "stopShowing": "Hide",
+  "show": "Public"
 }
