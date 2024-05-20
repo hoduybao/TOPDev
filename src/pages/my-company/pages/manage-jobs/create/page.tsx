@@ -166,7 +166,9 @@ export const CreateJob = () => {
       <div className='w-[90%]'>
         <Spin spinning={isFetching}>
           <div className='flex flex-col gap-4 mb-10'>
-            <p className='text-xl font-semibold'>Thông tin đăng tuyển chi tiết</p>
+            <p data-testid='create-job-main-title' className='text-xl font-semibold'>
+              Thông tin đăng tuyển chi tiết
+            </p>
             <div className='p-4 bg-white-900 rounded-sm text-base font-normal text-black-900 shadow-md  border-l-4 border-primary-red'>
               Tin tuyển dụng của bạn sẽ được kiểm duyệt trước khi hiển thị với các ứng viên tiềm
               năng.
@@ -190,7 +192,9 @@ export const CreateJob = () => {
                   />
                 </div>
                 <div className='flex flex-col gap-6 w-full'>
-                  <p className='text-base font-medium'>Tiêu đề tin tuyển dụng</p>
+                  <p data-testid='recruitment-title' className='text-base font-medium'>
+                    Tiêu đề tin tuyển dụng
+                  </p>
                   <Form.Item
                     rules={[
                       {
@@ -201,6 +205,7 @@ export const CreateJob = () => {
                     name='title'
                   >
                     <Input
+                      data-testid='recruitment-input'
                       className='!outline-none !shadow-none !px-1 !py-2 text-base !border-x-0 !border-t-0 !border-b-2 !border-primary-red  !rounded-none !w-full'
                       placeholder='VD: Front-end developer'
                     />
@@ -538,6 +543,7 @@ export const CreateJob = () => {
                 </Form.Item>
                 <Form.Item>
                   <Button
+                    data-testid='create-job-btn'
                     type='primary'
                     className='!h-10 !px-5 !py-2 !bg-primary-red text-base font-medium  !text-white-900 !border-none shadow-sm'
                     htmlType='submit'
