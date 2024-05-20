@@ -26,7 +26,8 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "esModuleInterop" : true
   },
   "include": [
     "src"
