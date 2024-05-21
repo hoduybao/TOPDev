@@ -504,7 +504,7 @@ export const CreateJob = () => {
                       label='Mô tả kỹ năng & chuyên môn'
                       name='skillRequirements'
                     >
-                      <ReactQuill style={{ height: '200px' }} />
+                      <ReactQuill className='skill-quill' style={{ height: '200px' }} />
                     </Form.Item>
                   </div>
                 </div>
@@ -517,7 +517,7 @@ export const CreateJob = () => {
                   <p className='text-base font-medium'>Quyền lợi ứng viên</p>
                   <div className='!h-[290px]'>
                     <Form.Item className='!w-full' label='Mô tả quyền lợi ứng viên' name='benefit'>
-                      <ReactQuill style={{ height: '200px' }} />
+                      <ReactQuill className='benefit-quill' style={{ height: '200px' }} />
                     </Form.Item>
                   </div>
                 </div>
@@ -534,7 +534,7 @@ export const CreateJob = () => {
                       label='Mô tả quy trình phỏng vấn'
                       name='interviewProcess'
                     >
-                      <ReactQuill style={{ height: '200px' }} />
+                      <ReactQuill className='interview-process-quill' style={{ height: '200px' }} />
                     </Form.Item>
                   </div>
                 </div>
