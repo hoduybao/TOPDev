@@ -218,9 +218,16 @@ export const CreateJob = () => {
                   <GrTechnology size={18} />
                 </div>
                 <div className='flex flex-col gap-6 w-full'>
-                  <p className='text-base font-medium'>{t('company.skills')}</p>
+                  <p data-testid='tech-stack-title' className='text-base font-medium'>
+                    {t('company.skills')}
+                  </p>
                   <Form.Item name='technicals'>
-                    <Select mode='multiple' placeholder='Tech stack' options={technicalItems} />
+                    <Select
+                      data-testid='tech-stack-select'
+                      mode='multiple'
+                      placeholder='Tech stack'
+                      options={technicalItems}
+                    />
                   </Form.Item>
                 </div>
               </div>
@@ -462,7 +469,7 @@ export const CreateJob = () => {
                           },
                         ]}
                       >
-                        <Input placeholder='VD: 123 Nguyễn Văn Linh' />
+                        <Input data-testid='address-input' placeholder='VD: 123 Nguyễn Văn Linh' />
                       </Form.Item>
                     </div>
                   </div>
@@ -535,6 +542,7 @@ export const CreateJob = () => {
               <div className='flex justify-end items-center gap-4'>
                 <Form.Item>
                   <Button
+                    data-testid='cancel-btn'
                     type='primary'
                     className='!h-10 !px-5 min-w-[103px] !py-2 !bg-gray-100 text-black-900 text-base font-medium !border-[#E7E5E4] shadow-md hover:!text-black-900'
                   >
