@@ -1,19 +1,49 @@
 import { useState } from 'react';
 import colors from '../../+core/themes/colors';
-import { Form, FormProps, Input } from 'antd';
+import { Form, FormProps, Input, Spin } from 'antd';
 import { MY_ROUTE } from '@/routes/route.constant';
+import {
+  AuthenticationFields,
+  useEmployerLoginMutation,
+  useTestAuthorizationQuery,
+} from '@/+core/redux/apis/common/authentication/authentication.api';
+import { useDispatch } from 'react-redux';
+import { logOut, setCredentials } from '@/+core/redux/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
-type FieldType = {
-  username?: string;
-  password?: string;
-  companyName?: string;
-  phoneNumber?: string;
-};
+type FieldType = AuthenticationFields;
 
 const LoginPage = () => {
+  const [employerLogin, { isLoading }] = useEmployerLoginMutation();
+  const dispatch = useDispatch();
+  // const { data, refetch } = useTestAuthorizationQuery();
+  const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState<string>('1');
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     console.log('Success:', values);
+    const resp = await employerLogin(values).unwrap();
+
+    if (resp && resp.data) {
+      const user = {
+        username: resp.data.username,
+        firstName: resp.data.firstName,
+        lastName: resp.data.lastName,
+        email: resp.data.email,
+      };
+
+      dispatch(
+        setCredentials({
+          userid: resp.data.id,
+          accessToken: resp.data.access_token,
+          refreshToken: resp.data.refresh_token,
+        }),
+      );
+      navigate('/company');
+    }
+
+    console.log('resp>>>', resp);
   };
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
@@ -107,6 +137,34 @@ const LoginPage = () => {
                     Tiếp tục với Github
                   </button>
 
+                  {/* <button
+                    onClick={() => {
+                      dispatch(logOut());
+                    }}
+                    className='p-4 mb-3 rounded w-full flex justify-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
+                    style={{
+                      background: colors.black[300],
+                      color: 'white',
+                    }}
+                  >
+                    Log out
+                  </button>
+
+                  <button
+                    onClick={async () => {
+                      console.log('before>>', data);
+                      await refetch();
+                      console.log('after>>', data);
+                    }}
+                    className='p-4 mb-3 rounded w-full flex justify-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
+                    style={{
+                      background: colors.black[300],
+                      color: 'white',
+                    }}
+                  >
+                    Test authorization api
+                  </button> */}
+
                   <p className='text-xs text-black-400'>
                     Bằng việc tiếp tục, bạn đồng ý với{' '}
                     <span className='font-bold'>Điều Khoản Sử Dụng</span>
@@ -143,22 +201,6 @@ const LoginPage = () => {
                       <Input.Password className='h-14' placeholder='Mật khẩu' />
                     </Form.Item>
 
-                    {/* <p className='text-sm text-black-400 font-bold mb-2'>Tên công ty</p>
-                    <Form.Item<FieldType>
-                      name='companyName'
-                      rules={[{ required: true, message: 'Please input your company name!' }]}
-                    >
-                      <Input className='h-14' placeholder='Ví dụ: Topdev' />
-                    </Form.Item>
-
-                    <p className='text-sm text-black-400 font-bold mb-2'>Số điện thoại</p>
-                    <Form.Item<FieldType>
-                      name='phoneNumber'
-                      rules={[{ required: true, message: 'Please input your phone number!' }]}
-                    >
-                      <Input className='h-14' placeholder='Ví dụ: 0912345678' />
-                    </Form.Item> */}
-
                     <p className='mt-4'>
                       Bằng việc đăng nhập, bạn đồng ý với{' '}
                       <strong className='cursor-pointer hover:text-orange-500'>
@@ -175,16 +217,19 @@ const LoginPage = () => {
                       {/* <Button type='primary' htmlType='submit'>
                         Submit
                       </Button> */}
-                      <button
-                        className='p-4 mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
-                        style={{
-                          background: colors.orange[500],
-                          color: 'white',
-                        }}
-                        type='submit'
-                      >
-                        Đăng nhập
-                      </button>
+                      <Spin spinning={isLoading}>
+                        <button
+                          className='p-4 mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
+                          style={{
+                            background: colors.orange[500],
+                            color: 'white',
+                          }}
+                          type='submit'
+                        >
+                          Đăng nhập
+                        </button>
+                      </Spin>
+
                       <div className='text-right'>
                         <a
                           href={MY_ROUTE.RESET_PASSWORD}
