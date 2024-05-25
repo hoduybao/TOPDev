@@ -1,5 +1,4 @@
-import React from 'react';
-import Advertising from './components/Advertising';
+import Advertising from './components/Advertising/Advertising';
 import RegisterSession from './components/RegisterSession';
 import Container from '@/components/global/Container/Container';
 
