@@ -6,6 +6,17 @@ export type AuthenticationFields = {
   password: string;
 };
 
+export type EmployerRegister = {
+  username?: string;
+  password?: string;
+  retypedPassword?: string;
+  companyName?: string;
+  phoneNumber?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+};
+
 const authenticationApi = commonApi
   .enhanceEndpoints({ addTagTypes: [TAG_TYPES.AUTHENTICATION] })
   .injectEndpoints({
@@ -16,6 +27,14 @@ const authenticationApi = commonApi
           method: 'POST',
           body: values,
         }),
+      }),
+      employerRegister: build.mutation<any, any>({
+        query: (values: EmployerRegister) => ({
+          url: `/auth/employer/register`,
+          method: 'POST',
+          body: values,
+        }),
+        invalidatesTags: [{ type: TAG_TYPES.AUTHENTICATION }],
       }),
       testAuthorization: build.query<any, void>({
         // Change type here
@@ -28,4 +47,5 @@ const authenticationApi = commonApi
     }),
   });
 
-export const { useEmployerLoginMutation, useTestAuthorizationQuery } = authenticationApi;
+export const { useEmployerLoginMutation, useTestAuthorizationQuery, useEmployerRegisterMutation } =
+  authenticationApi;
