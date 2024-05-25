@@ -57,16 +57,42 @@ const TopdevInfo = () => {
 };
 
 const TopdevCustomers = () => {
-  return <div className='p-4'>topdev customers</div>;
+  return (
+    <div className='p-4'>
+      <h3 className='font-bold text-orange-500 text-center text-2xl mb-4'>
+        Hơn 3,500 khách hàng tin dùng
+      </h3>
+      <p className='text-gray-400 text-center'>
+        Cả các công ty Việt Nam, FDI và đa quốc gia, trải rộng tất cả các ngành từ ngân hàng,
+        fintech đến gia công phần mềm (outsource), thương mại điện tử, truyền thông, quảng cáo, v.v.
+      </p>
+    </div>
+  );
 };
 
 const TopdevMore = () => {
-  return <div className='p-4'>topdev more</div>;
+  return (
+    <div className='p-4 bg-gray-100 mb-2 flex flex-col gap-2 rounded-lg'>
+      <h3 className='font-bold text-base'>Tìm hiểu thêm về dịch vụ mới của TopDev năm 2024:</h3>
+      <div className='flex items-center text-gray-400 text-base'>
+        <Image src='https://topdev.vn/v4/assets/images/online-payment/icon-check-list.png' />
+        <p className='ml-2'>Thanh toán trực tuyến (Thẻ ATM nội địa, thẻ Visa/Mastercard/JCB)</p>
+      </div>
+      <div className='flex items-center text-gray-400 text-base'>
+        <Image src='https://topdev.vn/v4/assets/images/online-payment/icon-check-list.png' />
+        <p className='ml-2'>Tìm kiếm Hồ sơ ứng viên</p>
+      </div>
+      <div className='text-gray-400 text-base'>
+        Liên hệ hotline <span className='underline text-orange-500 font-bold'>028.6273.3496</span>{' '}
+        để được hỗ trợ nhanh nhất.
+      </div>
+    </div>
+  );
 };
 
 const Advertising = () => {
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-2'>
       <TopdevInfo />
       <TopdevCustomers />
       <TopdevMore />
