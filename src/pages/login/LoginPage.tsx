@@ -6,6 +6,8 @@ import { MY_ROUTE } from '@/routes/route.constant';
 type FieldType = {
   username?: string;
   password?: string;
+  companyName?: string;
+  phoneNumber?: string;
 };
 
 const LoginPage = () => {
@@ -140,6 +142,22 @@ const LoginPage = () => {
                     >
                       <Input.Password className='h-14' placeholder='Mật khẩu' />
                     </Form.Item>
+
+                    {/* <p className='text-sm text-black-400 font-bold mb-2'>Tên công ty</p>
+                    <Form.Item<FieldType>
+                      name='companyName'
+                      rules={[{ required: true, message: 'Please input your company name!' }]}
+                    >
+                      <Input className='h-14' placeholder='Ví dụ: Topdev' />
+                    </Form.Item>
+
+                    <p className='text-sm text-black-400 font-bold mb-2'>Số điện thoại</p>
+                    <Form.Item<FieldType>
+                      name='phoneNumber'
+                      rules={[{ required: true, message: 'Please input your phone number!' }]}
+                    >
+                      <Input className='h-14' placeholder='Ví dụ: 0912345678' />
+                    </Form.Item> */}
 
                     <p className='mt-4'>
                       Bằng việc đăng nhập, bạn đồng ý với{' '}

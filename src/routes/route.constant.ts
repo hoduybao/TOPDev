@@ -35,6 +35,7 @@ export const MY_ROUTE = {
   IT_JOBS: '/it-jobs',
   MANAGE_FOLLOW: '/manage-follow',
   MY_PAGES: '/users',
+  REGITER: '/register',
 };
 
 // export const DEFAULT_ROUTE = MY_ROUTE.HOME;
