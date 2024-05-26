@@ -1,5 +1,6 @@
 export const MY_ROUTE = {
   //Company
+  COMPANY_DASHBOARD: '/company',
   COMPANY: '/company/profile',
   COMPANY_JOB_MANAGEMENT: '/company/manage-jobs',
   COMPANY_CREATE_JOB: '/company/manage-jobs/:id',

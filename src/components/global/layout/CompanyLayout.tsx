@@ -1,6 +1,6 @@
 import Header from '@/pages/my-company/components/Header';
 import { MY_ROUTE } from '@/routes/route.constant';
-import { ProfileOutlined } from '@ant-design/icons';
+import { ProfileOutlined, WindowsOutlined } from '@ant-design/icons';
 import { Layout as LayoutAntDesign } from 'antd';
 import { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
@@ -9,8 +9,25 @@ import NavBar from '../Admin/NavBar/NavBar';
 const { Content } = LayoutAntDesign;
 const items = [
   {
+    key: MY_ROUTE.COMPANY_DASHBOARD,
+    icon: (
+      <WindowsOutlined
+        style={{
+          fontSize: '24px',
+        }}
+      />
+    ),
+    label: 'Dashboard',
+  },
+  {
     key: MY_ROUTE.COMPANY,
-    icon: <ProfileOutlined />,
+    icon: (
+      <ProfileOutlined
+        style={{
+          fontSize: '24px',
+        }}
+      />
+    ),
     label: 'Company Profile',
   },
   {
