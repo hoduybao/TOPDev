@@ -17,6 +17,20 @@ export type EmployerRegister = {
   email?: string;
 };
 
+type ReponseLogin = {
+  data: {
+    access_token: string;
+    refresh_token: string;
+    id: string;
+  };
+};
+
+type ParseResponseLogin = {
+  accessToken: string;
+  refreshToken: string;
+  userid: string;
+};
+
 const authenticationApi = commonApi
   .enhanceEndpoints({ addTagTypes: [TAG_TYPES.AUTHENTICATION] })
   .injectEndpoints({
@@ -27,6 +41,13 @@ const authenticationApi = commonApi
           method: 'POST',
           body: values,
         }),
+        transformResponse: (response: ReponseLogin): ParseResponseLogin => {
+          return {
+            accessToken: response.data.access_token,
+            refreshToken: response.data.refresh_token,
+            userid: response.data.id,
+          };
+        },
       }),
       employerRegister: build.mutation<any, any>({
         query: (values: EmployerRegister) => ({

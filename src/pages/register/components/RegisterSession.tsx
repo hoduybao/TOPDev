@@ -1,4 +1,4 @@
-import { Form, FormProps, Input, notification } from 'antd';
+import { Button, Form, FormProps, Input, notification } from 'antd';
 import colors from '@/+core/themes/colors';
 import {
   EmployerRegister,
@@ -147,16 +147,17 @@ const RegisterForm = () => {
           </Form.Item>
 
           <Form.Item className='mt-5'>
-            <button
+            <Button
+              loading={isLoading}
               className='p-4 mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
               style={{
                 background: colors.orange[500],
                 color: 'white',
               }}
-              type='submit'
+              htmlType='submit'
             >
               Đăng ký
-            </button>
+            </Button>
           </Form.Item>
         </Form>
       </div>

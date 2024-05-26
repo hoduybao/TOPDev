@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import colors from '../../+core/themes/colors';
-import { Form, FormProps, Input, Spin } from 'antd';
+import { Button, Form, FormProps, Input } from 'antd';
 import { MY_ROUTE } from '@/routes/route.constant';
 import {
   AuthenticationFields,
   useEmployerLoginMutation,
-  useTestAuthorizationQuery,
 } from '@/+core/redux/apis/common/authentication/authentication.api';
 import { useDispatch } from 'react-redux';
-import { logOut, setCredentials } from '@/+core/redux/auth/authSlice';
+import { setCredentials } from '@/+core/redux/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 
-type FieldType = AuthenticationFields;
+type LoginFormFields = AuthenticationFields;
 
 const LoginPage = () => {
   const [employerLogin, { isLoading }] = useEmployerLoginMutation();
@@ -21,32 +20,17 @@ const LoginPage = () => {
 
   const [activeTab, setActiveTab] = useState<string>('1');
 
-  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+  const onFinish: FormProps<LoginFormFields>['onFinish'] = async (values) => {
     console.log('Success:', values);
     const resp = await employerLogin(values).unwrap();
 
-    if (resp && resp.data) {
-      const user = {
-        username: resp.data.username,
-        firstName: resp.data.firstName,
-        lastName: resp.data.lastName,
-        email: resp.data.email,
-      };
-
-      dispatch(
-        setCredentials({
-          userid: resp.data.id,
-          accessToken: resp.data.access_token,
-          refreshToken: resp.data.refresh_token,
-        }),
-      );
+    if (resp) {
+      dispatch(setCredentials(resp));
       navigate('/company');
     }
-
-    console.log('resp>>>', resp);
   };
 
-  const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+  const onFinishFailed: FormProps<LoginFormFields>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
   return (
@@ -185,7 +169,7 @@ const LoginPage = () => {
                     autoComplete='off'
                   >
                     <p className='text-sm text-black-400 font-bold mb-2'>ID tài khoản</p>
-                    <Form.Item<FieldType>
+                    <Form.Item<LoginFormFields>
                       name='username'
                       rules={[{ required: true, message: 'Please input your username!' }]}
                       className='mb-4'
@@ -194,7 +178,7 @@ const LoginPage = () => {
                     </Form.Item>
 
                     <p className='text-sm text-black-400 font-bold mb-2'>Mật khẩu</p>
-                    <Form.Item<FieldType>
+                    <Form.Item<LoginFormFields>
                       name='password'
                       rules={[{ required: true, message: 'Please input your password!' }]}
                     >
@@ -217,18 +201,17 @@ const LoginPage = () => {
                       {/* <Button type='primary' htmlType='submit'>
                         Submit
                       </Button> */}
-                      <Spin spinning={isLoading}>
-                        <button
-                          className='p-4 mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
-                          style={{
-                            background: colors.orange[500],
-                            color: 'white',
-                          }}
-                          type='submit'
-                        >
-                          Đăng nhập
-                        </button>
-                      </Spin>
+                      <Button
+                        loading={isLoading}
+                        className='p-4 mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
+                        style={{
+                          background: colors.orange[500],
+                          color: 'white',
+                        }}
+                        htmlType='submit'
+                      >
+                        Đăng nhập
+                      </Button>
 
                       <div className='text-right'>
                         <a
