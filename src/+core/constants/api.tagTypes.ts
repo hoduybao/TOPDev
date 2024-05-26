@@ -3,4 +3,6 @@ export enum TAG_TYPES {
   JOB = 'job',
   COMPANY = 'company',
   APPLICATION = 'application',
+  AUTHENTICATION = 'authentication',
+  REGISTER_EMPLOYER = 'registerEmployer',
 }

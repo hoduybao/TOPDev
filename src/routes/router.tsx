@@ -26,6 +26,7 @@ import AdminCompanyProfile from '@/pages/admin/CompanyProfile';
 import ApplicationsPage from '@/pages/manage-application/ApplicationsPage';
 import ApplicationDetail from '@/pages/application-detail/ApplicationDetail';
 import CandidateProfile from '@/pages/admin/CandidateProfile';
+import RegisterPage from '@/pages/register/RegisterPage';
 
 export const router = createBrowserRouter([
   {
@@ -90,6 +91,7 @@ export const router = createBrowserRouter([
       { path: MY_ROUTE.MANAGE_FOLLOW, element: <ManageFollowPage /> },
       { path: MY_ROUTE.IT_JOBS, element: <ITJobs /> },
       { path: MY_ROUTE.MY_PAGES, element: <MyPages /> },
+      { path: MY_ROUTE.REGITER, element: <RegisterPage /> },
     ],
   },
   {

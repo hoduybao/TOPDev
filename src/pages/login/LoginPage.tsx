@@ -1,20 +1,36 @@
 import { useState } from 'react';
 import colors from '../../+core/themes/colors';
-import { Form, FormProps, Input } from 'antd';
+import { Button, Form, FormProps, Input } from 'antd';
 import { MY_ROUTE } from '@/routes/route.constant';
+import {
+  AuthenticationFields,
+  useEmployerLoginMutation,
+} from '@/+core/redux/apis/common/authentication/authentication.api';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '@/+core/redux/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
-type FieldType = {
-  username?: string;
-  password?: string;
-};
+type LoginFormFields = AuthenticationFields;
 
 const LoginPage = () => {
+  const [employerLogin, { isLoading }] = useEmployerLoginMutation();
+  const dispatch = useDispatch();
+  // const { data, refetch } = useTestAuthorizationQuery();
+  const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState<string>('1');
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+
+  const onFinish: FormProps<LoginFormFields>['onFinish'] = async (values) => {
     console.log('Success:', values);
+    const resp = await employerLogin(values).unwrap();
+
+    if (resp) {
+      dispatch(setCredentials(resp));
+      navigate('/company');
+    }
   };
 
-  const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+  const onFinishFailed: FormProps<LoginFormFields>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
   return (
@@ -105,6 +121,34 @@ const LoginPage = () => {
                     Tiếp tục với Github
                   </button>
 
+                  {/* <button
+                    onClick={() => {
+                      dispatch(logOut());
+                    }}
+                    className='p-4 mb-3 rounded w-full flex justify-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
+                    style={{
+                      background: colors.black[300],
+                      color: 'white',
+                    }}
+                  >
+                    Log out
+                  </button>
+
+                  <button
+                    onClick={async () => {
+                      console.log('before>>', data);
+                      await refetch();
+                      console.log('after>>', data);
+                    }}
+                    className='p-4 mb-3 rounded w-full flex justify-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
+                    style={{
+                      background: colors.black[300],
+                      color: 'white',
+                    }}
+                  >
+                    Test authorization api
+                  </button> */}
+
                   <p className='text-xs text-black-400'>
                     Bằng việc tiếp tục, bạn đồng ý với{' '}
                     <span className='font-bold'>Điều Khoản Sử Dụng</span>
@@ -125,7 +169,7 @@ const LoginPage = () => {
                     autoComplete='off'
                   >
                     <p className='text-sm text-black-400 font-bold mb-2'>ID tài khoản</p>
-                    <Form.Item<FieldType>
+                    <Form.Item<LoginFormFields>
                       name='username'
                       rules={[{ required: true, message: 'Please input your username!' }]}
                       className='mb-4'
@@ -134,7 +178,7 @@ const LoginPage = () => {
                     </Form.Item>
 
                     <p className='text-sm text-black-400 font-bold mb-2'>Mật khẩu</p>
-                    <Form.Item<FieldType>
+                    <Form.Item<LoginFormFields>
                       name='password'
                       rules={[{ required: true, message: 'Please input your password!' }]}
                     >
@@ -157,16 +201,18 @@ const LoginPage = () => {
                       {/* <Button type='primary' htmlType='submit'>
                         Submit
                       </Button> */}
-                      <button
+                      <Button
+                        loading={isLoading}
                         className='p-4 mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
                         style={{
                           background: colors.orange[500],
                           color: 'white',
                         }}
-                        type='submit'
+                        htmlType='submit'
                       >
                         Đăng nhập
-                      </button>
+                      </Button>
+
                       <div className='text-right'>
                         <a
                           href={MY_ROUTE.RESET_PASSWORD}
