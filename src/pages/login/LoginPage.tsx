@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import colors from '../../+core/themes/colors';
 import { Button, Form, FormProps, Input } from 'antd';
 import { MY_ROUTE } from '@/routes/route.constant';
@@ -19,8 +19,30 @@ const LoginPage = () => {
   const [candidateLogin, { isLoading: isLoadingCandidate }] = useCandidateLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [activeTab, setActiveTab] = useState<string>('1');
+  const isCalledLoginWithGithub = React.useRef(false);
+
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+
+    const loginWithGithub = async (code: string) => {
+      isCalledLoginWithGithub.current = true;
+      const resp = await candidateLogin({
+        type: 'github',
+        token: code || '',
+      }).unwrap();
+
+      if (resp) {
+        dispatch(setCredentials(resp));
+        navigate('/');
+      }
+    };
+    // prevent double call api
+    if (code && !isCalledLoginWithGithub.current) {
+      loginWithGithub(code);
+    }
+  }, []);
 
   const onFinish: FormProps<LoginFormFields>['onFinish'] = async (values) => {
     const resp = await employerLogin(values).unwrap();
@@ -51,6 +73,12 @@ const LoginPage = () => {
     },
     onError: (error) => console.log('Login Failed:', error),
   });
+
+  const handleGithubLogin = () => {
+    window.location.assign(
+      'https://github.com/login/oauth/authorize?client_id=' + import.meta.env.VITE_GITHUB_CLIENT_ID,
+    );
+  };
 
   return (
     <>
@@ -126,8 +154,9 @@ const LoginPage = () => {
                     Tiếp tục với Google
                   </Button>
 
-                  <button
-                    className='p-4 mb-3 rounded w-full flex justify-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
+                  <Button
+                    onClick={() => handleGithubLogin()}
+                    className='h-full p-4 mb-3 rounded w-full flex justify-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
                     style={{
                       background: colors.black[300],
                       color: 'white',
@@ -139,7 +168,7 @@ const LoginPage = () => {
                       className='h-6 mr-3'
                     />
                     Tiếp tục với Github
-                  </button>
+                  </Button>
 
                   {/* <button
                     onClick={() => {
