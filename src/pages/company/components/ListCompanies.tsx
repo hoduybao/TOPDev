@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { SliderCompanyItem, SliderItem } from './CompanySliders';
 import companyData from '../../../draft/company-new.json';
+import { SliderCompanyItem, SliderItem } from './CompanySliders';
 
 const Companies = () => {
   const data: SliderCompanyItem[] = [
@@ -29,8 +29,8 @@ type Props = {
 const ListCompanies = ({ type }: Props) => {
   const { t } = useTranslation();
   return (
-    <div className='my-4' id={type}>
-      <h3 className='capitalize font-bold text-lg mb-4'>{t(type)}</h3>
+    <div className='mt-8 mb-4' id={type}>
+      <h3 className='capitalize font-bold text-lg mb-12'>{t(type)}</h3>
       <div className='h-full '>
         <Companies />
       </div>

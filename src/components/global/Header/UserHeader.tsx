@@ -518,7 +518,7 @@ const UserHeader = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   return (
-    <div className='w-full bg-white-900 shadow-md lg:px-3 flex justify-center h-[5.25rem]'>
+    <div className='w-full bg-white-900 shadow-md lg:px-3 flex justify-center h-[5.25rem] fixed z-50'>
       <div className='flex justify-between items-center w-full'>
         <div className='flex gap-1 items-center h-full'>
           <Image
