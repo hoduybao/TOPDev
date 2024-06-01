@@ -10,7 +10,6 @@ import {
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '@/+core/redux/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
-import GoogleLoginCustom from './components/google/GoogleLogin';
 import { useGoogleLogin } from '@react-oauth/google';
 
 type LoginFormFields = AuthenticationFields;
