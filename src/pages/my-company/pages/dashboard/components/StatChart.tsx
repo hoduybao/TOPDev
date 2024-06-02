@@ -27,6 +27,9 @@ const StatChart = () => {
         text: 'TopDev Recruitment Stats',
       },
     },
+    // Customize bar width
+    barPercentage: 0.6, // Adjust this value to reduce the width of the bars
+    categoryPercentage: 0.6, // Adjust this value to reduce the width of the bars within a category
   };
 
   const data = {
