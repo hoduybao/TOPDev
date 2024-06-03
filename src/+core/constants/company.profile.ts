@@ -6,13 +6,6 @@ export const industries = [
   { value: 'Giáo dục', label: 'Giáo dục' },
 ];
 
-export const techStack = [
-  { value: 'C++', label: 'C++' },
-  { value: 'ReactJS', label: 'ReactJS' },
-  { value: 'ExpressJS', label: 'ExpressJS' },
-  { value: 'Docker', label: 'Docker' },
-  { value: 'Unity 3d', label: 'Unity 3d' },
-];
 
 export const cities = [
   { value: 'Thành phố Hồ Chí Minh', label: 'Thành phố Hồ Chí Minh' },

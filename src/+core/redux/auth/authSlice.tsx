@@ -1,14 +1,22 @@
-import { setLocalAccessToken, setLocalRefreshToken } from '@/+core/services/local.service';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  setIsLogin,
+  setLocalAccessToken,
+  setLocalRefreshToken,
+} from '@/+core/services/local.service';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-interface AuthState {
-  userid: string | null;
+export interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
+  isLoggin: boolean;
 }
 
 // Define the initial state using the AuthState type
-const initialState: AuthState = { userid: null, accessToken: null, refreshToken: null };
+const initialState: AuthState = {
+  accessToken: null,
+  refreshToken: null,
+  isLoggin: false,
+};
 
 // Create the auth slice
 const authSlice = createSlice({
@@ -16,27 +24,34 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action: PayloadAction<AuthState>) => {
-      const { userid, accessToken, refreshToken } = action.payload;
+      const { accessToken, refreshToken, isLoggin } = action.payload;
 
-      state.userid = userid;
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
+      state.isLoggin = isLoggin;
 
       setLocalAccessToken(accessToken || '');
       setLocalRefreshToken(refreshToken || '');
+      setIsLogin('true');
     },
+
     logOut: (state) => {
-      state.userid = null;
+      state.isLoggin = false;
       state.accessToken = null;
       state.refreshToken = null;
       setLocalAccessToken('');
       setLocalRefreshToken('');
+      setIsLogin('false');
+    },
+    setLogin: (state, action: PayloadAction<boolean>) => {
+      state.isLoggin = action.payload;
+      setIsLogin('false');
     },
   },
 });
 
 // Export the actions
-export const { setCredentials, logOut } = authSlice.actions;
+export const { setCredentials, logOut, setLogin } = authSlice.actions;
 
 // Export the reducer
 export default authSlice.reducer;
@@ -47,12 +62,9 @@ interface RootState {
 }
 
 // Define and export the selectors
-export const selectCurrentUser = (state: RootState) => state.auth.userid;
 export const selectIsLogin = (state: RootState) => {
-  if (state.auth.userid && state.auth.userid != '') {
-    return true;
-  }
-  return false;
+  return state.auth.isLoggin;
 };
+
 // export const selectCurrentAccessToken = (state: RootState) => state.auth.accessToken;
 // export const selectCurrentRefreshToken = (state: RootState) => state.auth.refreshToken;
