@@ -86,7 +86,7 @@ export const router = createBrowserRouter([
         path: '/admin',
         element: <AdminLayout />,
         children: [
-          { path: MY_ROUTE.ADMIN, element: <AccountManagementPage /> },
+          // { path: MY_ROUTE.ADMIN, element: <AccountManagementPage /> },
           { path: MY_ROUTE.ADMIN_ACCOUNT_MANAGEMENT, element: <AccountManagementPage /> },
           { path: MY_ROUTE.ADMIN_JOB_MANAGEMENT, element: <JobManagementPage /> },
           { path: MY_ROUTE.ADMIN_COMPANY_PROFILE, element: <AdminCompanyProfile /> },

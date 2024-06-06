@@ -9,8 +9,21 @@ import { Pagination, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
 import { mockHRAccountData } from './mockdata';
 import '../../styles/admin/management-page.module.scss';
+import { RootState, selectIsLogin } from '@/+core/redux/auth/authSlice';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const AccountManagementPage = () => {
+  const state = useSelector((state: RootState) => state);
+  const isLogin = selectIsLogin(state);
+  const navigate = useNavigate();
+
+  console.log('AccountManagementPage', state);
+
+  if (!isLogin) {
+    navigate('/admin/login');
+  }
+
   const [allAccounts, setAllAccounts] = useState<HRAccount[]>(mockHRAccountData);
   const [displayedData, setDisplayedData] = useState<HRAccount[]>(
     allAccounts.filter((data) => data.status == AccountStatus.Pending),

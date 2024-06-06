@@ -1,5 +1,5 @@
-import { selectIsLogin, setLogin } from '@/+core/redux/auth/authSlice';
-import { getLocalAccessToken } from '@/+core/services/local.service';
+import { selectIsLogin, setCredentials, setLogin } from '@/+core/redux/auth/authSlice';
+import { getLocalAccessToken, getLocalRefreshToken } from '@/+core/services/local.service';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -7,9 +7,18 @@ export const useLoginState = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLogin);
 
-  const token = getLocalAccessToken();
+  const accessToken = getLocalAccessToken();
+  const refreshToken = getLocalRefreshToken();
   useEffect(() => {
-    if (token) dispatch(setLogin(true));
+    if (accessToken && refreshToken) {
+      dispatch(
+        setCredentials({
+          accessToken,
+          refreshToken,
+          isLoggin: true,
+        }),
+      );
+    }
   }, []);
   return useMemo(() => [isLoggedIn], [isLoggedIn]);
 };

@@ -34,7 +34,7 @@ const LoginPage = () => {
       }).unwrap();
 
       if (resp) {
-        dispatch(setCredentials(resp));
+        dispatch(setCredentials({ ...resp, isLoggin: true }));
         navigate('/');
       }
     };
@@ -48,7 +48,7 @@ const LoginPage = () => {
     try {
       const resp = await employerLogin(values).unwrap();
       if (resp) {
-        dispatch(setCredentials(resp));
+        dispatch(setCredentials({ ...resp, isLoggin: true }));
         navigate('/company');
       }
     } catch (error: any) {
@@ -70,7 +70,7 @@ const LoginPage = () => {
       }).unwrap();
 
       if (resp) {
-        dispatch(setCredentials(resp));
+        dispatch(setCredentials({ ...resp, isLoggin: true }));
         navigate('/');
       }
     },

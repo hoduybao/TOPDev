@@ -26,8 +26,9 @@ export default function App() {
     try {
       const resp = await adminLogin(values).unwrap();
       if (resp) {
-        dispatch(setCredentials(resp));
-        navigate('/company');
+        console.log({ ...resp, isLoggin: true });
+        dispatch(setCredentials({ ...resp, isLoggin: true }));
+        navigate('/admin');
       }
     } catch (error: any) {
       console.error(error?.data?.message);
