@@ -1,18 +1,37 @@
-import { Form, Grid, Input, theme, Typography } from 'antd';
+import { Button, Form, FormProps, Grid, Input, theme, Typography } from 'antd';
 
-import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import colors from '@/+core/themes/colors';
+import {
+  AuthenticationFields,
+  useAdminLoginMutation,
+} from '@/+core/redux/apis/common/authentication/authentication.api';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '@/+core/redux/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
 const { Text, Title } = Typography;
+type LoginFormFields = AuthenticationFields;
 
 export default function App() {
+  const [adminLogin, { isLoading }] = useAdminLoginMutation();
   const { token } = useToken();
+  const dispatch = useDispatch();
   const screens = useBreakpoint();
+  const navigate = useNavigate();
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+  const onFinish: FormProps<AuthenticationFields>['onFinish'] = async (values: any) => {
+    try {
+      const resp = await adminLogin(values).unwrap();
+      if (resp) {
+        dispatch(setCredentials(resp));
+        navigate('/company');
+      }
+    } catch (error: any) {
+      console.error(error?.data?.message);
+    }
   };
 
   const styles = {
@@ -52,20 +71,20 @@ export default function App() {
           layout='vertical'
           requiredMark='optional'
         >
-          <Form.Item
-            name='email'
+          <Form.Item<LoginFormFields>
+            name='username'
             rules={[
               {
-                type: 'email',
+                type: 'string',
                 required: true,
-                message: 'Please input your Email!',
+                message: 'Please input your Username!',
               },
             ]}
             className='mb-2'
           >
-            <Input prefix={<MailOutlined />} placeholder='Email' />
+            <Input prefix={<UserOutlined />} placeholder='Username' />
           </Form.Item>
-          <Form.Item
+          <Form.Item<AuthenticationFields>
             name='password'
             rules={[
               {
@@ -78,16 +97,17 @@ export default function App() {
             <Input.Password prefix={<LockOutlined />} type='password' placeholder='Password' />
           </Form.Item>
           <Form.Item>
-            <button
-              className='p-2 mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
+            <Button
+              loading={isLoading}
+              className='h-full p-2 mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
               style={{
                 background: colors.orange[500],
                 color: 'white',
               }}
-              type='submit'
+              htmlType='submit'
             >
               Login
-            </button>
+            </Button>
           </Form.Item>
         </Form>
       </div>
