@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import colors from '../../+core/themes/colors';
-import { Button, Form, FormProps, Input } from 'antd';
+import { Button, Form, FormProps, Input, notification } from 'antd';
 import { MY_ROUTE } from '@/routes/route.constant';
 import {
   AuthenticationFields,
@@ -45,11 +45,14 @@ const LoginPage = () => {
   }, []);
 
   const onFinish: FormProps<LoginFormFields>['onFinish'] = async (values) => {
-    const resp = await employerLogin(values).unwrap();
-
-    if (resp) {
-      dispatch(setCredentials(resp));
-      navigate('/company');
+    try {
+      const resp = await employerLogin(values).unwrap();
+      if (resp) {
+        dispatch(setCredentials(resp));
+        navigate('/company');
+      }
+    } catch (error: any) {
+      console.error(error?.data?.message);
     }
   };
 
