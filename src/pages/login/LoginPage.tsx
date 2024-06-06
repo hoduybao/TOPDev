@@ -252,7 +252,7 @@ const LoginPage = () => {
                       </Button> */}
                       <Button
                         loading={isLoading}
-                        className='p-4 mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
+                        className='p-4 h-full mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
                         style={{
                           background: colors.orange[500],
                           color: 'white',
