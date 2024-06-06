@@ -26,7 +26,7 @@ export default function App() {
 
   return (
     <div
-      className='h-full flex items-center justify-center bg-black-500'
+      className='h-[100vh] flex items-center justify-center bg-black-500'
       style={{
         backgroundImage:
           'radial-gradient(281.67% 158.44% at 105.89% -50.76%, rgb(3, 182, 252) 0%, rgb(255, 232, 216) 100%)',
