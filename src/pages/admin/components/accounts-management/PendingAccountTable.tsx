@@ -1,35 +1,36 @@
 import { HRAccount } from '@/+core/utilities/types/admin.type';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, TableProps, Tag, Tooltip } from 'antd';
+import { CheckOutlined, CloseOutlined, HomeOutlined } from '@ant-design/icons';
+import { Button, Image, Input, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface PendingAccountTableProps {
   data: HRAccount[];
-  approveAccounts: (accounts: HRAccount[]) => void;
-  rejectAccounts: (accounts: HRAccount[]) => void;
+  approveAccounts?: (accounts: HRAccount[]) => void;
+  rejectAccounts?: (accounts: HRAccount[]) => void;
+  status: number;
 }
 
-const PendingAccountTable = (props: PendingAccountTableProps) => {
-  const [data, setData] = useState<HRAccount[]>(props.data);
-  const { Search } = Input;
+const AccountTable = (props: PendingAccountTableProps) => {
+  const { data, status } = props;
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [selectedRows, setSelectedRows] = useState<HRAccount[]>([]);
+
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-    const DataWithKeys = addKeyToData(data);
-    const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
-    setSelectedRows(newSelectedRows);
+    // setSelectedRowKeys(newSelectedRowKeys);
+    // const DataWithKeys = addKeyToData(data);
+    // const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
+    // setSelectedRows(newSelectedRows);
   };
 
-  useEffect(() => {
-    setData(props.data);
-  }, [props]);
-
-  function addKeyToData(data: HRAccount[]) {
-    return data.map((item, index) => {
-      return { ...item, key: index.toString() };
-    });
+  function formatedData(data: HRAccount[]) {
+    return data
+      .map((item, index) => {
+        return { ...item, key: index.toString() };
+      })
+      .filter((item) => {
+        return item.status === props.status;
+      });
   }
 
   const rowSelection = {
@@ -38,46 +39,64 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
   };
   const columns: TableProps<HRAccount>['columns'] = [
     {
-      title: 'Company Name',
-      dataIndex: 'companyName',
+      title: 'Company',
+      dataIndex: 'name',
       key: 'name',
-      // render: (text) => <a>{text}</a>,
+      render: (value, record) => {
+        return (
+          <div className='flex items-center gap-2'>
+            {record.logo ? (
+              <Image className='object-contain' src={record.logo} width={50} height={50} />
+            ) : (
+              <HomeOutlined className='w-[50px] h-[50px]' />
+            )}
+            {value}
+          </div>
+        );
+      },
     },
     {
-      title: 'Tax Code',
-      dataIndex: 'taxCode',
-      key: 'taxCode',
+      title: 'Nationality',
+      dataIndex: 'nationality',
+      key: 'nationality',
+      render: (value) => {
+        return value.join(', ');
+      },
     },
     {
-      title: 'Display Name',
-      dataIndex: 'displayName',
-      key: 'displayName',
+      title: 'Industry',
+      dataIndex: 'industry',
+      key: 'industry',
+      render: (value) => {
+        return value.join(', ');
+      },
     },
-    {
-      title: 'Fields',
-      key: 'fields',
-      dataIndex: 'fields',
-      render: (_, { fields }) => (
-        <>
-          {fields.map((field) => {
-            return (
-              <Tag color={'geekblue'} key={field}>
-                {field.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
+
     {
       title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      dataIndex: 'addresses',
+      key: 'addresses',
+      render: (value) => {
+        return (
+          <div>
+            {value.map((address: any) => {
+              return (
+                <div>
+                  {address.addressDetail} , {address.city}
+                </div>
+              );
+            })}
+          </div>
+        );
+      },
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+      render: () => {
+        return <Tag color='gray'>Pending</Tag>;
+      },
     },
     {
       title: 'Action',
@@ -107,68 +126,69 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
   ];
 
   const onSearch: SearchProps['onSearch'] = (value, _e) => {
-    const newData = props.data.filter(
-      (item) =>
-        item.companyName.toLowerCase().includes(value.toLowerCase()) ||
-        item.taxCode.toString().toLowerCase().includes(value) ||
-        item.displayName.toLowerCase().includes(value.toLowerCase()) ||
-        item.fields.some((field) => field.toLowerCase().includes(value.toLowerCase())) ||
-        item.address.toLowerCase().includes(value.toLowerCase()),
-    );
-
-    setData(newData);
+    // const newData = props.data.filter(
+    //   (item) =>
+    //     item.companyName.toLowerCase().includes(value.toLowerCase()) ||
+    //     item.taxCode.toString().toLowerCase().includes(value) ||
+    //     item.displayName.toLowerCase().includes(value.toLowerCase()) ||
+    //     item.fields.some((field) => field.toLowerCase().includes(value.toLowerCase())) ||
+    //     item.address.toLowerCase().includes(value.toLowerCase()),
+    // );
+    // setData(newData);
   };
 
   const handleApproveSelections = () => {
-    props.approveAccounts(selectedRows);
-    setSelectedRowKeys([]);
+    // props.approveAccounts(selectedRows);
+    // setSelectedRowKeys([]);
   };
 
   const handleRejectSelections = () => {
-    props.rejectAccounts(selectedRows);
-    setSelectedRowKeys([]);
+    // props.rejectAccounts(selectedRows);
+    // setSelectedRowKeys([]);
   };
 
   const handleApproveAction = (record: any) => {
     const { key, ...account } = record;
-    props.approveAccounts([account]);
-    setSelectedRowKeys(selectedRowKeys.filter((selectedKey) => selectedKey !== key));
+    // props.approveAccounts([account]);
+    // setSelectedRowKeys(selectedRowKeys.filter((selectedKey) => selectedKey !== key));
   };
 
   const handleRejectAction = (record: any) => {
     const { key, ...account } = record;
-    props.rejectAccounts([account]);
-    setSelectedRowKeys(selectedRowKeys.filter((selectedKey) => selectedKey !== key));
+    // props.rejectAccounts([account]);
+    // setSelectedRowKeys(selectedRowKeys.filter((selectedKey) => selectedKey !== key));
   };
 
   return (
     <>
-      <div className='flex justify-between'>
-        <div>
-          <Button
-            onClick={handleApproveSelections}
-            className='mr-2'
-            style={{ color: '#4096ff', borderColor: '#4096ff' }}
-            icon={<CheckOutlined />}
-          >
-            Approve
-          </Button>
-          <Button danger onClick={handleRejectSelections} icon={<CloseOutlined />}>
-            Reject
-          </Button>
-        </div>
+      <div className={`flex ${status == 0 ? 'justify-between' : 'justify-end'} `}>
+        {status == 0 && (
+          <div>
+            <Button
+              onClick={handleApproveSelections}
+              className='mr-2'
+              style={{ color: '#4096ff', borderColor: '#4096ff' }}
+              icon={<CheckOutlined />}
+            >
+              Approve
+            </Button>
+            <Button danger onClick={handleRejectSelections} icon={<CloseOutlined />}>
+              Reject
+            </Button>
+          </div>
+        )}
 
-        <Search placeholder='Input search text' onSearch={onSearch} style={{ width: 200 }} />
+        <Input.Search placeholder='Input search text' onSearch={onSearch} style={{ width: 200 }} />
       </div>
       <Table
         className='mt-2'
         rowSelection={rowSelection}
         columns={columns}
-        dataSource={addKeyToData(data)}
+        dataSource={formatedData(data)}
         pagination={false}
       />
     </>
   );
 };
 
-export default PendingAccountTable;
+export default AccountTable;

@@ -1,13 +1,19 @@
 import { hRAccountStatus as accountStatus } from '@/+core/enums/hRAccountStatus.enum';
 
+type Address = {
+  city: string;
+  addressDetail: string;
+};
 export interface HRAccount {
-  id: string;
-  companyName: string;
-  taxCode: number;
-  displayName: string;
-  fields: string[];
-  status: accountStatus;
-  address: string;
+  hrId: string;
+  companyId: string;
+  status: number;
+  logo: string;
+  name: string;
+  nationality: string[];
+  website: string;
+  phoneNumber: string;
+  addresses: Address[];
 }
 
 export interface Job {
