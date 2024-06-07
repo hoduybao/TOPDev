@@ -1,20 +1,33 @@
-import { HRAccount } from '@/+core/utilities/types/admin.type';
+import { useGetEmployerDetailQuery } from '@/+core/redux/apis/admin/employer-management/employer-admin.api';
+import {
+  EmployerDetailResponse,
+  ListEmployersRES,
+} from '@/+core/redux/apis/admin/employer-management/employer-admin.response';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, TableProps, Tag, Tooltip } from 'antd';
+import { Button, Input, Modal, Space, Spin, Table, TableProps, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface PendingAccountTableProps {
-  data: HRAccount[];
-  approveAccounts: (accounts: HRAccount[]) => void;
-  rejectAccounts: (accounts: HRAccount[]) => void;
+  data: ListEmployersRES[];
+  approveEmployers: (accounts: ListEmployersRES[]) => void;
+  rejectEmployers: (accounts: ListEmployersRES[]) => void;
+  onSearch: (keyword: string) => void;
 }
 
 const PendingAccountTable = (props: PendingAccountTableProps) => {
-  const [data, setData] = useState<HRAccount[]>(props.data);
+  const { data, approveEmployers, rejectEmployers, onSearch } = props;
   const { Search } = Input;
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [selectedRows, setSelectedRows] = useState<HRAccount[]>([]);
+  const [selectedRows, setSelectedRows] = useState<ListEmployersRES[]>([]);
+
+  const [isEmployerDetailOpen, setIsEmployerDetailOpen] = useState<boolean>(false);
+  const [viewedEmployer, setViewedEmployer] = useState<EmployerDetailResponse>();
+  const [viewedEmployerId, setViewedEmployerId] = useState<string>('');
+
+  const { data: employerDetailData, isFetching: isFetchingEmployerDetail } =
+    useGetEmployerDetailQuery(viewedEmployerId);
+
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
     const DataWithKeys = addKeyToData(data);
@@ -22,11 +35,7 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
     setSelectedRows(newSelectedRows);
   };
 
-  useEffect(() => {
-    setData(props.data);
-  }, [props]);
-
-  function addKeyToData(data: HRAccount[]) {
+  function addKeyToData(data: ListEmployersRES[]) {
     return data.map((item, index) => {
       return { ...item, key: index.toString() };
     });
@@ -36,7 +45,8 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
     selectedRowKeys,
     onChange: onSelectChange,
   };
-  const columns: TableProps<HRAccount>['columns'] = [
+  
+  const columns: TableProps<ListEmployersRES>['columns'] = [
     {
       title: 'Company Name',
       dataIndex: 'companyName',
@@ -53,22 +63,22 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
       dataIndex: 'displayName',
       key: 'displayName',
     },
-    {
-      title: 'Fields',
-      key: 'fields',
-      dataIndex: 'fields',
-      render: (_, { fields }) => (
-        <>
-          {fields.map((field) => {
-            return (
-              <Tag color={'geekblue'} key={field}>
-                {field.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
+    // {
+    //   title: 'Fields',
+    //   key: 'fields',
+    //   dataIndex: 'fields',
+    //   render: (_, { fields }) => (
+    //     <>
+    //       {fields.map((field) => {
+    //         return (
+    //           <Tag color={'geekblue'} key={field}>
+    //             {field.toUpperCase()}
+    //           </Tag>
+    //         );
+    //       })}
+    //     </>
+    //   ),
+    // },
     {
       title: 'Address',
       dataIndex: 'address',
@@ -80,65 +90,64 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
       key: 'status',
     },
     {
-      title: 'Action',
+      title: <div className='font-semi-bold pl-5'>Action</div>,
       key: 'action',
       render: (_, record) => (
         <Space size='middle'>
-          <Tooltip placement='top' title={'Approve'}>
+          <Tooltip placement='top' title={'View Detail'}>
             <Button
-              onClick={() => {
-                handleApproveAction(record);
-              }}
-              icon={<CheckOutlined />}
-            ></Button>
-          </Tooltip>
-          <Tooltip placement='top' title={'Reject'}>
-            <Button
-              onClick={() => {
-                handleRejectAction(record);
-              }}
-              danger
-              icon={<CloseOutlined />}
-            ></Button>
+              onClick={() => handleViewEmployerDetails(record)}
+              className='text-blue-500 border border-white-900'
+            >
+              View Details
+            </Button>
           </Tooltip>
         </Space>
       ),
     },
   ];
 
-  const onSearch: SearchProps['onSearch'] = (value, _e) => {
-    const newData = props.data.filter(
-      (item) =>
-        item.companyName.toLowerCase().includes(value.toLowerCase()) ||
-        item.taxCode.toString().toLowerCase().includes(value) ||
-        item.displayName.toLowerCase().includes(value.toLowerCase()) ||
-        item.fields.some((field) => field.toLowerCase().includes(value.toLowerCase())) ||
-        item.address.toLowerCase().includes(value.toLowerCase()),
-    );
-
-    setData(newData);
+  const handleSearch: SearchProps['onSearch'] = (value, _e) => {
+    onSearch(value);
   };
 
   const handleApproveSelections = () => {
-    props.approveAccounts(selectedRows);
+    approveEmployers(selectedRows);
     setSelectedRowKeys([]);
   };
 
   const handleRejectSelections = () => {
-    props.rejectAccounts(selectedRows);
+    rejectEmployers(selectedRows);
     setSelectedRowKeys([]);
   };
 
-  const handleApproveAction = (record: any) => {
-    const { key, ...account } = record;
-    props.approveAccounts([account]);
-    setSelectedRowKeys(selectedRowKeys.filter((selectedKey) => selectedKey !== key));
+  const handleViewEmployerDetails = (employer: ListEmployersRES) => {
+    setViewedEmployerId(employer.id);
+    setIsEmployerDetailOpen(true);
   };
 
-  const handleRejectAction = (record: any) => {
-    const { key, ...account } = record;
-    props.rejectAccounts([account]);
-    setSelectedRowKeys(selectedRowKeys.filter((selectedKey) => selectedKey !== key));
+  const handleCancel = () => {
+    setIsEmployerDetailOpen(false);
+  };
+
+  const handleApproveModal = () => {
+    if (viewedEmployer) {
+      const foundEmployers = [data.find((item) => item.id === viewedEmployer.id)];
+      if (foundEmployers && foundEmployers[0]) {
+        approveEmployers([foundEmployers[0]]);
+      }
+    }
+    handleCancel();
+  };
+
+  const handleRejectModal = () => {
+    if (viewedEmployer) {
+      const foundEmployers = [data.find((item) => item.id === viewedEmployer.id)];
+      if (foundEmployers && foundEmployers[0]) {
+        rejectEmployers([foundEmployers[0]]);
+      }
+    }
+    handleCancel();
   };
 
   return (
@@ -167,6 +176,29 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
         dataSource={addKeyToData(data)}
         pagination={false}
       />
+
+      <Modal
+        title='Employer Details'
+        className='max-w-[60vw] min-w-[40vw]'
+        open={isEmployerDetailOpen}
+        onCancel={handleCancel}
+        footer={
+          <div>
+            <Button onClick={handleRejectModal} className='mr-2' icon={<CloseOutlined />}>
+              Reject
+            </Button>
+            <Button onClick={handleApproveModal} type='primary' danger icon={<CheckOutlined />}>
+              Approve
+            </Button>
+          </div>
+        }
+      >
+        <div className='max-h-[65vh] overflow-y-auto'>
+          <Spin spinning={isFetchingEmployerDetail}>
+            Employer Details
+          </Spin>
+        </div>
+      </Modal>
     </>
   );
 };

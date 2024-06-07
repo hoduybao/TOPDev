@@ -70,7 +70,7 @@ export default function AdminLayout() {
         </div>
 
         <Content
-          className={`w-full transition-all duration-300 ease-in-out  bg-[#E0ECFD] ${
+          className={`w-full transition-all duration-300 ease-in-out  bg-[#E8EDF2] ${
             isCollapsedNav ? 'ml-[104px]' : 'ml-[265px]'
           }`}
         >

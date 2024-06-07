@@ -1,19 +1,30 @@
-import { HRAccount } from '@/+core/utilities/types/admin.type';
-import { StopOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, TableProps, Tag, Tooltip } from 'antd';
+import { useGetEmployerDetailQuery } from '@/+core/redux/apis/admin/employer-management/employer-admin.api';
+import {
+  EmployerDetailResponse,
+  ListEmployersRES,
+} from '@/+core/redux/apis/admin/employer-management/employer-admin.response';
+import { Button, Input, Modal, Space, Spin, Table, TableProps, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface ApprovedAccountTableProps {
-  data: HRAccount[];
-  banAccounts: (accounts: HRAccount[]) => void;
+  data: ListEmployersRES[];
+  onSearch: (keyword: string) => void;
 }
 
 const PendingAccountTable = (props: ApprovedAccountTableProps) => {
-  const [data, setData] = useState<HRAccount[]>(props.data);
+  const { data, onSearch } = props;
   const { Search } = Input;
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [selectedRows, setSelectedRows] = useState<HRAccount[]>([]);
+  const [selectedRows, setSelectedRows] = useState<ListEmployersRES[]>([]);
+
+  const [isEmployerDetailOpen, setIsEmployerDetailOpen] = useState<boolean>(false);
+  const [viewedEmployer, setViewedEmployer] = useState<EmployerDetailResponse>();
+  const [viewedEmployerId, setViewedEmployerId] = useState<string>('');
+
+  const { data: employerDetailData, isFetching: isFetchingEmployerDetail } =
+    useGetEmployerDetailQuery(viewedEmployerId);
+
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
     const DataWithKeys = addKeyToData(data);
@@ -21,11 +32,7 @@ const PendingAccountTable = (props: ApprovedAccountTableProps) => {
     setSelectedRows(newSelectedRows);
   };
 
-  useEffect(() => {
-    setData(props.data);
-  }, [props]);
-
-  function addKeyToData(data: HRAccount[]) {
+  function addKeyToData(data: ListEmployersRES[]) {
     return data.map((item, index) => {
       return { ...item, key: index.toString() };
     });
@@ -35,7 +42,8 @@ const PendingAccountTable = (props: ApprovedAccountTableProps) => {
     selectedRowKeys,
     onChange: onSelectChange,
   };
-  const columns: TableProps<HRAccount>['columns'] = [
+
+  const columns: TableProps<ListEmployersRES>['columns'] = [
     {
       title: 'Company Name',
       dataIndex: 'companyName',
@@ -52,22 +60,22 @@ const PendingAccountTable = (props: ApprovedAccountTableProps) => {
       dataIndex: 'displayName',
       key: 'displayName',
     },
-    {
-      title: 'Fields',
-      key: 'fields',
-      dataIndex: 'fields',
-      render: (_, { fields }) => (
-        <>
-          {fields.map((field) => {
-            return (
-              <Tag color={'geekblue'} key={field}>
-                {field.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
+    // {
+    //   title: 'Fields',
+    //   key: 'fields',
+    //   dataIndex: 'fields',
+    //   render: (_, { fields }) => (
+    //     <>
+    //       {fields.map((field) => {
+    //         return (
+    //           <Tag color={'geekblue'} key={field}>
+    //             {field.toUpperCase()}
+    //           </Tag>
+    //         );
+    //       })}
+    //     </>
+    //   ),
+    // },
     {
       title: 'Address',
       dataIndex: 'address',
@@ -79,56 +87,42 @@ const PendingAccountTable = (props: ApprovedAccountTableProps) => {
       key: 'status',
     },
     {
-      title: 'Action',
+      title: <div className='font-semi-bold pl-5'>Action</div>,
       key: 'action',
       render: (_, record) => (
         <Space size='middle'>
-          <Tooltip placement='top' title={'Ban'}>
+          <Tooltip placement='top' title={'View Detail'}>
             <Button
-              onClick={() => {
-                handleBanAction(record);
-              }}
-              danger
-              icon={<StopOutlined />}
-            ></Button>
+              onClick={() => handleViewEmployerDetails(record)}
+              className='text-blue-500 border border-white-900'
+            >
+              View Details
+            </Button>
           </Tooltip>
         </Space>
       ),
     },
   ];
 
-  const onSearch: SearchProps['onSearch'] = (value, _e) => {
-    const newData = props.data.filter(
-      (item) =>
-        item.companyName.toLowerCase().includes(value.toLowerCase()) ||
-        item.taxCode.toString().toLowerCase().includes(value) ||
-        item.displayName.toLowerCase().includes(value.toLowerCase()) ||
-        item.fields.some((field) => field.toLowerCase().includes(value.toLowerCase())) ||
-        item.address.toLowerCase().includes(value.toLowerCase()),
-    );
-
-    setData(newData);
+  const handleSearch: SearchProps['onSearch'] = (value, _e) => {
+    onSearch(value);
   };
 
-  const handleBanSelections = () => {
-    props.banAccounts(selectedRows);
-    setSelectedRowKeys([]);
+  const handleViewEmployerDetails = (employer: ListEmployersRES) => {
+    setViewedEmployerId(employer.id);
+    setIsEmployerDetailOpen(true);
   };
 
-  const handleBanAction = (record: any) => {
-    const { key, ...account } = record;
-    props.banAccounts([account]);
-    setSelectedRowKeys(selectedRowKeys.filter((selectedKey) => selectedKey !== key));
+  const handleCancel = () => {
+    setIsEmployerDetailOpen(false);
   };
 
   return (
     <>
-      <div className='flex justify-between'>
-        <Button danger onClick={handleBanSelections} icon={<StopOutlined />}>
-          Ban
-        </Button>
+      <div className='flex justify-end mb-3'>
         <Search placeholder='Input search text' onSearch={onSearch} style={{ width: 200 }} />
       </div>
+
       <Table
         className='mt-2'
         rowSelection={rowSelection}
@@ -136,6 +130,18 @@ const PendingAccountTable = (props: ApprovedAccountTableProps) => {
         dataSource={addKeyToData(data)}
         pagination={{ pageSize: 5 }}
       />
+
+      <Modal
+        title='Employer Details'
+        className='max-w-[60vw] min-w-[40vw]'
+        open={isEmployerDetailOpen}
+        onCancel={handleCancel}
+        footer={<></>}
+      >
+        <div className='max-h-[65vh] overflow-y-auto'>
+          <Spin spinning={isFetchingEmployerDetail}>Employer Details</Spin>
+        </div>
+      </Modal>
     </>
   );
 };

@@ -1,16 +1,17 @@
-import { CompanyInfo, Job } from '@/+core/utilities/types/admin.type';
+import { CompanyInfo } from '@/+core/utilities/types/admin.type';
 import { Button, Input, Modal, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
 import { useState } from 'react';
 import JobDescriptions from './JobDescriptions';
 import dayjs from 'dayjs';
+import { ListJobsRES } from '@/+core/redux/apis/admin/job-management/job-admin.response';
 
 interface RejectedJobsTabProps {
-  data: Job[];
+  data: ListJobsRES[];
   onSearch: (keyword: string) => void;
 }
 
-function addKeyToData(data: Job[]) {
+function addKeyToData(data: ListJobsRES[]) {
   return data.map((item, index) => {
     return { ...item, key: index.toString() };
   });
@@ -23,7 +24,9 @@ const RejectedJobsTab = (props: RejectedJobsTabProps) => {
   // const [selectedRows, setSelectedRows] = useState<Job[]>([]);
 
   const [isJobDetailOpen, setIsJobDetailOpen] = useState<boolean>(false);
-  const [viewedJob, setViewedJob] = useState<Job>();
+  const [viewedJob, setViewedJob] = useState<ListJobsRES>();
+
+  const [showReasonModal, setShowReasonModal] = useState<boolean>(false);
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
@@ -36,7 +39,14 @@ const RejectedJobsTab = (props: RejectedJobsTabProps) => {
     onChange: onSelectChange,
   };
 
-  const columns: TableProps<Job>['columns'] = [
+  const columns: TableProps<ListJobsRES>['columns'] = [
+    {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+      sorter: (a, b) => a.title.localeCompare(b.title),
+      showSorterTooltip: false,
+    },
     {
       title: 'Company Name',
       dataIndex: 'company',
@@ -46,49 +56,51 @@ const RejectedJobsTab = (props: RejectedJobsTabProps) => {
       render: (text: CompanyInfo) => <p>{text?.name}</p>,
     },
     {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
-      sorter: (a, b) => a.title.localeCompare(b.title),
-      showSorterTooltip: false,
-    },
-    {
       title: 'Level',
       dataIndex: 'level',
       key: 'level',
-      sorter: (a, b) => a.level.localeCompare(b.level),
-      showSorterTooltip: false,
+      render: (levels) => levels.join(', '),
     },
-    {
-      title: 'Technology',
-      key: 'technicals',
-      dataIndex: 'technicals',
-      render: (_, { technicals: techs }) => (
-        <div className='max-w-64'>
-          {techs?.map((tech) => {
-            return (
-              <Tag color={'geekblue'} key={tech}>
-                {tech.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </div>
-      ),
-    },
+    // {
+    //   title: 'Technology',
+    //   key: 'technicals',
+    //   dataIndex: 'technicals',
+    //   render: (_, { technicals: techs }) => (
+    //     <div className='max-w-64'>
+    //       {techs?.map((tech) => {
+    //         return (
+    //           <Tag color={'blue'} key={tech}>
+    //             {tech.toUpperCase()}
+    //           </Tag>
+    //         );
+    //       })}
+    //     </div>
+    //   ),
+    // },
     {
       title: 'Contract Type',
       dataIndex: 'contractType',
       key: 'contractType',
-      sorter: (a, b) => a.contractType.localeCompare(b.contractType),
-      showSorterTooltip: false,
     },
     {
       title: 'Place',
       dataIndex: 'workingPlace',
       key: 'workingPlace',
-      sorter: (a, b) => a.workingPlace.localeCompare(b.workingPlace),
-      showSorterTooltip: false,
+      render: (text, record) => {
+        const { district, city } = record;
+        return `${district}, ${city}`;
+      },
     },
+
+    {
+      title: 'Refusal Reason',
+      dataIndex: 'reason',
+      key: 'reason',
+      render: (text) => {
+        return <div className='text-orange-500 max-w-64'>{text}</div>;
+      },
+    },
+
     // {
     //   title: 'End Date',
     //   dataIndex: 'endDate',
@@ -97,19 +109,19 @@ const RejectedJobsTab = (props: RejectedJobsTabProps) => {
     //   sorter: (a, b) => moment(a.endDate).unix() - moment(b.endDate).unix(),
     //   showSorterTooltip: false,
     // },
-    {
-      title: 'Submitted Date',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      render: (date) => <p>{dayjs(date).format('DD/MM/YYYY')}</p>,
-      // sorter: (a, b) => moment(a.createdAt).unix() - moment(b.createdAt).unix(),
-      showSorterTooltip: false,
-    },
+    // {
+    //   title: 'Submitted Date',
+    //   dataIndex: 'createdAt',
+    //   key: 'createdAt',
+    //   render: (date) => <p>{dayjs(date).format('DD/MM/YYYY')}</p>,
+    //   // sorter: (a, b) => moment(a.createdAt).unix() - moment(b.createdAt).unix(),
+    //   showSorterTooltip: false,
+    // },
     {
       title: <div className='font-semi-bold pl-5'>Action</div>,
       key: 'action',
       render: (_, record) => (
-        <Space size='middle'>
+        <Space size='middle' className='flex flex-col'>
           <Tooltip placement='top' title={'View Detail'}>
             <Button
               onClick={() => handleViewJobDetails(record)}
@@ -127,12 +139,12 @@ const RejectedJobsTab = (props: RejectedJobsTabProps) => {
     onSearch(value);
   };
 
-  const handleViewJobDetails = (job: Job) => {
+  const handleViewJobDetails = (job: ListJobsRES) => {
     setViewedJob(job);
     setIsJobDetailOpen(true);
   };
 
-  const handleCancel = () => {
+  const closeDetailModal = () => {
     setIsJobDetailOpen(false);
   };
 
@@ -143,7 +155,7 @@ const RejectedJobsTab = (props: RejectedJobsTabProps) => {
       </div>
       <Table
         className='mt-2'
-        rowSelection={rowSelection}
+        // rowSelection={rowSelection}
         columns={columns}
         dataSource={addKeyToData(data)}
         pagination={false}
@@ -153,7 +165,7 @@ const RejectedJobsTab = (props: RejectedJobsTabProps) => {
         title='Job Details'
         className='max-w-[60vw] min-w-[40vw]'
         open={isJobDetailOpen}
-        onCancel={handleCancel}
+        onCancel={closeDetailModal}
         footer={<></>}
       >
         <div className='max-h-[65vh] overflow-y-auto'>

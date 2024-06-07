@@ -1,14 +1,16 @@
-import { CompanyInfo, Job } from '@/+core/utilities/types/admin.type';
+import { CompanyInfo } from '@/+core/utilities/types/admin.type';
 import { Button, Input, Modal, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
 import { useState } from 'react';
 import JobDescriptions from './JobDescriptions';
+import { ListJobsRES } from '@/+core/redux/apis/admin/job-management/job-admin.response';
+import dayjs from 'dayjs';
 interface ActiveJobsTabProps {
-  data: Job[];
+  data: ListJobsRES[];
   onSearch: (keyword: string) => void;
 }
 
-function addKeyToData(data: Job[]) {
+function addKeyToData(data: ListJobsRES[]) {
   return data.map((item, index) => {
     return { ...item, key: index.toString() };
   });
@@ -21,20 +23,23 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
   // const [selectedRows, setSelectedRows] = useState<Job[]>([]);
 
   const [isJobDetailOpen, setIsJobDetailOpen] = useState<boolean>(false);
-  const [viewedJob, setViewedJob] = useState<Job>();
+  const [viewedJob, setViewedJob] = useState<ListJobsRES>();
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
-    // const DataWithKeys = addKeyToData(data);
-    // const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
-    // setSelectedRows(newSelectedRows);
   };
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
   };
 
-  const columns: TableProps<Job>['columns'] = [
+  const columns: TableProps<ListJobsRES>['columns'] = [
+    {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+      showSorterTooltip: false,
+    },
     {
       title: 'Company Name',
       dataIndex: 'company',
@@ -44,18 +49,10 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
       render: (text: CompanyInfo) => <p>{text?.name}</p>,
     },
     {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
-      // sorter: (a, b) => a.title.localeCompare(b.title),
-      showSorterTooltip: false,
-    },
-    {
       title: 'Level',
       dataIndex: 'level',
       key: 'level',
-      // sorter: (a, b) => a.level.localeCompare(b.level),
-      showSorterTooltip: false,
+      render: (levels) => levels.join(', '),
     },
     {
       title: 'Technology',
@@ -65,7 +62,7 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
         <div className='max-w-64'>
           {techs?.map((tech) => {
             return (
-              <Tag color={'geekblue'} key={tech}>
+              <Tag color={'blue'} key={tech}>
                 {tech.toUpperCase()}
               </Tag>
             );
@@ -77,22 +74,21 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
       title: 'Contract Type',
       dataIndex: 'contractType',
       key: 'contractType',
-      // sorter: (a, b) => a.contractType.localeCompare(b.contractType),
-      showSorterTooltip: false,
     },
     {
       title: 'Place',
       dataIndex: 'workingPlace',
       key: 'workingPlace',
-      // sorter: (a, b) => a.workingPlace.localeCompare(b.workingPlace),
-      showSorterTooltip: false,
+      render: (text, record) => {
+        const { district, city } = record;
+        return `${district}, ${city}`;
+      },
     },
     {
       title: 'Submitted Date',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      // render: (date) => <p>{dayjs(date).format('DD/MM/YYYY')}</p>,
-      showSorterTooltip: false,
+      render: (date) => <p>{dayjs(date).format('DD/MM/YYYY')}</p>,
     },
     {
       title: <div className='font-semi-bold pl-5'>Action</div>,
@@ -116,7 +112,7 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
     onSearch(value);
   };
 
-  const handleViewJobDetails = (job: Job) => {
+  const handleViewJobDetails = (job: ListJobsRES) => {
     setViewedJob(job);
     setIsJobDetailOpen(true);
   };
@@ -132,7 +128,7 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
       </div>
       <Table
         className='mt-2'
-        rowSelection={rowSelection}
+        // rowSelection={rowSelection}
         columns={columns}
         dataSource={addKeyToData(data)}
         pagination={false}

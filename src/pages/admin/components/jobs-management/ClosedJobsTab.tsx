@@ -1,16 +1,17 @@
-import { CompanyInfo, Job } from '@/+core/utilities/types/admin.type';
+import { CompanyInfo } from '@/+core/utilities/types/admin.type';
 import { Button, Input, Modal, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import JobDescriptions from './JobDescriptions';
 import dayjs from 'dayjs';
+import { ListJobsRES } from '@/+core/redux/apis/admin/job-management/job-admin.response';
 
 interface ClosedJobsTabProps {
-  data: Job[];
+  data: ListJobsRES[];
   onSearch: (keyword: string) => void;
 }
 
-function addKeyToData(data: Job[]) {
+function addKeyToData(data: ListJobsRES[]) {
   return data.map((item, index) => {
     return { ...item, key: index.toString() };
   });
@@ -23,7 +24,7 @@ const ExpiredJobsTab = (props: ClosedJobsTabProps) => {
   // const [selectedRows, setSelectedRows] = useState<Job[]>([]);
 
   const [isJobDetailOpen, setIsJobDetailOpen] = useState<boolean>(false);
-  const [viewedJob, setViewedJob] = useState<Job>();
+  const [viewedJob, setViewedJob] = useState<ListJobsRES>();
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
@@ -36,7 +37,7 @@ const ExpiredJobsTab = (props: ClosedJobsTabProps) => {
     onChange: onSelectChange,
   };
 
-  const columns: TableProps<Job>['columns'] = [
+  const columns: TableProps<ListJobsRES>['columns'] = [
     {
       title: 'Company Name',
       dataIndex: 'company',
@@ -56,8 +57,7 @@ const ExpiredJobsTab = (props: ClosedJobsTabProps) => {
       title: 'Level',
       dataIndex: 'level',
       key: 'level',
-      sorter: (a, b) => a.level.localeCompare(b.level),
-      showSorterTooltip: false,
+      render: (levels) => levels.join(', '),
     },
     {
       title: 'Technology',
@@ -67,7 +67,7 @@ const ExpiredJobsTab = (props: ClosedJobsTabProps) => {
         <div className='max-w-64'>
           {techs?.map((tech) => {
             return (
-              <Tag color={'geekblue'} key={tech}>
+              <Tag color={'blue'} key={tech}>
                 {tech.toUpperCase()}
               </Tag>
             );
@@ -79,32 +79,30 @@ const ExpiredJobsTab = (props: ClosedJobsTabProps) => {
       title: 'Contract Type',
       dataIndex: 'contractType',
       key: 'contractType',
-      sorter: (a, b) => a.contractType.localeCompare(b.contractType),
-      showSorterTooltip: false,
     },
     {
       title: 'Place',
       dataIndex: 'workingPlace',
       key: 'workingPlace',
-      sorter: (a, b) => a.workingPlace.localeCompare(b.workingPlace),
-      showSorterTooltip: false,
+      render: (text, record) => {
+        const { district, city } = record;
+        return `${district}, ${city}`;
+      },
     },
-    // {
-    //   title: 'End Date',
-    //   dataIndex: 'endDate',
-    //   key: 'endDate',
-    //   render: (date) => <p>{moment(date).format('DD/MM/YYYY')}</p>,
-    //   sorter: (a, b) => moment(a.endDate).unix() - moment(b.endDate).unix(),
-    //   showSorterTooltip: false,
-    // },
     {
       title: 'Submitted Date',
       dataIndex: 'createdAt',
       key: 'createdAt',
       render: (date) => <p>{dayjs(date).format('DD/MM/YYYY')}</p>,
-      // sorter: (a, b) => moment(a.createdAt).unix() - moment(b.createdAt).unix(),
       showSorterTooltip: false,
     },
+    {
+      title: 'End Date',
+      dataIndex: 'endDate',
+      key: 'endDate',
+      render: (date) => <p>{dayjs(date).format('DD/MM/YYYY')}</p>,
+    },
+
     {
       title: <div className='font-semi-bold pl-5'>Action</div>,
       key: 'action',
@@ -118,9 +116,6 @@ const ExpiredJobsTab = (props: ClosedJobsTabProps) => {
               View Details
             </Button>
           </Tooltip>
-          {/* <Tooltip placement='top' title={'Reject'}>
-            <Button icon={<CloseOutlined />}></Button>
-          </Tooltip> */}
         </Space>
       ),
     },
@@ -130,7 +125,7 @@ const ExpiredJobsTab = (props: ClosedJobsTabProps) => {
     onSearch(value);
   };
 
-  const handleViewJobDetails = (job: Job) => {
+  const handleViewJobDetails = (job: ListJobsRES) => {
     setViewedJob(job);
     setIsJobDetailOpen(true);
   };
