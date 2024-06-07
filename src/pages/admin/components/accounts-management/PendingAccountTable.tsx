@@ -37,93 +37,99 @@ const AccountTable = (props: PendingAccountTableProps) => {
     selectedRowKeys,
     onChange: onSelectChange,
   };
-  const columns: TableProps<HRAccount>['columns'] = [
-    {
-      title: 'Company',
-      dataIndex: 'name',
-      key: 'name',
-      render: (value, record) => {
-        return (
-          <div className='flex items-center gap-2'>
-            {record.logo ? (
-              <Image className='object-contain' src={record.logo} width={50} height={50} />
-            ) : (
-              <HomeOutlined className='w-[50px] h-[50px]' />
-            )}
-            {value}
-          </div>
-        );
-      },
-    },
-    {
-      title: 'Nationality',
-      dataIndex: 'nationality',
-      key: 'nationality',
-      render: (value) => {
-        return value.join(', ');
-      },
-    },
-    {
-      title: 'Industry',
-      dataIndex: 'industry',
-      key: 'industry',
-      render: (value) => {
-        return value.join(', ');
-      },
-    },
 
-    {
-      title: 'Address',
-      dataIndex: 'addresses',
-      key: 'addresses',
-      render: (value) => {
-        return (
-          <div>
-            {value.map((address: any) => {
-              return (
-                <div>
-                  {address.addressDetail} , {address.city}
-                </div>
-              );
-            })}
-          </div>
-        );
+  function getColumns(): TableProps<HRAccount>['columns'] {
+    const columns: TableProps<HRAccount>['columns'] = [
+      {
+        title: 'Company',
+        dataIndex: 'name',
+        key: 'name',
+        render: (value, record) => {
+          return (
+            <div className='flex items-center gap-2'>
+              {record.logo ? (
+                <Image className='object-contain' src={record.logo} width={50} height={50} />
+              ) : (
+                <HomeOutlined className='w-[50px] h-[50px]' />
+              )}
+              {value}
+            </div>
+          );
+        },
       },
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-      render: () => {
-        return <Tag color='gray'>Pending</Tag>;
+      {
+        title: 'Nationality',
+        dataIndex: 'nationality',
+        key: 'nationality',
+        render: (value) => {
+          return value.join(', ');
+        },
       },
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (_, record) => (
-        <Space size='middle'>
-          <Tooltip placement='top' title={'Approve'}>
-            <Button
-              onClick={() => {
-                handleApproveAction(record);
-              }}
-              icon={<CheckOutlined />}
-            ></Button>
-          </Tooltip>
-          <Tooltip placement='top' title={'Reject'}>
-            <Button
-              onClick={() => {
-                handleRejectAction(record);
-              }}
-              danger
-              icon={<CloseOutlined />}
-            ></Button>
-          </Tooltip>
-        </Space>
-      ),
-    },
-  ];
+      {
+        title: 'Industry',
+        dataIndex: 'industry',
+        key: 'industry',
+        render: (value) => {
+          return value.join(', ');
+        },
+      },
+      {
+        title: 'Address',
+        dataIndex: 'addresses',
+        key: 'addresses',
+        render: (value) => {
+          return (
+            <div>
+              {value.map((address: any) => {
+                return (
+                  <div>
+                    {address.addressDetail} , {address.city}
+                  </div>
+                );
+              })}
+            </div>
+          );
+        },
+      },
+      {
+        title: 'Status',
+        dataIndex: 'status',
+        key: 'status',
+        render: () => {
+          return <Tag color='gray'>Pending</Tag>;
+        },
+      },
+    ];
+
+    if (status == 0) {
+      columns.push({
+        title: 'Action',
+        key: 'action',
+        render: (_, record) => (
+          <Space size='middle'>
+            <Tooltip placement='top' title={'Approve'}>
+              <Button
+                onClick={() => {
+                  handleApproveAction(record);
+                }}
+                icon={<CheckOutlined />}
+              ></Button>
+            </Tooltip>
+            <Tooltip placement='top' title={'Reject'}>
+              <Button
+                onClick={() => {
+                  handleRejectAction(record);
+                }}
+                danger
+                icon={<CloseOutlined />}
+              ></Button>
+            </Tooltip>
+          </Space>
+        ),
+      });
+    }
+    return columns;
+  }
 
   const onSearch: SearchProps['onSearch'] = (value, _e) => {
     // const newData = props.data.filter(
@@ -183,7 +189,7 @@ const AccountTable = (props: PendingAccountTableProps) => {
       <Table
         className='mt-2'
         rowSelection={rowSelection}
-        columns={columns}
+        columns={getColumns()}
         dataSource={formatedData(data)}
         pagination={false}
       />
