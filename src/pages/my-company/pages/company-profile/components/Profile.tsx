@@ -1,8 +1,6 @@
 import { industries } from '@/+core/constants/company.profile';
 import {
-  CheckOutlined,
   DeleteOutlined,
-  DollarOutlined,
   EditOutlined,
   FacebookOutlined,
   GlobalOutlined,
@@ -12,7 +10,6 @@ import {
   MessageOutlined,
   PlusOutlined,
   QuestionCircleOutlined,
-  SketchOutlined,
   YoutubeOutlined,
 } from '@ant-design/icons';
 import { Button, Form, Input, Select, type FormProps } from 'antd';
@@ -26,8 +23,12 @@ import AddAddressModal from './AddAddressModal';
 import AddProductModal from './AddProductModal';
 import TextEditor from './TextEditor';
 import UploadFileInput from './UploadFileInput';
+import {
+  useGetCompanyProfileQuery,
+  useUpdateCompanyProfileMutation,
+} from '@/+core/redux/apis/common/company/company.api';
 
-const { Option } = Select;
+// const { Option } = Select;
 
 interface CompanyProductType {
   id?: string;
@@ -63,6 +64,10 @@ const Profile = () => {
   const { t } = useTranslation();
 
   const [CompanyProfileForm] = Form.useForm();
+
+  const { data, isLoading } = useGetCompanyProfileQuery(1);
+  const [updateCompanyProfile, { isLoading: updateProfileLoading }] =
+    useUpdateCompanyProfileMutation();
 
   const [nationalityOption, setNationalityOption] = useState<{ value: string; label: string }[]>(
     [],
@@ -104,7 +109,41 @@ const Profile = () => {
       products: products,
     };
 
+    const ProfileBody = {
+      logo: CompanyProfile?.logoUrl,
+      name: CompanyProfile?.companyName,
+      tagline: CompanyProfile?.companyTagline,
+      nationality: CompanyProfile?.nationality,
+      companySize: CompanyProfile?.companySize,
+      industry: CompanyProfile?.industry,
+      techStack: CompanyProfile?.techStack,
+      website: CompanyProfile?.website,
+      socialMedia: {
+        facebook: CompanyProfile?.facebook,
+        linkedin: CompanyProfile?.linkedin,
+        youtube: CompanyProfile?.youtube,
+        instagram: null,
+      },
+      addresses: CompanyProfile?.addresses,
+      benefits: CompanyProfile?.benefits?.map((b: any) => {
+        return b?.description;
+      }),
+      coverPhoto: CompanyProfile?.coverPhotoUrl,
+      galleries: [CompanyProfile?.galleriesUrl],
+      topConcerns: CompanyProfile?.topConcerns,
+      products: CompanyProfile?.products,
+    };
+
     console.log('Success:', CompanyProfile);
+    console.log('Profile Body Success:', ProfileBody);
+
+    const res = await updateCompanyProfile(ProfileBody).unwrap();
+
+    console.log('Update company profile API:', res);
+
+    if (res?.statusCode === 200) {
+      handleGetProfileInfo();
+    }
   };
 
   const onEditFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
@@ -154,9 +193,73 @@ const Profile = () => {
     setIsProductModalOpen(false);
   };
 
+  const handleGetProfileInfo = async () => {
+    const CompanyProfile: any = data?.data;
+
+    CompanyProfileForm.setFieldsValue({
+      ['companyName']: CompanyProfile?.name ? CompanyProfile?.name : 'null',
+      ['companyTagline']: CompanyProfile?.tagline ? CompanyProfile?.tagline : 'null',
+      ['nationality']: CompanyProfile?.nationality ? CompanyProfile?.nationality : [],
+      ['companySize']: CompanyProfile?.companySize ? CompanyProfile?.companySize : 'null',
+      ['industry']: CompanyProfile?.industry ? CompanyProfile?.industry : [],
+      ['techStack']: CompanyProfile?.techStack ? CompanyProfile?.techStack : [],
+      ['website']: CompanyProfile?.website ? CompanyProfile?.website : 'null',
+      ['facebook']: CompanyProfile?.socialMedia?.facebook
+        ? CompanyProfile?.socialMedia?.facebook
+        : 'null',
+      ['linkedin']: CompanyProfile?.socialMedia?.linkedin
+        ? CompanyProfile?.socialMedia?.linkedin
+        : 'null',
+      ['youtube']: CompanyProfile?.socialMedia?.youtube
+        ? CompanyProfile?.socialMedia?.youtube
+        : 'null',
+      ['benefits']: CompanyProfile?.benefits
+        ? CompanyProfile?.benefits?.map((b: string) => {
+            return { description: b };
+          })
+        : [],
+      ['topConcerns']: CompanyProfile?.topConcerns
+        ? CompanyProfile?.topConcerns?.map((c: { question: string; answer: string }) => {
+            return { question: c?.question, answer: c?.answer };
+          })
+        : [],
+    });
+
+    if (CompanyProfile?.addresses) {
+      const addrs: any = [];
+      for (let i = 0; i < CompanyProfile?.addresses?.length; ++i) {
+        const addrValue = `${CompanyProfile?.addresses[i]?.addressDetail}, ${CompanyProfile?.addresses[i]?.city}`;
+        addrs.push(addrValue);
+      }
+      setAddresses(addrs);
+    }
+
+    if (CompanyProfile?.products) {
+      const prods: any = [];
+      for (let i = 0; i < CompanyProfile?.products?.length; ++i) {
+        const prodValue = {
+          name: CompanyProfile?.products[i]?.productName,
+          link: CompanyProfile?.products[i]?.link,
+          photo: CompanyProfile?.products[i]?.productPhoto,
+          description: CompanyProfile?.products[i]?.description,
+        };
+
+        prods.push(prodValue);
+      }
+      setProducts(prods);
+    }
+  };
+
   useEffect(() => {
     handleGetNationality();
   }, []);
+
+  useEffect(() => {
+    // handleGetProfileInfo();
+    if (!isLoading && data?.statusCode === 200) {
+      handleGetProfileInfo();
+    }
+  }, [isLoading]);
 
   return (
     <Form
@@ -208,7 +311,7 @@ const Profile = () => {
               name='nationality'
               rules={[{ required: true, message: 'Please input company nationality!' }]}
             >
-              <Select size='large' options={nationalityOption} />
+              <Select size='large' mode='multiple' options={nationalityOption} />
             </Form.Item>
 
             <Form.Item<FieldType>
@@ -255,7 +358,7 @@ const Profile = () => {
             name='industry'
             rules={[{ required: true, message: 'Please input company industry!' }]}
           >
-            <Select size='large' options={industries} />
+            <Select size='large' mode='multiple' options={industries} />
           </Form.Item>
 
           <Form.Item
@@ -436,7 +539,7 @@ const Profile = () => {
                   <div key={key} className='flex items-center gap-3 my-5'>
                     <MenuOutlined className='text-2xl' />
 
-                    <Form.Item
+                    {/* <Form.Item
                       {...restField}
                       className='w-[20%]'
                       name={[name, 'icon']}
@@ -479,7 +582,7 @@ const Profile = () => {
                           },
                         ]}
                       />
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <Form.Item
                       {...restField}
@@ -676,8 +779,13 @@ const Profile = () => {
           <Button htmlType='button' danger>
             {t('cancelCompanyProfile')}
           </Button>
-          <Button type='primary' htmlType='submit' danger>
-            {t('saveCompanyProfile')}
+          <Button
+            type='primary'
+            htmlType='submit'
+            danger
+            disabled={updateProfileLoading ? true : false}
+          >
+            {updateProfileLoading ? 'Loading' : t('saveCompanyProfile')}
           </Button>
         </div>
       </section>
