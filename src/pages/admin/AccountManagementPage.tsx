@@ -48,28 +48,6 @@ const AccountManagementPage = () => {
     // setAllAccounts(updatedData);
   };
 
-  const handleReview = (accounts: HRAccount[]) => {
-    // const updatedData = [...allAccounts];
-    // accounts.forEach((account) => {
-    //   const index = updatedData.findIndex((item) => item.id === account.id);
-    //   if (index !== -1) {
-    //     updatedData[index].status = AccountStatus.Pending;
-    //   }
-    // });
-    // setAllAccounts(updatedData);
-  };
-
-  const handleBan = (accounts: HRAccount[]) => {
-    // const updatedData = [...allAccounts];
-    // accounts.forEach((account) => {
-    //   const index = updatedData.findIndex((item) => item.id === account.id);
-    //   if (index !== -1) {
-    //     updatedData[index].status = AccountStatus.Banned;
-    //   }
-    // });
-    // setAllAccounts(updatedData);
-  };
-
   const items: TabsProps['items'] = [
     {
       key: '1',
@@ -109,18 +87,6 @@ const AccountManagementPage = () => {
       children: <AccountTable data={accounts} status={-1} />,
     },
   ];
-
-  // useEffect(() => {
-  //   if (tabKey === '1') {
-  //     setDisplayedData(allAccounts.filter((data) => data.status == AccountStatus.Pending));
-  //   } else if (tabKey === '2') {
-  //     setDisplayedData(allAccounts.filter((data) => data.status == AccountStatus.Approved));
-  //   } else if (tabKey === '3') {
-  //     setDisplayedData(allAccounts.filter((data) => data.status == AccountStatus.Rejected));
-  //   } else {
-  //     setDisplayedData(allAccounts);
-  //   }
-  // }, [allAccounts, tabKey]);
 
   const handleChangePage = (page: number, pageSize: number) => {
     console.log(page, ' ', pageSize);
