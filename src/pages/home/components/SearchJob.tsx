@@ -148,10 +148,11 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
           onSubmit(
             {
               keywords: values.keywords.trim(),
-              workingPlace: address.value,
+              address: address.value,
               levels: level.map((i) => i.value).join('-'),
               contractTypes: contractType.map((i) => i.value).join('-'),
-              // type: jobType.map((i) => i.value).join('-'),
+              jobTypes: jobType.map((i) => i.value).join('-'),
+              status: 'PUBLIC',
             },
             searchValue,
           );

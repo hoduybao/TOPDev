@@ -58,7 +58,7 @@ export const Jobs = ({ data, limit = 10, total, keywords, handleFilterChange }: 
                       decoding='async'
                       data-nimg='1'
                       className='h-28 w-40 max-w-full rounded-xl bg-white-900 object-contain p-2 text-transparent'
-                      src={job?.company?.image}
+                      src={job?.company?.logo || ''}
                     />
                   </a>
                 </div>
@@ -125,7 +125,7 @@ export const Jobs = ({ data, limit = 10, total, keywords, handleFilterChange }: 
                   <hr className='mt-2 h-px w-full bg-[#DBDBDB]' />
                   <div className='mt-4 flex items-center justify-between'>
                     <div className='line-clamp-1'>
-                      {job.technicals.map((technical, index) => (
+                      {job?.technicals?.map((technical, index) => (
                         <a key={index} className='mr-2 inline-block' href='/it-jobs/java-kt21'>
                           <span className='whitespace-nowrap rounded border border-solid font-normal transition-all inline-flex items-center justify-center border- text-[#1047B2] bg-[#EDFBFF] hover:border-[#1047B2] h-[1.625rem] px-2 text-xs md:h-7 md:px-2 md:text-sm'>
                             {TechnicalsEnumTranslation[technical as TechnicalsEnum]}

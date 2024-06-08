@@ -27,7 +27,7 @@ export const CompanyProfile = () => {
   };
 
   return (
-    <div className='p-6 bg-white-900'>
+    <div className='p-6 bg-white-900 w-full'>
       <Tabs
         defaultActiveKey='company-profile'
         items={items}

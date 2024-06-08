@@ -1,11 +1,10 @@
+import { JobType } from '@/+core/utilities/types/recruitment.type';
+import { Empty, Pagination } from 'antd';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Empty, Pagination } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
-import { JobType } from '@/+core/utilities/types/recruitment.type';
 
 import FollowJobCard from './components/FollowJobCard';
-import SeenJobCard from './components/SeenJobCard';
 
 const ManageFollowPage = () => {
   const JOBS_MOCK_AMOUNT: number = 17; // use for mock jobs data without API
@@ -126,8 +125,8 @@ const ManageFollowPage = () => {
   }, [seenJobs, activeSeenPage]);
 
   return (
-    <div className='w-full flex flex-col items-center'>
-      <div className='w-4/5 py-5'>
+    <div className='w-full flex flex-col items-center mb-8'>
+      <div className='w-full'>
         <div className='flex flex-col gap-8'>
           <h3 className='text-xl font-bold text-primary-red'>{t('followJob')}</h3>
           {followJobsPerPage?.length === 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
@@ -151,33 +150,6 @@ const ManageFollowPage = () => {
             pageSize={ITEMS_PER_PAGE} // items per page
             onChange={(page: number) => {
               setActiveFollowPage(page);
-            }}
-          />
-        </div>
-        <div className='flex flex-col gap-8'>
-          <h3 className='text-xl font-bold text-primary-red'>{t('seenJob')}</h3>
-          {seenJobsPerPage?.length === 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-          <div className='grid sm:grid-cols-2 xl:grid-cols-3 gap-5'>
-            {seenJobsPerPage?.length !== 0 &&
-              seenJobsPerPage?.map((job) => {
-                return (
-                  <SeenJobCard
-                    key={job?.id}
-                    job={job}
-                    handleApplyJob={handleApplyJob}
-                    checkSaveJob={checkSaveJob}
-                    handleSaveJob={handleSaveJob}
-                  />
-                );
-              })}
-          </div>
-          <Pagination
-            className='self-end'
-            current={activeSeenPage}
-            total={seenJobs?.length}
-            pageSize={ITEMS_PER_PAGE} // items per page
-            onChange={(page: number) => {
-              setActiveSeenPage(page);
             }}
           />
         </div>

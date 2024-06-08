@@ -1,12 +1,12 @@
 import Container from '@/components/global/Container/Container';
-import SearchSession from './components/SearchSession';
-import CompanyTypes, { Company } from './components/CompanyTypes';
 import CompanySliders from './components/CompanySliders';
+import CompanyTypes, { Company } from './components/CompanyTypes';
+import SearchSession from './components/SearchSession';
 // import ListCompanies from './components/ListCompanies';
 import { Button } from 'antd';
-import CompaniesFooter from './components/CompaniesFooter';
-import { useTranslation } from 'react-i18next';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import CompaniesFooter from './components/CompaniesFooter';
 import ListCompanies from './components/ListCompanies';
 
 const LoadMoreBtn = () => {
@@ -48,7 +48,7 @@ const CompaniesPage = () => {
         <div ref={totalRef}>
           <ListCompanies type='trend.follow' />
         </div>
-        <div className='flex justify-center'>
+        <div className='flex justify-center mt-12'>
           <LoadMoreBtn />
         </div>
       </Container>
