@@ -249,5 +249,9 @@
   "expirationDate": "Expiration date",
   "edit": "Edit",
   "stopShowing": "Hide",
-  "show": "Public"
+  "show": "Public",
+  "success": "Success",
+  "approve": "Approve",
+  "reject": "Reject",
+  "status": "Status"
 }

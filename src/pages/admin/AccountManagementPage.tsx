@@ -1,12 +1,7 @@
-import { hRAccountStatus as AccountStatus } from '@/+core/enums/hRAccountStatus.enum';
-import { HRAccount } from '@/+core/utilities/types/admin.type';
-import ApprovedAccountTable from '@/pages/admin/components/accounts-management/ApprovedAccountTable';
 import AccountTable from '@/pages/admin/components/accounts-management/PendingAccountTable';
-import RejectedAccountTable from '@/pages/admin/components/accounts-management/RejectedAccountTable';
-import { CheckOutlined, ClockCircleOutlined, CloseOutlined, StopOutlined } from '@ant-design/icons';
+import { CheckOutlined, ClockCircleOutlined, CloseOutlined } from '@ant-design/icons';
 import { notification, Pagination, Spin, Tabs, TabsProps } from 'antd';
-import { useEffect, useState } from 'react';
-import { mockHRAccountData } from './mockdata';
+import { useState } from 'react';
 import '../../styles/admin/management-page.module.scss';
 import { RootState, selectIsLogin } from '@/+core/redux/auth/authSlice';
 import { useSelector } from 'react-redux';
@@ -16,6 +11,7 @@ import {
   useGetHRAccountsQuery,
   useUpdateHRMutation,
 } from '@/+core/redux/apis/admin/account-management/admin-service.api';
+import { useTranslation } from 'react-i18next';
 
 const AccountManagementPage = () => {
   const state = useSelector((state: RootState) => state);
@@ -25,6 +21,7 @@ const AccountManagementPage = () => {
   const { data, isLoading, refetch } = useGetHRAccountsQuery(pagination);
   const [updateHRStatus, { isLoading: isActivatingHRAccounts }] = useUpdateHRAccountsMutation();
   const [rejectHR, { isLoading: isRejectingHR }] = useUpdateHRMutation();
+  const { t } = useTranslation();
 
   if (!isLogin) {
     navigate('/admin/login');
@@ -36,7 +33,7 @@ const AccountManagementPage = () => {
     try {
       const message = await updateHRStatus({ hrIds, status: 1 }).unwrap();
       notification.success({
-        message: 'Success',
+        message: t('success'),
         description: message,
       });
     } catch (error) {
@@ -49,7 +46,7 @@ const AccountManagementPage = () => {
       const message = await updateHRStatus({ hrIds, status: -1 }).unwrap();
 
       notification.success({
-        message: 'Success',
+        message: t('success'),
         description: message,
       });
     } catch (error) {
@@ -61,7 +58,7 @@ const AccountManagementPage = () => {
     try {
       const message = await rejectHR({ hrId, reason }).unwrap();
       notification.success({
-        message: 'Success',
+        message: t('success'),
         description: message,
       });
     } catch (error) {
@@ -75,7 +72,7 @@ const AccountManagementPage = () => {
       label: (
         <div className='flex items-center'>
           <ClockCircleOutlined />
-          <p>Pending</p>
+          <p>{t('pending')}</p>
         </div>
       ),
       children: (
@@ -93,7 +90,7 @@ const AccountManagementPage = () => {
       label: (
         <div className='flex items-center'>
           <CheckOutlined />
-          <p>Approved</p>
+          <p>{t('approve')}</p>
         </div>
       ),
       children: <AccountTable data={data?.accounts || []} status={1} />,
@@ -103,7 +100,7 @@ const AccountManagementPage = () => {
       label: (
         <div className='flex items-center'>
           <CloseOutlined />
-          <p>Rejected</p>
+          <p>{t('reject')}</p>
         </div>
       ),
       children: <AccountTable data={data?.accounts || []} status={-1} />,
@@ -119,7 +116,7 @@ const AccountManagementPage = () => {
 
   return (
     <>
-      <Spin spinning={isLoading || isActivatingHRAccounts}>
+      <Spin spinning={isLoading || isActivatingHRAccounts || isRejectingHR}>
         {data && data?.accounts && (
           <div className='w-full h-screen font-roboto px-4 bg-white-700'>
             {/* <div className='py-2'>

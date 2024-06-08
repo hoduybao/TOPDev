@@ -15,6 +15,7 @@ import {
 } from 'antd';
 import { SearchProps } from 'antd/es/input';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactQuill from 'react-quill';
 
 interface PendingAccountTableProps {
@@ -40,6 +41,7 @@ const AccountTable = (props: PendingAccountTableProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState('');
   const [rejectID, setRejectID] = useState<string>('');
+  const { t } = useTranslation();
 
   function formatedData(data: HRAccount[]) {
     return data
@@ -62,7 +64,7 @@ const AccountTable = (props: PendingAccountTableProps) => {
     const columns: TableProps<HRAccount>['columns'] = [
       {
         title: 'Company',
-        dataIndex: 'name',
+        dataIndex: t('company'),
         key: 'name',
         render: (value, record) => {
           return (
@@ -78,7 +80,7 @@ const AccountTable = (props: PendingAccountTableProps) => {
         },
       },
       {
-        title: 'Nationality',
+        title: t('nationality'),
         dataIndex: 'nationality',
         key: 'nationality',
         render: (value) => {
@@ -86,7 +88,7 @@ const AccountTable = (props: PendingAccountTableProps) => {
         },
       },
       {
-        title: 'Industry',
+        title: t('industry'),
         dataIndex: 'industry',
         key: 'industry',
         render: (value) => {
@@ -94,7 +96,7 @@ const AccountTable = (props: PendingAccountTableProps) => {
         },
       },
       {
-        title: 'Address',
+        title: t('addresses'),
         dataIndex: 'addresses',
         key: 'addresses',
         render: (value) => {
@@ -112,17 +114,17 @@ const AccountTable = (props: PendingAccountTableProps) => {
         },
       },
       {
-        title: 'Status',
+        title: t('status'),
         dataIndex: 'status',
         key: 'status',
         render: () => {
           switch (status) {
             case 0:
-              return <Tag color='gray'>Pending</Tag>;
+              return <Tag color='gray'>{t('pending')}</Tag>;
             case 1:
-              return <Tag color='green'>Approved</Tag>;
+              return <Tag color='green'>{t('approve')}</Tag>;
             case -1:
-              return <Tag color='red'>Rejected</Tag>;
+              return <Tag color='red'>{t('reject')}</Tag>;
           }
         },
       },
@@ -130,7 +132,7 @@ const AccountTable = (props: PendingAccountTableProps) => {
 
     if (status == 0) {
       columns.push({
-        title: 'Action',
+        title: t('action'),
         key: 'action',
         render: (_, record) => (
           <Space size='middle'>

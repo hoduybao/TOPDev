@@ -249,5 +249,9 @@
   "expirationDate": "Hạn hiển thị",
   "edit": "Chỉnh sửa",
   "stopShowing": "Dừng hiển thị",
-  "show": "Hiển thị"
+  "show": "Hiển thị",
+  "success": "Thành công",
+  "approve": "Duyệt",
+  "reject": "Từ chối",
+  "status": "Trạng thái"
 }
