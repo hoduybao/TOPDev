@@ -20,11 +20,11 @@ const adminApi = commonApi
         },
         providesTags: [TAG_TYPES.HR_ACCOUNTS],
       }),
-      activeHRAccounts: build.mutation<any, any>({
-        query: (hrIds: string[]) => ({
-          url: '/auth/admin/accounts/hr/status/active',
+      updateHRAccounts: build.mutation<any, any>({
+        query: ({ hrIds, status }: { hrIds: string[]; status: number }) => ({
+          url: '/auth/admin/accounts/hr/status',
           method: 'POST',
-          body: hrIds,
+          body: { hrIds, status },
         }),
         transformResponse: (response: any): any => {
           return response.data;
@@ -34,4 +34,4 @@ const adminApi = commonApi
     }),
   });
 
-export const { useGetHRAccountsQuery, useActiveHRAccountsMutation } = adminApi;
+export const { useGetHRAccountsQuery, useUpdateHRAccountsMutation } = adminApi;

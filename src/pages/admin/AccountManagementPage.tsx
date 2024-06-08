@@ -4,7 +4,7 @@ import ApprovedAccountTable from '@/pages/admin/components/accounts-management/A
 import AccountTable from '@/pages/admin/components/accounts-management/PendingAccountTable';
 import RejectedAccountTable from '@/pages/admin/components/accounts-management/RejectedAccountTable';
 import { CheckOutlined, ClockCircleOutlined, CloseOutlined, StopOutlined } from '@ant-design/icons';
-import { Pagination, Spin, Tabs, TabsProps } from 'antd';
+import { notification, Pagination, Spin, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
 import { mockHRAccountData } from './mockdata';
 import '../../styles/admin/management-page.module.scss';
@@ -12,7 +12,7 @@ import { RootState, selectIsLogin } from '@/+core/redux/auth/authSlice';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
-  useActiveHRAccountsMutation,
+  useUpdateHRAccountsMutation,
   useGetHRAccountsQuery,
 } from '@/+core/redux/apis/admin/account-management/admin-service.api';
 
@@ -21,7 +21,7 @@ const AccountManagementPage = () => {
   const isLogin = selectIsLogin(state);
   const navigate = useNavigate();
   const { data: accounts, isLoading } = useGetHRAccountsQuery();
-  const [activeHRAccounts, { isLoading: isActivatingHRAccounts }] = useActiveHRAccountsMutation();
+  const [updateHRStatus, { isLoading: isActivatingHRAccounts }] = useUpdateHRAccountsMutation();
 
   if (!isLogin) {
     navigate('/admin/login');
@@ -30,32 +30,28 @@ const AccountManagementPage = () => {
   const [tabKey, setTabKey] = useState<string>('1');
 
   const handleApprove = async (hrIds: string[]) => {
-    console.log('approve ', hrIds);
-
-    const res = await activeHRAccounts({ hrIds }).unwrap();
-    console.log('result :', res);
-
-    // const updatedData = [...allAccounts];
-    // accounts.forEach((account) => {
-    //   const index = updatedData.findIndex((item) => item.id === account.id);
-    //   if (index !== -1) {
-    //     updatedData[index].status = AccountStatus.Approved;
-    //   }
-    // });
-    // setAllAccounts(updatedData);
+    try {
+      const message = await updateHRStatus({ hrIds, status: 1 }).unwrap();
+      notification.success({
+        message: 'Success',
+        description: message,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleReject = (accounts: HRAccount[]) => {
-    console.log('reject');
+  const handleReject = async (hrIds: string[]) => {
+    try {
+      const message = await updateHRStatus({ hrIds, status: -1 }).unwrap();
 
-    // const updatedData = [...allAccounts];
-    // accounts.forEach((account) => {
-    //   const index = updatedData.findIndex((item) => item.id === account.id);
-    //   if (index !== -1) {
-    //     updatedData[index].status = AccountStatus.Rejected;
-    //   }
-    // });
-    // setAllAccounts(updatedData);
+      notification.success({
+        message: 'Success',
+        description: message,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const items: TabsProps['items'] = [

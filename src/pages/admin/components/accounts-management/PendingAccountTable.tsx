@@ -8,7 +8,7 @@ import { useState } from 'react';
 interface PendingAccountTableProps {
   data: HRAccount[];
   approveAccounts: (hrIds: string[]) => Promise<void>;
-  rejectAccounts?: (accounts: HRAccount[]) => void;
+  rejectAccounts: (hrIds: string[]) => Promise<void>;
   status: number;
 }
 
@@ -155,13 +155,11 @@ const AccountTable = (props: PendingAccountTableProps) => {
     if (type === 1) {
       await approveAccounts(selectedRows || []);
     }
+    if (type === -1) {
+      await rejectAccounts(selectedRows || []);
+    }
     setIsLoading(false);
     setOpenModal(false);
-  };
-
-  const handleRejectSelections = () => {
-    // props.rejectAccounts(selectedRows);
-    // setSelectedRowKeys([]);
   };
 
   return (
@@ -180,7 +178,14 @@ const AccountTable = (props: PendingAccountTableProps) => {
             >
               Approve
             </Button>
-            <Button danger onClick={handleRejectSelections} icon={<CloseOutlined />}>
+            <Button
+              danger
+              onClick={() => {
+                setOpenModal(true);
+                setType(-1);
+              }}
+              icon={<CloseOutlined />}
+            >
               Reject
             </Button>
           </div>
