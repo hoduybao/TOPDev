@@ -63,8 +63,8 @@ const AccountTable = (props: PendingAccountTableProps) => {
   function getColumns(): TableProps<HRAccount>['columns'] {
     const columns: TableProps<HRAccount>['columns'] = [
       {
-        title: 'Company',
-        dataIndex: t('company'),
+        title: t('company'),
+        dataIndex: 'name',
         key: 'name',
         render: (value, record) => {
           return (
