@@ -18,10 +18,12 @@ const AccountManagementPage = () => {
   const isLogin = selectIsLogin(state);
   const navigate = useNavigate();
   const [pagination, setPagination] = useState({ page: 1, limit: 10 });
-  const { data, isLoading, refetch } = useGetHRAccountsQuery(pagination);
+  const { data, isLoading, isFetching } = useGetHRAccountsQuery(pagination);
   const [updateHRStatus, { isLoading: isActivatingHRAccounts }] = useUpdateHRAccountsMutation();
   const [rejectHR, { isLoading: isRejectingHR }] = useUpdateHRMutation();
   const { t } = useTranslation();
+
+  console.log('isLogin', isLogin);
 
   if (!isLogin) {
     navigate('/admin/login');
@@ -116,10 +118,9 @@ const AccountManagementPage = () => {
 
   return (
     <>
-      <Spin spinning={isLoading || isActivatingHRAccounts || isRejectingHR}>
-        {data && data?.accounts && (
-          <div className='w-full h-screen font-roboto px-4 bg-white-700'>
-            {/* <div className='py-2'>
+      <Spin spinning={isLoading || isActivatingHRAccounts || isRejectingHR || isFetching}>
+        <div className='w-full h-screen font-roboto px-4 bg-white-700'>
+          {/* <div className='py-2'>
         <span className='font-bold text-xl text-black-400'>Account Manager</span>
       </div>
 
@@ -127,32 +128,31 @@ const AccountManagementPage = () => {
         className='font-bold bg-orange-500 my-2'
         style={{ borderBlockStart: '3px solid rgba(5, 5, 5, 0.06)' }}
       /> */}
-            <div className='mt-2 mb-4 w-full flex gap-2'>
-              {/* <div className='w-[250px] flex items-center justify-center border-solid border-[1.5px] border-gray-500 rounded '>
+          <div className='mt-2 mb-4 w-full flex gap-2'>
+            {/* <div className='w-[250px] flex items-center justify-center border-solid border-[1.5px] border-gray-500 rounded '>
           <h1>Filter</h1>
         </div> */}
-              {/* Content */}
-              <div className='w-full p-2 border-solid border-[1.5px] border-gray-500 rounded'>
-                <Tabs
-                  size='large'
-                  defaultActiveKey='1'
-                  items={items}
-                  onChange={(key) => setTabKey(key)}
+            {/* Content */}
+            <div className='w-full p-2 border-solid border-[1.5px] border-gray-500 rounded'>
+              <Tabs
+                size='large'
+                defaultActiveKey='1'
+                items={items}
+                onChange={(key) => setTabKey(key)}
+              />
+              <div className='flex justify-end'>
+                {/* Thêm class "justify-end" để căn phải */}
+                <Pagination
+                  className='mt-5'
+                  defaultCurrent={pagination.page}
+                  total={data?.total || 0}
+                  pageSize={pagination.limit}
+                  onChange={handleChangePage}
                 />
-                <div className='flex justify-end'>
-                  {/* Thêm class "justify-end" để căn phải */}
-                  <Pagination
-                    className='mt-5'
-                    defaultCurrent={pagination.page}
-                    total={data?.total}
-                    pageSize={pagination.limit}
-                    onChange={handleChangePage}
-                  />
-                </div>
               </div>
             </div>
           </div>
-        )}
+        </div>
       </Spin>
     </>
   );

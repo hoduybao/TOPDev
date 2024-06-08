@@ -69,11 +69,11 @@ const AccountTable = (props: PendingAccountTableProps) => {
         render: (value, record) => {
           return (
             <div className='flex items-center gap-2'>
-              {record.logo ? (
+              {/* {record.logo ? (
                 <Image className='object-contain' src={record.logo} width={50} height={50} />
               ) : (
                 <HomeOutlined className='w-[50px] h-[50px]' />
-              )}
+              )} */}
               {value}
             </div>
           );

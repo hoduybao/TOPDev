@@ -1,4 +1,4 @@
-import { selectIsLogin, setCredentials, setLogin } from '@/+core/redux/auth/authSlice';
+import { selectIsLogin, setCredentials } from '@/+core/redux/auth/authSlice';
 import { getLocalAccessToken, getLocalRefreshToken } from '@/+core/services/local.service';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
