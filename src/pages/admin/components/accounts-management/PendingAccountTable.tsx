@@ -1,23 +1,45 @@
 import { HRAccount } from '@/+core/utilities/types/admin.type';
 import ConfirmModal from '@/components/global/ConfirmModal';
 import { CheckOutlined, CloseOutlined, HomeOutlined } from '@ant-design/icons';
-import { Button, Image, Input, Space, Table, TableProps, Tag, Tooltip } from 'antd';
+import {
+  Button,
+  Form,
+  Image,
+  Input,
+  notification,
+  Space,
+  Table,
+  TableProps,
+  Tag,
+  Tooltip,
+} from 'antd';
 import { SearchProps } from 'antd/es/input';
 import { useState } from 'react';
+import ReactQuill from 'react-quill';
 
 interface PendingAccountTableProps {
   data: HRAccount[];
   approveAccounts?: (hrIds: string[]) => Promise<void>;
   rejectAccounts?: (hrIds: string[]) => Promise<void>;
+  handleRejectReason?: (hrId: string, reason: string) => Promise<void>;
   status: number;
 }
 
 const AccountTable = (props: PendingAccountTableProps) => {
-  const { data, status, approveAccounts = () => {}, rejectAccounts = () => {} } = props;
+  const {
+    data,
+    status,
+    approveAccounts = () => {},
+    rejectAccounts = () => {},
+    handleRejectReason = () => {},
+  } = props;
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [openModal, setOpenModal] = useState(false);
+  const [openRejectModal, setOpenRejectModal] = useState(false);
   const [type, setType] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState('');
+  const [rejectID, setRejectID] = useState<string>('');
 
   function formatedData(data: HRAccount[]) {
     return data
@@ -115,9 +137,9 @@ const AccountTable = (props: PendingAccountTableProps) => {
             <Tooltip placement='top' title={'Approve'}>
               <Button
                 onClick={async () => {
-                  if (record.hrId) {
-                    await approveAccounts([record.hrId]);
-                  }
+                  setSelectedRows([record.hrId]);
+                  setOpenModal(true);
+                  setType(1);
                 }}
                 icon={<CheckOutlined />}
               ></Button>
@@ -125,7 +147,8 @@ const AccountTable = (props: PendingAccountTableProps) => {
             <Tooltip placement='top' title={'Reject'}>
               <Button
                 onClick={() => {
-                  rejectAccounts();
+                  setOpenRejectModal(true);
+                  setRejectID(record.hrId);
                 }}
                 danger
                 icon={<CloseOutlined />}
@@ -150,6 +173,16 @@ const AccountTable = (props: PendingAccountTableProps) => {
     // setData(newData);
   };
 
+  const handleOKReject = async () => {
+    setIsLoading(true);
+    if (rejectID && value) {
+      await handleRejectReason(rejectID, value);
+    }
+    setIsLoading(false);
+    setOpenRejectModal(false);
+    setValue('');
+  };
+
   const handleOK = async () => {
     setIsLoading(true);
     if (type === 1) {
@@ -169,8 +202,15 @@ const AccountTable = (props: PendingAccountTableProps) => {
           <div>
             <Button
               onClick={() => {
-                setOpenModal(true);
-                setType(1);
+                if (selectedRows.length === 0) {
+                  notification.error({
+                    message: 'Error',
+                    description: 'Hãy chọn ít nhất 1 tài khoản để thực hiện thao tác!',
+                  });
+                } else {
+                  setOpenModal(true);
+                  setType(1);
+                }
               }}
               className='mr-2'
               style={{ color: '#4096ff', borderColor: '#4096ff' }}
@@ -181,8 +221,15 @@ const AccountTable = (props: PendingAccountTableProps) => {
             <Button
               danger
               onClick={() => {
-                setOpenModal(true);
-                setType(-1);
+                if (selectedRows.length === 0) {
+                  notification.error({
+                    message: 'Error',
+                    description: 'Hãy chọn ít nhất 1 tài khoản để thực hiện thao tác!',
+                  });
+                } else {
+                  setOpenModal(true);
+                  setType(-1);
+                }
               }}
               icon={<CloseOutlined />}
             >
@@ -209,6 +256,27 @@ const AccountTable = (props: PendingAccountTableProps) => {
         {type === 1
           ? 'Bạn có chắc chắn muốn duyệt các tài khoản này?'
           : 'Bạn có chắc chắn muốn từ chối các tài khoản này?'}
+      </ConfirmModal>
+
+      {/* modal reject 1 HR */}
+      <ConfirmModal
+        open={openRejectModal}
+        setOpen={setOpenRejectModal}
+        handleOk={handleOKReject}
+        // isLoadingBtn={isLoading}
+      >
+        <div>
+          <h3 className='text-2xl font-semibold mb-4'>Input reason</h3>
+          <ReactQuill
+            className='mb-4'
+            theme='snow'
+            value={value}
+            style={{ height: '150px' }}
+            onChange={(value) => {
+              setValue(value);
+            }}
+          />
+        </div>
       </ConfirmModal>
     </>
   );

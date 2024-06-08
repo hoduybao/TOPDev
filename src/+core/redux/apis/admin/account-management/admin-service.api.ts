@@ -51,7 +51,18 @@ const adminApi = commonApi
         },
         invalidatesTags: [TAG_TYPES.HR_ACCOUNTS],
       }),
+      updateHR: build.mutation<any, any>({
+        query: ({ hrId, reason }: { hrId: string; reason: string }) => ({
+          url: `/auth/admin/accounts/hr/status/reject`,
+          method: 'POST',
+          body: { hrId, reason },
+        }),
+        transformResponse: (response: any): any => {
+          return response.data;
+        },
+        invalidatesTags: [TAG_TYPES.HR_ACCOUNTS],
+      }),
     }),
   });
 
-export const { useGetHRAccountsQuery, useUpdateHRAccountsMutation } = adminApi;
+export const { useGetHRAccountsQuery, useUpdateHRAccountsMutation, useUpdateHRMutation } = adminApi;

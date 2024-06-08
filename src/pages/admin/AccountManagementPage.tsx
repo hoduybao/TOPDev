@@ -14,15 +14,17 @@ import { useNavigate } from 'react-router-dom';
 import {
   useUpdateHRAccountsMutation,
   useGetHRAccountsQuery,
+  useUpdateHRMutation,
 } from '@/+core/redux/apis/admin/account-management/admin-service.api';
 
 const AccountManagementPage = () => {
   const state = useSelector((state: RootState) => state);
   const isLogin = selectIsLogin(state);
   const navigate = useNavigate();
-  const [pagination, setPagination] = useState({ page: 1, limit: 1 });
+  const [pagination, setPagination] = useState({ page: 1, limit: 10 });
   const { data, isLoading, refetch } = useGetHRAccountsQuery(pagination);
   const [updateHRStatus, { isLoading: isActivatingHRAccounts }] = useUpdateHRAccountsMutation();
+  const [rejectHR, { isLoading: isRejectingHR }] = useUpdateHRMutation();
 
   if (!isLogin) {
     navigate('/admin/login');
@@ -55,6 +57,18 @@ const AccountManagementPage = () => {
     }
   };
 
+  const handleRejectReason = async (hrId: string, reason: string) => {
+    try {
+      const message = await rejectHR({ hrId, reason }).unwrap();
+      notification.success({
+        message: 'Success',
+        description: message,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const items: TabsProps['items'] = [
     {
       key: '1',
@@ -70,6 +84,7 @@ const AccountManagementPage = () => {
           status={0}
           approveAccounts={handleApprove}
           rejectAccounts={handleReject}
+          handleRejectReason={handleRejectReason}
         />
       ),
     },
@@ -132,7 +147,7 @@ const AccountManagementPage = () => {
                   <Pagination
                     className='mt-5'
                     defaultCurrent={pagination.page}
-                    total={data?.total || 0}
+                    total={data?.total}
                     pageSize={pagination.limit}
                     onChange={handleChangePage}
                   />
