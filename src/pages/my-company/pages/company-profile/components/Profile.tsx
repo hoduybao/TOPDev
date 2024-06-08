@@ -146,10 +146,9 @@ const Profile = () => {
 
     console.log('Update company profile API:', res);
 
-    if (res?.statusCode === 200) {
-      refetch();
-      handleGetProfileInfo();
-    }
+    // Refetch get profile API
+    refetch();
+    handleGetProfileInfo();
   };
 
   const onEditFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
