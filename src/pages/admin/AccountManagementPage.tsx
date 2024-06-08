@@ -11,14 +11,17 @@ import '../../styles/admin/management-page.module.scss';
 import { RootState, selectIsLogin } from '@/+core/redux/auth/authSlice';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useGetHRAccountsQuery } from '@/+core/redux/apis/admin/account-management/admin-service.api';
+import {
+  useActiveHRAccountsMutation,
+  useGetHRAccountsQuery,
+} from '@/+core/redux/apis/admin/account-management/admin-service.api';
 
 const AccountManagementPage = () => {
   const state = useSelector((state: RootState) => state);
   const isLogin = selectIsLogin(state);
   const navigate = useNavigate();
   const { data: accounts, isLoading } = useGetHRAccountsQuery();
-  console.log(accounts, ' ', isLoading);
+  const [activeHRAccounts, { isLoading: isActivatingHRAccounts }] = useActiveHRAccountsMutation();
 
   if (!isLogin) {
     navigate('/admin/login');
@@ -26,7 +29,12 @@ const AccountManagementPage = () => {
 
   const [tabKey, setTabKey] = useState<string>('1');
 
-  const handleApprove = (accounts: HRAccount[]) => {
+  const handleApprove = async (hrIds: string[]) => {
+    console.log('approve ', hrIds);
+
+    const res = await activeHRAccounts({ hrIds }).unwrap();
+    console.log('result :', res);
+
     // const updatedData = [...allAccounts];
     // accounts.forEach((account) => {
     //   const index = updatedData.findIndex((item) => item.id === account.id);
@@ -38,6 +46,8 @@ const AccountManagementPage = () => {
   };
 
   const handleReject = (accounts: HRAccount[]) => {
+    console.log('reject');
+
     // const updatedData = [...allAccounts];
     // accounts.forEach((account) => {
     //   const index = updatedData.findIndex((item) => item.id === account.id);
@@ -94,7 +104,7 @@ const AccountManagementPage = () => {
 
   return (
     <>
-      <Spin spinning={isLoading}>
+      <Spin spinning={isLoading || isActivatingHRAccounts}>
         {accounts && (
           <div className='w-full h-screen font-roboto px-4 bg-white-700'>
             {/* <div className='py-2'>

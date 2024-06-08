@@ -6,27 +6,19 @@ import { useState } from 'react';
 
 interface PendingAccountTableProps {
   data: HRAccount[];
-  approveAccounts?: (accounts: HRAccount[]) => void;
+  approveAccounts: (hrIds: string[]) => Promise<void>;
   rejectAccounts?: (accounts: HRAccount[]) => void;
   status: number;
 }
 
 const AccountTable = (props: PendingAccountTableProps) => {
-  const { data, status } = props;
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [selectedRows, setSelectedRows] = useState<HRAccount[]>([]);
-
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    // setSelectedRowKeys(newSelectedRowKeys);
-    // const DataWithKeys = addKeyToData(data);
-    // const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
-    // setSelectedRows(newSelectedRows);
-  };
+  const { data, status, approveAccounts, rejectAccounts } = props;
+  const [selectedRows, setSelectedRows] = useState<string[]>([]);
 
   function formatedData(data: HRAccount[]) {
     return data
-      .map((item, index) => {
-        return { ...item, key: index.toString() };
+      .map((item) => {
+        return { ...item, key: item.hrId };
       })
       .filter((item) => {
         return item.status === props.status;
@@ -34,8 +26,10 @@ const AccountTable = (props: PendingAccountTableProps) => {
   }
 
   const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
+    selectedRowKeys: selectedRows,
+    onChange: (newSelectedRowKeys: React.Key[]) => {
+      setSelectedRows(newSelectedRowKeys.map((item) => item.toString()));
+    },
   };
 
   function getColumns(): TableProps<HRAccount>['columns'] {
@@ -82,7 +76,7 @@ const AccountTable = (props: PendingAccountTableProps) => {
             <div>
               {value.map((address: any) => {
                 return (
-                  <div>
+                  <div key={address}>
                     {address.addressDetail} , {address.city}
                   </div>
                 );
@@ -116,8 +110,10 @@ const AccountTable = (props: PendingAccountTableProps) => {
           <Space size='middle'>
             <Tooltip placement='top' title={'Approve'}>
               <Button
-                onClick={() => {
-                  handleApproveAction(record);
+                onClick={async () => {
+                  if (record.hrId) {
+                    await approveAccounts([record.hrId]);
+                  }
                 }}
                 icon={<CheckOutlined />}
               ></Button>
@@ -125,7 +121,7 @@ const AccountTable = (props: PendingAccountTableProps) => {
             <Tooltip placement='top' title={'Reject'}>
               <Button
                 onClick={() => {
-                  handleRejectAction(record);
+                  rejectAccounts();
                 }}
                 danger
                 icon={<CloseOutlined />}
@@ -150,26 +146,13 @@ const AccountTable = (props: PendingAccountTableProps) => {
     // setData(newData);
   };
 
-  const handleApproveSelections = () => {
-    // props.approveAccounts(selectedRows);
-    // setSelectedRowKeys([]);
+  const handleApproveSelections = async () => {
+    await approveAccounts(selectedRows || []);
   };
 
   const handleRejectSelections = () => {
     // props.rejectAccounts(selectedRows);
     // setSelectedRowKeys([]);
-  };
-
-  const handleApproveAction = (record: any) => {
-    const { key, ...account } = record;
-    // props.approveAccounts([account]);
-    // setSelectedRowKeys(selectedRowKeys.filter((selectedKey) => selectedKey !== key));
-  };
-
-  const handleRejectAction = (record: any) => {
-    const { key, ...account } = record;
-    // props.rejectAccounts([account]);
-    // setSelectedRowKeys(selectedRowKeys.filter((selectedKey) => selectedKey !== key));
   };
 
   return (
