@@ -65,7 +65,7 @@ const Profile = () => {
 
   const [CompanyProfileForm] = Form.useForm();
 
-  const { data, isLoading } = useGetCompanyProfileQuery(1);
+  const { data, isLoading } = useGetCompanyProfileQuery();
   const [updateCompanyProfile, { isLoading: updateProfileLoading }] =
     useUpdateCompanyProfileMutation();
 
@@ -124,7 +124,12 @@ const Profile = () => {
         youtube: CompanyProfile?.youtube,
         instagram: null,
       },
-      addresses: CompanyProfile?.addresses,
+      addresses: CompanyProfile?.addresses?.map((a: string) => {
+        const city = a.split(', ')[3];
+        const addressDetail = `${a.split(', ')[0]}, ${a.split(', ')[1]}, ${a.split(', ')[2]}`;
+
+        return { city: city, addressDetail: addressDetail };
+      }),
       benefits: CompanyProfile?.benefits?.map((b: any) => {
         return b?.description;
       }),

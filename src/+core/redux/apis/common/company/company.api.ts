@@ -11,7 +11,7 @@ const companyApi = commonApi
           method: 'GET',
         }),
       }),
-      getCompanyProfile: build.query<any, any>({
+      getCompanyProfile: build.query<any, void>({
         query: () => ({
           url: `/jobs/companies/info`,
           method: 'GET',
