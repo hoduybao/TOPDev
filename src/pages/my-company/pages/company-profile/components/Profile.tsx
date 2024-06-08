@@ -65,7 +65,7 @@ const Profile = () => {
 
   const [CompanyProfileForm] = Form.useForm();
 
-  const { data, isLoading } = useGetCompanyProfileQuery();
+  const { data, isLoading, refetch } = useGetCompanyProfileQuery();
   const [updateCompanyProfile, { isLoading: updateProfileLoading }] =
     useUpdateCompanyProfileMutation();
 
@@ -147,6 +147,7 @@ const Profile = () => {
     console.log('Update company profile API:', res);
 
     if (res?.statusCode === 200) {
+      refetch();
       handleGetProfileInfo();
     }
   };
