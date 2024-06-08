@@ -1,4 +1,5 @@
 import { HRAccount } from '@/+core/utilities/types/admin.type';
+import ConfirmModal from '@/components/global/ConfirmModal';
 import { CheckOutlined, CloseOutlined, HomeOutlined } from '@ant-design/icons';
 import { Button, Image, Input, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
@@ -14,6 +15,9 @@ interface PendingAccountTableProps {
 const AccountTable = (props: PendingAccountTableProps) => {
   const { data, status, approveAccounts, rejectAccounts } = props;
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [type, setType] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   function formatedData(data: HRAccount[]) {
     return data
@@ -146,8 +150,13 @@ const AccountTable = (props: PendingAccountTableProps) => {
     // setData(newData);
   };
 
-  const handleApproveSelections = async () => {
-    await approveAccounts(selectedRows || []);
+  const handleOK = async () => {
+    setIsLoading(true);
+    if (type === 1) {
+      await approveAccounts(selectedRows || []);
+    }
+    setIsLoading(false);
+    setOpenModal(false);
   };
 
   const handleRejectSelections = () => {
@@ -161,7 +170,10 @@ const AccountTable = (props: PendingAccountTableProps) => {
         {status == 0 && (
           <div>
             <Button
-              onClick={handleApproveSelections}
+              onClick={() => {
+                setOpenModal(true);
+                setType(1);
+              }}
               className='mr-2'
               style={{ color: '#4096ff', borderColor: '#4096ff' }}
               icon={<CheckOutlined />}
@@ -183,6 +195,16 @@ const AccountTable = (props: PendingAccountTableProps) => {
         dataSource={formatedData(data)}
         pagination={false}
       />
+      <ConfirmModal
+        open={openModal}
+        setOpen={setOpenModal}
+        handleOk={handleOK}
+        isLoadingBtn={isLoading}
+      >
+        {type === 1
+          ? 'Bạn có chắc chắn muốn duyệt các tài khoản này?'
+          : 'Bạn có chắc chắn muốn từ chối các tài khoản này?'}
+      </ConfirmModal>
     </>
   );
 };
