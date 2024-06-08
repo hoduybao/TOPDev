@@ -16,6 +16,7 @@ const companyApi = commonApi
           url: `/jobs/companies/info`,
           method: 'GET',
         }),
+        providesTags: [TAG_TYPES.COMPANY],
       }),
       updateCompanyProfile: build.mutation<any, any>({
         query: (profile: any) => ({
@@ -23,6 +24,7 @@ const companyApi = commonApi
           method: 'PATCH',
           body: profile,
         }),
+        invalidatesTags: [TAG_TYPES.COMPANY],
       }),
     }),
   });
