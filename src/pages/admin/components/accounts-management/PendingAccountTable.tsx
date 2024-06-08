@@ -96,7 +96,14 @@ const AccountTable = (props: PendingAccountTableProps) => {
         dataIndex: 'status',
         key: 'status',
         render: () => {
-          return <Tag color='gray'>Pending</Tag>;
+          switch (status) {
+            case 0:
+              return <Tag color='gray'>Pending</Tag>;
+            case 1:
+              return <Tag color='green'>Approved</Tag>;
+            case -1:
+              return <Tag color='red'>Rejected</Tag>;
+          }
         },
       },
     ];
