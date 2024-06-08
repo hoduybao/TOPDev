@@ -115,6 +115,7 @@ const JobManagementPage = () => {
       ...prevFilter,
       status: tabKey,
       page: 1,
+      keywords: '',
     }));
   }, [tabKey]);
 
@@ -198,8 +199,8 @@ const JobManagementPage = () => {
               <div className='flex justify-end'>
                 <Pagination
                   className='mt-5'
-                  defaultCurrent={filter.page}
                   total={jobs?.total}
+                  defaultCurrent={1}
                   pageSize={5}
                   onChange={handleChangePage}
                 />
@@ -211,7 +212,9 @@ const JobManagementPage = () => {
                 handleCancel={handleCancel}
                 isLoadingBtn={isLoadingApprove || isLoadingReject}
               >
-                {action === 'approve' ? 'Do you want to approve?' : 'Do you want to reject?'}
+                <h1 className='text-xl'>
+                  {action === 'approve' ? 'Do you want to approve?' : 'Do you want to reject?'}
+                </h1>
                 {action === 'reject' && (
                   <>
                     <Input

@@ -1,5 +1,4 @@
 import { TAG_TYPES } from '@/+core/constants/api.tagTypes';
-import { BaseResponse, ListResponseData, transformResponse } from '../../../response.type';
 import { commonApi } from '../../common.api';
 import {
   CreateJobREQ,
@@ -8,6 +7,7 @@ import {
   FilterPostCompanyTypeREQ,
 } from './job-service.request';
 import { JobDetailResponse, ListCompanyRES, ListJobsRES } from './job-service.response';
+import { BaseResponse, ListResponseData, transformResponse } from './response.type';
 
 const jobServiceApi = commonApi
   .enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB, TAG_TYPES.COMPANY] })

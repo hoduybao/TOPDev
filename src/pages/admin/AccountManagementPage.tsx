@@ -1,66 +1,67 @@
-import { hRAccountStatus as AccountStatus } from '@/+core/enums/hRAccountStatus.enum';
-import { HRAccount } from '@/+core/utilities/types/admin.type';
 import ApprovedAccountTable from '@/pages/admin/components/accounts-management/ApprovedAccountTable';
-import BannedAccountTable from '@/pages/admin/components/accounts-management/BannedAccountTable';
 import PendingAccountTable from '@/pages/admin/components/accounts-management/PendingAccountTable';
 import RejectedAccountTable from '@/pages/admin/components/accounts-management/RejectedAccountTable';
-import { CheckOutlined, ClockCircleOutlined, CloseOutlined, StopOutlined } from '@ant-design/icons';
-import { Input, Pagination, Spin, Tabs, TabsProps } from 'antd';
+import { CheckOutlined, ClockCircleOutlined, CloseOutlined } from '@ant-design/icons';
+import { Input, Modal, Pagination, Spin, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
-import { mockHRAccountData } from './mockdata';
 import '../../styles/admin/management-page.module.scss';
 import {
-  useApproveEmployersMutation,
-  useGetListEmployersQuery,
-  useRefuseEmployersMutation,
+  useApproveCompaniesMutation,
+  useGetListCompanyQuery,
+  useRefuseCompaniesMutation,
 } from '@/+core/redux/apis/admin/employer-management/employer-admin.api';
-import { ListEmployersRES } from '@/+core/redux/apis/admin/employer-management/employer-admin.response';
-import { FilterEmployersTypeREQ } from '@/+core/redux/apis/admin/employer-management/employer-admin.request';
+import { ListCompanyRES } from '@/+core/redux/apis/admin/employer-management/employer-admin.response';
+import { FilterCompanyTypeREQ } from '@/+core/redux/apis/admin/employer-management/employer-admin.request';
 import ConfirmModal from '@/components/global/ConfirmModal';
+import { STATUS_MAPPING } from './components/accounts-management/StatusMapping';
+import CompanyInfo from './components/accounts-management/CompanyInfo';
 
 const AccountManagementPage = () => {
-  const [filter, setFilter] = useState<FilterEmployersTypeREQ>({
+  const [filter, setFilter] = useState<FilterCompanyTypeREQ>({
     page: 1,
     limit: 5,
-    status: 'PENDING',
+    status: 0,
   });
 
   const {
-    data: employers,
-    isFetching: isFetchingEmployers,
+    data: companies,
+    isFetching: isFetchingCompanies,
     refetch,
-  } = useGetListEmployersQuery(filter, {
+  } = useGetListCompanyQuery(filter, {
     refetchOnMountOrArgChange: true,
   });
 
-  const [approveEmployers, { isLoading: isLoadingApprove }] = useApproveEmployersMutation();
-  const [rejectEmployers, { isLoading: isLoadingReject }] = useRefuseEmployersMutation();
-  const [employerList, setEmployerList] = useState<ListEmployersRES[]>([]);
+  const [approveCompanies, { isLoading: isLoadingApprove }] = useApproveCompaniesMutation();
+  const [rejectCompanies, { isLoading: isLoadingReject }] = useRefuseCompaniesMutation();
+  const [companyList, setCompanyList] = useState<ListCompanyRES[]>([]);
   const [tabKey, setTabKey] = useState<string>('PENDING');
 
   const [showModal, setShowModal] = useState(false);
   const [action, setAction] = useState<string>('');
   const [reason, setReason] = useState<string>('');
-  const [employersToProcess, setEmployersToProcess] = useState<ListEmployersRES[]>([]);
+  const [employersToProcess, setEmployersToProcess] = useState<ListCompanyRES[]>([]);
   const [error, setError] = useState('');
 
+  const [isCompanyDetailOpen, setIsCompanyDetailOpen] = useState<boolean>(false);
+  const [viewedCompany, setViewedCompany] = useState<ListCompanyRES>();
+
   useEffect(() => {
-    if (employers?.data) setEmployerList(employers?.data);
-    console.log('fetch');
-  }, [employers]);
+    if (companies?.data) setCompanyList(companies?.data);
+    console.log(companies?.data);
+  }, [companies]);
 
   useEffect(() => {
     console.log(filter);
     refetch();
   }, [filter]);
 
-  const handleApprove = (employers: ListEmployersRES[]) => {
+  const handleApprove = (employers: ListCompanyRES[]) => {
     setAction('approve');
     setEmployersToProcess(employers);
     setShowModal(true);
   };
 
-  const handleReject = (employers: ListEmployersRES[]) => {
+  const handleReject = (employers: ListCompanyRES[]) => {
     setAction('reject');
     setEmployersToProcess(employers);
     setShowModal(true);
@@ -74,9 +75,9 @@ const AccountManagementPage = () => {
 
     const jobIds = employersToProcess.map((employer) => employer.id);
     if (action === 'approve') {
-      approveEmployers({ ids: jobIds });
+      approveCompanies({ ids: jobIds });
     } else if (action === 'reject') {
-      rejectEmployers({ ids: jobIds, reason: reason });
+      rejectCompanies({ ids: jobIds, reason: reason });
     }
     setShowModal(false);
     setReason('');
@@ -107,11 +108,49 @@ const AccountManagementPage = () => {
   };
 
   useEffect(() => {
+    let status: number;
+
+    if (tabKey === STATUS_MAPPING.PENDING.string) {
+      status = STATUS_MAPPING.PENDING.number;
+    } else if (STATUS_MAPPING.REJECTED.string) {
+      status = STATUS_MAPPING.REJECTED.number;
+    } else if (tabKey === STATUS_MAPPING.APPROVED.string) {
+      status = STATUS_MAPPING.APPROVED.number;
+    }
+
     setFilter((prevFilter) => ({
       ...prevFilter,
-      status: tabKey,
+      status: status,
+      keywords: '',
+      page: 1,
     }));
   }, [tabKey]);
+
+  const handleCancelDetailModal = () => {
+    setIsCompanyDetailOpen(false);
+    setViewedCompany(undefined);
+  };
+
+  const handleApproveFromDetail = () => {
+    console.log('approve');
+    handleCancelDetailModal();
+    if (viewedCompany) {
+      handleApprove([viewedCompany]);
+    }
+  };
+
+  const handleRejectFromDetail = () => {
+    console.log('reject');
+    handleCancelDetailModal();
+    if (viewedCompany) {
+      handleReject([viewedCompany]);
+    }
+  };
+
+  const handleViewCompanyDetail = (company: ListCompanyRES) => {
+    setViewedCompany(company);
+    setIsCompanyDetailOpen(true);
+  };
 
   // const handleReview = (accounts: HRAccount[]) => {
   //   const updatedData = [...allAccounts];
@@ -151,7 +190,7 @@ const AccountManagementPage = () => {
 
   const items: TabsProps['items'] = [
     {
-      key: 'PENDING',
+      key: STATUS_MAPPING.PENDING.string,
       label: (
         <div className='flex items-center'>
           <ClockCircleOutlined />
@@ -160,33 +199,46 @@ const AccountManagementPage = () => {
       ),
       children: (
         <PendingAccountTable
-          data={employerList}
+          data={companyList}
           approveEmployers={handleApprove}
           rejectEmployers={handleReject}
           onSearch={handleSearch}
+          viewEmployer={handleViewCompanyDetail}
         />
       ),
     },
     {
-      key: 'APPROVED',
+      key: STATUS_MAPPING.APPROVED.string,
       label: (
         <div className='flex items-center'>
           <CheckOutlined />
           <p>Approved</p>
         </div>
       ),
-      children: <ApprovedAccountTable data={employerList} onSearch={handleSearch} />,
+      children: (
+        <ApprovedAccountTable
+          data={companyList}
+          onSearch={handleSearch}
+          viewCompany={handleViewCompanyDetail}
+        />
+      ),
     },
 
     {
-      key: 'REJECTED',
+      key: STATUS_MAPPING.REJECTED.string,
       label: (
         <div className='flex items-center'>
           <CloseOutlined />
           <p>Rejected</p>
         </div>
       ),
-      children: <RejectedAccountTable data={employerList} onSearch={handleSearch} />,
+      children: (
+        <RejectedAccountTable
+          data={companyList}
+          onSearch={handleSearch}
+          viewCompany={handleViewCompanyDetail}
+        />
+      ),
     },
 
     // {
@@ -203,7 +255,7 @@ const AccountManagementPage = () => {
 
   return (
     <>
-      <Spin spinning={isFetchingEmployers || isLoadingApprove || isLoadingReject}>
+      <Spin spinning={isFetchingCompanies || isLoadingApprove || isLoadingReject}>
         <div className='w-full h-screen font-roboto px-4 '>
           <div className='mt-2 mb-4 w-full flex gap-2'>
             <div className='w-full p-2 border-solid border-[1.5px] border-transparent rounded bg-white-700'>
@@ -217,7 +269,7 @@ const AccountManagementPage = () => {
                 <Pagination
                   className='mt-5'
                   defaultCurrent={1}
-                  total={employerList.length}
+                  total={companies?.total}
                   pageSize={5}
                   onChange={handleChangePage}
                 />
@@ -242,6 +294,27 @@ const AccountManagementPage = () => {
                   </>
                 )}
               </ConfirmModal>
+
+              <Modal
+                title='Employer Details'
+                open={isCompanyDetailOpen}
+                onCancel={handleCancelDetailModal}
+                width={1200}
+                centered
+                bodyStyle={{ overflowY: 'auto', maxHeight: 'calc(100vh - 200px)' }}
+                footer={null}
+              >
+                <div className='bg-[#E8EDF2]'>
+                  {/* <Spin spinning={isFetchingEmployerDetail}>Employer Details</Spin> */}
+                  {viewedCompany && (
+                    <CompanyInfo
+                      companyInfo={viewedCompany}
+                      approveCompany={handleApproveFromDetail}
+                      rejectCompany={handleRejectFromDetail}
+                    />
+                  )}
+                </div>
+              </Modal>
             </div>
           </div>
         </div>

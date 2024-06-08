@@ -1,90 +1,80 @@
-import { useGetEmployerDetailQuery } from '@/+core/redux/apis/admin/employer-management/employer-admin.api';
-import {
-  EmployerDetailResponse,
-  ListEmployersRES,
-} from '@/+core/redux/apis/admin/employer-management/employer-admin.response';
-import { Button, Input, Modal, Space, Spin, Table, TableProps, Tooltip } from 'antd';
-import { SearchProps } from 'antd/es/input';
-import { useState } from 'react';
+import { ListCompanyRES } from '@/+core/redux/apis/admin/employer-management/employer-admin.response';
+import { Button, Input, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 
 interface ApprovedAccountTableProps {
-  data: ListEmployersRES[];
+  data: ListCompanyRES[];
   onSearch: (keyword: string) => void;
+  viewCompany: (employer: ListCompanyRES) => void;
 }
 
 const PendingAccountTable = (props: ApprovedAccountTableProps) => {
-  const { data, onSearch } = props;
+  const { data, onSearch, viewCompany } = props;
   const { Search } = Input;
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [selectedRows, setSelectedRows] = useState<ListEmployersRES[]>([]);
+  // const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  // const [selectedRows, setSelectedRows] = useState<ListCompanyRES[]>([]);
 
-  const [isEmployerDetailOpen, setIsEmployerDetailOpen] = useState<boolean>(false);
-  const [viewedEmployer, setViewedEmployer] = useState<EmployerDetailResponse>();
-  const [viewedEmployerId, setViewedEmployerId] = useState<string>('');
+  // const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+  //   setSelectedRowKeys(newSelectedRowKeys);
+  //   const DataWithKeys = addKeyToData(data);
+  //   const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
+  //   setSelectedRows(newSelectedRows);
+  // };
 
-  const { data: employerDetailData, isFetching: isFetchingEmployerDetail } =
-    useGetEmployerDetailQuery(viewedEmployerId);
-
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-    const DataWithKeys = addKeyToData(data);
-    const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
-    setSelectedRows(newSelectedRows);
-  };
-
-  function addKeyToData(data: ListEmployersRES[]) {
+  function addKeyToData(data: ListCompanyRES[]) {
     return data.map((item, index) => {
       return { ...item, key: index.toString() };
     });
   }
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
+  // const rowSelection = {
+  //   selectedRowKeys,
+  //   onChange: onSelectChange,
+  // };
 
-  const columns: TableProps<ListEmployersRES>['columns'] = [
+  const columns: TableProps<ListCompanyRES>['columns'] = [
     {
       title: 'Company Name',
-      dataIndex: 'companyName',
+      dataIndex: 'name',
       key: 'name',
-      // render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Tax Code',
-      dataIndex: 'taxCode',
-      key: 'taxCode',
+      title: 'Nation',
+      dataIndex: 'nationality',
+      key: 'nationality',
+      render: (_, { nationality: nations }) => nations?.join(', '),
     },
     {
-      title: 'Display Name',
-      dataIndex: 'displayName',
-      key: 'displayName',
+      title: 'Company size',
+      dataIndex: 'companySize',
+      key: 'companySize',
     },
-    // {
-    //   title: 'Fields',
-    //   key: 'fields',
-    //   dataIndex: 'fields',
-    //   render: (_, { fields }) => (
-    //     <>
-    //       {fields.map((field) => {
-    //         return (
-    //           <Tag color={'geekblue'} key={field}>
-    //             {field.toUpperCase()}
-    //           </Tag>
-    //         );
-    //       })}
-    //     </>
-    //   ),
-    // },
+    {
+      title: 'Industry',
+      key: 'industry',
+      dataIndex: 'industry',
+      render: (_, { industry: industries }) => (
+        <div className='max-w-64'>
+          {industries?.map((industry) => {
+            return (
+              <Tag color={'geekblue'} key={industry}>
+                {industry}
+              </Tag>
+            );
+          })}
+        </div>
+      ),
+    },
     {
       title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      dataIndex: 'addresses',
+      key: 'addresses',
+      render: (_, { addresses: addresses }) =>
+        addresses?.map((address) => address.addressDetail).join('\n '),
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      title: 'Phone Number',
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
     },
     {
       title: <div className='font-semi-bold pl-5'>Action</div>,
@@ -104,17 +94,8 @@ const PendingAccountTable = (props: ApprovedAccountTableProps) => {
     },
   ];
 
-  const handleSearch: SearchProps['onSearch'] = (value, _e) => {
-    onSearch(value);
-  };
-
-  const handleViewEmployerDetails = (employer: ListEmployersRES) => {
-    setViewedEmployerId(employer.id);
-    setIsEmployerDetailOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsEmployerDetailOpen(false);
+  const handleViewEmployerDetails = (employer: ListCompanyRES) => {
+    viewCompany(employer);
   };
 
   return (
@@ -125,23 +106,11 @@ const PendingAccountTable = (props: ApprovedAccountTableProps) => {
 
       <Table
         className='mt-2'
-        rowSelection={rowSelection}
+        // rowSelection={rowSelection}
         columns={columns}
         dataSource={addKeyToData(data)}
-        pagination={{ pageSize: 5 }}
+        pagination={false}
       />
-
-      <Modal
-        title='Employer Details'
-        className='max-w-[60vw] min-w-[40vw]'
-        open={isEmployerDetailOpen}
-        onCancel={handleCancel}
-        footer={<></>}
-      >
-        <div className='max-h-[65vh] overflow-y-auto'>
-          <Spin spinning={isFetchingEmployerDetail}>Employer Details</Spin>
-        </div>
-      </Modal>
     </>
   );
 };

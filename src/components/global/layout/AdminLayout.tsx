@@ -24,7 +24,7 @@ const items = [
         ></path>
       </svg>
     ),
-    label: 'Manage Accounts',
+    label: 'Manage HR Accounts',
   },
   {
     key: MY_ROUTE.ADMIN_JOB_MANAGEMENT,
@@ -50,7 +50,7 @@ export default function AdminLayout() {
   const [isCollapsedNav, setIsCollapsedNav] = useState(false);
   const route = useLocation().pathname;
   const [textHeader, setTextHeader] = useState(
-    items.find((item) => item.key === route)?.label || 'Manage Accounts',
+    items.find((item) => item.key === route)?.label || 'Manage HR Accounts',
   );
 
   const handleCollapseNav = (isCollapsed: boolean) => {

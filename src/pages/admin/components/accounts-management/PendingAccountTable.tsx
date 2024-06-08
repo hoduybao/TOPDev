@@ -1,32 +1,21 @@
-import { useGetEmployerDetailQuery } from '@/+core/redux/apis/admin/employer-management/employer-admin.api';
-import {
-  EmployerDetailResponse,
-  ListEmployersRES,
-} from '@/+core/redux/apis/admin/employer-management/employer-admin.response';
+import { ListCompanyRES } from '@/+core/redux/apis/admin/employer-management/employer-admin.response';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { Button, Input, Modal, Space, Spin, Table, TableProps, Tooltip } from 'antd';
-import { SearchProps } from 'antd/es/input';
+import { Button, Input, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { useState } from 'react';
 
 interface PendingAccountTableProps {
-  data: ListEmployersRES[];
-  approveEmployers: (accounts: ListEmployersRES[]) => void;
-  rejectEmployers: (accounts: ListEmployersRES[]) => void;
+  data: ListCompanyRES[];
+  approveEmployers: (accounts: ListCompanyRES[]) => void;
+  rejectEmployers: (accounts: ListCompanyRES[]) => void;
   onSearch: (keyword: string) => void;
+  viewEmployer: (employer: ListCompanyRES) => void;
 }
 
 const PendingAccountTable = (props: PendingAccountTableProps) => {
-  const { data, approveEmployers, rejectEmployers, onSearch } = props;
+  const { data, approveEmployers, rejectEmployers, onSearch, viewEmployer } = props;
   const { Search } = Input;
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [selectedRows, setSelectedRows] = useState<ListEmployersRES[]>([]);
-
-  const [isEmployerDetailOpen, setIsEmployerDetailOpen] = useState<boolean>(false);
-  const [viewedEmployer, setViewedEmployer] = useState<EmployerDetailResponse>();
-  const [viewedEmployerId, setViewedEmployerId] = useState<string>('');
-
-  const { data: employerDetailData, isFetching: isFetchingEmployerDetail } =
-    useGetEmployerDetailQuery(viewedEmployerId);
+  const [selectedRows, setSelectedRows] = useState<ListCompanyRES[]>([]);
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
@@ -35,7 +24,7 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
     setSelectedRows(newSelectedRows);
   };
 
-  function addKeyToData(data: ListEmployersRES[]) {
+  function addKeyToData(data: ListCompanyRES[]) {
     return data.map((item, index) => {
       return { ...item, key: index.toString() };
     });
@@ -45,49 +34,56 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
     selectedRowKeys,
     onChange: onSelectChange,
   };
-  
-  const columns: TableProps<ListEmployersRES>['columns'] = [
+
+  const columns: TableProps<ListCompanyRES>['columns'] = [
     {
       title: 'Company Name',
-      dataIndex: 'companyName',
+      dataIndex: 'name',
       key: 'name',
-      // render: (text) => <a>{text}</a>,
+      render: (text, record) => (
+        <a className='text-blue-500 hover:underline' href={`/admin/company/${record.id}`}>
+          {text}
+        </a>
+      ),
     },
     {
-      title: 'Tax Code',
-      dataIndex: 'taxCode',
-      key: 'taxCode',
+      title: 'Nation',
+      dataIndex: 'nationality',
+      key: 'nationality',
+      render: (_, { nationality: nations }) => nations?.join(', '),
     },
     {
-      title: 'Display Name',
-      dataIndex: 'displayName',
-      key: 'displayName',
+      title: 'Company size',
+      dataIndex: 'companySize',
+      key: 'companySize',
     },
-    // {
-    //   title: 'Fields',
-    //   key: 'fields',
-    //   dataIndex: 'fields',
-    //   render: (_, { fields }) => (
-    //     <>
-    //       {fields.map((field) => {
-    //         return (
-    //           <Tag color={'geekblue'} key={field}>
-    //             {field.toUpperCase()}
-    //           </Tag>
-    //         );
-    //       })}
-    //     </>
-    //   ),
-    // },
+    {
+      title: 'Industry',
+      key: 'industry',
+      dataIndex: 'industry',
+      render: (_, { industry: industries }) => (
+        <div className='max-w-64'>
+          {industries?.map((industry) => {
+            return (
+              <Tag color={'geekblue'} key={industry}>
+                {industry}
+              </Tag>
+            );
+          })}
+        </div>
+      ),
+    },
     {
       title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      dataIndex: 'addresses',
+      key: 'addresses',
+      render: (_, { addresses: addresses }) =>
+        addresses?.map((address) => address.addressDetail).join('\n '),
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      title: 'Phone Number',
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
     },
     {
       title: <div className='font-semi-bold pl-5'>Action</div>,
@@ -107,10 +103,6 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
     },
   ];
 
-  const handleSearch: SearchProps['onSearch'] = (value, _e) => {
-    onSearch(value);
-  };
-
   const handleApproveSelections = () => {
     approveEmployers(selectedRows);
     setSelectedRowKeys([]);
@@ -121,53 +113,41 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
     setSelectedRowKeys([]);
   };
 
-  const handleViewEmployerDetails = (employer: ListEmployersRES) => {
-    setViewedEmployerId(employer.id);
-    setIsEmployerDetailOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsEmployerDetailOpen(false);
-  };
-
-  const handleApproveModal = () => {
-    if (viewedEmployer) {
-      const foundEmployers = [data.find((item) => item.id === viewedEmployer.id)];
-      if (foundEmployers && foundEmployers[0]) {
-        approveEmployers([foundEmployers[0]]);
-      }
-    }
-    handleCancel();
-  };
-
-  const handleRejectModal = () => {
-    if (viewedEmployer) {
-      const foundEmployers = [data.find((item) => item.id === viewedEmployer.id)];
-      if (foundEmployers && foundEmployers[0]) {
-        rejectEmployers([foundEmployers[0]]);
-      }
-    }
-    handleCancel();
+  const handleViewEmployerDetails = (employer: ListCompanyRES) => {
+    viewEmployer(employer);
   };
 
   return (
     <>
-      <div className='flex justify-between'>
+      <div className='flex justify-between items-center'>
         <div>
           <Button
             onClick={handleApproveSelections}
             className='mr-2'
-            style={{ color: '#4096ff', borderColor: '#4096ff' }}
+            style={{
+              color: selectedRows.length > 0 ? '#4096ff' : '',
+              borderColor: selectedRows.length > 0 ? '#4096ff' : 'transparent',
+            }}
             icon={<CheckOutlined />}
+            disabled={selectedRows.length > 0 ? false : true}
           >
             Approve
           </Button>
-          <Button danger onClick={handleRejectSelections} icon={<CloseOutlined />}>
+          <Button
+            danger
+            onClick={handleRejectSelections}
+            icon={<CloseOutlined />}
+            disabled={selectedRows.length > 0 ? false : true}
+          >
             Reject
           </Button>
         </div>
 
-        <Search placeholder='Input search text' onSearch={onSearch} style={{ width: 200 }} />
+        <Search
+          placeholder='Input search text'
+          onSearch={onSearch}
+          style={{ width: 200, marginLeft: 'auto' }}
+        />
       </div>
       <Table
         className='mt-2'
@@ -176,29 +156,6 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
         dataSource={addKeyToData(data)}
         pagination={false}
       />
-
-      <Modal
-        title='Employer Details'
-        className='max-w-[60vw] min-w-[40vw]'
-        open={isEmployerDetailOpen}
-        onCancel={handleCancel}
-        footer={
-          <div>
-            <Button onClick={handleRejectModal} className='mr-2' icon={<CloseOutlined />}>
-              Reject
-            </Button>
-            <Button onClick={handleApproveModal} type='primary' danger icon={<CheckOutlined />}>
-              Approve
-            </Button>
-          </div>
-        }
-      >
-        <div className='max-h-[65vh] overflow-y-auto'>
-          <Spin spinning={isFetchingEmployerDetail}>
-            Employer Details
-          </Spin>
-        </div>
-      </Modal>
     </>
   );
 };

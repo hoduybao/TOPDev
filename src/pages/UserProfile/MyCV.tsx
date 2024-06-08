@@ -1,20 +1,20 @@
 import Container from '@/components/global/Container/Container';
 import React from 'react';
-import ActivitiesSession from './components/ActivitiesSession';
-import AddMoreSession from './components/AddMoreSession';
-import AdsSession from './components/AdsSession';
-import CertificatesSession from './components/CertificatesSession';
-import EducationSession from './components/EducationSession';
-import ExpSession from './components/ExpSession';
-import HobbiesSession from './components/HobbiesSession';
-import LanguagesSession from './components/LanguagesSession';
-import OthersSession from './components/OthersSession';
-import ProjectsSession from './components/ProjectsSession';
-import ReferencesSession from './components/ReferencesSession';
-import SkillsSession from './components/SkillsSession';
-import SummarySession from './components/SummarySession';
 import UserSession from './components/UserSession';
 import UserStatusSession from './components/UserStatusSession';
+import SummarySession from './components/SummarySession';
+import SkillsSession from './components/SkillsSession';
+import ExpSession from './components/ExpSession';
+import EducationSession from './components/EducationSession';
+import ProjectsSession from './components/ProjectsSession';
+import AddMoreSession from './components/AddMoreSession';
+import AdsSession from './components/AdsSession';
+import LanguagesSession from './components/LanguagesSession';
+import HobbiesSession from './components/HobbiesSession';
+import ReferencesSession from './components/ReferencesSession';
+import ActivitiesSession from './components/ActivitiesSession';
+import CertificatesSession from './components/CertificatesSession';
+import OthersSession from './components/OthersSession';
 
 export type ExtendItem = {
   name: string;
@@ -43,7 +43,7 @@ const MyCV = () => {
   };
   return (
     <Container>
-      <div className='grid grid-cols-4 gap-6'>
+      <div className='grid grid-cols-4 gap-6 mt-8'>
         <div className='col-span-3'>
           {/* part 1 */}
           <UserSession />

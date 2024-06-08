@@ -1,44 +1,69 @@
-export type FilterEmployersTypeREQ = {
-  keywords?: string;
-  offset?: number;
-  limit?: number;
-  status?: string;
-};
+// export type FilterCompanyTypeREQ = {
+//   keywords?: string;
+//   offset?: number;
+//   limit?: number;
+//   status?: string;
+// };
 
 export type FilterCompanyTypeREQ = {
   keywords?: string;
   address?: string;
   page?: number;
   limit?: number;
-  status: string;
+  status?: number;
+  type?: string;
 };
 
-export type FilterPostCompanyTypeREQ = {
-  page?: number;
-  limit?: number;
-  status?: string;
-  keywords?: string;
+export type CreateCompanyREQ = {
+  id: string;
+  logo?: string;
+  name: string;
+  tagline?: string;
+  nationality?: string[];
+  companySize?: string;
+  industry?: string[];
+  techStack?: string[];
+  website?: string;
+  socialMedia?: SocialMedia;
+  addresses?: Address[];
+  benefits?: string[];
+  coverPhoto?: string;
+  galleries?: string[];
+  topConcerns?: TopConcern[];
+  products?: Product[];
+  status: number;
+  followedCount: number;
+  createdAt: string;
+  updatedAt: string;
+  applicationCount: number;
+  viewedCount: number;
+  phoneNumber?: string;
+  hrId: string;
+  jobCount: number;
+  introduction: any;
+  reason?: string;
 };
 
-export type CreateJobREQ = {
-  title: string;
-  level: string[];
-  technicals: string[];
-  experience: string;
-  startDate: string;
-  endDate: string;
-  jobType: string;
-  contractType: string;
-  interviewProcess: string | null;
-  jobDescription: string | null;
-  currency: string;
-  salaryType: string;
-  minSalary: number | null;
-  maxSalary: number | null;
+export interface SocialMedia {
+  facebook: string;
+  linkedin: string;
+  youtube: any;
+  instagram: any;
+}
+
+export interface Address {
   city: string;
-  address: string | null;
-  district: string | null;
-  addressDetails: string;
-  benefit: string | null;
-  skillRequirements: string | null;
-};
+  addressDetail: string;
+}
+
+export interface TopConcern {
+  question: string;
+  answer?: string;
+}
+
+export interface Product {
+  productPhoto?: string;
+  productName: string;
+  link?: string;
+  description?: string;
+}

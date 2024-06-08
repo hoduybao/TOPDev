@@ -9,8 +9,8 @@ export default function UserLayout() {
   return (
     <LayoutAntDesign className='bg-white-900'>
       <UserHeader />
-      <LayoutAntDesign className={`bg-white-900 duration-500 ease-in-out'`}>
-        <Content className='m-auto mt-[84px] transition w-full'>
+      <LayoutAntDesign className={`bg-white-900 duration-500 ease-in-out' `}>
+        <Content className='m-auto transition w-full'>
           <Outlet />
         </Content>
       </LayoutAntDesign>

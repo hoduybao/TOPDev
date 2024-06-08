@@ -1,9 +1,8 @@
 import { CompanyInfo } from '@/+core/utilities/types/admin.type';
-import { Button, Input, Modal, Space, Table, TableProps, Tag, Tooltip } from 'antd';
+import { Button, Input, Modal, Space, Table, TableProps, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
 import { useState } from 'react';
 import JobDescriptions from './JobDescriptions';
-import dayjs from 'dayjs';
 import { ListJobsRES } from '@/+core/redux/apis/admin/job-management/job-admin.response';
 
 interface RejectedJobsTabProps {
@@ -20,24 +19,23 @@ function addKeyToData(data: ListJobsRES[]) {
 const RejectedJobsTab = (props: RejectedJobsTabProps) => {
   const { data, onSearch } = props;
   const { Search } = Input;
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
+  //const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   // const [selectedRows, setSelectedRows] = useState<Job[]>([]);
 
   const [isJobDetailOpen, setIsJobDetailOpen] = useState<boolean>(false);
   const [viewedJob, setViewedJob] = useState<ListJobsRES>();
 
-  const [showReasonModal, setShowReasonModal] = useState<boolean>(false);
-
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-    // const DataWithKeys = addKeyToData(data);
-    // const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
-    // setSelectedRows(newSelectedRows);
-  };
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
+  // const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+  //   setSelectedRowKeys(newSelectedRowKeys);
+  //   // const DataWithKeys = addKeyToData(data);
+  //   // const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
+  //   // setSelectedRows(newSelectedRows);
+  // };
+  // const rowSelection = {
+  //   selectedRowKeys,
+  //   onChange: onSelectChange,
+  // };
 
   const columns: TableProps<ListJobsRES>['columns'] = [
     {
@@ -86,7 +84,7 @@ const RejectedJobsTab = (props: RejectedJobsTabProps) => {
       title: 'Place',
       dataIndex: 'workingPlace',
       key: 'workingPlace',
-      render: (text, record) => {
+      render: (_text, record) => {
         const { district, city } = record;
         return `${district}, ${city}`;
       },

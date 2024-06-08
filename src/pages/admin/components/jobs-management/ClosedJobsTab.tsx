@@ -84,7 +84,7 @@ const ExpiredJobsTab = (props: ClosedJobsTabProps) => {
       title: 'Place',
       dataIndex: 'workingPlace',
       key: 'workingPlace',
-      render: (text, record) => {
+      render: (_text, record) => {
         const { district, city } = record;
         return `${district}, ${city}`;
       },

@@ -1,4 +1,9 @@
-import { industries } from '@/+core/constants/company.profile';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { countries } from 'countries-list';
+import { v4 as uuidv4 } from 'uuid';
+import { Form, Input, Button, Select } from 'antd';
+import { type FormProps } from 'antd';
 import {
   CheckOutlined,
   DeleteOutlined,
@@ -8,24 +13,19 @@ import {
   GlobalOutlined,
   LinkOutlined,
   LinkedinOutlined,
-  MenuOutlined,
-  MessageOutlined,
   PlusOutlined,
-  QuestionCircleOutlined,
   SketchOutlined,
+  MenuOutlined,
   YoutubeOutlined,
+  QuestionCircleOutlined,
+  MessageOutlined,
 } from '@ant-design/icons';
-import { Button, Form, Input, Select, type FormProps } from 'antd';
-import { countries } from 'countries-list';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { v4 as uuidv4 } from 'uuid';
+import { industries, techStack } from '@/+core/constants/company.profile';
 
-import { technicalItems } from '../../manage-jobs/create/components/SelectItems';
+import UploadFileInput from './UploadFileInput';
+import TextEditor from './TextEditor';
 import AddAddressModal from './AddAddressModal';
 import AddProductModal from './AddProductModal';
-import TextEditor from './TextEditor';
-import UploadFileInput from './UploadFileInput';
 
 const { Option } = Select;
 
@@ -269,7 +269,15 @@ const Profile = () => {
               },
             ]}
           >
-            <Select size='large' mode='multiple' options={technicalItems}></Select>
+            <Select size='large' mode='multiple'>
+              {techStack?.map((item) => {
+                return (
+                  <Option key={uuidv4()} value={`${item?.value}`}>
+                    {item?.label}
+                  </Option>
+                );
+              })}
+            </Select>
           </Form.Item>
 
           <Form.Item<FieldType>

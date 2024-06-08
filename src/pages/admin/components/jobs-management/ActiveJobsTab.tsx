@@ -19,19 +19,21 @@ function addKeyToData(data: ListJobsRES[]) {
 const ActiveJobsTab = (props: ActiveJobsTabProps) => {
   const { data, onSearch } = props;
   const { Search } = Input;
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
+  //const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   // const [selectedRows, setSelectedRows] = useState<Job[]>([]);
 
   const [isJobDetailOpen, setIsJobDetailOpen] = useState<boolean>(false);
   const [viewedJob, setViewedJob] = useState<ListJobsRES>();
 
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
+  // const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+  //   setSelectedRowKeys(newSelectedRowKeys);
+  // };
+
+  // const rowSelection = {
+  //   selectedRowKeys,
+  //   onChange: onSelectChange,
+  // };
 
   const columns: TableProps<ListJobsRES>['columns'] = [
     {
@@ -79,7 +81,7 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
       title: 'Place',
       dataIndex: 'workingPlace',
       key: 'workingPlace',
-      render: (text, record) => {
+      render: (_text, record) => {
         const { district, city } = record;
         return `${district}, ${city}`;
       },

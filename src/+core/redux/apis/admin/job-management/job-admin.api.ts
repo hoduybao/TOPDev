@@ -1,6 +1,6 @@
 import { TAG_TYPES } from '@/+core/constants/api.tagTypes';
 import { commonApi } from '../../common.api';
-import { CreateJobREQ, FilterJobsTypeREQ } from './job-admin.request';
+import { FilterJobsTypeREQ } from './job-admin.request';
 import { JobActionResponse, JobDetailResponse, ListJobsRES } from './job-admin.response';
 import { BaseResponse, ListResponseData, transformResponse } from '../response.type';
 

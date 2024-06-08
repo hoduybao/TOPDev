@@ -35,8 +35,10 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
   const [viewedJobId, setViewedJobId] = useState<string>('');
   //const { data: JobDetailData } = useGetJobByIdQuery(viewedJobId);
 
-  const { data: JobDetailData, isFetching: isFetchingJobDetail } =
-    useGetJobDetailQuery(viewedJobId);
+  const { data: JobDetailData, isFetching: isFetchingJobDetail } = useGetJobDetailQuery(
+    viewedJobId,
+    { skip: viewedJobId == '' },
+  );
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
@@ -103,7 +105,7 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
       title: 'Place',
       dataIndex: 'workingPlace',
       key: 'workingPlace',
-      render: (text, record) => {
+      render: (_text, record) => {
         const { district, city } = record;
         return `${district}, ${city}`;
       },
@@ -191,14 +193,22 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
         <div>
           <Button
             onClick={handleApproveSelections}
-            type='primary'
-            danger
             className='mr-2'
+            style={{
+              color: selectedRows.length > 0 ? '#4096ff' : '',
+              borderColor: selectedRows.length > 0 ? '#4096ff' : 'transparent',
+            }}
             icon={<CheckOutlined />}
+            disabled={selectedRows.length > 0 ? false : true}
           >
             Approve
           </Button>
-          <Button onClick={handleRejectSelections} icon={<CloseOutlined />}>
+          <Button
+            danger
+            onClick={handleRejectSelections}
+            icon={<CloseOutlined />}
+            disabled={selectedRows.length > 0 ? false : true}
+          >
             Reject
           </Button>
         </div>

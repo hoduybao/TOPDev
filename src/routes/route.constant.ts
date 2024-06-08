@@ -16,8 +16,8 @@ export const MY_ROUTE = {
 
   // Admin
   ADMIN: '/admin',
-  ADMIN_ACCOUNT_MANAGEMENT: '/admin',
-  ADMIN_JOB_MANAGEMENT: '/admin/manage-job',
+  ADMIN_ACCOUNT_MANAGEMENT: '/admin/mange-account',
+  ADMIN_JOB_MANAGEMENT: '/admin/manage-jobs',
   ADMIN_LOGIN: '/admin/login',
   ADMIN_COMPANY_PROFILE: '/admin/company/:companyId',
   ADMIN_CANDIDATE_PROFILE: '/admin/candidate/:candidateId',

@@ -2,53 +2,53 @@ import { TAG_TYPES } from '@/+core/constants/api.tagTypes';
 import { commonApi } from '../../common.api';
 import { BaseResponse, ListResponseData, transformResponse } from '../response.type';
 import {
-  EmployerDetailResponse,
-  EmployerActionResponse,
-  ListEmployersRES,
+  CompanyActionResponse,
+  CompanyDetailResponse,
+  ListCompanyRES,
 } from './employer-admin.response';
-import { FilterEmployersTypeREQ } from './employer-admin.request';
-
-const jobServiceApi = commonApi
+import { FilterCompanyTypeREQ } from './employer-admin.request';
+const companyServiceApi = commonApi
   .enhanceEndpoints({ addTagTypes: [TAG_TYPES.EMPLOYER_ACCOUNT, TAG_TYPES.COMPANY] })
   .injectEndpoints({
     endpoints: (build) => ({
-      getListEmployers: build.query<ListResponseData<ListEmployersRES>, FilterEmployersTypeREQ>({
+      getListCompany: build.query<ListResponseData<ListCompanyRES>, FilterCompanyTypeREQ>({
         query: (params) => ({
-          url: '/users/admin/employers/condition/',
+          url: '/jobs/companies/filter',
           method: 'GET',
-          params: { ...params, status: params.status },
+          params: { ...params },
         }),
         transformResponse: transformResponse,
         providesTags: [TAG_TYPES.EMPLOYER_ACCOUNT],
       }),
-      getEmployerDetail: build.query<BaseResponse<EmployerDetailResponse>, string>({
+      getCompanyDetail: build.query<BaseResponse<CompanyDetailResponse>, string>({
         query: (id) => ({
-          url: `/jobs/${id}`,
+          url: `/jobs/companies/${id}`,
           method: 'GET',
         }),
+        providesTags: [TAG_TYPES.EMPLOYER_ACCOUNT],
       }),
-      approveEmployers: build.mutation<EmployerActionResponse, { ids: string[] }>({
+      approveCompanies: build.mutation<CompanyActionResponse, { ids: string[] }>({
         query: ({ ids }) => ({
-          url: '/jobs/update-status',
+          url: '/jobs/companies/update-status',
           method: 'PATCH',
           body: ids.map((id) => {
             return {
               id: id,
-              status: 'APPROVED',
+              status: 1,
             };
           }),
         }),
         invalidatesTags: [TAG_TYPES.EMPLOYER_ACCOUNT],
       }),
 
-      refuseEmployers: build.mutation<EmployerActionResponse, { ids: string[]; reason: string }>({
+      refuseCompanies: build.mutation<CompanyActionResponse, { ids: string[]; reason: string }>({
         query: ({ ids, reason }) => ({
-          url: '/jobs/update-status',
+          url: '/jobs/companies/update-status',
           method: 'PATCH',
           body: ids.map((id) => {
             return {
               id: id,
-              status: 'REJECTED',
+              status: -1,
               reason: reason,
             };
           }),
@@ -59,8 +59,8 @@ const jobServiceApi = commonApi
   });
 
 export const {
-  useGetListEmployersQuery,
-  useGetEmployerDetailQuery,
-  useApproveEmployersMutation,
-  useRefuseEmployersMutation,
-} = jobServiceApi;
+  useGetListCompanyQuery,
+  useGetCompanyDetailQuery,
+  useApproveCompaniesMutation,
+  useRefuseCompaniesMutation,
+} = companyServiceApi;
