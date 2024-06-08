@@ -7,13 +7,13 @@ import { useState } from 'react';
 
 interface PendingAccountTableProps {
   data: HRAccount[];
-  approveAccounts: (hrIds: string[]) => Promise<void>;
-  rejectAccounts: (hrIds: string[]) => Promise<void>;
+  approveAccounts?: (hrIds: string[]) => Promise<void>;
+  rejectAccounts?: (hrIds: string[]) => Promise<void>;
   status: number;
 }
 
 const AccountTable = (props: PendingAccountTableProps) => {
-  const { data, status, approveAccounts, rejectAccounts } = props;
+  const { data, status, approveAccounts = () => {}, rejectAccounts = () => {} } = props;
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [openModal, setOpenModal] = useState(false);
   const [type, setType] = useState<number>(0);

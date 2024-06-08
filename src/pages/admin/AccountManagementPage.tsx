@@ -20,7 +20,8 @@ const AccountManagementPage = () => {
   const state = useSelector((state: RootState) => state);
   const isLogin = selectIsLogin(state);
   const navigate = useNavigate();
-  const { data: accounts, isLoading } = useGetHRAccountsQuery();
+  const [pagination, setPagination] = useState({ page: 1, limit: 1 });
+  const { data, isLoading, refetch } = useGetHRAccountsQuery(pagination);
   const [updateHRStatus, { isLoading: isActivatingHRAccounts }] = useUpdateHRAccountsMutation();
 
   if (!isLogin) {
@@ -65,7 +66,7 @@ const AccountManagementPage = () => {
       ),
       children: (
         <AccountTable
-          data={accounts}
+          data={data?.accounts || []}
           status={0}
           approveAccounts={handleApprove}
           rejectAccounts={handleReject}
@@ -80,7 +81,7 @@ const AccountManagementPage = () => {
           <p>Approved</p>
         </div>
       ),
-      children: <AccountTable data={accounts} status={1} />,
+      children: <AccountTable data={data?.accounts || []} status={1} />,
     },
     {
       key: '3',
@@ -90,18 +91,21 @@ const AccountManagementPage = () => {
           <p>Rejected</p>
         </div>
       ),
-      children: <AccountTable data={accounts} status={-1} />,
+      children: <AccountTable data={data?.accounts || []} status={-1} />,
     },
   ];
 
-  const handleChangePage = (page: number, pageSize: number) => {
-    console.log(page, ' ', pageSize);
+  const handleChangePage = async (page: number, pageSize: number) => {
+    console.log(page, pageSize);
+
+    // setPagination({ page, limit: pageSize });
+    // await refetch();
   };
 
   return (
     <>
       <Spin spinning={isLoading || isActivatingHRAccounts}>
-        {accounts && (
+        {data && data?.accounts && (
           <div className='w-full h-screen font-roboto px-4 bg-white-700'>
             {/* <div className='py-2'>
         <span className='font-bold text-xl text-black-400'>Account Manager</span>
@@ -127,9 +131,9 @@ const AccountManagementPage = () => {
                   {/* Thêm class "justify-end" để căn phải */}
                   <Pagination
                     className='mt-5'
-                    defaultCurrent={1}
-                    total={accounts.length}
-                    pageSize={5}
+                    defaultCurrent={pagination.page}
+                    total={data?.total || 0}
+                    pageSize={pagination.limit}
                     onChange={handleChangePage}
                   />
                 </div>
