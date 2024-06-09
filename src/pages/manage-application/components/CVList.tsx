@@ -32,12 +32,16 @@ const CVList = ({ data }: { data: Application[] }) => {
     },
     {
       title: 'Tin Tuyển Dụng',
-      render(value) {
+      render(value: Application) {
+        console.log(value);
+
         return (
           <div>
             <div>
-              <RightSquareOutlined className='m-2 text-green-400' />
-              <span>{value?.title}</span>
+              <div className='text-base font-semibold'>{value?.jobDetail?.title}</div>
+              <div>
+                {value?.jobDetail?.jobType} - {value?.jobDetail?.level}
+              </div>
             </div>
           </div>
         );
