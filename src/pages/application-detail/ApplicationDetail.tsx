@@ -22,7 +22,7 @@ const ApplicationDetail = () => {
 
           <div className='col-span-1 px-4 py-2'>
             <ProfileSession name={data?.fullName} email={data?.email} phone={data?.phone} />
-            <CVStatus status={data?.status} cvUrl={data?.cvUrl} />
+            {data && <CVStatus appId={data?.id} status={data?.status} cvUrl={data?.cvUrl} />}
             <CandateCode />
           </div>
         </div>
