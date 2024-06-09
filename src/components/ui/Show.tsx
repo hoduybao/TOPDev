@@ -5,5 +5,12 @@ export const Show = ({
   children: React.ReactNode;
   isShow?: boolean;
 }) => {
-  return <div>{isShow ? children : null}</div>;
+  return (
+    <div
+      className={`
+      ${isShow ? 'block' : 'hidden'}`}
+    >
+      {children}
+    </div>
+  );
 };

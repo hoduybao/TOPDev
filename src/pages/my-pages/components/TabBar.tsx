@@ -12,7 +12,7 @@ export const TabBar = ({ tab, setTab }: { tab: string; setTab: (tab: string) => 
         } hover:border-b-2`}
       >
         <Link
-          to='/users?tab=profile'
+          to=''
           className={`${
             tab === 'profile' ? 'font-bold' : ''
           } block py-[22px] text-center text-primary-red transition-all duration-300 group-hover:font-bold group-hover:text-primary-red`}
@@ -20,7 +20,7 @@ export const TabBar = ({ tab, setTab }: { tab: string; setTab: (tab: string) => 
           {t('myTopDevCv')}
         </Link>
       </div>
-      {/* <div
+      <div
         onClick={() => setTab('job-management')}
         className={`group block w-full transition-all duration-300 ${
           tab === 'job-management' ? 'border-b-2' : 'border-b'
@@ -34,7 +34,7 @@ export const TabBar = ({ tab, setTab }: { tab: string; setTab: (tab: string) => 
         >
           {t('jobManagement')}
         </Link>
-      </div> */}
+      </div>
       <div
         onClick={() => setTab('cv-management')}
         className={`group block w-full transition-all duration-300 ${
@@ -42,7 +42,7 @@ export const TabBar = ({ tab, setTab }: { tab: string; setTab: (tab: string) => 
         } hover:border-b-2`}
       >
         <Link
-          to='/users?tab=cv-management'
+          to=''
           className={`${
             tab === 'cv-management' ? 'font-bold' : ''
           } block py-[22px] text-center text-primary-red transition-all duration-300 group-hover:font-bold group-hover:text-primary-red`}
@@ -57,7 +57,7 @@ export const TabBar = ({ tab, setTab }: { tab: string; setTab: (tab: string) => 
         } hover:border-b-2`}
       >
         <Link
-          to='/users?tab=jobs-applied'
+          to=''
           className={`${
             tab === 'jobs-applied' ? 'font-bold' : ''
           } block py-[22px] text-center text-primary-red transition-all duration-300 group-hover:font-bold group-hover:text-primary-red`}
@@ -72,7 +72,7 @@ export const TabBar = ({ tab, setTab }: { tab: string; setTab: (tab: string) => 
         } hover:border-b-2`}
       >
         <Link
-          to='/users?tab=jobs-followed'
+          to=''
           className={`${
             tab === 'jobs-followed' ? 'font-bold' : ''
           } block py-[22px] text-center text-primary-red transition-all duration-300 group-hover:font-bold group-hover:text-primary-red`}

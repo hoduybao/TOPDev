@@ -1,11 +1,11 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import companyData from '../../../draft/company-new.json';
 // Import Swiper styles
-import { ICONS } from '@/config/icons';
-import { ArrowRightOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
 import 'swiper/css';
+import { useTranslation } from 'react-i18next';
+import { ICONS } from '@/config/icons';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowRightOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 type Props = {
   type: string;
@@ -124,7 +124,7 @@ const Sliders = ({ size, autoplay }: { size: number; autoplay: boolean }) => {
 
   return (
     <div>
-      <Swiper {...swiperProps} navigation={true} className='swiper-company'>
+      <Swiper {...swiperProps} navigation={true}>
         {data.map((company: SliderCompanyItem, index: number) => (
           <SwiperSlide key={company.id + index}>
             <SliderItem company={company} />
@@ -138,9 +138,9 @@ const Sliders = ({ size, autoplay }: { size: number; autoplay: boolean }) => {
 const CompanySliders = ({ type, size, autoplay = false }: Props) => {
   const { t } = useTranslation();
   return (
-    <div className='mt-8 mb-4' id={type}>
-      <h3 className='capitalize font-bold text-lg mb-12'>{t(type)}</h3>
-      <div className='h-full'>
+    <div className='my-4' id={type}>
+      <h3 className='capitalize font-bold text-lg mb-4'>{t(type)}</h3>
+      <div className='h-full '>
         <Sliders size={size} autoplay={autoplay} />
       </div>
     </div>

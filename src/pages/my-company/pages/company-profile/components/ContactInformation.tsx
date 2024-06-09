@@ -1,7 +1,8 @@
-import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Space, type FormProps } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button, Form, Input, Space } from 'antd';
+import { type FormProps } from 'antd';
+import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
 
 type FieldType = {
   emailAddress?: string;
@@ -35,14 +36,14 @@ const ContactInformation = () => {
 
   return (
     <Form
-      name='company-contact-information !w-full'
+      name='company-contact-information'
       form={CompanyContactInformationForm}
       labelCol={{ span: 24 }}
       wrapperCol={{ span: 24 }}
       onFinish={onEditFinish}
       onFinishFailed={onEditFinishFailed}
     >
-      <section className='w-full'>
+      <section>
         <h1 className='text-xl font-bold flex items-center gap-1'>
           <p className='text-sm text-red-500'>*</p>
           {t('contactInformation')}

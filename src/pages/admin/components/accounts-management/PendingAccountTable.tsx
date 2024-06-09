@@ -1,20 +1,22 @@
-import { HRAccount } from '@/+core/utilities/types/admin.type';
+import { ListCompanyRES } from '@/+core/redux/apis/admin/employer-management/employer-admin.response';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, TableProps, Tag, Tooltip } from 'antd';
-import { SearchProps } from 'antd/es/input';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface PendingAccountTableProps {
-  data: HRAccount[];
-  approveAccounts: (accounts: HRAccount[]) => void;
-  rejectAccounts: (accounts: HRAccount[]) => void;
+  data: ListCompanyRES[];
+  approveEmployers: (accounts: ListCompanyRES[]) => void;
+  rejectEmployers: (accounts: ListCompanyRES[]) => void;
+  onSearch: (keyword: string) => void;
+  viewEmployer: (employer: ListCompanyRES) => void;
 }
 
 const PendingAccountTable = (props: PendingAccountTableProps) => {
-  const [data, setData] = useState<HRAccount[]>(props.data);
+  const { data, approveEmployers, rejectEmployers, onSearch, viewEmployer } = props;
   const { Search } = Input;
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [selectedRows, setSelectedRows] = useState<HRAccount[]>([]);
+  const [selectedRows, setSelectedRows] = useState<ListCompanyRES[]>([]);
+
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
     const DataWithKeys = addKeyToData(data);
@@ -22,11 +24,7 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
     setSelectedRows(newSelectedRows);
   };
 
-  useEffect(() => {
-    setData(props.data);
-  }, [props]);
-
-  function addKeyToData(data: HRAccount[]) {
+  function addKeyToData(data: ListCompanyRES[]) {
     return data.map((item, index) => {
       return { ...item, key: index.toString() };
     });
@@ -36,129 +34,120 @@ const PendingAccountTable = (props: PendingAccountTableProps) => {
     selectedRowKeys,
     onChange: onSelectChange,
   };
-  const columns: TableProps<HRAccount>['columns'] = [
+
+  const columns: TableProps<ListCompanyRES>['columns'] = [
     {
       title: 'Company Name',
-      dataIndex: 'companyName',
+      dataIndex: 'name',
       key: 'name',
-      // render: (text) => <a>{text}</a>,
+      render: (text, record) => (
+        <a className='text-blue-500 hover:underline' href={`/admin/company/${record.id}`}>
+          {text}
+        </a>
+      ),
     },
     {
-      title: 'Tax Code',
-      dataIndex: 'taxCode',
-      key: 'taxCode',
+      title: 'Nation',
+      dataIndex: 'nationality',
+      key: 'nationality',
+      render: (_, { nationality: nations }) => nations?.join(', '),
     },
     {
-      title: 'Display Name',
-      dataIndex: 'displayName',
-      key: 'displayName',
+      title: 'Company size',
+      dataIndex: 'companySize',
+      key: 'companySize',
     },
     {
-      title: 'Fields',
-      key: 'fields',
-      dataIndex: 'fields',
-      render: (_, { fields }) => (
-        <>
-          {fields.map((field) => {
+      title: 'Industry',
+      key: 'industry',
+      dataIndex: 'industry',
+      render: (_, { industry: industries }) => (
+        <div className='max-w-64'>
+          {industries?.map((industry) => {
             return (
-              <Tag color={'geekblue'} key={field}>
-                {field.toUpperCase()}
+              <Tag color={'geekblue'} key={industry}>
+                {industry}
               </Tag>
             );
           })}
-        </>
+        </div>
       ),
     },
     {
       title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      dataIndex: 'addresses',
+      key: 'addresses',
+      render: (_, { addresses: addresses }) =>
+        addresses?.map((address) => address.addressDetail).join('\n '),
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      title: 'Phone Number',
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
     },
     {
-      title: 'Action',
+      title: <div className='font-semi-bold pl-5'>Action</div>,
       key: 'action',
       render: (_, record) => (
         <Space size='middle'>
-          <Tooltip placement='top' title={'Approve'}>
+          <Tooltip placement='top' title={'View Detail'}>
             <Button
-              onClick={() => {
-                handleApproveAction(record);
-              }}
-              icon={<CheckOutlined />}
-            ></Button>
-          </Tooltip>
-          <Tooltip placement='top' title={'Reject'}>
-            <Button
-              onClick={() => {
-                handleRejectAction(record);
-              }}
-              danger
-              icon={<CloseOutlined />}
-            ></Button>
+              onClick={() => handleViewEmployerDetails(record)}
+              className='text-blue-500 border border-white-900'
+            >
+              View Details
+            </Button>
           </Tooltip>
         </Space>
       ),
     },
   ];
 
-  const onSearch: SearchProps['onSearch'] = (value, _e) => {
-    const newData = props.data.filter(
-      (item) =>
-        item.companyName.toLowerCase().includes(value.toLowerCase()) ||
-        item.taxCode.toString().toLowerCase().includes(value) ||
-        item.displayName.toLowerCase().includes(value.toLowerCase()) ||
-        item.fields.some((field) => field.toLowerCase().includes(value.toLowerCase())) ||
-        item.address.toLowerCase().includes(value.toLowerCase()),
-    );
-
-    setData(newData);
-  };
-
   const handleApproveSelections = () => {
-    props.approveAccounts(selectedRows);
+    approveEmployers(selectedRows);
     setSelectedRowKeys([]);
   };
 
   const handleRejectSelections = () => {
-    props.rejectAccounts(selectedRows);
+    rejectEmployers(selectedRows);
     setSelectedRowKeys([]);
   };
 
-  const handleApproveAction = (record: any) => {
-    const { key, ...account } = record;
-    props.approveAccounts([account]);
-    setSelectedRowKeys(selectedRowKeys.filter((selectedKey) => selectedKey !== key));
-  };
-
-  const handleRejectAction = (record: any) => {
-    const { key, ...account } = record;
-    props.rejectAccounts([account]);
-    setSelectedRowKeys(selectedRowKeys.filter((selectedKey) => selectedKey !== key));
+  const handleViewEmployerDetails = (employer: ListCompanyRES) => {
+    viewEmployer(employer);
   };
 
   return (
     <>
-      <div className='flex justify-between'>
+      <div className='flex justify-between items-center'>
         <div>
           <Button
             onClick={handleApproveSelections}
             className='mr-2'
-            style={{ color: '#4096ff', borderColor: '#4096ff' }}
+            style={{
+              color: selectedRows.length > 0 ? '#4096ff' : '',
+              borderColor: selectedRows.length > 0 ? '#4096ff' : 'transparent',
+            }}
             icon={<CheckOutlined />}
+            disabled={selectedRows.length > 0 ? false : true}
           >
             Approve
           </Button>
-          <Button danger onClick={handleRejectSelections} icon={<CloseOutlined />}>
+          <Button
+            danger
+            onClick={handleRejectSelections}
+            icon={<CloseOutlined />}
+            disabled={selectedRows.length > 0 ? false : true}
+          >
             Reject
           </Button>
         </div>
 
-        <Search placeholder='Input search text' onSearch={onSearch} style={{ width: 200 }} />
+        <Search
+          placeholder='Input search text'
+          onSearch={onSearch}
+          style={{ width: 200, marginLeft: 'auto' }}
+        />
       </div>
       <Table
         className='mt-2'

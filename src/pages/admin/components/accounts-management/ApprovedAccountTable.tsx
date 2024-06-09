@@ -1,140 +1,115 @@
-import { HRAccount } from '@/+core/utilities/types/admin.type';
-import { StopOutlined } from '@ant-design/icons';
+import { ListCompanyRES } from '@/+core/redux/apis/admin/employer-management/employer-admin.response';
 import { Button, Input, Space, Table, TableProps, Tag, Tooltip } from 'antd';
-import { SearchProps } from 'antd/es/input';
-import { useEffect, useState } from 'react';
 
 interface ApprovedAccountTableProps {
-  data: HRAccount[];
-  banAccounts: (accounts: HRAccount[]) => void;
+  data: ListCompanyRES[];
+  onSearch: (keyword: string) => void;
+  viewCompany: (employer: ListCompanyRES) => void;
 }
 
 const PendingAccountTable = (props: ApprovedAccountTableProps) => {
-  const [data, setData] = useState<HRAccount[]>(props.data);
+  const { data, onSearch, viewCompany } = props;
   const { Search } = Input;
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [selectedRows, setSelectedRows] = useState<HRAccount[]>([]);
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-    const DataWithKeys = addKeyToData(data);
-    const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
-    setSelectedRows(newSelectedRows);
-  };
+  // const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  // const [selectedRows, setSelectedRows] = useState<ListCompanyRES[]>([]);
 
-  useEffect(() => {
-    setData(props.data);
-  }, [props]);
+  // const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+  //   setSelectedRowKeys(newSelectedRowKeys);
+  //   const DataWithKeys = addKeyToData(data);
+  //   const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
+  //   setSelectedRows(newSelectedRows);
+  // };
 
-  function addKeyToData(data: HRAccount[]) {
+  function addKeyToData(data: ListCompanyRES[]) {
     return data.map((item, index) => {
       return { ...item, key: index.toString() };
     });
   }
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-  const columns: TableProps<HRAccount>['columns'] = [
+  // const rowSelection = {
+  //   selectedRowKeys,
+  //   onChange: onSelectChange,
+  // };
+
+  const columns: TableProps<ListCompanyRES>['columns'] = [
     {
       title: 'Company Name',
-      dataIndex: 'companyName',
+      dataIndex: 'name',
       key: 'name',
-      // render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Tax Code',
-      dataIndex: 'taxCode',
-      key: 'taxCode',
+      title: 'Nation',
+      dataIndex: 'nationality',
+      key: 'nationality',
+      render: (_, { nationality: nations }) => nations?.join(', '),
     },
     {
-      title: 'Display Name',
-      dataIndex: 'displayName',
-      key: 'displayName',
+      title: 'Company size',
+      dataIndex: 'companySize',
+      key: 'companySize',
     },
     {
-      title: 'Fields',
-      key: 'fields',
-      dataIndex: 'fields',
-      render: (_, { fields }) => (
-        <>
-          {fields.map((field) => {
+      title: 'Industry',
+      key: 'industry',
+      dataIndex: 'industry',
+      render: (_, { industry: industries }) => (
+        <div className='max-w-64'>
+          {industries?.map((industry) => {
             return (
-              <Tag color={'geekblue'} key={field}>
-                {field.toUpperCase()}
+              <Tag color={'geekblue'} key={industry}>
+                {industry}
               </Tag>
             );
           })}
-        </>
+        </div>
       ),
     },
     {
       title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      dataIndex: 'addresses',
+      key: 'addresses',
+      render: (_, { addresses: addresses }) =>
+        addresses?.map((address) => address.addressDetail).join('\n '),
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      title: 'Phone Number',
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
     },
     {
-      title: 'Action',
+      title: <div className='font-semi-bold pl-5'>Action</div>,
       key: 'action',
       render: (_, record) => (
         <Space size='middle'>
-          <Tooltip placement='top' title={'Ban'}>
+          <Tooltip placement='top' title={'View Detail'}>
             <Button
-              onClick={() => {
-                handleBanAction(record);
-              }}
-              danger
-              icon={<StopOutlined />}
-            ></Button>
+              onClick={() => handleViewEmployerDetails(record)}
+              className='text-blue-500 border border-white-900'
+            >
+              View Details
+            </Button>
           </Tooltip>
         </Space>
       ),
     },
   ];
 
-  const onSearch: SearchProps['onSearch'] = (value, _e) => {
-    const newData = props.data.filter(
-      (item) =>
-        item.companyName.toLowerCase().includes(value.toLowerCase()) ||
-        item.taxCode.toString().toLowerCase().includes(value) ||
-        item.displayName.toLowerCase().includes(value.toLowerCase()) ||
-        item.fields.some((field) => field.toLowerCase().includes(value.toLowerCase())) ||
-        item.address.toLowerCase().includes(value.toLowerCase()),
-    );
-
-    setData(newData);
-  };
-
-  const handleBanSelections = () => {
-    props.banAccounts(selectedRows);
-    setSelectedRowKeys([]);
-  };
-
-  const handleBanAction = (record: any) => {
-    const { key, ...account } = record;
-    props.banAccounts([account]);
-    setSelectedRowKeys(selectedRowKeys.filter((selectedKey) => selectedKey !== key));
+  const handleViewEmployerDetails = (employer: ListCompanyRES) => {
+    viewCompany(employer);
   };
 
   return (
     <>
-      <div className='flex justify-between'>
-        <Button danger onClick={handleBanSelections} icon={<StopOutlined />}>
-          Ban
-        </Button>
+      <div className='flex justify-end mb-3'>
         <Search placeholder='Input search text' onSearch={onSearch} style={{ width: 200 }} />
       </div>
+
       <Table
         className='mt-2'
-        rowSelection={rowSelection}
+        // rowSelection={rowSelection}
         columns={columns}
         dataSource={addKeyToData(data)}
-        pagination={{ pageSize: 5 }}
+        pagination={false}
       />
     </>
   );

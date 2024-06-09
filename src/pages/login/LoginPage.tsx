@@ -1,50 +1,27 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import colors from '../../+core/themes/colors';
 import { Button, Form, FormProps, Input } from 'antd';
 import { MY_ROUTE } from '@/routes/route.constant';
 import {
   AuthenticationFields,
-  useCandidateLoginMutation,
   useEmployerLoginMutation,
 } from '@/+core/redux/apis/common/authentication/authentication.api';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '@/+core/redux/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
-import { useGoogleLogin } from '@react-oauth/google';
 
 type LoginFormFields = AuthenticationFields;
 
 const LoginPage = () => {
   const [employerLogin, { isLoading }] = useEmployerLoginMutation();
-  const [candidateLogin, { isLoading: isLoadingCandidate }] = useCandidateLoginMutation();
   const dispatch = useDispatch();
+  // const { data, refetch } = useTestAuthorizationQuery();
   const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState<string>('1');
-  const isCalledLoginWithGithub = React.useRef(false);
-
-  React.useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-
-    const loginWithGithub = async (code: string) => {
-      isCalledLoginWithGithub.current = true;
-      const resp = await candidateLogin({
-        type: 'github',
-        token: code || '',
-      }).unwrap();
-
-      if (resp) {
-        dispatch(setCredentials(resp));
-        navigate('/');
-      }
-    };
-    // prevent double call api
-    if (code && !isCalledLoginWithGithub.current) {
-      loginWithGithub(code);
-    }
-  }, []);
 
   const onFinish: FormProps<LoginFormFields>['onFinish'] = async (values) => {
+    console.log('Success:', values);
     const resp = await employerLogin(values).unwrap();
 
     if (resp) {
@@ -56,30 +33,6 @@ const LoginPage = () => {
   const onFinishFailed: FormProps<LoginFormFields>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
-
-  const handleCandidateLogin = useGoogleLogin({
-    onSuccess: async (codeResponse) => {
-      console.log('Login Success:', codeResponse);
-
-      const resp = await candidateLogin({
-        type: 'google',
-        token: codeResponse?.access_token || '',
-      }).unwrap();
-
-      if (resp) {
-        dispatch(setCredentials(resp));
-        navigate('/');
-      }
-    },
-    onError: (error) => console.log('Login Failed:', error),
-  });
-
-  const handleGithubLogin = () => {
-    window.location.assign(
-      'https://github.com/login/oauth/authorize?client_id=' + import.meta.env.VITE_GITHUB_CLIENT_ID,
-    );
-  };
-
   return (
     <>
       <div className='font-roboto'>
@@ -137,10 +90,8 @@ const LoginPage = () => {
               </ul>
               {activeTab == '1' && (
                 <div className='p-8'>
-                  <Button
-                    loading={isLoadingCandidate}
-                    onClick={() => handleCandidateLogin()}
-                    className='h-full p-4 mb-3 rounded w-full flex justify-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
+                  <button
+                    className='p-4 mb-3 rounded w-full flex justify-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
                     style={{
                       border: `solid 1px ${colors.black[300]}`,
                       color: `solid 1px ${colors.black[300]}`,
@@ -152,11 +103,11 @@ const LoginPage = () => {
                       className='h-6 mr-3'
                     />
                     Tiếp tục với Google
-                  </Button>
+                    {/* <span className='ml-3 font-bold'></span> */}
+                  </button>
 
-                  <Button
-                    onClick={() => handleGithubLogin()}
-                    className='h-full p-4 mb-3 rounded w-full flex justify-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
+                  <button
+                    className='p-4 mb-3 rounded w-full flex justify-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
                     style={{
                       background: colors.black[300],
                       color: 'white',
@@ -168,7 +119,7 @@ const LoginPage = () => {
                       className='h-6 mr-3'
                     />
                     Tiếp tục với Github
-                  </Button>
+                  </button>
 
                   {/* <button
                     onClick={() => {

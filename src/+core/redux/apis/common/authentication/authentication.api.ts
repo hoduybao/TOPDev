@@ -6,11 +6,6 @@ export type AuthenticationFields = {
   password: string;
 };
 
-export type CandidateAuthen = {
-  type: string;
-  token: string;
-};
-
 export type EmployerRegister = {
   username?: string;
   password?: string;
@@ -54,20 +49,6 @@ const authenticationApi = commonApi
           };
         },
       }),
-      candidateLogin: build.mutation<any, any>({
-        query: (values: CandidateAuthen) => ({
-          url: `/auth/candidate/login`,
-          method: 'POST',
-          body: values,
-        }),
-        transformResponse: (response: ReponseLogin): ParseResponseLogin => {
-          return {
-            accessToken: response.data.access_token,
-            refreshToken: response.data.refresh_token,
-            userid: response.data.id,
-          };
-        },
-      }),
       employerRegister: build.mutation<any, any>({
         query: (values: EmployerRegister) => ({
           url: `/auth/employer/register`,
@@ -87,9 +68,5 @@ const authenticationApi = commonApi
     }),
   });
 
-export const {
-  useEmployerLoginMutation,
-  useTestAuthorizationQuery,
-  useEmployerRegisterMutation,
-  useCandidateLoginMutation,
-} = authenticationApi;
+export const { useEmployerLoginMutation, useTestAuthorizationQuery, useEmployerRegisterMutation } =
+  authenticationApi;

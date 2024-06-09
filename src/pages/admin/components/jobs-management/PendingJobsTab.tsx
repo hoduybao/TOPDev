@@ -1,20 +1,24 @@
-import { useGetJobByIdQuery } from '@/+core/redux/apis/admin/job-management/job-service.api';
-import { CompanyInfo, Job } from '@/+core/utilities/types/admin.type';
+import { CompanyInfo } from '@/+core/utilities/types/admin.type';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { Button, Input, Modal, Space, Table, TableProps, Tag, Tooltip } from 'antd';
+import { Button, Input, Modal, Space, Spin, Table, TableProps, Tag, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
 import { useEffect, useState } from 'react';
 import JobDescriptions from './JobDescriptions';
 import dayjs from 'dayjs';
+import {
+  JobDetailResponse,
+  ListJobsRES,
+} from '@/+core/redux/apis/admin/job-management/job-admin.response';
+import { useGetJobDetailQuery } from '@/+core/redux/apis/admin/job-management/job-admin.api';
 
 interface PendingJobTabProps {
-  data: Job[];
-  approveJobs: (accounts: Job[]) => void;
-  rejectJobs: (accounts: Job[]) => void;
+  data: ListJobsRES[];
+  approveJobs: (jobs: ListJobsRES[]) => void;
+  rejectJobs: (jobs: ListJobsRES[]) => void;
   onSearch: (keyword: string) => void;
 }
 
-function addKeyToData(data: Job[]) {
+function addKeyToData(data: ListJobsRES[]) {
   return data.map((item, index) => {
     return { ...item, key: index.toString() };
   });
@@ -24,12 +28,17 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
   const { data, approveJobs, rejectJobs, onSearch } = props;
   const { Search } = Input;
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [selectedRows, setSelectedRows] = useState<Job[]>([]);
+  const [selectedRows, setSelectedRows] = useState<ListJobsRES[]>([]);
 
   const [isJobDetailOpen, setIsJobDetailOpen] = useState<boolean>(false);
-  const [viewedJob, setViewedJob] = useState<Job>();
+  const [viewedJob, setViewedJob] = useState<JobDetailResponse>();
   const [viewedJobId, setViewedJobId] = useState<string>('');
-  const { data: JobDetailData } = useGetJobByIdQuery(viewedJobId);
+  //const { data: JobDetailData } = useGetJobByIdQuery(viewedJobId);
+
+  const { data: JobDetailData, isFetching: isFetchingJobDetail } = useGetJobDetailQuery(
+    viewedJobId,
+    { skip: viewedJobId == '' },
+  );
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(newSelectedRowKeys);
@@ -43,10 +52,18 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
   };
 
   useEffect(() => {
+    console.log(JobDetailData);
     setViewedJob(JobDetailData?.data);
   }, [JobDetailData]);
 
-  const columns: TableProps<Job>['columns'] = [
+  const columns: TableProps<ListJobsRES>['columns'] = [
+    {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+      sorter: (a, b) => a.title.localeCompare(b.title),
+      showSorterTooltip: false,
+    },
     {
       title: 'Company Name',
       dataIndex: 'company',
@@ -58,18 +75,10 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
       ),
     },
     {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
-      sorter: (a, b) => a.title.localeCompare(b.title),
-      showSorterTooltip: false,
-    },
-    {
       title: 'Level',
       dataIndex: 'level',
       key: 'level',
-      sorter: (a, b) => a.level.localeCompare(b.level),
-      showSorterTooltip: false,
+      render: (levels) => levels.join(', '),
     },
     {
       title: 'Technology',
@@ -91,15 +100,15 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
       title: 'Contract Type',
       dataIndex: 'contractType',
       key: 'contractType',
-      sorter: (a, b) => a.contractType.localeCompare(b.contractType),
-      showSorterTooltip: false,
     },
     {
       title: 'Place',
       dataIndex: 'workingPlace',
       key: 'workingPlace',
-      sorter: (a, b) => a.workingPlace.localeCompare(b.workingPlace),
-      showSorterTooltip: false,
+      render: (_text, record) => {
+        const { district, city } = record;
+        return `${district}, ${city}`;
+      },
     },
     // {
     //   title: 'End Date',
@@ -149,9 +158,8 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
     setSelectedRowKeys([]);
   };
 
-  const handleViewJobDetails = (job: Job) => {
+  const handleViewJobDetails = (job: ListJobsRES) => {
     setViewedJobId(job.id);
-    setViewedJob(job);
     setIsJobDetailOpen(true);
   };
 
@@ -161,14 +169,20 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
 
   const handleApproveModal = () => {
     if (viewedJob) {
-      approveJobs([viewedJob]);
+      const foundJobs = [data.find((item) => item.id === viewedJob.id)];
+      if (foundJobs && foundJobs[0]) {
+        approveJobs([foundJobs[0]]);
+      }
     }
     handleCancel();
   };
 
   const handleRejectModal = () => {
     if (viewedJob) {
-      rejectJobs([viewedJob]);
+      const foundJobs = [data.find((item) => item.id === viewedJob.id)];
+      if (foundJobs && foundJobs[0]) {
+        rejectJobs([foundJobs[0]]);
+      }
     }
     handleCancel();
   };
@@ -179,14 +193,22 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
         <div>
           <Button
             onClick={handleApproveSelections}
-            type='primary'
-            danger
             className='mr-2'
+            style={{
+              color: selectedRows.length > 0 ? '#4096ff' : '',
+              borderColor: selectedRows.length > 0 ? '#4096ff' : 'transparent',
+            }}
             icon={<CheckOutlined />}
+            disabled={selectedRows.length > 0 ? false : true}
           >
             Approve
           </Button>
-          <Button onClick={handleRejectSelections} icon={<CloseOutlined />}>
+          <Button
+            danger
+            onClick={handleRejectSelections}
+            icon={<CloseOutlined />}
+            disabled={selectedRows.length > 0 ? false : true}
+          >
             Reject
           </Button>
         </div>
@@ -218,7 +240,9 @@ const PendingJobsTab = (props: PendingJobTabProps) => {
         }
       >
         <div className='max-h-[65vh] overflow-y-auto'>
-          {viewedJob && <JobDescriptions data={viewedJob} />}
+          <Spin spinning={isFetchingJobDetail}>
+            {viewedJob && <JobDescriptions data={viewedJob} />}
+          </Spin>
         </div>
       </Modal>
     </>
