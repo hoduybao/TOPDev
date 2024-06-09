@@ -5,7 +5,7 @@ import { Tooltip } from 'antd';
 import { ColumnGroupType, ColumnType } from 'antd/es/table';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PostStatus from './PostStatus';
 
 export const Columns = (): (ColumnGroupType<ListJobsRES> | ColumnType<ListJobsRES>)[] => {
@@ -23,7 +23,7 @@ export const Columns = (): (ColumnGroupType<ListJobsRES> | ColumnType<ListJobsRE
             <span className='text-base font-semibold'>{record.title}</span>
           </div>
           <span className='!px-3 py-1 bg-primary-100 text-primary-red w-fit rounded-sm cursor-pointer hover:bg-primary-red hover:text-white-900'>
-            Xem CV ứng tuyển
+            <Link to={`/recruitment/${record.id}/applications`}>Xem CV ứng tuyển</Link>
           </span>
         </div>
       ),

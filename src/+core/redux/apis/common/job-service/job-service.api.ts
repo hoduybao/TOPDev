@@ -59,6 +59,14 @@ const jobServiceApi = commonApi
         transformResponse: transformResponse,
         providesTags: [TAG_TYPES.JOB],
       }),
+      getJobsByCompanyIdPublic: build.query<ListResponseData<ListJobsRES>, any>({
+        query: ({ page = '1', id, limit = '10' }: { page: string; limit: string; id: string }) => ({
+          url: `/jobs/companies/${id}/jobs?page=${page}&limit=${limit}&status=PUBLIC`,
+          method: 'GET',
+        }),
+        transformResponse: transformResponse,
+        providesTags: [TAG_TYPES.JOB],
+      }),
       getJobDetail: build.query<BaseResponse<JobDetailResponse>, string>({
         query: (id) => ({
           url: `/jobs/${id}`,
@@ -75,4 +83,5 @@ export const {
   useCreateJobMutation,
   useGetJobDetailQuery,
   useUpdateJobMutation,
+  useGetJobsByCompanyIdPublicQuery,
 } = jobServiceApi;

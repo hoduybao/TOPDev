@@ -5,4 +5,5 @@ export enum TAG_TYPES {
   APPLICATION = 'application',
   AUTHENTICATION = 'authentication',
   REGISTER_EMPLOYER = 'registerEmployer',
+  HR_ACCOUNTS = 'hrAccounts',
 }

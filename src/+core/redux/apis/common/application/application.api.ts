@@ -22,17 +22,43 @@ const applicationApi = commonApi
           body: values,
         }),
       }),
+      updateStatus: build.mutation<any, any>({
+        query: ({ id, status }: { id: string; status: string }) => ({
+          url: `/applications/${id}`,
+          method: 'PATCH',
+          body: { status },
+        }),
+        invalidatesTags: [{ type: TAG_TYPES.APPLICATION }],
+      }),
       getApplication: build.query<any, any>({
         query: (id: string) => ({
           url: `/applications/${id}`,
           method: 'GET',
         }),
+        transformResponse: (response: any) => {
+          return response.data;
+        },
       }),
       getApplicationsByCompanyId: build.query<any, any>({
-        query: (id: string) => ({
-          url: `/applications/list-apply/${id}`,
+        query: ({
+          id,
+          page = '1',
+          limit = '10',
+          status,
+        }: {
+          id: string;
+          page: string;
+          limit: string;
+          status: string;
+        }) => ({
+          url: `/applications/list-apply/${id}?page=${page}&limit=${limit}&status=${
+            status !== 'ALL' ? status : ''
+          }`,
           method: 'GET',
         }),
+        transformResponse: (response: any) => {
+          return response.data;
+        },
       }),
     }),
   });
@@ -41,4 +67,5 @@ export const {
   useCreateApplicationMutation,
   useGetApplicationQuery,
   useGetApplicationsByCompanyIdQuery,
+  useUpdateStatusMutation,
 } = applicationApi;

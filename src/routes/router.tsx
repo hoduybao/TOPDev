@@ -27,6 +27,8 @@ import LoginPage from '../pages/login/LoginPage';
 import ResetPasswordPage from '../pages/login/ResetPasswordPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import { MY_ROUTE } from './route.constant';
+import ApplicationsPage from '@/pages/manage-application/ApplicationsPage';
+import ApplicationDetail from '@/pages/application-detail/ApplicationDetail';
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +60,14 @@ export const router = createBrowserRouter([
     ],
   },
   {
+    path: '/recruitment',
+    element: <CompanyLayout />,
+    children: [
+      { path: MY_ROUTE.RECRUITMENT_PROCESS, element: <ApplicationsPage /> },
+      { path: MY_ROUTE.RECRUITMENT_DETAIL, element: <ApplicationDetail /> },
+    ],
+  },
+  {
     element: <PrivateRoute />,
     children: [
       {
@@ -86,7 +96,7 @@ export const router = createBrowserRouter([
         path: '/admin',
         element: <AdminLayout />,
         children: [
-          { path: MY_ROUTE.ADMIN, element: <AccountManagementPage /> },
+          // { path: MY_ROUTE.ADMIN, element: <AccountManagementPage /> },
           { path: MY_ROUTE.ADMIN_ACCOUNT_MANAGEMENT, element: <AccountManagementPage /> },
           { path: MY_ROUTE.ADMIN_JOB_MANAGEMENT, element: <JobManagementPage /> },
           { path: MY_ROUTE.ADMIN_COMPANY_PROFILE, element: <AdminCompanyProfile /> },

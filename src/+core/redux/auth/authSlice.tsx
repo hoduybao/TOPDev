@@ -42,10 +42,11 @@ const authSlice = createSlice({
       setLocalAccessToken('');
       setLocalRefreshToken('');
       setIsLogin('false');
+      console.log('logOut');
     },
     setLogin: (state, action: PayloadAction<boolean>) => {
       state.isLoggin = action.payload;
-      setIsLogin('false');
+      setIsLogin(String(action.payload));
     },
   },
 });
@@ -57,7 +58,7 @@ export const { setCredentials, logOut, setLogin } = authSlice.actions;
 export default authSlice.reducer;
 
 // Define the state type for the selectors
-interface RootState {
+export interface RootState {
   auth: AuthState;
 }
 
