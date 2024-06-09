@@ -153,7 +153,7 @@ const CVList = ({
   ];
   return (
     <div className='mt-8'>
-      {total && (
+      {total ? (
         <Table
           pagination={{
             current: Number(currentPage),
@@ -166,7 +166,7 @@ const CVList = ({
           columns={columns}
           dataSource={dataSource}
         />
-      )}
+      ) : null}
     </div>
   );
 };

@@ -274,5 +274,7 @@
   "contactInfo": "Contact Info",
   "submitedDate": "Submited date",
   "findPlaceholder": "Search by name, email, phone",
-  "chooseJob": "Choose job"
+  "chooseJob": "Choose job",
+  "applyForJob": " applied for job",
+  "notFoundApplications": "No applications found"
 }

@@ -262,6 +262,7 @@
   "pendingCV": "Chờ xét duyệt",
   "approvedCV": "Đã duyệt",
   "rejectedCV": "Đã từ chối",
+  "viewingCV": "Đang xem",
   "origin": "Nguồn gốc",
   "changeCVStatus": "Thay đổi trạng thái CV",
   "shareCV": "Chia sẻ CV",
@@ -273,5 +274,7 @@
   "contactInfo": "Thông tin liên hệ",
   "submitedDate": "Ngày nộp",
   "findPlaceholder": "Tìm kiếm tên, email, số điện thoại",
-  "chooseJob": "Chọn công việc"
+  "chooseJob": "Chọn công việc",
+  "applyForJob": " ứng tuyển cho công việc",
+  "notFoundApplications": "Không tìm thấy ứng viên nào"
 }

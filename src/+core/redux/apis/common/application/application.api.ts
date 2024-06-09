@@ -40,8 +40,20 @@ const applicationApi = commonApi
         },
       }),
       getApplicationsByCompanyId: build.query<any, any>({
-        query: ({ id, page = '1', limit = '10' }: { id: string; page: string; limit: string }) => ({
-          url: `/applications/list-apply/${id}?page=${page}&limit=${limit}`,
+        query: ({
+          id,
+          page = '1',
+          limit = '10',
+          status,
+        }: {
+          id: string;
+          page: string;
+          limit: string;
+          status: string;
+        }) => ({
+          url: `/applications/list-apply/${id}?page=${page}&limit=${limit}&status=${
+            status !== 'ALL' ? status : ''
+          }`,
           method: 'GET',
         }),
         transformResponse: (response: any) => {

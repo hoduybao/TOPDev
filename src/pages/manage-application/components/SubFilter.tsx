@@ -6,10 +6,12 @@ const SubFilter = ({
   total,
   showState,
   setShowState,
+  title,
 }: {
   total: number;
   showState: boolean;
   setShowState: (value: boolean) => void;
+  title: string;
 }) => {
   const { t } = useTranslation();
   const options = [
@@ -21,10 +23,18 @@ const SubFilter = ({
     <Container>
       <div className='flex justify-between'>
         <div>
-          {t('found')} <span className='text-green-500 font-bold'>{total}</span>{' '}
-          {total > 1 ? t('candidates') : t('candidate')}
+          {total > 0 ? (
+            <>
+              {t('found')} <span className='text-green-500 font-bold'>{total}</span>{' '}
+              {total > 1 ? t('candidates') : t('candidate')}
+              {total > 0 ? t('applyForJob') : ''}
+              {title ? <span className='font-semibold'> {title}</span> : ''}
+            </>
+          ) : (
+            <>{t('notFoundApplications')}</>
+          )}
         </div>
-        <Radio.Group
+        {/* <Radio.Group
           defaultValue={showState}
           className='text-green-500'
           options={options}
@@ -32,7 +42,7 @@ const SubFilter = ({
             console.log(value);
             setShowState(value);
           }}
-        />
+        /> */}
       </div>
     </Container>
   );

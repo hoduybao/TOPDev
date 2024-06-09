@@ -9,11 +9,13 @@ import React from 'react';
 
 const ApplicationsPage = () => {
   const { jobId } = useParams<{ jobId: string }>();
-  const [pagination, setPagination] = React.useState({ page: '1', limit: '2' });
+  const [pagination, setPagination] = React.useState({ page: '1', limit: '5' });
+  const [cvState, setCvState] = React.useState('ALL');
   const { data, isFetching } = useGetApplicationsByCompanyIdQuery({
     id: jobId,
     page: pagination.page,
     limit: pagination.limit,
+    status: cvState,
   });
   const [showState, setShowState] = React.useState(true); // true for all cv, false for unseen cv
 
@@ -22,18 +24,17 @@ const ApplicationsPage = () => {
   };
 
   return (
-    <Spin spinning={isFetching}>
-      <div>
-        <Filter />
+    <div className='w-full'>
+      <Spin spinning={isFetching}>
+        <Filter isFetching={isFetching} setCvState={setCvState} cvState={cvState} />
         <div className='mt-8'>
           <SubFilter
             setShowState={setShowState}
             showState={showState}
             total={data?.paging?.total}
+            title={data?.data.length && data?.data[0].jobDetail?.title}
           />
         </div>
-      </div>
-      <Container>
         <CVList
           showState={showState}
           data={data?.data}
@@ -42,9 +43,8 @@ const ApplicationsPage = () => {
           currentPage={pagination.page}
           changePage={changePage}
         />
-      </Container>
-      ;
-    </Spin>
+      </Spin>
+    </div>
   );
 };
 
