@@ -27,6 +27,7 @@ import ApplicationsPage from '@/pages/manage-application/ApplicationsPage';
 import ApplicationDetail from '@/pages/application-detail/ApplicationDetail';
 import CandidateProfile from '@/pages/admin/CandidateProfile';
 import RegisterPage from '@/pages/register/RegisterPage';
+import Locations from '@/pages/graphql/test/Locations';
 
 export const router = createBrowserRouter([
   {
@@ -106,5 +107,6 @@ export const router = createBrowserRouter([
     ],
   },
 
+  { path: '/graphql/test', element: <Locations /> },
   { path: '/*', element: <NotFoundPage /> },
 ]);

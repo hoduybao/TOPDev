@@ -33,9 +33,15 @@ export const CreateJob = () => {
 
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const [citys, setCitys] = useState<{ label: string; value: string }[]>();
+  const [citys, setCitys] = useState<{ label: string; value: string }[]>([
+    { label: 'Hà Nội', value: 'Hà nội' },
+    { label: 'Tp Hồ Chí Minh', value: 'HCM' },
+  ]);
   const [selectedCity, setSelectedCity] = useState<string>();
-  const [districts, setDistricts] = useState<{ label: string; value: string }[]>();
+  const [districts, setDistricts] = useState<{ label: string; value: string }[]>([
+    { label: 'Quận 1', value: '1' },
+    { label: 'Quận 7', value: '7' },
+  ]);
 
   const { data: jobDetail, isFetching } = useGetJobDetailQuery(id as string, {
     skip: !id || id === 'create',
@@ -125,14 +131,21 @@ export const CreateJob = () => {
     fetch(`https://vapi.vnappmob.com/api/province/district/${selectedCity}`)
       .then((res) => res.json())
       .then((data) => {
-        setDistricts(() =>
-          data.results.map((item: any) => {
-            return {
-              value: item.district_id,
-              label: item.district_name,
-            };
-          }),
-        );
+        setDistricts(() => {
+          if (data.results.length > 0) {
+            return data.results.map((item: any) => {
+              return {
+                value: item.district_id,
+                label: item.district_name,
+              };
+            });
+          } else {
+            return [
+              { label: 'Quận 1', value: '1' },
+              { label: 'Quận 7', value: '7' },
+            ];
+          }
+        });
       });
   }, [selectedCity]);
 
