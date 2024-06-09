@@ -25,7 +25,7 @@ const SubFilter = ({
         <div>
           {total > 0 ? (
             <>
-              {t('found')} <span className='text-green-500 font-bold'>{total}</span>{' '}
+              {t('found')} <span className='text-orange-500 font-bold'>{total}</span>{' '}
               {total > 1 ? t('candidates') : t('candidate')}
               {total > 0 ? t('applyForJob') : ''}
               {title ? <span className='font-semibold'> {title}</span> : ''}

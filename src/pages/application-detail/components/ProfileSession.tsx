@@ -24,8 +24,8 @@ const ProfileSession = (props: Props) => {
       <div className='flex gap-2 mt-2'>
         <div className='w-[50px]'></div>
         <div className='flex-1 flex gap-2'>
-          <PhoneOutlined className='text-green-500 p-1 rounded-full bg-gray-200' />
-          <MailOutlined className='text-green-500 p-1 rounded-full bg-gray-200' />
+          <PhoneOutlined className='text-orange-500 p-1 rounded-full bg-gray-200' />
+          <MailOutlined className='text-orange-500 p-1 rounded-full bg-gray-200' />
         </div>
       </div>
       <div className='w-full border border-b-[1px] border-black-100 my-3'></div>

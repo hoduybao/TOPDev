@@ -6,6 +6,7 @@ import { EyeOutlined, FieldTimeOutlined, MailOutlined, PhoneOutlined } from '@an
 import { Application } from '@/+core/redux/apis/common/application/application.response';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import Container from '@/components/global/Container/Container';
 
 const CVList = ({
   data,
@@ -73,12 +74,12 @@ const CVList = ({
         return (
           <div>
             <div>
-              <MailOutlined className='m-2 text-green-400' />
+              <MailOutlined className='m-2 text-orange-500' />
               <span>{record.email}</span>
             </div>
 
             <div>
-              <PhoneOutlined className='m-2 text-green-400' />
+              <PhoneOutlined className='m-2 text-orange-500' />
               <span>{record.phone}</span>
             </div>
           </div>
@@ -91,7 +92,7 @@ const CVList = ({
         return (
           <div>
             <div>
-              <FieldTimeOutlined className='m-2 text-green-400' />{' '}
+              <FieldTimeOutlined className='m-2 text-orange-500' />{' '}
               <span>{moment(value?.createdAt).format('MMMM D YYYY')}</span>
             </div>
           </div>
@@ -154,18 +155,20 @@ const CVList = ({
   return (
     <div className='mt-8'>
       {total ? (
-        <Table
-          pagination={{
-            current: Number(currentPage),
-            total: Number(total),
-            pageSize: Number(limit),
-            onChange: (page) => {
-              changePage(page.toString());
-            },
-          }}
-          columns={columns}
-          dataSource={dataSource}
-        />
+        <Container>
+          <Table
+            pagination={{
+              current: Number(currentPage),
+              total: Number(total),
+              pageSize: Number(limit),
+              onChange: (page) => {
+                changePage(page.toString());
+              },
+            }}
+            columns={columns}
+            dataSource={dataSource}
+          />
+        </Container>
       ) : null}
     </div>
   );
