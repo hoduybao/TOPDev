@@ -1,31 +1,55 @@
-import { Button, Table } from 'antd';
+import { Button, Pagination, Table } from 'antd';
 import moment from 'moment';
 
 import type { TableColumnsType } from 'antd';
 import { EyeOutlined, FieldTimeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import { Application } from '@/+core/redux/apis/common/application/application.response';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
-const CVList = ({ data }: { data: Application[] }) => {
+const CVList = ({
+  data,
+  changePage,
+  total,
+  limit,
+  currentPage,
+  showState,
+}: {
+  data: Application[];
+  changePage: (page: string) => void;
+  total: string;
+  limit: string;
+  currentPage: string;
+  showState: boolean;
+}) => {
   const navigate = useNavigate();
   const { jobId } = useParams<{ jobId: string }>();
+  const { t } = useTranslation();
 
-  const dataSource = data?.map((item) => ({
-    ...item,
-    key: item.id,
-  }));
+  const dataSource = data
+    ?.filter((item) => {
+      if (showState) {
+        return item;
+      }
+      return item.status === 'PENDING';
+    })
+    ?.map((item) => ({
+      ...item,
+      key: item.id,
+    }));
+  console.log('total', total);
 
   const columns: TableColumnsType<Application> = [
     {
-      title: 'Mã hồ sơ',
+      title: t('applicationCode'),
       dataIndex: 'id',
     },
     {
-      title: 'Ứng viên',
+      title: <span className='capitalize'>{t('candidate')}</span>,
       dataIndex: 'fullName',
     },
     {
-      title: 'Tin Tuyển Dụng',
+      title: t('job'),
       render(value: Application) {
         console.log(value);
 
@@ -42,7 +66,7 @@ const CVList = ({ data }: { data: Application[] }) => {
       },
     },
     {
-      title: 'Thông tin liên hệ',
+      title: t('contactInfo'),
       render(record) {
         console.log(record);
 
@@ -62,7 +86,7 @@ const CVList = ({ data }: { data: Application[] }) => {
       },
     },
     {
-      title: 'Ngày Ứng Tuyển',
+      title: t('submitedDate'),
       render(value) {
         return (
           <div>
@@ -75,35 +99,35 @@ const CVList = ({ data }: { data: Application[] }) => {
       },
     },
     {
-      title: 'Trạng thái',
+      title: <span className='capitalize'>{t('status')}</span>,
       dataIndex: 'status',
       render(value) {
         switch (value) {
           case 'PENDING': {
             return (
               <div className='text-yellow-700 rounded-full p-[0.1rem] text-center font-semibold bg-yellow-400'>
-                Đang chờ
+                {t('pendingCV')}
               </div>
             );
           }
           case 'VIEWING': {
             return (
               <div className='text-blue-700 rounded-full p-[0.1rem] text-center font-semibold bg-blue-400'>
-                Đang xem
+                {t('viewingCV')}
               </div>
             );
           }
           case 'APPROVED': {
             return (
               <div className='text-green-700 rounded-full p-[0.1rem] text-center font-semibold bg-green-400'>
-                Đã duyệt
+                {t('approvedCV')}
               </div>
             );
           }
           case 'REJECTED': {
             return (
               <div className='text-red-700 rounded-full p-[0.1rem] text-center font-semibold bg-red-400'>
-                Đã từ chối
+                {t('rejectedCV')}
               </div>
             );
           }
@@ -129,7 +153,20 @@ const CVList = ({ data }: { data: Application[] }) => {
   ];
   return (
     <div className='mt-8'>
-      <Table columns={columns} dataSource={dataSource} />;
+      {total && (
+        <Table
+          pagination={{
+            current: Number(currentPage),
+            total: Number(total),
+            pageSize: Number(limit),
+            onChange: (page) => {
+              changePage(page.toString());
+            },
+          }}
+          columns={columns}
+          dataSource={dataSource}
+        />
+      )}
     </div>
   );
 };

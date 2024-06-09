@@ -3,6 +3,7 @@ import ConfirmModal from '@/components/global/ConfirmModal';
 import { Button, Form, FormProps, notification } from 'antd';
 import { Select } from 'antd';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 type StatusFormField = {
   status: string;
@@ -12,6 +13,7 @@ const CVStatus = ({ status, cvUrl, appId }: { status: string; cvUrl: string; app
   const [statusForm] = Form.useForm();
   const [openModal, setOpenModal] = React.useState(false);
   const [updateStatus, { isLoading }] = useUpdateStatusMutation();
+  const { t } = useTranslation();
   const handleOK = () => {
     updateStatus({ id: appId, status: statusForm.getFieldValue('status') })
       .unwrap()
@@ -32,11 +34,11 @@ const CVStatus = ({ status, cvUrl, appId }: { status: string; cvUrl: string; app
 
   return (
     <Form initialValues={{ status }} onFinish={() => setOpenModal(true)} form={statusForm}>
-      <h3 className='font-bold text-base'>Trạng thái CV</h3>
+      <h3 className='font-bold text-base'>{t('status')}</h3>
 
       <div className='flex mt-2'>
         <div className='w-[50%] text-sm text-gray-400 font-semibold border border-r-1 border-gray-200 p-2'>
-          Trạng thái
+          {t('status')}
         </div>
         <div className='flex-1 text-sm text-blue-400 font-semibold border border-r-1 border-gray-200 p-2'>
           <Form.Item<StatusFormField> name='status'>
@@ -48,10 +50,10 @@ const CVStatus = ({ status, cvUrl, appId }: { status: string; cvUrl: string; app
               // }}
               loading={isLoading}
               options={[
-                { value: 'PENDING', label: 'Pending' },
-                { value: 'VIEWING', label: 'Viewing' },
-                { value: 'APPROVED', label: 'Approved' },
-                { value: 'REJECTED', label: 'Rejected' },
+                { value: 'PENDING', label: t('pendingCV') },
+                { value: 'VIEWING', label: t('viewingCV') },
+                { value: 'APPROVED', label: t('approvedCV') },
+                { value: 'REJECTED', label: t('rejectedCV') },
               ]}
             />
           </Form.Item>
@@ -60,7 +62,7 @@ const CVStatus = ({ status, cvUrl, appId }: { status: string; cvUrl: string; app
 
       <div className='flex'>
         <div className='w-[50%] text-sm text-gray-400 font-semibold border border-r-[1px] border-gray-200 p-2'>
-          Nguồn
+          {t('origin')}
         </div>
         <div className='flex-1 text-sm text-gray-400 font-semibold border border-r-1 border-gray-200 p-2'>
           Topdev
@@ -72,7 +74,7 @@ const CVStatus = ({ status, cvUrl, appId }: { status: string; cvUrl: string; app
           htmlType='submit'
           className='mt-4 w-full bg-gray-200 text-black-800 font-semibold rounded'
         >
-          Đổi trạng thái CV
+          {t('changeCVStatus')}
         </Button>
       </div>
       <div className='grid grid-cols-2 gap-2 mt-4'>
@@ -86,11 +88,11 @@ const CVStatus = ({ status, cvUrl, appId }: { status: string; cvUrl: string; app
           }}
           className='col-span-1 w-full bg-gray-200 text-black-800 font-semibold rounded'
         >
-          Chia sẻ CV
+          {t('shareCV')}
         </Button>
         <Button className='col-span-1 w-full bg-gray-200 text-black-800 font-semibold rounded'>
           <a href={cvUrl} target='_blank' rel='noopener noreferrer'>
-            Tải CV PDF
+            {t('downloadCV')}
           </a>
         </Button>
       </div>
@@ -102,7 +104,7 @@ const CVStatus = ({ status, cvUrl, appId }: { status: string; cvUrl: string; app
         isLoadingBtn={isLoading}
         // isLoadingBtn={isLoadingCreate || isLoadingUpdate}
       >
-        Bạn có chắc chắn muốn thay đổi trạng thái CV?
+        {t('confirmCVChange')}
       </ConfirmModal>
     </Form>
   );

@@ -1,28 +1,37 @@
 import Container from '@/components/global/Container/Container';
 import { Radio } from 'antd';
-import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-const SubFilter = ({ total }: { total: number }) => {
+const SubFilter = ({
+  total,
+  showState,
+  setShowState,
+}: {
+  total: number;
+  showState: boolean;
+  setShowState: (value: boolean) => void;
+}) => {
+  const { t } = useTranslation();
   const options = [
-    { label: 'Hiển thị tất cả CV', value: 'ALL' },
-    { label: 'Chỉ hiển thị CV chưa xem', value: 'PENDING' },
+    { label: t('showAllCV'), value: true },
+    { label: t('onlyUnseenCV'), value: false },
   ];
-
-  const [filterValue, setFilterValue] = React.useState(options[0].value);
 
   return (
     <Container>
       <div className='flex justify-between'>
         <div>
-          Tìm thấy <span className='text-green-500 font-bold'>{total}</span> ứng viên
+          {t('found')} <span className='text-green-500 font-bold'>{total}</span>{' '}
+          {total > 1 ? t('candidates') : t('candidate')}
         </div>
         <Radio.Group
+          defaultValue={showState}
           className='text-green-500'
           options={options}
           onChange={({ target: { value } }) => {
-            setFilterValue(value);
+            console.log(value);
+            setShowState(value);
           }}
-          value={filterValue}
         />
       </div>
     </Container>
