@@ -11,7 +11,26 @@ const companyApi = commonApi
           method: 'GET',
         }),
       }),
+      getCompanyProfile: build.query<any, void>({
+        query: () => ({
+          url: `/jobs/companies/info`,
+          method: 'GET',
+        }),
+        providesTags: [TAG_TYPES.COMPANY],
+      }),
+      updateCompanyProfile: build.mutation<any, any>({
+        query: (profile: any) => ({
+          url: `/jobs/companies/update`,
+          method: 'PATCH',
+          body: profile,
+        }),
+        invalidatesTags: [TAG_TYPES.COMPANY],
+      }),
     }),
   });
 
-export const { useGetCompanyByIdQuery } = companyApi;
+export const {
+  useGetCompanyByIdQuery,
+  useGetCompanyProfileQuery,
+  useUpdateCompanyProfileMutation,
+} = companyApi;
