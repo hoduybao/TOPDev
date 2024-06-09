@@ -9,28 +9,25 @@ import { Spin } from 'antd';
 
 const ApplicationDetail = () => {
   const { applicationId } = useParams<{ applicationId: string }>();
-  const { data, isLoading } = useGetApplicationQuery(applicationId);
+  const { data, isFetching } = useGetApplicationQuery(applicationId);
+  console.log(data);
 
   return (
-    <Spin spinning={isLoading}>
-      <Container>
-        <div className='grid grid-cols-3'>
+    <div className='w-full'>
+      <Spin spinning={isFetching}>
+        <div className='w-full grid grid-cols-3'>
           <div className='col-span-2'>
-            <PDFSession fileUrl={data?.data?.cvUrl} />
+            <PDFSession fileUrl={data?.cvUrl} />
           </div>
 
           <div className='col-span-1 px-4 py-2'>
-            <ProfileSession
-              name={data?.data?.fullName}
-              email={data?.data?.email}
-              phone={data?.data?.phone}
-            />
-            <CVStatus status={data?.data?.status} />
+            <ProfileSession name={data?.fullName} email={data?.email} phone={data?.phone} />
+            <CVStatus status={data?.status} cvUrl={data?.cvUrl} />
             <CandateCode />
           </div>
         </div>
-      </Container>
-    </Spin>
+      </Spin>
+    </div>
   );
 };
 

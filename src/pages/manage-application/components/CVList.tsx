@@ -2,13 +2,7 @@ import { Button, Table } from 'antd';
 import moment from 'moment';
 
 import type { TableColumnsType } from 'antd';
-import {
-  EyeOutlined,
-  FieldTimeOutlined,
-  MailOutlined,
-  PhoneOutlined,
-  RightSquareOutlined,
-} from '@ant-design/icons';
+import { EyeOutlined, FieldTimeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import { Application } from '@/+core/redux/apis/common/application/application.response';
 import { useNavigate, useParams } from 'react-router-dom';
 

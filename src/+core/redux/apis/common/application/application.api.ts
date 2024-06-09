@@ -27,6 +27,9 @@ const applicationApi = commonApi
           url: `/applications/${id}`,
           method: 'GET',
         }),
+        transformResponse: (response: any) => {
+          return response.data;
+        },
       }),
       getApplicationsByCompanyId: build.query<any, any>({
         query: (id: string) => ({

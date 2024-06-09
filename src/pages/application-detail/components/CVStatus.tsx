@@ -1,8 +1,6 @@
-import React from 'react';
-import mockData from './mockData';
-import { Button } from 'antd';
+import { Button, notification } from 'antd';
 
-const CVStatus = ({ status }: { status: string }) => {
+const CVStatus = ({ status, cvUrl }: { status: string; cvUrl: string }) => {
   return (
     <div>
       <h3 className='font-bold text-base'>Trạng thái CV</h3>
@@ -21,7 +19,7 @@ const CVStatus = ({ status }: { status: string }) => {
           Nguồn
         </div>
         <div className='flex-1 text-sm text-gray-400 font-semibold border border-r-1 border-gray-200 p-2'>
-          {mockData.cv.origin}
+          Topdev
         </div>
       </div>
       <div>
@@ -30,11 +28,22 @@ const CVStatus = ({ status }: { status: string }) => {
         </Button>
       </div>
       <div className='grid grid-cols-2 gap-2 mt-4'>
-        <Button className='col-span-1 w-full bg-gray-200 text-black-800 font-semibold rounded'>
+        <Button
+          onClick={() => {
+            navigator.clipboard.writeText(cvUrl);
+            notification.success({
+              message: 'Đã sao chép',
+              description: 'Đã sao chép link CV',
+            });
+          }}
+          className='col-span-1 w-full bg-gray-200 text-black-800 font-semibold rounded'
+        >
           Chia sẻ CV
         </Button>
         <Button className='col-span-1 w-full bg-gray-200 text-black-800 font-semibold rounded'>
-          Tải CV PDF
+          <a href={cvUrl} target='_blank' rel='noopener noreferrer'>
+            Tải CV PDF
+          </a>
         </Button>
       </div>
       <div className='w-full border border-b-[1px] border-black-100 mt-4 mb-3'></div>
