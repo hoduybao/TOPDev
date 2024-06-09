@@ -106,28 +106,28 @@ const CVList = ({
         switch (value) {
           case 'PENDING': {
             return (
-              <div className='text-yellow-700 rounded-full p-[0.1rem] text-center font-semibold bg-yellow-400'>
+              <div className='text-white-900 rounded-full p-[0.1rem] text-center font-semibold bg-yellow-500'>
                 {t('pendingCV')}
               </div>
             );
           }
           case 'VIEWING': {
             return (
-              <div className='text-blue-700 rounded-full p-[0.1rem] text-center font-semibold bg-blue-400'>
+              <div className='text-white-900 rounded-full p-[0.1rem] text-center font-semibold bg-blue-500'>
                 {t('viewingCV')}
               </div>
             );
           }
           case 'APPROVED': {
             return (
-              <div className='text-green-700 rounded-full p-[0.1rem] text-center font-semibold bg-green-400'>
+              <div className='text-white-900 rounded-full p-[0.1rem] text-center font-semibold bg-green-400'>
                 {t('approvedCV')}
               </div>
             );
           }
           case 'REJECTED': {
             return (
-              <div className='text-red-700 rounded-full p-[0.1rem] text-center font-semibold bg-red-400'>
+              <div className='text-white-900 rounded-full p-[0.1rem] text-center font-semibold bg-red-500'>
                 {t('rejectedCV')}
               </div>
             );
