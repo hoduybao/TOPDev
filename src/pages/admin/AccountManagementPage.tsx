@@ -119,7 +119,7 @@ const AccountManagementPage = () => {
   return (
     <>
       <Spin spinning={isLoading || isActivatingHRAccounts || isRejectingHR || isFetching}>
-        <div className='w-full h-screen font-roboto px-4 bg-white-700'>
+        <div className='w-full h-screen font-roboto px-4'>
           {/* <div className='py-2'>
         <span className='font-bold text-xl text-black-400'>Account Manager</span>
       </div>
@@ -133,7 +133,7 @@ const AccountManagementPage = () => {
           <h1>Filter</h1>
         </div> */}
             {/* Content */}
-            <div className='w-full p-2 border-solid border-[1.5px] border-gray-500 rounded'>
+            <div className='w-full p-2 border-solid border-[1.5px] rounded bg-white-700'>
               <Tabs
                 size='large'
                 defaultActiveKey='1'
