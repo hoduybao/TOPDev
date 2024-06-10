@@ -1,5 +1,6 @@
 import { HRAccount } from '@/+core/utilities/types/admin.type';
 import ConfirmModal from '@/components/global/ConfirmModal';
+import { MY_ROUTE } from '@/routes/route.constant';
 import { CheckOutlined, CloseOutlined, HomeOutlined } from '@ant-design/icons';
 import {
   Button,
@@ -68,14 +69,14 @@ const AccountTable = (props: PendingAccountTableProps) => {
         key: 'name',
         render: (value, record) => {
           return (
-            <div className='flex items-center gap-2'>
-              {/* {record.logo ? (
-                <Image className='object-contain' src={record.logo} width={50} height={50} />
-              ) : (
-                <HomeOutlined className='w-[50px] h-[50px]' />
-              )} */}
+            <a
+              className='flex items-center gap-2 text-blue-500 hover:underline'
+              href={MY_ROUTE.ADMIN_COMPANY_PROFILE.replace(':companyId', record.companyId)}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               {value}
-            </div>
+            </a>
           );
         },
       },
