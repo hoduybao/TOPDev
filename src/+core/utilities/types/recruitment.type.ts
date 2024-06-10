@@ -19,7 +19,7 @@ export interface CompanyType {
 }
 
 export interface JobType {
-  id?: string;
+  id: string;
   company?: CompanyType;
   companyId?: string;
   companyName?: string;

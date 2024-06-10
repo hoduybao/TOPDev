@@ -1,14 +1,20 @@
 import { useTranslation } from 'react-i18next';
 import { JobType } from '@/+core/utilities/types/recruitment.type';
+import { Button } from 'antd';
 
 interface PropType {
   job: JobType;
-  handleUnfollowJob: (job: JobType) => void;
-  handleApplyJob: (job: JobType) => void;
+  isLoading: boolean;
+  handleUnfollowJob: (jobId: string) => Promise<void>;
 }
 
 const FollowJobCard = (props: PropType) => {
-  const { job, handleUnfollowJob, handleApplyJob } = props;
+  const { job, handleUnfollowJob, isLoading } = props;
+
+  const handleApplyJob = (job: JobType) => {
+    // console.log('Apply job', job);
+    window.open(`jobs/companyId/${job?.id}`, '_blank', 'noreferrer');
+  };
 
   const { t } = useTranslation();
 
@@ -63,9 +69,11 @@ const FollowJobCard = (props: PropType) => {
                 </svg>
                 {job.minSalary ? job.minSalary : 0} - {job?.maxSalary}
               </p>
-              <button
-                onClick={() => {
-                  handleUnfollowJob(job);
+              <Button
+                className='border-none'
+                loading={isLoading}
+                onClick={async () => {
+                  await handleUnfollowJob(job.id);
                 }}
               >
                 <svg
@@ -82,7 +90,7 @@ const FollowJobCard = (props: PropType) => {
                 >
                   <path d='m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z' />
                 </svg>
-              </button>
+              </Button>
             </div>
           </div>
         </div>
