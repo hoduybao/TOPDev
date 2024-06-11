@@ -1,56 +1,97 @@
-import {
-  useApproveJobsMutation,
-  useGetJobsQuery,
-  useRefuseJobsMutation,
-} from '@/+core/redux/apis/admin/job-management/job-service.api';
-import { Job } from '@/+core/utilities/types/admin.type';
 import ActiveJobsTab from '@/pages/admin/components/jobs-management/ActiveJobsTab';
 import PendingJobsTab from '@/pages/admin/components/jobs-management/PendingJobsTab';
 import RejectedJobsTab from '@/pages/admin/components/jobs-management/RejectedJobsTab';
-import { Pagination, Spin, Tabs, TabsProps } from 'antd';
+import { Input, Pagination, Spin, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
 import '../../styles/admin/management-page.module.scss';
 import ClosedJobsTab from '@/pages/admin/components/jobs-management/ClosedJobsTab';
 import { CheckOutlined, ClockCircleOutlined, CloseOutlined } from '@ant-design/icons';
-import { FilterJobsTypeREQ } from '@/+core/redux/apis/admin/job-management/job-service.request';
+import ConfirmModal from '@/components/global/ConfirmModal';
+import { FilterJobsTypeREQ } from '@/+core/redux/apis/admin/job-management/job-admin.request';
+import {
+  useApproveJobsMutation,
+  useGetListJobsQuery,
+  useRefuseJobsMutation,
+} from '@/+core/redux/apis/admin/job-management/job-admin.api';
+import { ListJobsRES } from '@/+core/redux/apis/admin/job-management/job-admin.response';
 
 const JobManagementPage = () => {
   const [filter, setFilter] = useState<FilterJobsTypeREQ>({
     page: 1,
     limit: 5,
+    status: 'PENDING',
   });
+  // const {
+  //   data: jobsData,
+  //   isFetching: isFetchingJobs,
+  //   refetch,
+  // } = useGetJobsQuery(filter, {
+  //   refetchOnMountOrArgChange: true,
+  // });
+
   const {
-    data: jobsData,
+    data: jobs,
     isFetching: isFetchingJobs,
     refetch,
-  } = useGetJobsQuery(filter, {
+  } = useGetListJobsQuery(filter, {
     refetchOnMountOrArgChange: true,
   });
-  const [approveJobs, { isLoading: isFetchingApprove }] = useApproveJobsMutation();
-  const [rejectJobs, { isLoading: isFetchingReject }] = useRefuseJobsMutation();
-  const [jobList, setJobList] = useState<Job[]>([]);
-  const [tabKey, setTabKey] = useState<string>('pending');
+
+  const [approveJobs, { isLoading: isLoadingApprove }] = useApproveJobsMutation();
+  const [rejectJobs, { isLoading: isLoadingReject }] = useRefuseJobsMutation();
+  const [jobList, setJobList] = useState<ListJobsRES[]>([]);
+  const [tabKey, setTabKey] = useState<string>('PENDING');
+
+  const [showModal, setShowModal] = useState(false);
+  const [action, setAction] = useState<string>('');
+  const [reason, setReason] = useState<string>('');
+  const [jobsToProcess, setJobsToProcess] = useState<ListJobsRES[]>([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    if (jobsData?.data.jobs) setJobList(jobsData?.data.jobs);
+    if (jobs?.data) setJobList(jobs?.data);
     console.log('fetch');
-  }, [jobsData]);
+  }, [jobs]);
 
   useEffect(() => {
-    console.log(filter);
+    console.log('filter: ', filter);
     refetch();
   }, [filter]);
 
-  const handleApprove = (jobs: Job[]) => {
-    const jobIds = jobs.map((job) => job.id);
-
-    approveJobs(jobIds);
+  const handleApprove = (jobs: ListJobsRES[]) => {
+    setAction('approve');
+    setJobsToProcess(jobs);
+    setShowModal(true);
   };
 
-  const handleReject = (jobs: Job[]) => {
-    const jobIds = jobs.map((job) => job.id);
+  const handleReject = (jobs: ListJobsRES[]) => {
+    setAction('reject');
+    setJobsToProcess(jobs);
+    setShowModal(true);
+  };
 
-    rejectJobs(jobIds);
+  const handleConfirm = () => {
+    if (action === 'reject' && reason.trim() === '') {
+      setError('The reason is required!');
+      return;
+    }
+
+    const jobIds = jobsToProcess.map((job) => job.id);
+    if (action === 'approve') {
+      approveJobs({ ids: jobIds });
+    } else if (action === 'reject') {
+      rejectJobs({ ids: jobIds, reason: reason });
+    }
+    setShowModal(false);
+    setReason('');
+    setError('');
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
+    setJobsToProcess([]);
+    setReason('');
+    setError('');
   };
 
   const handleSearch = (keyword: string) => {
@@ -61,9 +102,26 @@ const JobManagementPage = () => {
     }));
   };
 
+  const handleChangePage = (page: number, pageSize: number) => {
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: page,
+      limit: pageSize,
+    }));
+  };
+
+  useEffect(() => {
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      status: tabKey,
+      page: 1,
+      keywords: '',
+    }));
+  }, [tabKey]);
+
   const items: TabsProps['items'] = [
     {
-      key: 'pending',
+      key: 'PENDING',
       label: (
         <div className='flex items-center'>
           <ClockCircleOutlined />
@@ -80,7 +138,7 @@ const JobManagementPage = () => {
       ),
     },
     {
-      key: 'active',
+      key: 'APPROVED',
       label: (
         <div className='flex items-center'>
           <CheckOutlined />
@@ -100,7 +158,7 @@ const JobManagementPage = () => {
     //   children: <ComingJobsTab data={displayedData} />,
     // },
     {
-      key: 'rejected',
+      key: 'REJECTED',
       label: (
         <div className='flex items-center'>
           <CloseOutlined />
@@ -110,7 +168,7 @@ const JobManagementPage = () => {
       children: <RejectedJobsTab data={jobList} onSearch={handleSearch} />,
     },
     {
-      key: 'closed',
+      key: 'CLOSED',
       label: (
         <div className='flex items-center'>
           {/* <ContainerOutlined /> */}
@@ -121,46 +179,54 @@ const JobManagementPage = () => {
     },
   ];
 
-  useEffect(() => {
-    setFilter((prevFilter) => ({
-      ...prevFilter,
-      status: tabKey,
-    }));
-  }, [tabKey]);
-
-  const handleChangePage = (page: number, pageSize: number) => {
-    setFilter((prevFilter) => ({
-      ...prevFilter,
-      page: page,
-      limit: pageSize,
-    }));
-  };
-
   return (
     <>
-      <Spin spinning={isFetchingJobs || isFetchingApprove || isFetchingReject}>
-        <div className='w-full h-screen font-roboto px-4 bg-white-700'>
+      <Spin spinning={isFetchingJobs || isLoadingApprove || isLoadingReject}>
+        <div className='w-full h-screen font-roboto px-4 '>
           <div className='mt-2 mb-4 w-full flex gap-2'>
             {/* <div className='w-[250px] flex items-center justify-center border-solid border-[1.5px] border-gray-500 rounded '>
             <h1>Filter</h1>
           </div> */}
+
             {/* Content */}
-            <div className='w-full p-2 border-solid border-[1.5px] border-gray-500 rounded'>
+            <div className='w-full p-2 border-solid border-[1.5px] border-transparent rounded bg-white-700'>
               <Tabs
                 size='large'
-                defaultActiveKey='1'
+                defaultActiveKey='PENDING'
                 items={items}
                 onChange={(key) => setTabKey(key)}
               />
               <div className='flex justify-end'>
                 <Pagination
                   className='mt-5'
+                  total={jobs?.total}
                   defaultCurrent={1}
-                  total={jobList.length}
                   pageSize={5}
                   onChange={handleChangePage}
                 />
               </div>
+              <ConfirmModal
+                open={showModal}
+                setOpen={setShowModal}
+                handleOk={handleConfirm}
+                handleCancel={handleCancel}
+                isLoadingBtn={isLoadingApprove || isLoadingReject}
+              >
+                <h1 className='text-xl'>
+                  {action === 'approve' ? 'Do you want to approve?' : 'Do you want to reject?'}
+                </h1>
+                {action === 'reject' && (
+                  <>
+                    <Input
+                      className='mt-3'
+                      placeholder='Input reason for refusal'
+                      onChange={(e) => setReason(e.target.value)}
+                      value={reason}
+                    />
+                    {error && <div style={{ color: 'red' }}>{error}</div>}
+                  </>
+                )}
+              </ConfirmModal>
             </div>
           </div>
         </div>

@@ -1,19 +1,8 @@
 import { HRAccount } from '@/+core/utilities/types/admin.type';
 import ConfirmModal from '@/components/global/ConfirmModal';
 import { MY_ROUTE } from '@/routes/route.constant';
-import { CheckOutlined, CloseOutlined, HomeOutlined } from '@ant-design/icons';
-import {
-  Button,
-  Form,
-  Image,
-  Input,
-  notification,
-  Space,
-  Table,
-  TableProps,
-  Tag,
-  Tooltip,
-} from 'antd';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { Button, Input, notification, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -164,7 +153,7 @@ const AccountTable = (props: PendingAccountTableProps) => {
     return columns;
   }
 
-  const onSearch: SearchProps['onSearch'] = (value, _e) => {
+  const onSearch: SearchProps['onSearch'] = (_value, _e) => {
     // const newData = props.data.filter(
     //   (item) =>
     //     item.companyName.toLowerCase().includes(value.toLowerCase()) ||
