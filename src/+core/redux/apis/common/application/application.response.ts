@@ -1,3 +1,10 @@
+type JobDetail = {
+  endDate: string;
+  jobId: string;
+  jobType: string;
+  level: string;
+  title: string;
+};
 export type Application = {
   id: string;
   jobId: string;
@@ -8,6 +15,7 @@ export type Application = {
   description: string;
   status: string;
   createdAt: string;
+  jobDetail: JobDetail;
 };
 
 export type MyApplicationRES = {

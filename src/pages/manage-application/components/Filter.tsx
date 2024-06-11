@@ -1,52 +1,116 @@
-import { Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 import mockdata from './mockdata';
 import { SearchOutlined } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
+import Container from '@/components/global/Container/Container';
 
 type FormFields = {
-  keywork: string;
-  campaign: string;
+  // keywork: string;
+  // campaign: string;
   cvStatus: string;
-  originCV: string;
+  // originCV: string;
 };
 
-const FilterForm = () => {
+const FilterForm = ({
+  setCvState,
+  cvState,
+  isFetching,
+}: {
+  setCvState: (value: string) => void;
+  cvState: string;
+  isFetching: boolean;
+}) => {
   const [filterForm] = Form.useForm();
+  const { t } = useTranslation();
   return (
-    <Form name='ref-form' form={filterForm} onFinish={() => {}}>
-      <div className='grid grid-cols-8 gap-2'>
+    <Form
+      initialValues={{ cvStatus: cvState }}
+      name='ref-form'
+      form={filterForm}
+      onFinish={(value) => {
+        setCvState(value.cvStatus);
+      }}
+    >
+      <div className='grid grid-cols-8 gap-2 w-full'>
         <div className='col-span-2'>
-          <Form.Item<FormFields> labelCol={{ span: 24 }} wrapperCol={{ span: 24 }} name='keywork'>
+          <Form.Item<FormFields> labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
             <div className='flex justify-between items-center relative'>
-              <Input placeholder='Tìm kiếm tên, email, số điện thoại' />
+              <Input placeholder={t('findPlaceholder')} />
               <SearchOutlined className='absolute right-0 p-4 text-md' />
             </div>
           </Form.Item>
         </div>
-        <div className='col-span-2'>
-          <Form.Item<FormFields> labelCol={{ span: 24 }} wrapperCol={{ span: 24 }} name='campaign'>
-            <Select placeholder='Chọn chiến dịch tuyển dụng' options={mockdata.campaigns} />
-          </Form.Item>
-        </div>
-        <div className='col'>
+        <div className='col-span-1'>
           <Form.Item<FormFields> labelCol={{ span: 24 }} wrapperCol={{ span: 24 }} name='cvStatus'>
-            <Select showSearch placeholder='Nhập trạng thái CV' options={mockdata.cvStatus} />
+            {cvState && (
+              <Select
+                showSearch
+                // onChange={(value) => {
+                //   console.log(value);
+                // }}
+                defaultValue={cvState}
+                options={[
+                  {
+                    value: 'ALL',
+                    label: t('all'),
+                  },
+                  {
+                    value: 'PENDING',
+                    label: t('pendingCV'),
+                  },
+                  {
+                    value: 'VIEWING',
+                    label: t('viewingCV'),
+                  },
+                  {
+                    value: 'APPROVED',
+                    label: t('approvedCV'),
+                  },
+                  {
+                    value: 'REJECTED',
+                    label: t('rejectedCV'),
+                  },
+                ]}
+              />
+            )}
           </Form.Item>
         </div>
 
-        <div className='col'>
+        {/* <div className='col-span-1'>
           <Form.Item<FormFields> labelCol={{ span: 24 }} wrapperCol={{ span: 24 }} name='originCV'>
-            <Select showSearch placeholder='Nhập nguồn CV' options={mockdata.cvOrigins} />
+            <Select showSearch placeholder='Nhập nguồn CV' options={mockdata.cvOrigins} disabled />
           </Form.Item>
+        </div> */}
+
+        <div className='col-span-5 w-full flex justify-end'>
+          <Button
+            loading={isFetching}
+            className='bg-orange-500 text-white-900 w-[150px]'
+            type='primary'
+            htmlType='submit'
+          >
+            {t('recruitmentSearch')}
+          </Button>
         </div>
       </div>
     </Form>
   );
 };
 
-const Filter = () => {
+const Filter = ({
+  setCvState,
+  cvState,
+  isFetching,
+}: {
+  setCvState: (value: string) => void;
+  cvState: string;
+  isFetching: boolean;
+}) => {
   return (
-    <div className='mt-8 mx-8'>
-      <FilterForm />
+    <div className='mt-8'>
+      <Container>
+        <FilterForm setCvState={setCvState} cvState={cvState} isFetching={isFetching} />
+      </Container>
     </div>
   );
 };

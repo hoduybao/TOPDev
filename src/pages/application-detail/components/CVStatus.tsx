@@ -1,44 +1,112 @@
+import { useUpdateStatusMutation } from '@/+core/redux/apis/common/application/application.api';
+import ConfirmModal from '@/components/global/ConfirmModal';
+import { Button, Form, FormProps, notification } from 'antd';
+import { Select } from 'antd';
 import React from 'react';
-import mockData from './mockData';
-import { Button } from 'antd';
+import { useTranslation } from 'react-i18next';
 
-const CVStatus = ({ status }: { status: string }) => {
+type StatusFormField = {
+  status: string;
+};
+
+const CVStatus = ({ status, cvUrl, appId }: { status: string; cvUrl: string; appId: string }) => {
+  const [statusForm] = Form.useForm();
+  const [openModal, setOpenModal] = React.useState(false);
+  const [updateStatus, { isLoading }] = useUpdateStatusMutation();
+  const { t } = useTranslation();
+  const handleOK = () => {
+    updateStatus({ id: appId, status: statusForm.getFieldValue('status') })
+      .unwrap()
+      .then((rs) => {
+        console.log(rs);
+        notification.success({
+          message: 'Thành công',
+          description: 'Thay đổi trạng thái CV thành công',
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setOpenModal(false);
+      });
+  };
+
   return (
-    <div>
-      <h3 className='font-bold text-base'>Trạng thái CV</h3>
+    <Form initialValues={{ status }} onFinish={() => setOpenModal(true)} form={statusForm}>
+      <h3 className='font-bold text-base'>{t('status')}</h3>
 
       <div className='flex mt-2'>
         <div className='w-[50%] text-sm text-gray-400 font-semibold border border-r-1 border-gray-200 p-2'>
-          Trạng thái
+          {t('status')}
         </div>
         <div className='flex-1 text-sm text-blue-400 font-semibold border border-r-1 border-gray-200 p-2'>
-          {status}
+          <Form.Item<StatusFormField> name='status'>
+            <Select
+              className='w-full'
+              defaultValue={status}
+              // onChange={(value) => {
+              //   console.log(`selected ${value}`);
+              // }}
+              loading={isLoading}
+              options={[
+                { value: 'PENDING', label: t('pendingCV') },
+                { value: 'VIEWING', label: t('viewingCV') },
+                { value: 'APPROVED', label: t('approvedCV') },
+                { value: 'REJECTED', label: t('rejectedCV') },
+              ]}
+            />
+          </Form.Item>
         </div>
       </div>
 
       <div className='flex'>
         <div className='w-[50%] text-sm text-gray-400 font-semibold border border-r-[1px] border-gray-200 p-2'>
-          Nguồn
+          {t('origin')}
         </div>
         <div className='flex-1 text-sm text-gray-400 font-semibold border border-r-1 border-gray-200 p-2'>
-          {mockData.cv.origin}
+          Topdev
         </div>
       </div>
       <div>
-        <Button className='mt-4 w-full bg-gray-200 text-black-800 font-semibold rounded'>
-          Đổi trạng thái CV
+        <Button
+          loading={isLoading}
+          htmlType='submit'
+          className='mt-4 w-full bg-gray-200 text-black-800 font-semibold rounded'
+        >
+          {t('changeCVStatus')}
         </Button>
       </div>
       <div className='grid grid-cols-2 gap-2 mt-4'>
-        <Button className='col-span-1 w-full bg-gray-200 text-black-800 font-semibold rounded'>
-          Chia sẻ CV
+        <Button
+          onClick={() => {
+            navigator.clipboard.writeText(cvUrl);
+            notification.success({
+              message: 'Đã sao chép',
+              description: 'Đã sao chép link CV',
+            });
+          }}
+          className='col-span-1 w-full bg-gray-200 text-black-800 font-semibold rounded'
+        >
+          {t('shareCV')}
         </Button>
         <Button className='col-span-1 w-full bg-gray-200 text-black-800 font-semibold rounded'>
-          Tải CV PDF
+          <a href={cvUrl} target='_blank' rel='noopener noreferrer'>
+            {t('downloadCV')}
+          </a>
         </Button>
       </div>
       <div className='w-full border border-b-[1px] border-black-100 mt-4 mb-3'></div>
-    </div>
+      <ConfirmModal
+        open={openModal}
+        setOpen={setOpenModal}
+        handleOk={handleOK}
+        isLoadingBtn={isLoading}
+        // isLoadingBtn={isLoadingCreate || isLoadingUpdate}
+      >
+        {t('confirmCVChange')}
+      </ConfirmModal>
+    </Form>
   );
 };
 

@@ -57,6 +57,20 @@ const authenticationApi = commonApi
           };
         },
       }),
+      adminLogin: build.mutation<any, any>({
+        query: (values: AuthenticationFields) => ({
+          url: `/auth/admin/login`,
+          method: 'POST',
+          body: values,
+        }),
+        transformResponse: (response: ReponseLogin): ParseResponseLogin => {
+          return {
+            accessToken: response.data.access_token,
+            refreshToken: response.data.refresh_token,
+            userid: '', // no need store userid, all needed data is store in token
+          };
+        },
+      }),
       candidateLogin: build.mutation<any, any>({
         query: (values: CandidateAuthen) => ({
           url: `/auth/candidate/login`,
@@ -96,4 +110,5 @@ export const {
   useTestAuthorizationQuery,
   useEmployerRegisterMutation,
   useCandidateLoginMutation,
+  useAdminLoginMutation,
 } = authenticationApi;

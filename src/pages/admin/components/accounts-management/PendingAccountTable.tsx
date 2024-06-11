@@ -1,174 +1,277 @@
 import { HRAccount } from '@/+core/utilities/types/admin.type';
+import ConfirmModal from '@/components/global/ConfirmModal';
+import { MY_ROUTE } from '@/routes/route.constant';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, TableProps, Tag, Tooltip } from 'antd';
+import { Button, Input, notification, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import ReactQuill from 'react-quill';
 
 interface PendingAccountTableProps {
   data: HRAccount[];
-  approveAccounts: (accounts: HRAccount[]) => void;
-  rejectAccounts: (accounts: HRAccount[]) => void;
+  approveAccounts?: (hrIds: string[]) => Promise<void>;
+  rejectAccounts?: (hrIds: string[]) => Promise<void>;
+  handleRejectReason?: (hrId: string, reason: string) => Promise<void>;
+  status: number;
 }
 
-const PendingAccountTable = (props: PendingAccountTableProps) => {
-  const [data, setData] = useState<HRAccount[]>(props.data);
-  const { Search } = Input;
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [selectedRows, setSelectedRows] = useState<HRAccount[]>([]);
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-    const DataWithKeys = addKeyToData(data);
-    const newSelectedRows = DataWithKeys.filter((item) => newSelectedRowKeys.includes(item.key));
-    setSelectedRows(newSelectedRows);
-  };
+const AccountTable = (props: PendingAccountTableProps) => {
+  const {
+    data,
+    status,
+    approveAccounts = () => {},
+    rejectAccounts = () => {},
+    handleRejectReason = () => {},
+  } = props;
+  const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [openRejectModal, setOpenRejectModal] = useState(false);
+  const [type, setType] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState('');
+  const [rejectID, setRejectID] = useState<string>('');
+  const { t } = useTranslation();
 
-  useEffect(() => {
-    setData(props.data);
-  }, [props]);
-
-  function addKeyToData(data: HRAccount[]) {
-    return data.map((item, index) => {
-      return { ...item, key: index.toString() };
-    });
+  function formatedData(data: HRAccount[]) {
+    return data
+      .map((item) => {
+        return { ...item, key: item.hrId };
+      })
+      .filter((item) => {
+        return item.status === props.status;
+      });
   }
 
   const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-  const columns: TableProps<HRAccount>['columns'] = [
-    {
-      title: 'Company Name',
-      dataIndex: 'companyName',
-      key: 'name',
-      // render: (text) => <a>{text}</a>,
+    selectedRowKeys: selectedRows,
+    onChange: (newSelectedRowKeys: React.Key[]) => {
+      setSelectedRows(newSelectedRowKeys.map((item) => item.toString()));
     },
-    {
-      title: 'Tax Code',
-      dataIndex: 'taxCode',
-      key: 'taxCode',
-    },
-    {
-      title: 'Display Name',
-      dataIndex: 'displayName',
-      key: 'displayName',
-    },
-    {
-      title: 'Fields',
-      key: 'fields',
-      dataIndex: 'fields',
-      render: (_, { fields }) => (
-        <>
-          {fields.map((field) => {
-            return (
-              <Tag color={'geekblue'} key={field}>
-                {field.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (_, record) => (
-        <Space size='middle'>
-          <Tooltip placement='top' title={'Approve'}>
-            <Button
-              onClick={() => {
-                handleApproveAction(record);
-              }}
-              icon={<CheckOutlined />}
-            ></Button>
-          </Tooltip>
-          <Tooltip placement='top' title={'Reject'}>
-            <Button
-              onClick={() => {
-                handleRejectAction(record);
-              }}
-              danger
-              icon={<CloseOutlined />}
-            ></Button>
-          </Tooltip>
-        </Space>
-      ),
-    },
-  ];
-
-  const onSearch: SearchProps['onSearch'] = (value, _e) => {
-    const newData = props.data.filter(
-      (item) =>
-        item.companyName.toLowerCase().includes(value.toLowerCase()) ||
-        item.taxCode.toString().toLowerCase().includes(value) ||
-        item.displayName.toLowerCase().includes(value.toLowerCase()) ||
-        item.fields.some((field) => field.toLowerCase().includes(value.toLowerCase())) ||
-        item.address.toLowerCase().includes(value.toLowerCase()),
-    );
-
-    setData(newData);
   };
 
-  const handleApproveSelections = () => {
-    props.approveAccounts(selectedRows);
-    setSelectedRowKeys([]);
+  function getColumns(): TableProps<HRAccount>['columns'] {
+    const columns: TableProps<HRAccount>['columns'] = [
+      {
+        title: t('company'),
+        dataIndex: 'name',
+        key: 'name',
+        render: (value, record) => {
+          return (
+            <a
+              className='flex items-center gap-2 text-blue-500 hover:underline'
+              href={MY_ROUTE.ADMIN_COMPANY_PROFILE.replace(':companyId', record.companyId)}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              {value}
+            </a>
+          );
+        },
+      },
+      {
+        title: t('nationality'),
+        dataIndex: 'nationality',
+        key: 'nationality',
+        render: (value) => {
+          return value.join(', ');
+        },
+      },
+      {
+        title: t('industry'),
+        dataIndex: 'industry',
+        key: 'industry',
+        render: (value) => {
+          return value.join(', ');
+        },
+      },
+      {
+        title: t('addresses'),
+        dataIndex: 'addresses',
+        key: 'addresses',
+        render: (value) => {
+          return (
+            <div>
+              {value.map((address: any) => {
+                return (
+                  <div key={address}>
+                    {address.addressDetail} , {address.city}
+                  </div>
+                );
+              })}
+            </div>
+          );
+        },
+      },
+      {
+        title: t('status'),
+        dataIndex: 'status',
+        key: 'status',
+        render: () => {
+          switch (status) {
+            case 0:
+              return <Tag color='gray'>{t('pending')}</Tag>;
+            case 1:
+              return <Tag color='green'>{t('approve')}</Tag>;
+            case -1:
+              return <Tag color='red'>{t('reject')}</Tag>;
+          }
+        },
+      },
+    ];
+
+    if (status == 0) {
+      columns.push({
+        title: t('action'),
+        key: 'action',
+        render: (_, record) => (
+          <Space size='middle'>
+            <Tooltip placement='top' title={'Approve'}>
+              <Button
+                onClick={async () => {
+                  setSelectedRows([record.hrId]);
+                  setOpenModal(true);
+                  setType(1);
+                }}
+                icon={<CheckOutlined />}
+              ></Button>
+            </Tooltip>
+            <Tooltip placement='top' title={'Reject'}>
+              <Button
+                onClick={() => {
+                  setOpenRejectModal(true);
+                  setRejectID(record.hrId);
+                }}
+                danger
+                icon={<CloseOutlined />}
+              ></Button>
+            </Tooltip>
+          </Space>
+        ),
+      });
+    }
+    return columns;
+  }
+
+  const onSearch: SearchProps['onSearch'] = (_value, _e) => {
+    // const newData = props.data.filter(
+    //   (item) =>
+    //     item.companyName.toLowerCase().includes(value.toLowerCase()) ||
+    //     item.taxCode.toString().toLowerCase().includes(value) ||
+    //     item.displayName.toLowerCase().includes(value.toLowerCase()) ||
+    //     item.fields.some((field) => field.toLowerCase().includes(value.toLowerCase())) ||
+    //     item.address.toLowerCase().includes(value.toLowerCase()),
+    // );
+    // setData(newData);
   };
 
-  const handleRejectSelections = () => {
-    props.rejectAccounts(selectedRows);
-    setSelectedRowKeys([]);
+  const handleOKReject = async () => {
+    setIsLoading(true);
+    if (rejectID && value) {
+      await handleRejectReason(rejectID, value);
+    }
+    setIsLoading(false);
+    setOpenRejectModal(false);
+    setValue('');
   };
 
-  const handleApproveAction = (record: any) => {
-    const { key, ...account } = record;
-    props.approveAccounts([account]);
-    setSelectedRowKeys(selectedRowKeys.filter((selectedKey) => selectedKey !== key));
-  };
-
-  const handleRejectAction = (record: any) => {
-    const { key, ...account } = record;
-    props.rejectAccounts([account]);
-    setSelectedRowKeys(selectedRowKeys.filter((selectedKey) => selectedKey !== key));
+  const handleOK = async () => {
+    setIsLoading(true);
+    if (type === 1) {
+      await approveAccounts(selectedRows || []);
+    }
+    if (type === -1) {
+      await rejectAccounts(selectedRows || []);
+    }
+    setIsLoading(false);
+    setOpenModal(false);
   };
 
   return (
     <>
-      <div className='flex justify-between'>
-        <div>
-          <Button
-            onClick={handleApproveSelections}
-            className='mr-2'
-            style={{ color: '#4096ff', borderColor: '#4096ff' }}
-            icon={<CheckOutlined />}
-          >
-            Approve
-          </Button>
-          <Button danger onClick={handleRejectSelections} icon={<CloseOutlined />}>
-            Reject
-          </Button>
-        </div>
+      <div className={`flex ${status == 0 ? 'justify-between' : 'justify-end'} `}>
+        {status == 0 && (
+          <div>
+            <Button
+              onClick={() => {
+                if (selectedRows.length === 0) {
+                  notification.error({
+                    message: 'Error',
+                    description: 'Hãy chọn ít nhất 1 tài khoản để thực hiện thao tác!',
+                  });
+                } else {
+                  setOpenModal(true);
+                  setType(1);
+                }
+              }}
+              className='mr-2'
+              style={{ color: '#4096ff', borderColor: '#4096ff' }}
+              icon={<CheckOutlined />}
+            >
+              Approve
+            </Button>
+            <Button
+              danger
+              onClick={() => {
+                if (selectedRows.length === 0) {
+                  notification.error({
+                    message: 'Error',
+                    description: 'Hãy chọn ít nhất 1 tài khoản để thực hiện thao tác!',
+                  });
+                } else {
+                  setOpenModal(true);
+                  setType(-1);
+                }
+              }}
+              icon={<CloseOutlined />}
+            >
+              Reject
+            </Button>
+          </div>
+        )}
 
-        <Search placeholder='Input search text' onSearch={onSearch} style={{ width: 200 }} />
+        <Input.Search placeholder='Input search text' onSearch={onSearch} style={{ width: 200 }} />
       </div>
       <Table
         className='mt-2'
         rowSelection={rowSelection}
-        columns={columns}
-        dataSource={addKeyToData(data)}
+        columns={getColumns()}
+        dataSource={formatedData(data)}
         pagination={false}
       />
+      <ConfirmModal
+        open={openModal}
+        setOpen={setOpenModal}
+        handleOk={handleOK}
+        isLoadingBtn={isLoading}
+      >
+        {type === 1
+          ? 'Bạn có chắc chắn muốn duyệt các tài khoản này?'
+          : 'Bạn có chắc chắn muốn từ chối các tài khoản này?'}
+      </ConfirmModal>
+
+      {/* modal reject 1 HR */}
+      <ConfirmModal
+        open={openRejectModal}
+        setOpen={setOpenRejectModal}
+        handleOk={handleOKReject}
+        // isLoadingBtn={isLoading}
+      >
+        <div>
+          <h3 className='text-2xl font-semibold mb-4'>Input reason</h3>
+          <ReactQuill
+            className='mb-4'
+            theme='snow'
+            value={value}
+            style={{ height: '150px' }}
+            onChange={(value) => {
+              setValue(value);
+            }}
+          />
+        </div>
+      </ConfirmModal>
     </>
   );
 };
 
-export default PendingAccountTable;
+export default AccountTable;

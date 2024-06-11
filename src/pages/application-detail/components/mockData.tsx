@@ -8,7 +8,7 @@ export default {
   cv: {
     origin: 'Topdev',
     status: 'PENDING',
-    cvUrl: '123.firebase',
+    cvUrl: 'https://facebook.com',
     candidateId: '123',
   },
 };

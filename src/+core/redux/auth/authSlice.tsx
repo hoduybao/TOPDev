@@ -64,7 +64,7 @@ export const { setCredentials, logOut, setLogin } = authSlice.actions;
 export default authSlice.reducer;
 
 // Define the state type for the selectors
-interface RootState {
+export interface RootState {
   auth: AuthState;
 }
 

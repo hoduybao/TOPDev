@@ -14,6 +14,21 @@ const companyApi = commonApi
           method: 'GET',
         }),
       }),
+      getCompanyProfile: build.query<any, void>({
+        query: () => ({
+          url: `/jobs/companies/info`,
+          method: 'GET',
+        }),
+        providesTags: [TAG_TYPES.COMPANY],
+      }),
+      updateCompanyProfile: build.mutation<any, any>({
+        query: (profile: any) => ({
+          url: `/jobs/companies/update`,
+          method: 'PATCH',
+          body: profile,
+        }),
+        invalidatesTags: [TAG_TYPES.COMPANY],
+      }),
       getCompanies: build.query<ListResponseData<CompanyRES>, GetCompanyREQ>({
         query: (params) => ({
           url: `/jobs/companies/listByType`,
@@ -25,4 +40,8 @@ const companyApi = commonApi
     }),
   });
 
-export const { useGetCompanyByIdQuery, useGetCompaniesQuery } = companyApi;
+export const {
+  useGetCompanyByIdQuery, useGetCompaniesQuery,
+  useGetCompanyProfileQuery,
+  useUpdateCompanyProfileMutation,
+} = companyApi;

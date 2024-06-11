@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import colors from '../../+core/themes/colors';
-import { Button, Form, FormProps, Input } from 'antd';
+import { Button, Form, FormProps, Input, notification } from 'antd';
 import { MY_ROUTE } from '@/routes/route.constant';
 import {
   AuthenticationFields,
@@ -34,7 +34,7 @@ const LoginPage = () => {
       }).unwrap();
 
       if (resp) {
-        dispatch(setCredentials(resp));
+        dispatch(setCredentials({ ...resp, isLoggin: true }));
         navigate('/');
       }
     };
@@ -45,11 +45,14 @@ const LoginPage = () => {
   }, []);
 
   const onFinish: FormProps<LoginFormFields>['onFinish'] = async (values) => {
-    const resp = await employerLogin(values).unwrap();
-
-    if (resp) {
-      dispatch(setCredentials(resp));
-      navigate('/company');
+    try {
+      const resp = await employerLogin(values).unwrap();
+      if (resp) {
+        dispatch(setCredentials({ ...resp, isLoggin: true }));
+        navigate('/company');
+      }
+    } catch (error: any) {
+      console.error(error?.data?.message);
     }
   };
 
@@ -67,7 +70,7 @@ const LoginPage = () => {
       }).unwrap();
 
       if (resp) {
-        dispatch(setCredentials(resp));
+        dispatch(setCredentials({ ...resp, isLoggin: true }));
         navigate('/');
       }
     },
@@ -252,7 +255,7 @@ const LoginPage = () => {
                       </Button> */}
                       <Button
                         loading={isLoading}
-                        className='p-4 mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
+                        className='p-4 h-full mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
                         style={{
                           background: colors.orange[500],
                           color: 'white',

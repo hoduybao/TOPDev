@@ -17,7 +17,7 @@ const { Dragger } = Upload;
 type CustomInputType = {
   name: string;
   label: string;
-  rules: Rule[];
+  rules?: Rule[];
   form?: FormInstance<any>;
   description: string;
 };
