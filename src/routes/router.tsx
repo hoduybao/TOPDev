@@ -9,7 +9,6 @@ import { HomePage } from '@/pages/home/HomePage';
 import { ITJobs } from '@/pages/it-jobs/IT-Jobs';
 import JobManagement from '@/pages/job-management/JobManagement';
 import ManageFollowPage from '@/pages/manage-follow/ManageFollowPage';
-import CompanyDashboard from '@/pages/my-company/pages/dashboard/page';
 import { CompanyProfile } from '@/pages/my-company/pages/company-profile/page';
 import { CreateJob } from '@/pages/my-company/pages/manage-jobs/create/page';
 import { ManageJobs } from '@/pages/my-company/pages/manage-jobs/page';
@@ -44,19 +43,7 @@ export const router = createBrowserRouter([
       { path: MY_ROUTE.REGITER, element: <RegisterPage /> },
     ],
   },
-  {
-    path: '/company',
-    element: <CompanyLayout />,
-    children: [
-      { path: MY_ROUTE.COMPANY_DASHBOARD, element: <CompanyDashboard /> },
-      { path: MY_ROUTE.COMPANY, element: <CompanyProfile /> },
-      {
-        path: MY_ROUTE.COMPANY_JOB_MANAGEMENT,
-        element: <ManageJobs />,
-      },
-      { path: MY_ROUTE.COMPANY_CREATE_JOB, element: <CreateJob /> },
-    ],
-  },
+
   {
     element: <PrivateRoute />,
     children: [

@@ -1,4 +1,5 @@
 import {
+  setEmail,
   setIsLogin,
   setLocalAccessToken,
   setLocalRefreshToken,
@@ -9,6 +10,7 @@ export interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
   isLoggin: boolean;
+  email: string | null;
 }
 
 // Define the initial state using the AuthState type
@@ -16,6 +18,7 @@ const initialState: AuthState = {
   accessToken: null,
   refreshToken: null,
   isLoggin: false,
+  email: null,
 };
 
 // Create the auth slice
@@ -24,14 +27,16 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action: PayloadAction<AuthState>) => {
-      const { accessToken, refreshToken, isLoggin } = action.payload;
+      const { accessToken, refreshToken, isLoggin, email } = action.payload;
 
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
       state.isLoggin = isLoggin;
+      state.email = email;
 
       setLocalAccessToken(accessToken || '');
       setLocalRefreshToken(refreshToken || '');
+      setEmail(email || '');
       setIsLogin('true');
     },
 
@@ -39,13 +44,15 @@ const authSlice = createSlice({
       state.isLoggin = false;
       state.accessToken = null;
       state.refreshToken = null;
+      state.email = null;
       setLocalAccessToken('');
       setLocalRefreshToken('');
       setIsLogin('false');
+      setEmail('');
     },
     setLogin: (state, action: PayloadAction<boolean>) => {
       state.isLoggin = action.payload;
-      setIsLogin('false');
+      setIsLogin(action.payload ? 'true' : 'false');
     },
   },
 });

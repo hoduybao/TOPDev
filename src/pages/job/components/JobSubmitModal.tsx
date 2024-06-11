@@ -1,23 +1,24 @@
-import React from 'react';
-import { Button, Form, Input, Modal, notification, Spin, Upload, UploadProps } from 'antd';
-import UserSubmitButton from '../../../components/ui/button/UserSubmitButton';
-import { useParams } from 'react-router-dom';
-import firebaseApp from '../../../config/firebase';
+import { JobResponse } from '@/+core/redux/apis/common/job/job.response';
+import { CustomJobResponse } from '@/+core/redux/apis/common/job/job.types';
+import { getEmail } from '@/+core/services/local.service';
+import { Button, Form, Input, Modal, notification, Upload, UploadProps } from 'antd';
+import { FormInstance, Rule } from 'antd/es/form';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
+import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { useParams } from 'react-router-dom';
 import {
   ApplicationFields,
   useCreateApplicationMutation,
 } from '../../../+core/redux/apis/common/application/application.api';
-import { FormInstance, Rule } from 'antd/es/form';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import { useTranslation } from 'react-i18next';
-import { CustomJobResponse } from '@/+core/redux/apis/common/job/job.types';
-import { JobResponse } from '@/+core/redux/apis/common/job/job.response';
+import UserSubmitButton from '../../../components/ui/button/UserSubmitButton';
+import firebaseApp from '../../../config/firebase';
 type CustomInputType = {
   label: string;
   name?: string;
-  rules: Rule[];
+  rules?: Rule[];
   form?: FormInstance<ApplicationFields>;
 };
 
@@ -88,7 +89,7 @@ const CustomInputFile = (props: CustomInputType) => {
       label={label}
       name='cvUrl'
       rules={rules}
-      labelCol={{ span: 6 }}
+      labelCol={{ span: 4 }}
       labelAlign='left'
       className='my-4'
       initialValue={null}
@@ -108,7 +109,7 @@ const CustomInputTextArea = (props: CustomInputType) => {
       label={label && <label className='whitespace-normal w-full'>{label}</label>}
       name='description'
       rules={rules}
-      labelCol={{ span: 6 }}
+      labelCol={{ span: 4 }}
       labelAlign='left'
       className='mb-[50px]'
     >
@@ -128,7 +129,10 @@ const ApplicationForm = ({ closeModal }: { closeModal: () => void }) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
   const { jobId } = useParams<{ jobId: string }>();
-  const [addNewApplication] = useCreateApplicationMutation();
+  const [addNewApplication, { isLoading }] = useCreateApplicationMutation();
+
+  const email = getEmail();
+  console.log(email);
 
   // logic handlers
   const onFinish = async () => {
@@ -161,6 +165,12 @@ const ApplicationForm = ({ closeModal }: { closeModal: () => void }) => {
     closeModal();
   };
 
+  useEffect(() => {
+    if (email) {
+      form.setFieldValue('email', email);
+    }
+  }, [email]);
+
   return (
     <Form
       form={form}
@@ -169,12 +179,13 @@ const ApplicationForm = ({ closeModal }: { closeModal: () => void }) => {
       onFinishFailed={(error) => {
         console.log('error>>>', error);
       }}
+      colon={false}
     >
       <Form.Item<ApplicationFields>
         label={t('form.fullName')}
         name='fullName'
         rules={[{ required: true, message: 'Please input your username!' }]}
-        labelCol={{ span: 6 }}
+        labelCol={{ span: 4 }}
         labelAlign='left'
         className='my-4 '
       >
@@ -185,18 +196,18 @@ const ApplicationForm = ({ closeModal }: { closeModal: () => void }) => {
         label={t('form.email')}
         name='email'
         rules={[{ required: true, message: 'Please input your email!' }]}
-        labelCol={{ span: 6 }}
+        labelCol={{ span: 4 }}
         labelAlign='left'
         className='my-4 '
       >
-        <Input className='h-[40px]' />
+        <Input className='h-[40px]' disabled={email != null && email != '' && email != undefined} />
       </Form.Item>
 
       <Form.Item<ApplicationFields>
         label={t('form.phone')}
         name='phone'
         rules={[{ required: true, message: 'Please input your phone!' }]}
-        labelCol={{ span: 6 }}
+        labelCol={{ span: 4 }}
         labelAlign='left'
         className='my-4 '
       >
@@ -210,10 +221,7 @@ const ApplicationForm = ({ closeModal }: { closeModal: () => void }) => {
         rules={[{ required: true, message: 'Please input your cv!' }]}
       />
 
-      <CustomInputTextArea
-        label={t('form.description')}
-        rules={[{ required: true, message: 'Please input your note!' }]}
-      />
+      <CustomInputTextArea label={t('form.description')} />
 
       <div className='flex justify-end gap-2 '>
         <UserSubmitButton
@@ -234,42 +242,32 @@ const ApplicationForm = ({ closeModal }: { closeModal: () => void }) => {
   );
 };
 
-const JobSubmitModal = ({
-  data,
-  isLoading,
-}: {
-  data: CustomJobResponse<JobResponse> | undefined;
-  isLoading: boolean;
-}) => {
+const JobSubmitModal = ({ data }: { data: CustomJobResponse<JobResponse> | undefined }) => {
   const { t } = useTranslation();
 
   // modal handlers ui
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   return (
-    <Spin spinning={isLoading}>
-      {data && (
-        <div className='mb-2'>
-          <UserSubmitButton name={t('applyJob')} onClick={() => setIsModalOpen(true)} isFilled />
-          <Modal
-            width={'100%'}
-            style={{ maxWidth: '800px' }}
-            title={
-              <div className='text-xl'>
-                {t('youApply')}
-                <span className='text-orange-600'> {data.data.title} </span>
-                {t('at')} {data?.data?.company?.name}
-              </div>
-            }
-            open={isModalOpen}
-            onCancel={() => setIsModalOpen(false)}
-            footer={null}
-          >
-            <ApplicationForm closeModal={() => setIsModalOpen(false)} />
-          </Modal>
-        </div>
-      )}
-    </Spin>
+    <div className='mb-2'>
+      <UserSubmitButton name={t('applyJob')} onClick={() => setIsModalOpen(true)} isFilled />
+      <Modal
+        width={'100%'}
+        style={{ maxWidth: '800px' }}
+        title={
+          <div className='text-xl'>
+            {t('youApply')}
+            <span className='text-orange-600'> {data?.data?.title} </span>
+            {t('at')} {data?.data?.company?.name}
+          </div>
+        }
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        footer={null}
+      >
+        <ApplicationForm closeModal={() => setIsModalOpen(false)} />
+      </Modal>
+    </div>
   );
 };
 

@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react';
 
 type ConfirmModalProps = PropsWithChildren<{
   open: boolean;
-  setOpen: (open: boolean) => void;
+  setOpen?: (open: boolean) => void;
   handleOk?: () => void;
   handleCancel?: () => void;
   btnOkText?: string;
@@ -32,7 +32,7 @@ export default function ConfirmModal({
               if (handleCancel) {
                 handleCancel();
               } else {
-                setOpen(false);
+                setOpen && setOpen(false);
               }
             }}
             className='!w-[150px] !py-2.5 !h-[46px] !bg-gray-100 !text-black-900 text-base !border-[#E7E5E4] shadow-md hover:!text-black-900 !font-semibold'
@@ -47,7 +47,7 @@ export default function ConfirmModal({
               if (handleOk) {
                 handleOk();
               } else {
-                setOpen(false);
+                setOpen && setOpen(false);
               }
             }}
             className='!px-[48px] !w-[150px] !py-2.5 !h-[46px] !bg-primary-red !font-semibold'

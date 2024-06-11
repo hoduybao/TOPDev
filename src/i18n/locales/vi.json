@@ -249,5 +249,17 @@
   "expirationDate": "Hạn hiển thị",
   "edit": "Chỉnh sửa",
   "stopShowing": "Dừng hiển thị",
-  "show": "Hiển thị"
+  "show": "Hiển thị",
+  "application.pending": "Ứng tuyển thành công",
+  "application.viewing": "Đã xem hồ sơ",
+  "application.accepted": "Đã chấp nhận",
+  "application.rejected": "Đã từ chối",
+  "NONE": "Không yêu cầu",
+  "UNDER_1_YEAR": "Dưới 1 năm",
+  "1_YEAR": "1 năm",
+  "2_YEAR": "2 năm",
+  "3_YEAR": "3 năm",
+  "4_YEAR": "4 năm",
+  "5_YEAR": "5 năm",
+  "OVER_5_YEAR": "Hơn 5 năm"
 }

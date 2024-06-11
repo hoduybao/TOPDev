@@ -27,6 +27,7 @@ type ReponseLogin = {
     access_token: string;
     refresh_token: string;
     id: string;
+    email: string;
   };
 };
 
@@ -34,6 +35,7 @@ type ParseResponseLogin = {
   accessToken: string;
   refreshToken: string;
   userid: string;
+  email: string;
 };
 
 const authenticationApi = commonApi
@@ -51,6 +53,7 @@ const authenticationApi = commonApi
             accessToken: response.data.access_token,
             refreshToken: response.data.refresh_token,
             userid: response.data.id,
+            email: response.data.email,
           };
         },
       }),
@@ -65,6 +68,7 @@ const authenticationApi = commonApi
             accessToken: response.data.access_token,
             refreshToken: response.data.refresh_token,
             userid: response.data.id,
+            email: response.data.email,
           };
         },
       }),

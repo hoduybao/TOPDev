@@ -1,11 +1,9 @@
-import { Button, Form, FormProps, Input, notification } from 'antd';
-import colors from '@/+core/themes/colors';
 import {
   EmployerRegister,
   useEmployerRegisterMutation,
 } from '@/+core/redux/apis/common/authentication/authentication.api';
-import { useDispatch } from 'react-redux';
-import { setCredentials } from '@/+core/redux/auth/authSlice';
+import colors from '@/+core/themes/colors';
+import { Button, Form, FormProps, Input, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 type FieldType = EmployerRegister;
@@ -15,6 +13,7 @@ type RegisterResponse = {
     access_token: string;
     refresh_token: string;
     id: string;
+    email: string;
   };
 };
 

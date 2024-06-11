@@ -29,16 +29,31 @@ export function ITJobs() {
   const { data: jobs, isFetching: isFetchingJobs } = useGetListJobsQuery(filter, {
     refetchOnMountOrArgChange: true,
   });
-  const { data: companies, isFetching: isFetchingCompanies } = useGetListCompaniesQuery(filter, {
-    refetchOnMountOrArgChange: true,
-  });
+  const { data: companies, isFetching: isFetchingCompanies } = useGetListCompaniesQuery(
+    {
+      page: filter?.page || 1,
+      limit: filter?.limit || 10,
+      status: '1',
+      keywords: filter?.keywords,
+      address: filter?.address,
+    },
+    {
+      refetchOnMountOrArgChange: true,
+    },
+  );
 
   const onFinish = (values: any, searchValues?: string[]) => {
+    console.log(values);
     let keywords = searchValues?.join('-');
-    if (values.keywords !== '' && !keywords?.split('-').some((item) => item === values.keywords)) {
+    if (
+      values.keywords &&
+      values.keywords !== '' &&
+      !keywords?.split('-').some((item) => item === values.keywords)
+    ) {
       keywords = keywords ? keywords + '-' + values.keywords : values.keywords;
     }
     setSearchValues(keywords && keywords !== '' ? keywords?.split('-') : []);
+    console.log(values);
     handleFilterChange({
       ...values,
       keywords: keywords,
@@ -47,7 +62,7 @@ export function ITJobs() {
 
   return (
     <Spin spinning={isFetchingJobs || isFetchingCompanies}>
-      <div className="bg-[url('https://c.topdevvn.com/v4/assets/images/bg-search.jpg')]  w-full flex flex-col mb-10">
+      <div className="bg-[url('https://c.topdevvn.com/v4/assets/images/bg-search.jpg')]  w-full flex flex-col">
         <div className='flex justify-center py-12'>
           <div className='w-4/5 flex flex-col gap-4'>
             <SearchJob onSubmit={onFinish} filter={filter} />
@@ -90,7 +105,7 @@ export function ITJobs() {
           </div>
           <div className='flex justify-center mt-8'>
             <div className='w-4/5 grid grid-cols-3 gap-6'>
-              <div className='col-span-2 flex flex-col gap-10'>
+              <div className='col-span-2 flex flex-col gap-10 mb-10'>
                 <div className='flex items-center justify-between px-5 py-4 transition-all bg-gray-200'>
                   <p className='text-sm font-semibold lg:text-lg'>{t('getJobAlerts')}</p>
                   <button

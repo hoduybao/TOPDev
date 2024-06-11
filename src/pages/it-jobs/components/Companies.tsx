@@ -28,7 +28,7 @@ export const Companies = ({ data, limit, total, handleFilterChange }: CompaniesP
                     decoding='async'
                     data-nimg='1'
                     className='inline-block h-28 w-40 rounded-xl bg-white-900 object-contain p-2 text-transparent'
-                    src={company.image}
+                    src={company?.logo}
                   />
                 </a>
               </div>
@@ -38,7 +38,9 @@ export const Companies = ({ data, limit, total, handleFilterChange }: CompaniesP
                     {company.name}
                   </h3>
                   <div className=' mt-2 flex flex-wrap items-start text-base capitalize text-[#5C5B5B]'>
-                    {company.address}
+                    {company?.addresses && company?.addresses.length > 0
+                      ? company?.addresses[0].addressDetail
+                      : 'Unknown'}
                     <span className='whitespace-nowrap'>
                       <span className='mx-5 inline-block h-[6px] w-[6px] rounded-full bg-[#5C5B5B] align-middle'></span>
                       {company.companySize}
@@ -47,7 +49,7 @@ export const Companies = ({ data, limit, total, handleFilterChange }: CompaniesP
                   <ul className=' text-base capitalize text-[#5C5B5B]'></ul>
                 </a>
                 <div className='mt-3 line-clamp-1'>
-                  {company.skills.map((skill, index) => (
+                  {company?.techStack?.map((skill, index) => (
                     <a key={index} className='mr-2 inline-block' href='/'>
                       <span className='whitespace-nowrap rounded border border-solid font-normal transition-all inline-flex items-center justify-center border-[#EDFBFF] text-[#1047B2] bg-[#EDFBFF] hover:border-[#1047B2] h-[1.625rem] px-2 text-xs md:h-7 md:px-2 md:text-sm'>
                         {skill}
@@ -96,7 +98,7 @@ export const Companies = ({ data, limit, total, handleFilterChange }: CompaniesP
           type='button'
           className={`${
             limit >= (total || 10) && 'hidden'
-          } inline-flex items-center justify-center gap-1 border border-solid text-sm transition-all disabled:cursor-not-allowed lg:gap-3 lg:text-base border-primary-red bg-transparent text-primary-red hover:bg-[#FEEEEB] dark:border-white-900 dark:text-white-900 undefined h-9 rounded px-4 font-semibold lg:h-12 lg:px-6 w-full lg:w-[238px]`}
+          } inline-flex items-center justify-center gap-1 border border-solid text-sm transition-all disabled:cursor-not-allowed lg:gap-3 lg:text-base border-primary-red bg-transparent text-primary-red hover:bg-[#FEEEEB] dark:border-white-900 dark:text-white-900 undefined h-9 rounded px-4 font-semibold lg:h-12 lg:px-6 w-full lg:w-[238px] mb-20`}
         >
           <span className=''>{t('view_more')}</span>
         </button>

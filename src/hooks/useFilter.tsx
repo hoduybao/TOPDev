@@ -28,6 +28,13 @@ export function useFilter<T>({ initialFilter }: PagingFiletrType<T>) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const pathname = useLocation();
+
+  // when paging change, update url by new paging
+  const handlePageChange = (paging: { page: number; limit: number }) => {
+    const newParams = { ...filter, ...paging };
+    navigate(`${pathname.pathname}?${queryString.stringify(removeEmptyParams(newParams))}`);
+  };
+
   // when filter change, update url by new filter
   const handleFilterChange = (filter: T & Record<string, string>) => {
     const newParams = { ...filter };
@@ -37,7 +44,7 @@ export function useFilter<T>({ initialFilter }: PagingFiletrType<T>) {
   useEffect(() => {
     let params: any = queryString.parse(window.location.search);
     if (!params.page || !params.limit) {
-      params = { ...params, page: 1, limit: 10 };
+      params = { ...params, ...initialFilter };
     }
 
     setFilter(params as T);
@@ -46,5 +53,6 @@ export function useFilter<T>({ initialFilter }: PagingFiletrType<T>) {
   return {
     filter,
     handleFilterChange,
+    handlePageChange,
   };
 }

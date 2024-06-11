@@ -112,21 +112,54 @@ export type CompanyInformationResponse = {
 
 export type ListCompanyRES = {
   id: string;
-  name: string;
-  address: string;
-  url: string;
-  companySize: string;
-  skills: string[];
-  nations: string[];
-  benefits: string[];
-  fields: string[];
-  about: string;
-  status: number;
-  image: string;
-  createdAt: string;
-  updatedAt: string;
-  followedCount: number;
-  cover: string;
-  images: string[];
-  slogan: string;
+  logo?: string;
+  name?: string;
+  tagline?: string;
+  nationality?: string[];
+  companySize?: string;
+  industry?: string[];
+  techStack?: string[];
+  website?: string;
+  socialMedia?: SocialMedia;
+  addresses?: Address[];
+  benefits?: string[];
+  coverPhoto?: string;
+  galleries?: string[];
+  topConcerns?: TopConcern[];
+  products?: Product[];
+  status?: number;
+  followedCount?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  applicationCount?: number;
+  viewedCount?: number;
+  phoneNumber?: string;
+  hrId?: string;
+  jobCount: number;
+  introduction?: string;
+  reason?: string;
+};
+
+type SocialMedia = {
+  facebook?: string;
+  linkedin?: string;
+  youtube?: string;
+  instagram?: string;
+};
+
+type Address = {
+  city: string;
+  addressDetail: string;
+};
+
+type TopConcern = {
+  question?: string;
+  answer?: string;
+};
+
+export type Product = {
+  productName?: string;
+  productPhoto?: string;
+  link?: string;
+  description?: string;
 };
