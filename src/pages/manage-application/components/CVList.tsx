@@ -1,5 +1,5 @@
-import { Button, Pagination, Table } from 'antd';
-import moment from 'moment';
+import { Button, Table } from 'antd';
+import dayjs from 'dayjs';
 
 import type { TableColumnsType } from 'antd';
 import { EyeOutlined, FieldTimeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
@@ -93,7 +93,7 @@ const CVList = ({
           <div>
             <div>
               <FieldTimeOutlined className='m-2 text-orange-500' />{' '}
-              <span>{moment(value?.createdAt).format('MMMM D YYYY')}</span>
+              <span>{dayjs(value?.createdAt).format('DD/MM/YYYY')}</span>
             </div>
           </div>
         );

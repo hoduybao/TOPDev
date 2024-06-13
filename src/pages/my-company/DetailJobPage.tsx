@@ -98,7 +98,7 @@ const DetailJobPage = () => {
 
   const onEditFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const job: JobType = {
-      id: values?.jobId,
+      id: values?.jobId || '',
       title: values?.title,
       level: values?.level,
       salary: values?.salary,
@@ -486,6 +486,3 @@ const DetailJobPage = () => {
 };
 
 export default DetailJobPage;
-
-
-

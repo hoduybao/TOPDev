@@ -21,11 +21,11 @@ import { ChangeEvent, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './headerTable.module.scss';
 
-interface JobType {
-  jobName: string;
-  companyName: string;
-  createdAt: string;
-}
+// interface JobType {
+//   jobName: string;
+//   companyName: string;
+//   createdAt: string;
+// }
 
 export const Columns = (): (ColumnGroupType<MyCv> | ColumnType<MyCv>)[] => {
   const { t } = useTranslation();

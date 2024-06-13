@@ -1,3 +1,7 @@
+type Address = {
+  city: string;
+  addressDetail: string;
+};
 export interface CompanyType {
   id?: string;
   name?: string;
@@ -10,6 +14,8 @@ export interface CompanyType {
   technicals?: string[];
   website?: string;
   address?: string;
+  logo?: string;
+  addresses?: Address[];
 }
 
 export interface JobType {
@@ -42,6 +48,8 @@ export interface JobType {
   createdBy?: string;
   followedCount?: number;
   status?: number | string;
+  minSalary?: number;
+  maxSalary?: number;
 }
 
 export interface ApplicationType {

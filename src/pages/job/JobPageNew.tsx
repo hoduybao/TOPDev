@@ -27,10 +27,10 @@ const JobPage = () => {
           <section className='w-full lg:w-[70%] flex flex-col gap-4 relative'>
             <section
               className={`flex items-start bg-white-900 rounded shadow-md p-4
-            sticky top-0 z-10
+            sticky top-20 z-10
             `}
             >
-              <CompanyCard isSticky={false} data={data} />
+              <CompanyCard data={data} />
             </section>
             <section>
               <SelectionTags
@@ -56,7 +56,7 @@ const JobPage = () => {
             </section>
           </section>
 
-          <section className='w-full lg:w-[30%] sticky top-0 z-10'>
+          <section className='w-full lg:w-[30%] sticky top-20 z-10'>
             <JobSubmitModal data={data} />
             <UserSubmitButton name='Tạo CV để ứng tuyển' onClick={() => {}} />
             <ShortDetail data={data} />

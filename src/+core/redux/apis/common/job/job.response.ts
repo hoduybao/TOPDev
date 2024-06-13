@@ -29,6 +29,7 @@ export type JobResponse = {
   createdAt?: string;
   updatedAt?: string;
   company?: Company;
+  salary?: string;
 };
 
 type Company = {
@@ -59,6 +60,8 @@ type Company = {
   jobCount?: number;
   introduction?: any;
   reason?: string;
+  image?: string;
+  address?: string;
 };
 
 type SocialMedia = {
