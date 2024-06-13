@@ -19,7 +19,7 @@ const CompanyPage = () => {
           </div>
           <div className='col-span-12 lg:col-span-4 '>
             <CompanyOverview data={data} />
-            <CompanyContact />
+            <CompanyContact data={data} />
           </div>
         </div>
       </Spin>
