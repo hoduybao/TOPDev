@@ -12,8 +12,8 @@ const jobApi = commonApi.enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB] }).inje
   endpoints: (build) => ({
     getListFollow: build.query<any, Paging>({
       query: (params: Paging) => ({
-        // url: '/jobs/list-follow',
-        url: '/jobs',
+        url: '/jobs/list-follow',
+        // url: '/jobs',
         method: 'GET',
         params: params,
       }),

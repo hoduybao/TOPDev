@@ -70,7 +70,7 @@ const FollowJobCard = (props: PropType) => {
                 {job.minSalary ? job.minSalary : 0} - {job?.maxSalary}
               </p>
               <Button
-                className='border-none'
+                className='border-none flex items-center justify-center'
                 loading={isLoading}
                 onClick={async () => {
                   await handleUnfollowJob(job.id);
