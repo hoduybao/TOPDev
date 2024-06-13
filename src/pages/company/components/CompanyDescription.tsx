@@ -5,13 +5,13 @@ import SelectionTags, { TAG_TYPES } from '@/components/ui/tag/SelectionTags';
 import ProductsSession from './ProductsSession';
 import ProfileSession from './ProfileSession';
 import useSticky from '@/hooks/sticky';
+import { CompanyDetail } from '@/+core/redux/apis/common/company/company.api';
 
-const CompanyDescription = () => {
+const CompanyDescription = ({ data }: { data: CompanyDetail }) => {
   const productRef = React.useRef<HTMLDivElement>(null);
   const companyRef = React.useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
   const { ref, isSticky } = useSticky();
-  console.log(isSticky);
 
   return (
     <div className=''>
