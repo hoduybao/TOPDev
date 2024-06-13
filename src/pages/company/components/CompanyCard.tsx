@@ -1,7 +1,7 @@
 import { Button } from 'antd';
-import companyData from '../../../draft/company-new.json';
 import { ICONS } from '@/config/icons';
 import { useTranslation } from 'react-i18next';
+import { CompanyDetail } from '@/+core/redux/apis/common/company/company.api';
 
 const CustomButton = ({
   isOutlined,
@@ -21,14 +21,20 @@ const CustomButton = ({
   );
 };
 
-const CompanyCardContent = ({ isStickyCustom = false }: { isStickyCustom?: boolean }) => {
+const CompanyCardContent = ({
+  isStickyCustom = false,
+  data,
+}: {
+  isStickyCustom?: boolean;
+  data: CompanyDetail;
+}) => {
   const { t } = useTranslation();
 
   return (
     <div className={`flex-1 ${isStickyCustom ? 'flex' : ''}`}>
       <div className={`${isStickyCustom ? 'flex-1' : ''}`}>
-        <h1 className='font-bold text-lg'>{companyData.name}</h1>
-        <div className='mt-4' dangerouslySetInnerHTML={{ __html: companyData.about }}></div>
+        <h1 className='font-bold text-lg'>{data?.name}</h1>
+        <div className='mt-4' dangerouslySetInnerHTML={{ __html: data?.tagline || '' }}></div>
       </div>
       <div className='flex gap-4 mt-4 justify-start'>
         <div className='flex-1'>
@@ -53,18 +59,18 @@ const CompanyCardContent = ({ isStickyCustom = false }: { isStickyCustom?: boole
   );
 };
 
-const CompanyCard = () => {
+const CompanyCard = ({ data }: { data: CompanyDetail }) => {
   return (
     <div className='w-full relative'>
-      <img src={companyData.background} alt='company logo' className='w-full h-[250px] rounded' />
+      <img src={data?.coverPhoto} alt='company logo' className='w-full h-[250px] rounded' />
       <div className='absolute top-[50%] w-full p-4'>
         <div className='bg-white-900 w-full rounded flex gap-4 p-4 '>
           <img
-            src={companyData.avatar}
+            src={data?.logo}
             alt='company logo'
             className='w-40 h-28 p-2 rounded object-contain'
           />
-          <CompanyCardContent />
+          <CompanyCardContent data={data} />
         </div>
       </div>
     </div>

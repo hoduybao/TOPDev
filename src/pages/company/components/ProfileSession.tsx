@@ -1,16 +1,21 @@
 import ContentSession from './ContentSession';
-import companyData from '../../../draft/company-new.json';
 import { useTranslation } from 'react-i18next';
+import { CompanyDetail } from '@/+core/redux/apis/common/company/company.api';
 
-const ProfileSession = () => {
+const ProfileSession = ({ data }: { data: CompanyDetail }) => {
   const { t } = useTranslation();
   return (
     <div className='p-4'>
-      <ContentSession header={t('company.aboutus')} content={companyData.about} />
-      <ContentSession header={t('company.introduction')} content={companyData.introduction} />
-      <ContentSession header={t('company.benefit')} content={companyData.benefit} />
+      {/* <ContentSession header={t('company.aboutus')} content={companyData.about} /> */}
+      {data?.introduction && (
+        <ContentSession header={t('company.introduction')} content={data?.introduction} />
+      )}
+      {data?.benefits && (
+        <ContentSession header={t('company.benefit')} content={data?.benefits?.join(' ')} />
+      )}
+
       <div className='flex gap-2 mb-2'>
-        {companyData.imgs.map((img, index) => (
+        {data?.galleries?.map((img, index) => (
           <img
             key={index}
             src={img}
@@ -19,7 +24,6 @@ const ProfileSession = () => {
           />
         ))}
       </div>
-      <ContentSession header={t('company.benefit')} content={companyData.benefit} />
     </div>
   );
 };
