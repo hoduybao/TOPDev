@@ -5,7 +5,7 @@ export const commonApi = createApi({
   reducerPath: 'CommonApi',
   keepUnusedDataFor: 1,
   baseQuery: baseQueryWithAuth({
-    baseUrl: `http://localhost:5000`,
+    baseUrl: `${import.meta.env.VITE_ROUTE}`,
     // baseUrl: `http://20.191.157.139`,
     async prepareHeaders(headers) {
       // if have token, set Authorization header
