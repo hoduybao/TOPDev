@@ -3,13 +3,23 @@ import { commonApi } from '../../common.api';
 import { JobResponse } from './job.response';
 import { CustomJobResponse, transformResponse } from './job.types';
 
+export type Paging = {
+  limit: number;
+  page: number;
+};
+
 const jobApi = commonApi.enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB] }).injectEndpoints({
   endpoints: (build) => ({
-    getJobs: build.query<any, any>({
-      query: () => ({
-        url: '/jobs',
+    getListFollow: build.query<any, Paging>({
+      query: (params: Paging) => ({
+        url: '/jobs/list-follow',
+        // url: '/jobs',
         method: 'GET',
+        params: params,
       }),
+      // transformResponse: (response: any) => {
+      //   return response?.data;
+      // },
       providesTags: [TAG_TYPES.JOB],
     }),
     getJobById: build.query<CustomJobResponse<JobResponse>, any>({
@@ -19,7 +29,26 @@ const jobApi = commonApi.enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB] }).inje
       }),
       transformResponse: transformResponse,
     }),
+    followJob: build.mutation<any, any>({
+      query: (id: string) => ({
+        url: `/jobs/${id}/followed`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: [TAG_TYPES.JOB],
+    }),
+    unfollowJob: build.mutation<any, any>({
+      query: (id: string) => ({
+        url: `/jobs/${id}/unfollowed`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: [TAG_TYPES.JOB],
+    }),
   }),
 });
 
-export const { useGetJobsQuery, useGetJobByIdQuery } = jobApi;
+export const {
+  useGetListFollowQuery,
+  useGetJobByIdQuery,
+  useFollowJobMutation,
+  useUnfollowJobMutation,
+} = jobApi;

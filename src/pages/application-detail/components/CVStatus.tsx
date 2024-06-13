@@ -1,6 +1,6 @@
 import { useUpdateStatusMutation } from '@/+core/redux/apis/common/application/application.api';
 import ConfirmModal from '@/components/global/ConfirmModal';
-import { Button, Form, FormProps, notification } from 'antd';
+import { Button, Form, notification } from 'antd';
 import { Select } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

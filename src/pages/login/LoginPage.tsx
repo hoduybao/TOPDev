@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import colors from '../../+core/themes/colors';
-import { Button, Form, FormProps, Input, notification } from 'antd';
+import { Button, Form, FormProps, Input } from 'antd';
 import { MY_ROUTE } from '@/routes/route.constant';
 import {
   AuthenticationFields,
