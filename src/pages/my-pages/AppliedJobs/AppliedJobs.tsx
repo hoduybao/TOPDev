@@ -1,7 +1,7 @@
 import { ApplicationStatusEnum } from '@/+core/enums/applicationStatus.enum';
 import { useGetMyApplicationsQuery } from '@/+core/redux/apis/common/application/application.api';
 import {
-  JobDetail,
+  JobDetailRES,
   MyApplicationRES,
 } from '@/+core/redux/apis/common/application/application.response';
 import { PagingREQ, initialPagingState } from '@/+core/redux/paging.type';
@@ -35,7 +35,7 @@ export const Columns = (): (ColumnGroupType<MyApplicationRES> | ColumnType<MyApp
       dataIndex: 'jobDetail',
       key: 'jobDetail',
       className: 'text-left',
-      render: (jobDetail: JobDetail, record) => (
+      render: (jobDetail: JobDetailRES, record) => (
         <div className='flex flex-col gap-1'>
           <div className='text-base font-bold text-primary-red'>{jobDetail?.title}</div>
           <LinkOutlined
@@ -53,7 +53,7 @@ export const Columns = (): (ColumnGroupType<MyApplicationRES> | ColumnType<MyApp
       dataIndex: 'jobDetail',
       key: 'jobDetail',
       className: 'text-left',
-      render: (jobDetail: JobDetail) => (
+      render: (jobDetail: JobDetailRES) => (
         <div className='text-base font-bold text-[#000000D9]'>{jobDetail?.companyName}</div>
       ),
     },

@@ -9,6 +9,8 @@ interface RefreshResponse {
   refresh_token: string;
   email: string;
   userId: string;
+  firstName: string;
+  lastName: string;
 }
 
 export const baseQueryWithAuth: (
@@ -36,13 +38,15 @@ export const baseQueryWithAuth: (
 
       if (response && response.data) {
         console.log('Fetch token success, retry the request');
-        const { access_token, refresh_token, email } = response.data as RefreshResponse;
+        const { access_token, refresh_token, email, firstName, lastName } =
+          response.data as RefreshResponse;
         api.dispatch(
           setCredentials({
             accessToken: access_token,
             refreshToken: refresh_token,
             isLoggin: true,
             email: email,
+            name: firstName + ' ' + lastName,
           }),
         );
         const newResult = await fetchBaseQuery(option)(args, api, extraOptions);

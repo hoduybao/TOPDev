@@ -5,16 +5,16 @@ import RejectedJobsTab from '@/pages/admin/components/jobs-management/RejectedJo
 import { Input, Pagination, Spin, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
 import '../../styles/admin/management-page.module.scss';
-import ClosedJobsTab from '@/pages/admin/components/jobs-management/ClosedJobsTab';
-import { CheckOutlined, ClockCircleOutlined, CloseOutlined } from '@ant-design/icons';
-import ConfirmModal from '@/components/global/ConfirmModal';
-import { FilterJobsTypeREQ } from '@/+core/redux/apis/admin/job-management/job-admin.request';
+
 import {
   useApproveJobsMutation,
   useGetListJobsQuery,
   useRefuseJobsMutation,
 } from '@/+core/redux/apis/admin/job-management/job-admin.api';
+import { FilterJobsTypeREQ } from '@/+core/redux/apis/admin/job-management/job-admin.request';
 import { ListJobsRES } from '@/+core/redux/apis/admin/job-management/job-admin.response';
+import ConfirmModal from '@/components/global/ConfirmModal';
+import { CheckOutlined, ClockCircleOutlined, CloseOutlined } from '@ant-design/icons';
 
 const JobManagementPage = () => {
   const [filter, setFilter] = useState<FilterJobsTypeREQ>({

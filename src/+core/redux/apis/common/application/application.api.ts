@@ -76,20 +76,6 @@ const applicationApi = commonApi
         }),
         transformResponse: transformResponse,
       }),
-      getMyApplications: build.query<
-        ListResponseData<MyApplicationRES>,
-        { page?: number; limit?: number }
-      >({
-        query: (params) => ({
-          url: `applications/user/list`,
-          method: 'GET',
-          params: {
-            page: params.page,
-            limit: params.limit,
-          },
-        }),
-        transformResponse: transformResponse,
-      }),
     }),
   });
 

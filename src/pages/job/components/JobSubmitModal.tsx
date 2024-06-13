@@ -236,6 +236,7 @@ const ApplicationForm = ({ closeModal }: { closeModal: () => void }) => {
           name={t('form.submitcv')}
           htmlType='submit'
           isFilled
+          isLoad={isLoading}
         />
       </div>
     </Form>

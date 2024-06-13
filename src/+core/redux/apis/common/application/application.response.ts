@@ -29,10 +29,10 @@ export type MyApplicationRES = {
   status: string;
   createdAt: string;
   updatedAt: string;
-  jobDetail: JobDetail;
+  jobDetail: JobDetailRES;
 };
 
-export type JobDetail = {
+export type JobDetailRES = {
   jobId: string;
   title: string;
   level?: string;

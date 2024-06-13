@@ -1,4 +1,4 @@
-import { TAG_TYPES } from '../../../../../+core/constants/api.tagTypes';
+import { TAG_TYPES } from '@/+core/constants/api.tagTypes';
 import { commonApi } from '../../common.api';
 
 export type AuthenticationFields = {
@@ -28,6 +28,8 @@ type ReponseLogin = {
     refresh_token: string;
     id: string;
     email: string;
+    firstName: string;
+    lastName: string;
   };
 };
 
@@ -36,6 +38,7 @@ type ParseResponseLogin = {
   refreshToken: string;
   userid: string;
   email: string;
+  name: string;
 };
 
 const authenticationApi = commonApi
@@ -54,6 +57,7 @@ const authenticationApi = commonApi
             refreshToken: response.data.refresh_token,
             userid: response.data.id,
             email: response.data.email,
+            name: response?.data?.lastName + ' ' + response?.data?.firstName || '',
           };
         },
       }),
@@ -68,6 +72,8 @@ const authenticationApi = commonApi
             accessToken: response.data.access_token,
             refreshToken: response.data.refresh_token,
             userid: '', // no need store userid, all needed data is store in token
+            email: '', // no need store email
+            name: '', // no need store name
           };
         },
       }),
@@ -83,6 +89,7 @@ const authenticationApi = commonApi
             refreshToken: response.data.refresh_token,
             userid: response.data.id,
             email: response.data.email,
+            name: response?.data?.lastName + ' ' + response?.data?.firstName || '',
           };
         },
       }),

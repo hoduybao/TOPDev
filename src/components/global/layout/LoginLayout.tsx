@@ -1,18 +1,24 @@
 import { faBars, faBook, faBriefcase, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Layout as LayoutAntDesign } from 'antd';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import colors from '../../../+core/themes/colors';
 
 const { Content } = LayoutAntDesign;
 
 export default function LoginLayout() {
+  const navigate = useNavigate();
   return (
     <LayoutAntDesign className='bg-white font-roboto'>
       {/* Header */}
       <div className='h-[88px] justify-center hidden xl:flex'>
         <div className='w-[1140px] px-[15px] flex justify-between items-center'>
-          <div className='flex'>
+          <div
+            className='flex'
+            onClick={() => {
+              navigate('/');
+            }}
+          >
             <img className='w-[160px]' src='https://accounts.topdev.vn/asset/images/logo.png' />
             <p className='inline-flex items-end text-2xl text-black-600'>
               <span className='text-orange-500 mr-2'>Việc Làm IT </span>
@@ -28,14 +34,14 @@ export default function LoginLayout() {
               <FontAwesomeIcon className='mr-1.5' icon={faPhone} />
               028.6723.3946
             </a>
-            <a
-              href='/'
+            <Link
+              to={'/register'}
               className='px-3 text-black-400 hover:text-orange-500'
               style={{ borderRight: `1px solid ${colors.black[400]}` }}
             >
               <FontAwesomeIcon className='mr-1.5' icon={faBriefcase} />
               Đăng tuyển
-            </a>
+            </Link>
             <a
               href='/'
               className='px-3 text-black-400 hover:text-orange-500'
@@ -102,6 +108,9 @@ export default function LoginLayout() {
 
           <div className='hidden lg:block'>
             <button
+              onClick={() => {
+                navigate('/register');
+              }}
               className='w-[142px] h-[38px] rounded text-sm hover:bg-orange-800 bg-orange-500'
               style={{
                 color: 'white',

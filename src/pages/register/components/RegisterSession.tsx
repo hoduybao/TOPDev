@@ -148,7 +148,7 @@ const RegisterForm = () => {
           <Form.Item className='mt-5'>
             <Button
               loading={isLoading}
-              className='p-4 mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
+              className='px-4 !h-14 mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
               style={{
                 background: colors.orange[500],
                 color: 'white',

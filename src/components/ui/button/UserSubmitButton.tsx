@@ -1,3 +1,5 @@
+import { Button } from 'antd';
+
 const UserSubmitButton = ({
   name,
   isFilled = false,
@@ -5,6 +7,7 @@ const UserSubmitButton = ({
   onClick,
   isSmall = false,
   customClass,
+  isLoad = false,
 }: {
   name: string;
   isFilled?: boolean;
@@ -13,20 +16,22 @@ const UserSubmitButton = ({
   onClick?: (values?: any) => void;
   htmlType?: string;
   customClass?: string;
+  isLoad?: boolean;
 }) => {
   return (
     <div className={`${isFullWidth && 'w-full'} mb-2`}>
-      <button
+      <Button
+        loading={isLoad}
         onClick={onClick}
         className={`
         ${isFilled ? 'bg-orange-600 text-white-900' : 'text-orange-600 border border-orange-600'}
-        ${isSmall ? 'p-2' : 'p-4'}
-        w-full text-base font-bold rounded
+        ${isSmall ? 'px-2' : 'px-4'}
+        w-full text-base font-bold rounded !h-12
         ${customClass}
         `}
       >
         {name}
-      </button>
+      </Button>
     </div>
   );
 };
