@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import FollowJobCard from './components/FollowJobCard';
 import {
   Paging,
-  useGetJobsQuery,
+  useGetListFollowQuery,
   useUnfollowJobMutation,
 } from '@/+core/redux/apis/common/job/job.api';
 
@@ -15,7 +15,7 @@ const ManageFollowPage = () => {
     page: 1,
     limit: 6,
   });
-  const { data: jobsData, isFetching } = useGetJobsQuery(filter);
+  const { data: jobsData, isFetching } = useGetListFollowQuery(filter);
   const [unfollowJob, { isLoading }] = useUnfollowJobMutation();
 
   const { t } = useTranslation();

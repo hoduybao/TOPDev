@@ -10,8 +10,9 @@ export type Paging = {
 
 const jobApi = commonApi.enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB] }).injectEndpoints({
   endpoints: (build) => ({
-    getJobs: build.query<any, Paging>({
+    getListFollow: build.query<any, Paging>({
       query: (params: Paging) => ({
+        // url: '/jobs/list-follow',
         url: '/jobs',
         method: 'GET',
         params: params,
@@ -45,5 +46,9 @@ const jobApi = commonApi.enhanceEndpoints({ addTagTypes: [TAG_TYPES.JOB] }).inje
   }),
 });
 
-export const { useGetJobsQuery, useGetJobByIdQuery, useFollowJobMutation, useUnfollowJobMutation } =
-  jobApi;
+export const {
+  useGetListFollowQuery,
+  useGetJobByIdQuery,
+  useFollowJobMutation,
+  useUnfollowJobMutation,
+} = jobApi;

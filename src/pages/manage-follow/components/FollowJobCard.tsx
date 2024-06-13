@@ -13,7 +13,7 @@ const FollowJobCard = (props: PropType) => {
 
   const handleApplyJob = (job: JobType) => {
     // console.log('Apply job', job);
-    window.open(`jobs/companyId/${job?.id}`, '_blank', 'noreferrer');
+    window.open(`jobs/${job?.id}`, '_blank', 'noreferrer');
   };
 
   const { t } = useTranslation();
