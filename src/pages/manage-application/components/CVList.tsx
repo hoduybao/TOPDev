@@ -1,12 +1,12 @@
 import { Button, Table } from 'antd';
 import dayjs from 'dayjs';
 
-import type { TableColumnsType } from 'antd';
-import { EyeOutlined, FieldTimeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import { Application } from '@/+core/redux/apis/common/application/application.response';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import Container from '@/components/global/Container/Container';
+import { EyeOutlined, FieldTimeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
+import type { TableColumnsType } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const CVList = ({
   data,
@@ -141,7 +141,7 @@ const CVList = ({
         return (
           <Button
             onClick={() => {
-              navigate(`/recruitment/${jobId}/application/${record.id}`);
+              navigate(`/company/manage-jobs/${jobId}/application/${record.id}`);
               console.log('click');
             }}
             className='font-bold flex justify-center items-center'
@@ -154,22 +154,20 @@ const CVList = ({
   ];
   return (
     <div className='mt-8'>
-      {total ? (
-        <Container>
-          <Table
-            pagination={{
-              current: Number(currentPage),
-              total: Number(total),
-              pageSize: Number(limit),
-              onChange: (page) => {
-                changePage(page.toString());
-              },
-            }}
-            columns={columns}
-            dataSource={dataSource}
-          />
-        </Container>
-      ) : null}
+      <Container>
+        <Table
+          pagination={{
+            current: Number(currentPage) || 1,
+            total: Number(total) || 0,
+            pageSize: Number(limit),
+            onChange: (page) => {
+              changePage(page.toString());
+            },
+          }}
+          columns={columns}
+          dataSource={dataSource}
+        />
+      </Container>
     </div>
   );
 };

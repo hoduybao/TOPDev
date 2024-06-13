@@ -1,5 +1,7 @@
-import { Button } from 'antd';
-import { useState } from 'react';
+import { logOut } from '@/+core/redux/auth/authSlice';
+import { Button, Dropdown, MenuProps } from 'antd';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 interface HeaderProps {
   onCollapseNavigation: (collapsed: boolean) => void;
@@ -9,11 +11,28 @@ interface HeaderProps {
 const Header = ({ onCollapseNavigation, textHeader }: HeaderProps) => {
   // const menuItems = HeaderMenu();
   const [collapsed, setCollapsed] = useState(false);
+  const dispatch = useDispatch();
 
   const handleCollapseNavigation = () => {
     onCollapseNavigation(!collapsed);
     setCollapsed(!collapsed);
   };
+
+  const items: MenuProps['items'] = [
+    {
+      key: 'logout',
+      label: (
+        <div
+          className='text-base font-medium cursor-pointer'
+          onClick={() => {
+            dispatch(logOut());
+          }}
+        >
+          Đăng xuất
+        </div>
+      ),
+    },
+  ];
 
   return (
     <header>
@@ -73,19 +92,40 @@ const Header = ({ onCollapseNavigation, textHeader }: HeaderProps) => {
           </ul> */}
         <div className='flex w-full pr-4 justify-between items-center'>
           <h1 className='text-[25px] font-semibold text-black-400'>{textHeader} </h1>
-          <svg
-            fill='none'
-            viewBox='0 0 26 26'
-            height='26'
-            width='26'
-            xmlns='http://www.w3.org/2000/svg'
+          <Dropdown
+            trigger={['click']}
+            menu={{ items }}
+            dropdownRender={(menu) => (
+              <div
+                className='w-[138px] rounded-md flex flex-col items-center py-3 px-2.5 bg-white-900 mt-2'
+                style={{ border: '1px solid #D2D5E0' }}
+              >
+                {React.cloneElement(menu as React.ReactElement, {
+                  style: {
+                    boxShadow: 'none',
+                    padding: 0,
+                    width: '100%',
+                    textAlign: 'center',
+                  },
+                })}
+              </div>
+            )}
+            placement='bottomRight'
           >
-            <path
+            <svg
+              fill='none'
+              viewBox='0 0 26 26'
+              height='26'
+              width='26'
               xmlns='http://www.w3.org/2000/svg'
-              d='M13 0.5C6.1 0.5 0.5 6.1 0.5 13C0.5 19.9 6.1 25.5 13 25.5C19.9 25.5 25.5 19.9 25.5 13C25.5 6.1 19.9 0.5 13 0.5ZM6.8375 20.85C7.375 19.725 10.65 18.625 13 18.625C15.35 18.625 18.6375 19.725 19.1625 20.85C17.4625 22.2 15.325 23 13 23C10.675 23 8.5375 22.2 6.8375 20.85ZM20.95 19.0375C19.1625 16.8625 14.825 16.125 13 16.125C11.175 16.125 6.8375 16.8625 5.05 19.0375C3.775 17.3625 3 15.275 3 13C3 7.4875 7.4875 3 13 3C18.5125 3 23 7.4875 23 13C23 15.275 22.225 17.3625 20.95 19.0375ZM13 5.5C10.575 5.5 8.625 7.45 8.625 9.875C8.625 12.3 10.575 14.25 13 14.25C15.425 14.25 17.375 12.3 17.375 9.875C17.375 7.45 15.425 5.5 13 5.5ZM13 11.75C11.9625 11.75 11.125 10.9125 11.125 9.875C11.125 8.8375 11.9625 8 13 8C14.0375 8 14.875 8.8375 14.875 9.875C14.875 10.9125 14.0375 11.75 13 11.75Z'
-              fill='#393E46'
-            ></path>
-          </svg>
+            >
+              <path
+                xmlns='http://www.w3.org/2000/svg'
+                d='M13 0.5C6.1 0.5 0.5 6.1 0.5 13C0.5 19.9 6.1 25.5 13 25.5C19.9 25.5 25.5 19.9 25.5 13C25.5 6.1 19.9 0.5 13 0.5ZM6.8375 20.85C7.375 19.725 10.65 18.625 13 18.625C15.35 18.625 18.6375 19.725 19.1625 20.85C17.4625 22.2 15.325 23 13 23C10.675 23 8.5375 22.2 6.8375 20.85ZM20.95 19.0375C19.1625 16.8625 14.825 16.125 13 16.125C11.175 16.125 6.8375 16.8625 5.05 19.0375C3.775 17.3625 3 15.275 3 13C3 7.4875 7.4875 3 13 3C18.5125 3 23 7.4875 23 13C23 15.275 22.225 17.3625 20.95 19.0375ZM13 5.5C10.575 5.5 8.625 7.45 8.625 9.875C8.625 12.3 10.575 14.25 13 14.25C15.425 14.25 17.375 12.3 17.375 9.875C17.375 7.45 15.425 5.5 13 5.5ZM13 11.75C11.9625 11.75 11.125 10.9125 11.125 9.875C11.125 8.8375 11.9625 8 13 8C14.0375 8 14.875 8.8375 14.875 9.875C14.875 10.9125 14.0375 11.75 13 11.75Z'
+                fill='#393E46'
+              ></path>
+            </svg>
+          </Dropdown>
         </div>
       </nav>
     </header>

@@ -22,16 +22,10 @@ const SubFilter = ({
     <Container>
       <div className='flex justify-between'>
         <div>
-          {total > 0 ? (
-            <>
-              {t('found')} <span className='text-orange-500 font-bold'>{total}</span>{' '}
-              {total > 1 ? t('candidates') : t('candidate')}
-              {total > 0 ? t('applyForJob') : ''}
-              {title ? <span className='font-semibold'> {title}</span> : ''}
-            </>
-          ) : (
-            <>{t('notFoundApplications')}</>
-          )}
+          {t('found')} <span className='text-orange-500 font-bold'>{total}</span>{' '}
+          {total > 1 ? t('candidates') : t('candidate')}
+          {total > 0 ? t('applyForJob') : ''}
+          {title ? <span className='font-semibold'> {title}</span> : ''}
         </div>
         {/* <Radio.Group
           defaultValue={showState}

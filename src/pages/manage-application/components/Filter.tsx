@@ -1,7 +1,7 @@
-import { Button, Form, Input, Select } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
-import { useTranslation } from 'react-i18next';
 import Container from '@/components/global/Container/Container';
+import { SearchOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Select } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 type FormFields = {
   // keywork: string;
@@ -34,7 +34,7 @@ const FilterForm = ({
         <div className='col-span-2'>
           <Form.Item<FormFields> labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
             <div className='flex justify-between items-center relative'>
-              <Input placeholder={t('findPlaceholder')} />
+              <Input placeholder={t('findPlaceholder')} className='!h-10' />
               <SearchOutlined className='absolute right-0 p-4 text-md' />
             </div>
           </Form.Item>
@@ -43,6 +43,7 @@ const FilterForm = ({
           <Form.Item<FormFields> labelCol={{ span: 24 }} wrapperCol={{ span: 24 }} name='cvStatus'>
             {cvState && (
               <Select
+                className='h-10'
                 showSearch
                 // onChange={(value) => {
                 //   console.log(value);
@@ -81,10 +82,10 @@ const FilterForm = ({
           </Form.Item>
         </div> */}
 
-        <div className='col-span-5 w-full flex justify-end'>
+        <div className='col-span-5 w-full flex justify-start'>
           <Button
             loading={isFetching}
-            className='bg-orange-500 text-white-900 w-[150px]'
+            className='bg-orange-500 text-white-900 w-[150px] !h-[38px]'
             type='primary'
             htmlType='submit'
           >

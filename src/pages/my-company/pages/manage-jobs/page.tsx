@@ -60,6 +60,7 @@ export const ManageJobs = () => {
               status={status}
               handleFilterChange={handleFilterChange}
               filter={filter}
+              numberPost={data?.total || 0}
             />
             <Table
               className='post-company-table !w-full'

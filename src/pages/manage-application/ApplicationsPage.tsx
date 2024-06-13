@@ -1,10 +1,10 @@
+import { useGetApplicationsByCompanyIdQuery } from '@/+core/redux/apis/common/application/application.api';
+import { Spin } from 'antd';
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import CVList from './components/CVList';
 import Filter from './components/Filter';
 import SubFilter from './components/SubFilter';
-import CVList from './components/CVList';
-import { Spin } from 'antd';
-import { useParams } from 'react-router-dom';
-import { useGetApplicationsByCompanyIdQuery } from '@/+core/redux/apis/common/application/application.api';
-import React from 'react';
 
 const ApplicationsPage = () => {
   const { jobId } = useParams<{ jobId: string }>();
@@ -22,24 +22,26 @@ const ApplicationsPage = () => {
   };
 
   return (
-    <div className='w-full'>
-      <Spin spinning={isFetching}>
-        <Filter isFetching={isFetching} setCvState={setCvState} cvState={cvState} />
-        <div className='mt-8'>
-          <SubFilter
+    <div className='w-full flex justify-center mt-4'>
+      <div className='w-[90%]'>
+        <Spin spinning={isFetching}>
+          <Filter isFetching={isFetching} setCvState={setCvState} cvState={cvState} />
+          <div className='mt-8'>
+            <SubFilter
+              total={data?.paging?.total}
+              title={data?.data.length && data?.data[0].jobDetail?.title}
+            />
+          </div>
+          <CVList
+            showState={true}
+            data={data?.data}
             total={data?.paging?.total}
-            title={data?.data.length && data?.data[0].jobDetail?.title}
+            limit={pagination.limit}
+            currentPage={pagination.page}
+            changePage={changePage}
           />
-        </div>
-        <CVList
-          showState={true}
-          data={data?.data}
-          total={data?.paging?.total}
-          limit={pagination.limit}
-          currentPage={pagination.page}
-          changePage={changePage}
-        />
-      </Spin>
+        </Spin>
+      </div>
     </div>
   );
 };

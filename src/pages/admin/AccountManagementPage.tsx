@@ -1,17 +1,17 @@
-import AccountTable from '@/pages/admin/components/accounts-management/PendingAccountTable';
-import { CheckOutlined, ClockCircleOutlined, CloseOutlined } from '@ant-design/icons';
-import { notification, Pagination, Spin, Tabs, TabsProps } from 'antd';
-import { useState } from 'react';
-import '../../styles/admin/management-page.module.scss';
-import { RootState, selectIsLogin } from '@/+core/redux/auth/authSlice';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import {
-  useUpdateHRAccountsMutation,
   useGetHRAccountsQuery,
+  useUpdateHRAccountsMutation,
   useUpdateHRMutation,
 } from '@/+core/redux/apis/admin/account-management/admin-service.api';
+import { RootState, selectIsLogin } from '@/+core/redux/auth/authSlice';
+import AccountTable from '@/pages/admin/components/accounts-management/PendingAccountTable';
+import { CheckOutlined, ClockCircleOutlined, CloseOutlined } from '@ant-design/icons';
+import { Pagination, Spin, Tabs, TabsProps, notification } from 'antd';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import '../../styles/admin/management-page.module.scss';
 
 const AccountManagementPage = () => {
   const state = useSelector((state: RootState) => state);
@@ -121,7 +121,7 @@ const AccountManagementPage = () => {
   return (
     <>
       <Spin spinning={isLoading || isActivatingHRAccounts || isRejectingHR || isFetching}>
-        <div className='w-full h-screen font-roboto px-4'>
+        <div className='w-full h-screen font-roboto px-4 '>
           {/* <div className='py-2'>
         <span className='font-bold text-xl text-black-400'>Account Manager</span>
       </div>

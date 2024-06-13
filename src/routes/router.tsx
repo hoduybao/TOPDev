@@ -5,11 +5,15 @@ import CandidateProfile from '@/pages/admin/CandidateProfile';
 import AdminCompanyProfile from '@/pages/admin/CompanyProfile';
 import JobManagementPage from '@/pages/admin/JobManagementPage';
 import AdminLoginPage from '@/pages/admin/LoginPage';
+import ApplicationDetail from '@/pages/application-detail/ApplicationDetail';
 import { HomePage } from '@/pages/home/HomePage';
 import { ITJobs } from '@/pages/it-jobs/IT-Jobs';
 import JobManagement from '@/pages/job-management/JobManagement';
+import ApplicationsPage from '@/pages/manage-application/ApplicationsPage';
 import ManageFollowPage from '@/pages/manage-follow/ManageFollowPage';
 import { CompanyProfile } from '@/pages/my-company/pages/company-profile/page';
+import CompanyDashboard from '@/pages/my-company/pages/dashboard/page';
+import { CreateJob } from '@/pages/my-company/pages/manage-jobs/create/page';
 import { ManageJobs } from '@/pages/my-company/pages/manage-jobs/page';
 import { MyPages } from '@/pages/my-pages/MyPages';
 import RegisterPage from '@/pages/register/RegisterPage';
@@ -25,8 +29,6 @@ import LoginPage from '../pages/login/LoginPage';
 import ResetPasswordPage from '../pages/login/ResetPasswordPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import { MY_ROUTE } from './route.constant';
-import ApplicationsPage from '@/pages/manage-application/ApplicationsPage';
-import ApplicationDetail from '@/pages/application-detail/ApplicationDetail';
 
 export const router = createBrowserRouter([
   {
@@ -51,21 +53,22 @@ export const router = createBrowserRouter([
         path: '/company',
         element: <CompanyLayout />,
         children: [
+          { path: MY_ROUTE.COMPANY_DASHBOARD, element: <CompanyDashboard /> },
+
           { path: MY_ROUTE.COMPANY, element: <CompanyProfile /> },
           {
             path: MY_ROUTE.COMPANY_JOB_MANAGEMENT,
             element: <ManageJobs />,
           },
-        ],
-      },
-      {
-        path: '/recruitment',
-        element: <CompanyLayout />,
-        children: [
+          {
+            path: MY_ROUTE.COMPANY_CREATE_JOB,
+            element: <CreateJob />,
+          },
           { path: MY_ROUTE.RECRUITMENT_DETAIL, element: <ApplicationDetail /> },
           { path: MY_ROUTE.RECRUITMENT_PROCESS, element: <ApplicationsPage /> },
         ],
       },
+
       {
         path: '/',
         element: <UserLayout />,

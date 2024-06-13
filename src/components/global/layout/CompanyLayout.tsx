@@ -53,9 +53,13 @@ const items = [
 export default function CompanyLayout() {
   const [isCollapsedNav, setIsCollapsedNav] = useState(false);
   const route = useLocation().pathname;
-  const [textHeader, setTextHeader] = useState(
-    items.find((item) => route.includes(item.key))?.label || '',
-  );
+  const [textHeader, setTextHeader] = useState(() => {
+    if (route === MY_ROUTE.COMPANY_DASHBOARD) return 'Dashboard';
+    return (
+      items.find((item) => route.includes(item.key) && item.key !== MY_ROUTE.COMPANY_DASHBOARD)
+        ?.label || ''
+    );
+  });
 
   const handleCollapseNav = (isCollapsed: boolean) => {
     setIsCollapsedNav(isCollapsed);

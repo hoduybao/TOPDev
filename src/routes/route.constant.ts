@@ -10,8 +10,8 @@ export const MY_ROUTE = {
   // RECRUITMENT_DETAIL_JOB: '/recruitment/:jobId',
 
   // //RecruitmentProcessLayout
-  RECRUITMENT_PROCESS: '/recruitment/:jobId/applications',
-  RECRUITMENT_DETAIL: '/recruitment/:jobId/application/:applicationId',
+  RECRUITMENT_PROCESS: '/company/manage-jobs/:jobId/applications',
+  RECRUITMENT_DETAIL: '/company/manage-jobs/:jobId/application/:applicationId',
   // RECRUITMENT_PROFILE: '/recruitment/profile',
 
   // Admin

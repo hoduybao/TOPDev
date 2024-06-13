@@ -1,3 +1,4 @@
+import { MY_ROUTE } from '@/routes/route.constant';
 import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import '../../../../styles/admin/nav-bar.module.scss';
@@ -22,7 +23,10 @@ const NavBar = ({ isCollapsed, items, route, setTextHeader }: NavBarProps) => {
         theme='light'
         mode='inline'
         inlineCollapsed={isCollapsed}
-        defaultSelectedKeys={[items.find((item) => route.includes(item.key))?.key || items[0].key]}
+        defaultSelectedKeys={[
+          items.find((item) => route.includes(item.key) && item.key !== MY_ROUTE.COMPANY_DASHBOARD)
+            ?.key || items[0].key,
+        ]}
         onClick={(e) => {
           setTextHeader(items.find((item) => item.key === e.key)?.label || '');
           handleSelect(e.key);

@@ -35,9 +35,16 @@ type FilterPostProps = {
   status: string;
   filter: FilterPostCompanyTypeREQ;
   handleFilterChange: (filter: any) => void;
+  numberPost: number;
 };
 
-export const FilterPost = ({ setStatus, status, handleFilterChange, filter }: FilterPostProps) => {
+export const FilterPost = ({
+  setStatus,
+  status,
+  handleFilterChange,
+  filter,
+  numberPost,
+}: FilterPostProps) => {
   const [form] = Form.useForm();
   const { t } = useTranslation();
 
@@ -67,15 +74,17 @@ export const FilterPost = ({ setStatus, status, handleFilterChange, filter }: Fi
             key={index}
           >
             <span>{item.label}</span>
-            <Badge
-              count={20}
-              showZero
-              color={status === item.value ? '#ffffff' : '#dd3f24'}
-              style={{
-                color: status === item.value ? '#dd3f24' : '#ffffff',
-                fontWeight: 500,
-              }}
-            />
+            {status === item.value && (
+              <Badge
+                count={numberPost}
+                showZero
+                color={status === item.value ? '#ffffff' : '#dd3f24'}
+                style={{
+                  color: status === item.value ? '#dd3f24' : '#ffffff',
+                  fontWeight: 500,
+                }}
+              />
+            )}
           </div>
         ))}
       </div>
