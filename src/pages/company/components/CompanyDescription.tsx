@@ -14,7 +14,7 @@ const CompanyDescription = ({ data }: { data: CompanyDetail }) => {
   const { ref, isSticky } = useSticky();
 
   return (
-    <div className=''>
+    <div>
       <CompanyCard />
       <div>
         <div
@@ -47,7 +47,7 @@ const CompanyDescription = ({ data }: { data: CompanyDetail }) => {
         </div>
 
         <div ref={companyRef} className='bg-white-900 rounded'>
-          <ProfileSession />
+          <ProfileSession data={data} />
         </div>
         <div ref={productRef} className='bg-white-900 rounded mt-8'>
           <ProductsSession />
