@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { JobType } from '@/+core/utilities/types/recruitment.type';
-import { Button } from 'antd';
+import { Button, notification } from 'antd';
 
 interface PropType {
   job: JobType;
@@ -73,7 +73,14 @@ const FollowJobCard = (props: PropType) => {
                 className='border-none flex items-center justify-center'
                 loading={isLoading}
                 onClick={async () => {
-                  await handleUnfollowJob(job.id);
+                  if (job.id) {
+                    await handleUnfollowJob(job.id);
+                  } else {
+                    notification.error({
+                      message: 'Error',
+                      description: 'Job not found',
+                    });
+                  }
                 }}
               >
                 <svg

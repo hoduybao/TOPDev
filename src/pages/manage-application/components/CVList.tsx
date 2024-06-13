@@ -1,4 +1,4 @@
-import { Button, Pagination, Table } from 'antd';
+import { Button, Table } from 'antd';
 import moment from 'moment';
 
 import type { TableColumnsType } from 'antd';

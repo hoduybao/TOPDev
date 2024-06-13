@@ -1,5 +1,4 @@
 import { Button, Form, Input, Select } from 'antd';
-import mockdata from './mockdata';
 import { SearchOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import Container from '@/components/global/Container/Container';

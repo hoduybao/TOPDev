@@ -1,23 +1,22 @@
 import Container from '@/components/global/Container/Container';
-import { Radio } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 const SubFilter = ({
   total,
-  showState,
-  setShowState,
+  // showState,
+  // setShowState,
   title,
 }: {
   total: number;
-  showState: boolean;
-  setShowState: (value: boolean) => void;
+  // showState: boolean;
+  // setShowState: (value: boolean) => void;
   title: string;
 }) => {
   const { t } = useTranslation();
-  const options = [
-    { label: t('showAllCV'), value: true },
-    { label: t('onlyUnseenCV'), value: false },
-  ];
+  // const options = [
+  //   { label: t('showAllCV'), value: true },
+  //   { label: t('onlyUnseenCV'), value: false },
+  // ];
 
   return (
     <Container>

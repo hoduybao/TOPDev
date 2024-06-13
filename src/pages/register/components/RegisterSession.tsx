@@ -7,15 +7,15 @@ import { Button, Form, FormProps, Input, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 type FieldType = EmployerRegister;
-type RegisterResponse = {
-  statusCode: number;
-  data: {
-    access_token: string;
-    refresh_token: string;
-    id: string;
-    email: string;
-  };
-};
+// type RegisterResponse = {
+//   statusCode: number;
+//   data: {
+//     access_token: string;
+//     refresh_token: string;
+//     id: string;
+//     email: string;
+//   };
+// };
 
 const RegisterForm = () => {
   const [RegisterForm] = Form.useForm();

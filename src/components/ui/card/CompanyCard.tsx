@@ -31,6 +31,7 @@ const CompanyCard = ({ data }: { data: CustomJobResponse<JobResponse> | undefine
     followJob(jobId)
       .unwrap()
       .then((rs) => {
+        console.log(rs);
         notification.success({ message: 'Follow job success' });
       })
       .catch((err) => {

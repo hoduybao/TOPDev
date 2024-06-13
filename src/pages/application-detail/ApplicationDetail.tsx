@@ -1,4 +1,3 @@
-import Container from '@/components/global/Container/Container';
 import PDFSession from './components/PDFSession';
 import ProfileSession from './components/ProfileSession';
 import CVStatus from './components/CVStatus';

@@ -1,4 +1,4 @@
-import { JobType } from '@/+core/utilities/types/recruitment.type';
+// import { JobType } from '@/+core/utilities/types/recruitment.type';
 import { Pagination, Spin } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';

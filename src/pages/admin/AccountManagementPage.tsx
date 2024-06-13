@@ -17,7 +17,8 @@ const AccountManagementPage = () => {
   const state = useSelector((state: RootState) => state);
   const isLogin = selectIsLogin(state);
   const navigate = useNavigate();
-  const [pagination, setPagination] = useState({ page: 1, limit: 10 });
+  const pagination = { page: 1, limit: 10 };
+  // const [pagination, setPagination] = useState({ page: 1, limit: 10 });
   const { data, isLoading, isFetching } = useGetHRAccountsQuery(pagination);
   const [updateHRStatus, { isLoading: isActivatingHRAccounts }] = useUpdateHRAccountsMutation();
   const [rejectHR, { isLoading: isRejectingHR }] = useUpdateHRMutation();
@@ -30,6 +31,7 @@ const AccountManagementPage = () => {
   }
 
   const [tabKey, setTabKey] = useState<string>('1');
+  console.log(tabKey);
 
   const handleApprove = async (hrIds: string[]) => {
     try {

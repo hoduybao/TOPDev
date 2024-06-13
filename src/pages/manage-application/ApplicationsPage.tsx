@@ -1,4 +1,3 @@
-import Container from '@/components/global/Container/Container';
 import Filter from './components/Filter';
 import SubFilter from './components/SubFilter';
 import CVList from './components/CVList';
@@ -17,7 +16,6 @@ const ApplicationsPage = () => {
     limit: pagination.limit,
     status: cvState,
   });
-  const [showState, setShowState] = React.useState(true); // true for all cv, false for unseen cv
 
   const changePage = (page: string) => {
     setPagination({ ...pagination, page });
@@ -29,14 +27,12 @@ const ApplicationsPage = () => {
         <Filter isFetching={isFetching} setCvState={setCvState} cvState={cvState} />
         <div className='mt-8'>
           <SubFilter
-            setShowState={setShowState}
-            showState={showState}
             total={data?.paging?.total}
             title={data?.data.length && data?.data[0].jobDetail?.title}
           />
         </div>
         <CVList
-          showState={showState}
+          showState={true}
           data={data?.data}
           total={data?.paging?.total}
           limit={pagination.limit}

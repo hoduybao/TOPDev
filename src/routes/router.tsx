@@ -10,7 +10,6 @@ import { ITJobs } from '@/pages/it-jobs/IT-Jobs';
 import JobManagement from '@/pages/job-management/JobManagement';
 import ManageFollowPage from '@/pages/manage-follow/ManageFollowPage';
 import { CompanyProfile } from '@/pages/my-company/pages/company-profile/page';
-import { CreateJob } from '@/pages/my-company/pages/manage-jobs/create/page';
 import { ManageJobs } from '@/pages/my-company/pages/manage-jobs/page';
 import { MyPages } from '@/pages/my-pages/MyPages';
 import RegisterPage from '@/pages/register/RegisterPage';
@@ -26,6 +25,8 @@ import LoginPage from '../pages/login/LoginPage';
 import ResetPasswordPage from '../pages/login/ResetPasswordPage';
 import { NotFoundPage } from '../pages/not-found-page/NotFoundPage';
 import { MY_ROUTE } from './route.constant';
+import ApplicationsPage from '@/pages/manage-application/ApplicationsPage';
+import ApplicationDetail from '@/pages/application-detail/ApplicationDetail';
 
 export const router = createBrowserRouter([
   {
@@ -55,7 +56,14 @@ export const router = createBrowserRouter([
             path: MY_ROUTE.COMPANY_JOB_MANAGEMENT,
             element: <ManageJobs />,
           },
-          { path: MY_ROUTE.COMPANY_CREATE_JOB, element: <CreateJob /> },
+        ],
+      },
+      {
+        path: '/recruitment',
+        element: <CompanyLayout />,
+        children: [
+          { path: MY_ROUTE.RECRUITMENT_DETAIL, element: <ApplicationDetail /> },
+          { path: MY_ROUTE.RECRUITMENT_PROCESS, element: <ApplicationsPage /> },
         ],
       },
       {
