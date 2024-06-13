@@ -1,65 +1,67 @@
 export type ListJobsRES = {
-  id: string;
-  createdBy: string;
-  title: string;
-  jobDescription: string | null;
-  level?: string[];
-  salaryType?: string;
-  minSalary?: number;
-  maxSalary?: number;
-  technicals?: string[];
-  experience?: string;
-  endDate?: string;
-  startDate?: string;
-  jobType?: string;
-  contractType?: string;
-  benefit: string | null;
-  skillRequirements: string | null;
-  interviewProcess: string | null;
-  currency?: string;
-  city?: string;
-  addressDetails?: string;
-  address?: string;
-  district?: string;
-  followedCount: number;
-  appliedCount: number;
-  reason: string | null;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-  companyId: string;
+  id: string
+  createdBy: string
+  title: string
+  jobDescription: string
+  level: string[]
+  salaryType: string
+  minSalary: number
+  maxSalary: number
+  technicals: string[]
+  experience: string
+  endDate: string
+  startDate: string
+  jobType: string
+  contractType: string
+  benefit: string
+  skillRequirements: string
+  interviewProcess: string
+  currency: string
+  city: string
+  addressDetails: string
+  followedCount: number
+  appliedCount: number
+  address: string
+  district: string
+  reason: any
+  status: string
+  viewedCount: number
+  createdAt: string
+  updatedAt: string
   company: CompanyInformationResponse;
 };
 
 export type JobDetailResponse = {
-  id: string;
-  createdBy: string;
-  title: string;
-  jobDescription: string | null;
-  level: string[];
-  salaryType: string;
-  minSalary: number | null;
-  maxSalary: any | null;
-  technicals: string[];
-  experience: string;
-  endDate: string;
-  startDate: string;
-  jobType: string;
-  contractType: string;
-  benefit: string | null;
-  skillRequirements: string | null;
-  interviewProcess: string | null;
-  currency: string;
-  city: string;
-  district: string;
-  addressDetails: string;
-  followedCount: number;
-  appliedCount: number;
-  reason: string | null;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-  company: CompanyInformationResponse;
+  id: string
+  createdBy: string
+  title: string
+  jobDescription: string
+  level: string[]
+  salaryType: string
+  minSalary: number
+  maxSalary: number
+  technicals: string[]
+  experience: string
+  endDate: string
+  startDate: string
+  jobType: string
+  contractType: string
+  benefit: string
+  skillRequirements: string
+  interviewProcess: string
+  currency: string
+  city: string
+  addressDetails: string
+  followedCount: number
+  appliedCount: number
+  address: string
+  district: string
+  reason: any
+  status: string
+  viewedCount: number
+  createdAt: string
+  updatedAt: string
+  company: CompanyInformationResponse
 };
 
 export type CompanyInformationResponse = {
