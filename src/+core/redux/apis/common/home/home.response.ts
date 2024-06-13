@@ -29,8 +29,41 @@ export type CompanyHome = {
   viewedCount?: number;
   phoneNumber?: any;
   hrId?: string;
-  count_job?: number;
+  jobCount?: number;
   introduction?: string;
+  job?: Job;
+};
+type Job = {
+  id?: string;
+  createdBy?: string;
+  companyId?: number;
+  title?: string;
+  jobDescription?: string;
+  level?: string[];
+  salaryType?: string;
+  minSalary?: number;
+  maxSalary?: number;
+  technicals?: string[];
+  experience?: string;
+  endDate?: string;
+  startDate?: string;
+  jobType?: string;
+  contractType?: string;
+  benefit?: string;
+  skillRequirements?: string;
+  interviewProcess?: string;
+  currency?: string;
+  city?: string;
+  addressDetails?: string;
+  followedCount?: number;
+  appliedCount?: number;
+  address?: string;
+  district?: string;
+  reason?: any;
+  status?: string;
+  viewedCount?: number;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type SocialMedia = {

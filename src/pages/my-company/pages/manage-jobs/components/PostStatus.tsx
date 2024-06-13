@@ -18,7 +18,9 @@ const PostStatus = ({ status }: Props) => {
         return 'text-black-900 bg-gray-100';
       case PostStatusEnum.EXPRIED:
         return 'text-gray-700 bg-gray-100';
-      case PostStatusEnum.PUBLIC || PostStatusEnum.APPROVED:
+      case PostStatusEnum.PUBLIC:
+        return 'text-sky-900 bg-sky-100';
+      case PostStatusEnum.APPROVED:
         return 'text-sky-900 bg-sky-100';
     }
   }, [status]);

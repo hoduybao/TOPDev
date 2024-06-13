@@ -49,7 +49,7 @@ const jobServiceApi = commonApi
       }),
       getJobsByCompanyId: build.query<ListResponseData<ListJobsRES>, FilterPostCompanyTypeREQ>({
         query: (params) => ({
-          url: `/jobs/companies/dLuxLT43mvYY/jobs`,
+          url: `/jobs/companies/jobs`,
           method: 'GET',
           params: {
             ...params,
@@ -73,6 +73,22 @@ const jobServiceApi = commonApi
           method: 'GET',
         }),
       }),
+      updateJobStatus: build.mutation<
+        BaseResponse<JobDetailResponse>,
+        {
+          id: string;
+          status: string;
+        }
+      >({
+        query: (body) => ({
+          url: `/jobs/update-status`,
+          method: 'PATCH',
+          body: {
+            id: body.id,
+            status: body.status,
+          },
+        }),
+      }),
     }),
   });
 
@@ -84,4 +100,5 @@ export const {
   useGetJobDetailQuery,
   useUpdateJobMutation,
   useGetJobsByCompanyIdPublicQuery,
+  useUpdateJobStatusMutation,
 } = jobServiceApi;

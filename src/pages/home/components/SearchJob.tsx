@@ -1,3 +1,13 @@
+import {
+  AddressSearchEnum,
+  AddressTranslation,
+  ContractTypeSearchEnum,
+  ContractTypeTranslation,
+  JobTypeSearchEnum,
+  JobTypeTranslation,
+  LevekTranslation,
+  LevelSearchEnum,
+} from '@/+core/enums/searchJob.enum';
 import { FilterJobsTypeREQ } from '@/+core/redux/apis/common/job-service/job-service.request';
 import { Show } from '@/components/ui/Show';
 import { FilterFilled, SearchOutlined } from '@ant-design/icons';
@@ -118,19 +128,24 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
   const location = useLocation();
 
   const [searchValue, setSearchValue] = useState<string[]>([]);
-  const [address, setAddress] = useState<ValueType>({
-    value: 'ALL',
-    lable: t('allLocations'),
-  });
-  const [level, setLevel] = useState<ValueType[]>([]);
-  const [jobType, setJobType] = useState<ValueType[]>([]);
-  const [contractType, setContractType] = useState<ValueType[]>([]);
+  const [address, setAddress] = useState<string>('ALL');
+  const [level, setLevel] = useState<string[]>([]);
+  const [jobType, setJobType] = useState<string[]>([]);
+  const [contractType, setContractType] = useState<string[]>([]);
 
   const [currentSelect, setCurrentSelect] = useState<FilterType | undefined>(undefined);
 
   useEffect(() => {
     if (filter) {
       setSearchValue(filter.keywords && filter.keywords !== '' ? filter.keywords.split('-') : []);
+      setJobType(filter?.jobTypes && filter?.jobTypes !== '' ? filter.jobTypes.split('-') : []);
+      setContractType(
+        filter?.contractTypes && filter?.contractTypes !== ''
+          ? filter.contractTypes.split('-')
+          : [],
+      );
+      setLevel(filter?.levels && filter?.levels !== '' ? filter.levels.split('-') : []);
+      setAddress(filter?.address || 'ALL');
     }
   }, [filter]);
 
@@ -147,11 +162,11 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
         onFinish={(values) => {
           onSubmit(
             {
-              keywords: values.keywords.trim(),
-              address: address.value,
-              levels: level.map((i) => i.value).join('-'),
-              contractTypes: contractType.map((i) => i.value).join('-'),
-              jobTypes: jobType.map((i) => i.value).join('-'),
+              keywords: values?.keywords ? values?.keywords.trim() : undefined,
+              address: address,
+              levels: level.join('-'),
+              contractTypes: contractType.join('-'),
+              jobTypes: jobType.join('-'),
               status: 'PUBLIC',
             },
             searchValue,
@@ -237,7 +252,7 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
                 className={`relative flex cursor-pointer items-center justify-between rounded ${
                   currentSelect === 'location' && 'border border-solid'
                 }   px-4 py-2 transition-all border-gray-200 ${
-                  address.value !== 'ALL' ? 'bg-[#424242]' : 'bg-white-900'
+                  address !== 'ALL' ? 'bg-[#424242]' : 'bg-white-900'
                 }  h-12`}
                 onClick={() => {
                   if (currentSelect !== 'location') setCurrentSelect('location');
@@ -245,11 +260,9 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
                 }}
               >
                 <span
-                  className={`flex-1 ${
-                    address.value !== 'ALL' ? 'text-white-900' : 'text-[#424242]'
-                  }`}
+                  className={`flex-1 ${address !== 'ALL' ? 'text-white-900' : 'text-[#424242]'}`}
                 >
-                  {address.lable}
+                  {AddressTranslation(t)[address as AddressSearchEnum]}
                 </span>
                 <span
                   className={`inline-flex h-6 w-6 items-center justify-center transition-all ease-out ${
@@ -257,8 +270,8 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
                   }`}
                 >
                   <svg
-                    stroke={`${address.value !== 'ALL' ? '#FFFFFF' : '#424242'}`}
-                    fill={`${address.value !== 'ALL' ? '#FFFFFF' : '#424242'}`}
+                    stroke={`${address !== 'ALL' ? '#FFFFFF' : '#424242'}`}
+                    fill={`${address !== 'ALL' ? '#FFFFFF' : '#424242'}`}
                     strokeWidth='0'
                     viewBox='0 0 320 512'
                     height='1em'
@@ -277,19 +290,19 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
                         className='cursor-pointer'
                         key={index}
                         onClick={() => {
-                          setAddress(city);
+                          setAddress(city.value);
                           setCurrentSelect(undefined);
                         }}
                       >
                         <div className='flex items-center justify-between gap-2 p-4 transition-all hover:bg-gray-100 text-primary'>
                           <span
                             className={`line-clamp-1 flex-1 ${
-                              address.value === city.value && 'text-primary-red'
+                              address === city.value && 'text-primary-red'
                             }`}
                           >
                             {city.lable}
                           </span>
-                          {address.value === city.value && (
+                          {address === city.value && (
                             <span className='inline-flex h-5 w-5 items-center justify-center'>
                               <svg
                                 stroke='#DD3F24'
@@ -333,7 +346,7 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
                     {level.length === 0
                       ? t('allLevels')
                       : level.length === 1
-                      ? level[0].lable
+                      ? LevekTranslation(t)[level[0] as LevelSearchEnum]
                       : t('level', { number: level.length })}
                   </span>
                   <span
@@ -361,17 +374,17 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
                         <div
                           key={index}
                           onClick={() => {
-                            if (level.some((i) => i.value === item.value)) {
-                              setLevel((prev) => prev.filter((i) => i.value !== item.value));
+                            if (level.some((i) => i === item.value)) {
+                              setLevel((prev) => prev.filter((i) => i !== item.value));
                             } else {
-                              setLevel((prev) => [...prev, item]);
+                              setLevel((prev) => [...prev, item.value]);
                             }
                           }}
                           className='cursor-pointer'
                         >
                           <div className='flex items-center justify-between gap-2 p-4 text-sm transition-all hover:bg-gray-100 lg:text-base'>
                             <input
-                              checked={level.some((i) => i.value === item.value)}
+                              checked={level.some((i) => i === item.value)}
                               className='h-5 w-5 rounded outline-none ring-0 checked:bg-primary checked:text-primary-red checked:accent-primary-red focus:border-none focus:shadow-transparent focus:outline-none focus:ring-0'
                               type='checkbox'
                             />
@@ -403,7 +416,7 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
                     {jobType.length === 0
                       ? t('allJobTypes')
                       : jobType.length === 1
-                      ? jobType[0].lable
+                      ? JobTypeTranslation(t)[jobType[0] as JobTypeSearchEnum]
                       : t('jobType', { number: jobType.length })}
                   </span>
                   <span
@@ -431,17 +444,17 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
                         <div
                           key={index}
                           onClick={() => {
-                            if (jobType.some((i) => i.value === item.value)) {
-                              setJobType((prev) => prev.filter((i) => i.value !== item.value));
+                            if (jobType.some((i) => i === item.value)) {
+                              setJobType((prev) => prev.filter((i) => i !== item.value));
                             } else {
-                              setJobType((prev) => [...prev, item]);
+                              setJobType((prev) => [...prev, item.value]);
                             }
                           }}
                           className='cursor-pointer'
                         >
                           <div className='flex items-center justify-between gap-2 p-4 text-sm transition-all hover:bg-gray-100 lg:text-base'>
                             <input
-                              checked={jobType.some((i) => i.value === item.value)}
+                              checked={jobType.some((i) => i === item.value)}
                               className='h-5 w-5 rounded outline-none ring-0 checked:bg-primary checked:text-primary-red checked:accent-primary-red focus:border-none focus:shadow-transparent focus:outline-none focus:ring-0'
                               type='checkbox'
                             />
@@ -475,7 +488,7 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
                     {contractType.length === 0
                       ? t('allContractTypes')
                       : contractType.length === 1
-                      ? contractType[0].lable
+                      ? ContractTypeTranslation(t)[contractType[0] as ContractTypeSearchEnum]
                       : t('contractType', { number: contractType.length })}
                   </span>
                   <span
@@ -503,17 +516,17 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
                         <div
                           key={index}
                           onClick={() => {
-                            if (contractType.some((i) => i.value === item.value)) {
-                              setContractType((prev) => prev.filter((i) => i.value !== item.value));
+                            if (contractType.some((i) => i === item.value)) {
+                              setContractType((prev) => prev.filter((i) => i !== item.value));
                             } else {
-                              setContractType((prev) => [...prev, item]);
+                              setContractType((prev) => [...prev, item.value]);
                             }
                           }}
                           className='cursor-pointer'
                         >
                           <div className='flex items-center justify-between gap-2 p-4 text-sm transition-all hover:bg-gray-100 lg:text-base'>
                             <input
-                              checked={contractType.some((i) => i.value === item.value)}
+                              checked={contractType.some((i) => i === item.value)}
                               className='h-5 w-5 rounded outline-none ring-0 checked:bg-primary checked:text-primary-red checked:accent-primary-red focus:border-none focus:shadow-transparent focus:outline-none focus:ring-0'
                               type='checkbox'
                             />
@@ -529,7 +542,7 @@ export default function SearchJob({ onSubmit, filter }: SearchJobProps) {
           </div>
           <Button
             onClick={() => {
-              setAddress({ value: 'ALL', lable: t('allLocations') });
+              setAddress('ALL');
               setLevel([]);
               setJobType([]);
               setContractType([]);

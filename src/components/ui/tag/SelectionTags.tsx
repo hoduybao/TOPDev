@@ -52,8 +52,9 @@ const SelectionTags = ({ listTags }: JobTagsProps) => {
 
   return (
     <div className={`grid grid-cols-12 bg-white-900 shadow-md rounded rounded-b-none`}>
-      {listTags.map((tagItem) => (
+      {listTags.map((tagItem, index) => (
         <TagItem
+          key={index}
           type={tagItem.type}
           name={tagItem.name}
           isSelected={selectedTag === tagItem.type ? true : false}

@@ -1,16 +1,19 @@
 import { PostStatusEnum } from '@/+core/enums/postStatus.enum';
 import { ListJobsRES } from '@/+core/redux/apis/common/job-service/job-service.response';
 import { ArrowUpOutlined, EditOutlined, PauseOutlined, SettingOutlined } from '@ant-design/icons';
-import { Tooltip } from 'antd';
+import { Tooltip, notification } from 'antd';
 import { ColumnGroupType, ColumnType } from 'antd/es/table';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import PostStatus from './PostStatus';
 
-export const Columns = (): (ColumnGroupType<ListJobsRES> | ColumnType<ListJobsRES>)[] => {
+export const Columns = (
+  setOpenModal: any,
+): (ColumnGroupType<ListJobsRES> | ColumnType<ListJobsRES>)[] => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
   return [
     {
       title: t('jobPosting'),
@@ -61,6 +64,20 @@ export const Columns = (): (ColumnGroupType<ListJobsRES> | ColumnType<ListJobsRE
                 fontSize: '20px',
                 color: '#000000',
               }}
+              onClick={() => {
+                if (record.status !== 'HIDE') {
+                  setOpenModal({
+                    id: record.id,
+                    status: 'HIDE',
+                  });
+                } else {
+                  notification.info({
+                    message: 'Thông báo',
+                    description: 'Tin tuyển dụng này đã ở trạng thái ẩn',
+                    duration: 3,
+                  });
+                }
+              }}
             />
           </Tooltip>
           <Tooltip placement='right' title={t('show')}>
@@ -69,6 +86,20 @@ export const Columns = (): (ColumnGroupType<ListJobsRES> | ColumnType<ListJobsRE
               style={{
                 fontSize: '20px',
                 color: '#000000',
+              }}
+              onClick={() => {
+                if (record.status === 'HIDE') {
+                  setOpenModal({
+                    id: record.id,
+                    status: 'PUBLIC',
+                  });
+                } else {
+                  notification.info({
+                    message: 'Thông báo',
+                    description: 'Tin tuyển dụng này chưa được duyệt hoặc đang được hiển thị',
+                    duration: 3,
+                  });
+                }
               }}
             />
           </Tooltip>

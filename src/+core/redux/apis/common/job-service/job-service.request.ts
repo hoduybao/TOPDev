@@ -6,7 +6,7 @@ export type FilterJobsTypeREQ = {
   address?: string;
   page?: number;
   limit?: number;
-  status: string;
+  status: 'PUBLIC';
 };
 
 export type FilterCompanyTypeREQ = {
@@ -14,7 +14,7 @@ export type FilterCompanyTypeREQ = {
   address?: string;
   page?: number;
   limit?: number;
-  status: 'PUBLIC';
+  status: '1';
 };
 
 export type FilterPostCompanyTypeREQ = {

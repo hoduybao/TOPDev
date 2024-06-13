@@ -1,18 +1,8 @@
 import { HRAccount } from '@/+core/utilities/types/admin.type';
 import ConfirmModal from '@/components/global/ConfirmModal';
-import { CheckOutlined, CloseOutlined, HomeOutlined } from '@ant-design/icons';
-import {
-  Button,
-  Form,
-  Image,
-  Input,
-  notification,
-  Space,
-  Table,
-  TableProps,
-  Tag,
-  Tooltip,
-} from 'antd';
+import { MY_ROUTE } from '@/routes/route.constant';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { Button, Input, notification, Space, Table, TableProps, Tag, Tooltip } from 'antd';
 import { SearchProps } from 'antd/es/input';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -68,14 +58,14 @@ const AccountTable = (props: PendingAccountTableProps) => {
         key: 'name',
         render: (value, record) => {
           return (
-            <div className='flex items-center gap-2'>
-              {/* {record.logo ? (
-                <Image className='object-contain' src={record.logo} width={50} height={50} />
-              ) : (
-                <HomeOutlined className='w-[50px] h-[50px]' />
-              )} */}
+            <a
+              className='flex items-center gap-2 text-blue-500 hover:underline'
+              href={MY_ROUTE.ADMIN_COMPANY_PROFILE.replace(':companyId', record.companyId)}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               {value}
-            </div>
+            </a>
           );
         },
       },
@@ -163,7 +153,7 @@ const AccountTable = (props: PendingAccountTableProps) => {
     return columns;
   }
 
-  const onSearch: SearchProps['onSearch'] = (value, _e) => {
+  const onSearch: SearchProps['onSearch'] = (_value, _e) => {
     // const newData = props.data.filter(
     //   (item) =>
     //     item.companyName.toLowerCase().includes(value.toLowerCase()) ||

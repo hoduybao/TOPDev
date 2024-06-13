@@ -1,5 +1,7 @@
+import { ListResponseData, transformResponse } from '@/+core/redux/response.type';
 import { TAG_TYPES } from '../../../../../+core/constants/api.tagTypes';
 import { commonApi } from '../../common.api';
+import { MyApplicationRES } from './application.response';
 // import { CustomApplicationResponse } from './response.type';
 
 export type ApplicationFields = {
@@ -60,6 +62,20 @@ const applicationApi = commonApi
           return response.data;
         },
       }),
+      getMyApplications: build.query<
+        ListResponseData<MyApplicationRES>,
+        { page?: number; limit?: number }
+      >({
+        query: (params) => ({
+          url: `applications/user/list`,
+          method: 'GET',
+          params: {
+            page: params.page,
+            limit: params.limit,
+          },
+        }),
+        transformResponse: transformResponse,
+      }),
     }),
   });
 
@@ -68,4 +84,5 @@ export const {
   useGetApplicationQuery,
   useGetApplicationsByCompanyIdQuery,
   useUpdateStatusMutation,
+  useGetMyApplicationsQuery,
 } = applicationApi;

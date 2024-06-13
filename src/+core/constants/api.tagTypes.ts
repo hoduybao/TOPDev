@@ -6,4 +6,5 @@ export enum TAG_TYPES {
   AUTHENTICATION = 'authentication',
   REGISTER_EMPLOYER = 'registerEmployer',
   HR_ACCOUNTS = 'hrAccounts',
+  CV = 'cv',
 }

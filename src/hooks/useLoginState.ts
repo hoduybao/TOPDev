@@ -1,5 +1,10 @@
 import { selectIsLogin, setCredentials } from '@/+core/redux/auth/authSlice';
-import { getLocalAccessToken, getLocalRefreshToken } from '@/+core/services/local.service';
+import {
+  getEmail,
+  getLocalAccessToken,
+  getLocalRefreshToken,
+  getName,
+} from '@/+core/services/local.service';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -9,6 +14,9 @@ export const useLoginState = () => {
 
   const accessToken = getLocalAccessToken();
   const refreshToken = getLocalRefreshToken();
+  const email = getEmail();
+  const name = getName();
+
   useEffect(() => {
     if (accessToken && refreshToken) {
       dispatch(
@@ -16,6 +24,8 @@ export const useLoginState = () => {
           accessToken,
           refreshToken,
           isLoggin: true,
+          email,
+          name,
         }),
       );
     }

@@ -1,15 +1,22 @@
 import {
-  CheckCircleFilled,
   CloudDownloadOutlined,
   CloudUploadOutlined,
   DeleteOutlined,
   EditOutlined,
   EyeOutlined,
 } from '@ant-design/icons';
-import { Button, Modal, Table } from 'antd';
+import { Button, Modal, Spin, Table, notification } from 'antd';
 import { ColumnGroupType, ColumnType } from 'antd/es/table';
 import { PiWarningCircleLight } from 'react-icons/pi';
 
+import {
+  useGetCandidateInforQuery,
+  useUploadCVMutation,
+} from '@/+core/redux/apis/common/cv/cv.api';
+import { MyCv } from '@/+core/redux/apis/common/cv/cv.response';
+import firebaseApp from '@/config/firebase';
+import dayjs from 'dayjs';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { ChangeEvent, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './headerTable.module.scss';
@@ -20,15 +27,7 @@ interface JobType {
   createdAt: string;
 }
 
-interface DataType {
-  key: string;
-  name: string;
-  appliedJos: JobType[];
-  updatedAt: string;
-  link: string;
-}
-
-export const Columns = (): (ColumnGroupType<DataType> | ColumnType<DataType>)[] => {
+export const Columns = (): (ColumnGroupType<MyCv> | ColumnType<MyCv>)[] => {
   const { t } = useTranslation();
   return [
     {
@@ -41,35 +40,40 @@ export const Columns = (): (ColumnGroupType<DataType> | ColumnType<DataType>)[] 
     },
     {
       title: t('completeStatus'),
-      dataIndex: 'appliedJos',
-      key: 'appliedJos',
+      dataIndex: 'listJobApplied',
+      key: 'listJobApplied',
       className: 'text-left',
-      render: (appliedJos: JobType[]) =>
-        appliedJos.length < 1 ? (
-          <div className='flex items-center gap-3'>
-            <PiWarningCircleLight size={18} />
-            <span className={`text-base text-[#393e46] italic`}>{t('notYetAppliedForAnyJob')}</span>
-          </div>
-        ) : (
-          <div className='flex flex-col gap-4'>
-            {appliedJos.map((job, index) => (
-              <div className='flex items-center gap-3' key={index}>
-                <CheckCircleFilled
-                  style={{
-                    color: '#0BC763',
-                  }}
-                />
-                <span className={`text-base text-[#000000d9] italic`}>
-                  {t('haveAppliedForJob', {
-                    jobName: job.jobName,
-                    companyName: job.companyName,
-                    createdAt: job.createdAt,
-                  })}
-                </span>
-              </div>
-            ))}
-          </div>
-        ),
+      render: () => (
+        <div className='flex items-center gap-3'>
+          <PiWarningCircleLight size={18} />
+          <span className={`text-base text-[#393e46] italic`}>{t('notYetAppliedForAnyJob')}</span>
+        </div>
+      ),
+      // appliedJos && appliedJos?.length < 1 ? (
+      //   <div className='flex items-center gap-3'>
+      //     <PiWarningCircleLight size={18} />
+      //     <span className={`text-base text-[#393e46] italic`}>{t('notYetAppliedForAnyJob')}</span>
+      //   </div>
+      // ) : (
+      //   <div className='flex flex-col gap-4'>
+      //     {appliedJos.map((job, index) => (
+      //       <div className='flex items-center gap-3' key={index}>
+      //         <CheckCircleFilled
+      //           style={{
+      //             color: '#0BC763',
+      //           }}
+      //         />
+      //         <span className={`text-base text-[#000000d9] italic`}>
+      //           {t('haveAppliedForJob', {
+      //             jobName: job.jobName,
+      //             companyName: job.companyName,
+      //             createdAt: job.createdAt,
+      //           })}
+      //         </span>
+      //       </div>
+      //     ))}
+      //   </div>
+      // ),
     },
     {
       title: t('lastEditedAt'),
@@ -77,6 +81,7 @@ export const Columns = (): (ColumnGroupType<DataType> | ColumnType<DataType>)[] 
       key: 'updatedAt',
       align: 'center',
       width: 220,
+      render: (text) => <span>{dayjs(text).format('DD-MM-YYYY HH:mm:ss')}</span>,
     },
     {
       title: t('action'),
@@ -84,9 +89,11 @@ export const Columns = (): (ColumnGroupType<DataType> | ColumnType<DataType>)[] 
       dataIndex: 'action',
       width: 200,
       align: 'center',
-      render: () => (
-        <div className='flex gap-2 justify-center'>
-          <EyeOutlined style={{ fontSize: '24px' }} />
+      render: (_, record) => (
+        <div className='flex gap-3 justify-center'>
+          <a href={record.link} target='_blank' rel='noreferrer'>
+            <EyeOutlined style={{ fontSize: '24px' }} />
+          </a>
           <EditOutlined style={{ fontSize: '24px' }} />
           <CloudDownloadOutlined style={{ fontSize: '24px' }} />
           <DeleteOutlined style={{ fontSize: '24px' }} />
@@ -96,46 +103,84 @@ export const Columns = (): (ColumnGroupType<DataType> | ColumnType<DataType>)[] 
   ];
 };
 
-const data: DataType[] = [
-  {
-    key: '1',
-    name: 'John Brown',
-    updatedAt: '19-04-2024 22:21:53',
-    appliedJos: [],
-    link: 'https://www.topdev.vn',
-  },
-  {
-    key: '2',
-    name: 'John Brown',
-    updatedAt: '19-04-2024 22:21:53',
-    appliedJos: [
-      {
-        jobName: 'Software Engineer',
-        companyName: 'One Mount Group',
-        createdAt: '20-04-2024',
-      },
-      {
-        jobName: 'Software Engineer',
-        companyName: 'One Mount Group',
-        createdAt: '20-04-2024',
-      },
-    ],
-    link: 'https://www.topdev.vn',
-  },
-];
 export const CVManagement = () => {
   const [openModalUpload, setOpenModalUpload] = useState(false);
   const [cv, setCv] = useState<File | null>();
+  const [loadingUploadFile, setLoadingUploadFile] = useState(false);
 
   const { t } = useTranslation();
   const inputFile = useRef(null);
 
+  const { data, isFetching } = useGetCandidateInforQuery({});
+  const [uploadCV, { isLoading }] = useUploadCVMutation();
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCv(e.target.files != null ? e.target.files[0] : null);
   };
+  const handleImageUpload = async () => {
+    setLoadingUploadFile(true);
+    try {
+      const fileName = new Date().getTime() + '-' + cv?.name;
+      const storage = getStorage(firebaseApp);
+      const storageRef = ref(storage, `company/cv/${fileName}`);
+      const uploadTask = uploadBytesResumable(storageRef, cv as File);
+
+      await new Promise<void>((resolve, reject) => {
+        uploadTask.on(
+          'state_changed',
+          (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+              case 'paused':
+                console.log('Upload is paused');
+                break;
+              case 'running':
+                console.log('Upload is running');
+                break;
+            }
+          },
+          (err) => {
+            console.log('err>>>', err);
+            setLoadingUploadFile(false);
+            reject(err);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref)
+              .then((downloadURL) => {
+                console.log('File available at', downloadURL);
+                setLoadingUploadFile(false);
+                uploadCV({ link: downloadURL, name: cv?.name || '' })
+                  .unwrap()
+                  .then(() => {
+                    setOpenModalUpload(false);
+                    notification.success({
+                      message: 'Success!',
+                      description: 'Tải CV lênthành công',
+                      duration: 3,
+                    });
+                  });
+                resolve();
+              })
+              .catch((err) => {
+                console.log('err>>>', err);
+                setLoadingUploadFile(false);
+                reject(err);
+              });
+          },
+        );
+      });
+    } catch (error) {
+      setLoadingUploadFile(false);
+      console.error('error>>>', error);
+    }
+  };
+  const handleSaveCV = async () => {
+    await handleImageUpload();
+  };
 
   return (
-    <>
+    <Spin spinning={isFetching}>
       <div className='flex justify-end mb-4'>
         <Button
           onClick={() => {
@@ -148,7 +193,11 @@ export const CVManagement = () => {
           <CloudUploadOutlined className='!text-[26px]' />
         </Button>
       </div>
-      <Table className={styles.headerTable} columns={Columns()} dataSource={data} />
+      <Table
+        className={styles.headerTable}
+        columns={Columns()}
+        dataSource={data?.data?.myCVs || []}
+      />
       <Modal
         centered
         open={openModalUpload}
@@ -184,7 +233,7 @@ export const CVManagement = () => {
               />
               <Button
                 type='primary'
-                className='!h-[45.6px] text-base font-medium !bg-[#0957d5] rounded-l-[0px] rounded-r-[4px] !w-[160px]'
+                className='!h-[45.6px] text-base font-medium !bg-primary-red rounded-l-[0px] rounded-r-[4px] !w-[160px]'
               >
                 {t('browse')}
               </Button>
@@ -201,11 +250,9 @@ export const CVManagement = () => {
               {t('cancel')}
             </Button>
             <Button
-              loading={false}
+              loading={loadingUploadFile || isLoading}
               disabled={cv == null}
-              onClick={() => {
-                setOpenModalUpload(false);
-              }}
+              onClick={handleSaveCV}
               className='!px-[15px]  !h-[34px] !bg-white-900 !border !border-solid !border-[#D34127] disabled:!border-[#d9d9d9] disabled:!bg-[#f5f5f5] text-[#D34127] hover:!text-white-900 hover:!bg-[#D34127] text-lg rounded-[8px] !leading-[100%]'
             >
               {t('save')}
@@ -213,6 +260,6 @@ export const CVManagement = () => {
           </div>
         </div>
       </Modal>
-    </>
+    </Spin>
   );
 };

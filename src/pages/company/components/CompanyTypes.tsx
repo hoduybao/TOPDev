@@ -21,21 +21,24 @@ const CompanyItem = ({
   const { t } = useTranslation();
   return (
     <div
-      className={`
-      py-2 border-[0.5px] border-orange-500 text-center
-      ${selected === alias ? 'text-white-900 bg-orange-500' : ' text-black-900 bg-white-900'} `}
+      onClick={() => {
+        setSelected(alias);
+        if (ref && ref.current) {
+          ref.current.scrollIntoView({ block: 'start', inline: 'start', behavior: 'smooth' });
+        }
+      }}
+      className={` ${
+        selected !== alias
+          ? 'hover:text-primary-red text-black-900 bg-white-900'
+          : 'hover:text-white-900 text-white-900 bg-orange-500'
+      }
+      py-2 border-[0.5px] border-orange-500 text-center cursor-pointer`}
     >
       <Link
-        className={`capitalize font-bold text-base ${
+        className={`capitalize font-bold text-base  ${
           selected !== alias ? 'hover:text-primary-red' : 'hover:text-white-900'
-        } `}
+        }`}
         to={url}
-        onClick={() => {
-          setSelected(alias);
-          if (ref && ref.current) {
-            ref.current.scrollIntoView({ block: 'start', inline: 'start', behavior: 'smooth' });
-          }
-        }}
       >
         {t(alias)}
       </Link>

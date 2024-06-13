@@ -66,7 +66,7 @@ export default function FeaturedCompany({ data }: FeaturedCompanyProps) {
                 </div>
                 <div className='flex justify-end items-center gap-2 w-full mt-1'>
                   <div className='text-sm font-medium underline text-primary-red'>
-                    {item?.count_job} vị trí tuyển dụng
+                    {item?.jobCount} vị trí tuyển dụng
                   </div>
                   <img src={ICONS.minorRightArrow} className='mt-1' />
                 </div>

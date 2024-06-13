@@ -86,7 +86,7 @@ export const CreateJob = () => {
           notification.success({
             message: 'Success!',
             description: 'Tạo công việc thành công',
-            duration: 300,
+            duration: 3,
           });
           navigate('/company/manage-jobs');
         });
@@ -98,9 +98,8 @@ export const CreateJob = () => {
           notification.success({
             message: 'Success!',
             description: 'Cập nhật công việc thành công',
-            duration: 300,
+            duration: 3,
           });
-          navigate('/company/manage-jobs');
         });
     }
   };

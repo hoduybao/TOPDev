@@ -1,5 +1,8 @@
+import { ListResponseData, transformResponseNoPaging } from '@/+core/redux/response.type';
 import { TAG_TYPES } from '../../../../../+core/constants/api.tagTypes';
 import { commonApi } from '../../common.api';
+import { GetCompanyREQ } from './company.request';
+import { CompanyRES } from './company.response';
 
 const companyApi = commonApi
   .enhanceEndpoints({ addTagTypes: [TAG_TYPES.COMPANY] })
@@ -26,11 +29,19 @@ const companyApi = commonApi
         }),
         invalidatesTags: [TAG_TYPES.COMPANY],
       }),
+      getCompanies: build.query<ListResponseData<CompanyRES>, GetCompanyREQ>({
+        query: (params) => ({
+          url: `/jobs/companies/listByType`,
+          method: 'GET',
+          params: params,
+        }),
+        transformResponse: transformResponseNoPaging,
+      }),
     }),
   });
 
 export const {
-  useGetCompanyByIdQuery,
+  useGetCompanyByIdQuery, useGetCompaniesQuery,
   useGetCompanyProfileQuery,
   useUpdateCompanyProfileMutation,
 } = companyApi;

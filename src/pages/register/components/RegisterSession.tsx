@@ -1,11 +1,9 @@
-import { Button, Form, FormProps, Input, notification } from 'antd';
-import colors from '@/+core/themes/colors';
 import {
   EmployerRegister,
   useEmployerRegisterMutation,
 } from '@/+core/redux/apis/common/authentication/authentication.api';
-import { useDispatch } from 'react-redux';
-import { setCredentials } from '@/+core/redux/auth/authSlice';
+import colors from '@/+core/themes/colors';
+import { Button, Form, FormProps, Input, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 type FieldType = EmployerRegister;
@@ -15,6 +13,7 @@ type RegisterResponse = {
     access_token: string;
     refresh_token: string;
     id: string;
+    email: string;
   };
 };
 
@@ -149,7 +148,7 @@ const RegisterForm = () => {
           <Form.Item className='mt-5'>
             <Button
               loading={isLoading}
-              className='p-4 mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
+              className='px-4 !h-14 mb-3 rounded w-full text-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
               style={{
                 background: colors.orange[500],
                 color: 'white',

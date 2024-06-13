@@ -1,7 +1,20 @@
+import { logOut } from '@/+core/redux/auth/authSlice.tsx';
+import { getName } from '@/+core/services/local.service.tsx';
 import { IMAGES } from '@/config/images';
+import { useLoginState } from '@/hooks/useLoginState.ts';
+import NotificationBox from '@/pages/home/components/NotificationBox.tsx';
+import {
+  AppstoreOutlined,
+  FileProtectOutlined,
+  LogoutOutlined,
+  ProfileOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { Button, Image } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { SlUserFollowing } from 'react-icons/sl';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ArrowDownIcon from '../../../../public/assets/icons/down-arrow.tsx';
 import PhoneIcon from '../../../../public/assets/icons/phone.tsx';
@@ -28,6 +41,7 @@ const HeaderMenuItem = ({ items }: { items: any }) => {
           <div className='bg-white-900 w-[300px] group-hover:block hidden group-hover:animate-slide-top shadow-md'>
             {items.children.map((item: any, index: number) => (
               <div
+                onClick={item.onClick}
                 key={index}
                 className='p-4 hover:bg-gray-100 flex justify-between items-center group/item relative'
                 onMouseEnter={() => {
@@ -517,6 +531,99 @@ const Show = ({
 const UserHeader = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [isLoggedIn] = useLoginState();
+  const name = getName();
+
+  const dispatch = useDispatch();
+
+  const userMenu = {
+    title: (
+      <div className='flex justify-between gap-4 items-center'>
+        <UserOutlined
+          style={{
+            fontSize: '20px',
+          }}
+        />
+        <span>{name || 'Unknown'}</span>
+      </div>
+    ),
+    onClick: () => {},
+    children: [
+      {
+        title: (
+          <div className='flex justify-between gap-4 items-center'>
+            <AppstoreOutlined
+              style={{
+                fontSize: '20px',
+              }}
+            />
+            <span>TopDev CV</span>
+          </div>
+        ),
+        leading: <ArrowDownIcon />,
+        onClick: () => {
+          navigate('/users');
+        },
+      },
+      {
+        title: (
+          <div className='flex justify-between gap-4 items-center'>
+            <ProfileOutlined
+              style={{
+                fontSize: '20px',
+              }}
+            />
+            <span>Quản lý CV</span>
+          </div>
+        ),
+        leading: <ArrowDownIcon />,
+        onClick: () => {
+          navigate('/users?tab=cv-management');
+        },
+      },
+      {
+        title: (
+          <div className='flex justify-between gap-4 items-center'>
+            <FileProtectOutlined
+              style={{
+                fontSize: '20px',
+              }}
+            />
+            <span>Việc đã ứng tuyển</span>
+          </div>
+        ),
+
+        leading: <ArrowDownIcon />,
+        onClick: () => {
+          navigate('/users?tab=jobs-applied');
+        },
+      },
+      {
+        title: (
+          <div className='flex justify-between gap-4 items-center'>
+            <SlUserFollowing className='!font-semibold' size={20} />
+            <span>Việc đang theo dõi</span>
+          </div>
+        ),
+        leading: <ArrowDownIcon />,
+        onClick: () => {
+          navigate('/users?tab=jobs-followed');
+        },
+      },
+      {
+        title: (
+          <div className='flex justify-between gap-4 items-center'>
+            <LogoutOutlined />
+            <span>Đăng xuất</span>
+          </div>
+        ),
+        leading: <ArrowDownIcon />,
+        onClick: () => {
+          dispatch(logOut());
+        },
+      },
+    ],
+  };
   return (
     <div className='w-full bg-white-900 shadow-md lg:px-3 flex justify-center h-[5.25rem] fixed z-50'>
       <div className='flex justify-between items-center w-full'>
@@ -537,32 +644,47 @@ const UserHeader = () => {
         </div>
 
         <div className='flex items-center h-full gap-4'>
-          <Show hideInMobile>
-            <div className='flex gap-2 items-center justify-center group cursor-pointer'>
-              <PhoneIcon className='group-hover:fill-primary-red fill-black-900' />
-              <div className='text-base font-semibold group-hover:text-primary-red'>
-                028 6273 3496
-              </div>
-            </div>
-          </Show>
-          {/* <Show hideInMobile>
-            <NotificationBox />
-          </Show> */}
-          <Show hideInMobile>
-            <Button
-              onClick={() => {
-                navigate('/recruitment');
-              }}
-              className=' !text-primary-red !font-bold hover:!border-primary-red border-primary-red !bg-white-900 hover:!bg-red-300 !text-base !px-6 !h-11 !leading-[100%] rounded-[4px]'
-            >
-              {t('employer')}
-            </Button>
-          </Show>
-          <Show hideInMobile>
-            <Button className='!bg-primary-red !text-white-900 !font-bold border-none hover:!bg-secondary-red !text-base !px-6 !h-11 !leading-[100%]  rounded-[4px]'>
-              Đăng nhập
-            </Button>
-          </Show>
+          {isLoggedIn ? (
+            <>
+              <Show hideInMobile>
+                <NotificationBox />
+              </Show>
+              <HeaderMenuItem items={userMenu} />
+            </>
+          ) : (
+            <>
+              <Show hideInMobile>
+                <div className='flex gap-2 items-center justify-center group cursor-pointer'>
+                  <PhoneIcon className='group-hover:fill-primary-red fill-black-900' />
+                  <div className='text-base font-semibold group-hover:text-primary-red'>
+                    028 6273 3496
+                  </div>
+                </div>
+              </Show>
+
+              <Show hideInMobile>
+                <Button
+                  onClick={() => {
+                    navigate('/company');
+                  }}
+                  className=' !text-primary-red !font-bold hover:!border-primary-red border-primary-red !bg-white-900 hover:!bg-red-300 !text-base !px-6 !h-10 !leading-[100%] rounded-[4px]'
+                >
+                  {t('employer')}
+                </Button>
+              </Show>
+              <Show hideInMobile>
+                <Button
+                  onClick={() => {
+                    navigate('/login');
+                  }}
+                  className='!bg-primary-red !text-white-900 !font-bold border-none hover:!bg-secondary-red !text-base !px-6 !h-10 !leading-[100%] rounded-[4px]'
+                >
+                  Đăng nhập
+                </Button>
+              </Show>
+            </>
+          )}
+
           <LanguageSelector />
         </div>
       </div>
