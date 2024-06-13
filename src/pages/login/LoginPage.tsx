@@ -141,7 +141,7 @@ const LoginPage = () => {
               {activeTab == '1' && (
                 <div className='p-8'>
                   <Button
-                    loading={isLoadingCandidate}
+                    loading={isLoadingCandidate && !isCalledLoginWithGithub.current}
                     onClick={() => handleCandidateLogin()}
                     className='h-full p-4 mb-3 rounded w-full flex justify-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
                     style={{
@@ -158,6 +158,7 @@ const LoginPage = () => {
                   </Button>
 
                   <Button
+                    loading={isCalledLoginWithGithub.current && isLoadingCandidate}
                     onClick={() => handleGithubLogin()}
                     className='h-full p-4 mb-3 rounded w-full flex justify-center font-bold hover:shadow-lg hover:shadow-slate-500/20'
                     style={{

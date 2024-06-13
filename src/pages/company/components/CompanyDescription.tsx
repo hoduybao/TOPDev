@@ -5,17 +5,17 @@ import SelectionTags, { TAG_TYPES } from '@/components/ui/tag/SelectionTags';
 import ProductsSession from './ProductsSession';
 import ProfileSession from './ProfileSession';
 import useSticky from '@/hooks/sticky';
+import { CompanyDetail } from '@/+core/redux/apis/common/company/company.api';
 
-const CompanyDescription = () => {
+const CompanyDescription = ({ data }: { data: CompanyDetail }) => {
   const productRef = React.useRef<HTMLDivElement>(null);
   const companyRef = React.useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
   const { ref, isSticky } = useSticky();
-  console.log(isSticky);
 
   return (
-    <div className=''>
-      <CompanyCard />
+    <div>
+      <CompanyCard data={data} />
       <div>
         <div
           className='pb-4 sticky top-0 z-10 bg-mainBackground'
@@ -25,7 +25,7 @@ const CompanyDescription = () => {
           ref={ref}
         >
           <div className={` bg-white-900 p-4`}>
-            <CompanyCardContent isStickyCustom />
+            <CompanyCardContent data={data} isStickyCustom />
           </div>
         </div>
 
@@ -47,10 +47,10 @@ const CompanyDescription = () => {
         </div>
 
         <div ref={companyRef} className='bg-white-900 rounded'>
-          <ProfileSession />
+          <ProfileSession data={data} />
         </div>
         <div ref={productRef} className='bg-white-900 rounded mt-8'>
-          <ProductsSession />
+          <ProductsSession data={data} />
         </div>
       </div>
     </div>

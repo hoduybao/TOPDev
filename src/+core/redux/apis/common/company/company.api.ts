@@ -3,6 +3,9 @@ import { TAG_TYPES } from '../../../../../+core/constants/api.tagTypes';
 import { commonApi } from '../../common.api';
 import { GetCompanyREQ } from './company.request';
 import { CompanyRES } from './company.response';
+import { CreateCompanyREQ } from '../../admin/company-profile/company-profile.request';
+
+export interface CompanyDetail extends CreateCompanyREQ {}
 
 const companyApi = commonApi
   .enhanceEndpoints({ addTagTypes: [TAG_TYPES.COMPANY] })
@@ -13,6 +16,7 @@ const companyApi = commonApi
           url: `/jobs/companies/${id}`,
           method: 'GET',
         }),
+        transformResponse: (response: { data: CompanyDetail }) => response?.data,
       }),
       getCompanyProfile: build.query<any, void>({
         query: () => ({
@@ -41,7 +45,8 @@ const companyApi = commonApi
   });
 
 export const {
-  useGetCompanyByIdQuery, useGetCompaniesQuery,
+  useGetCompanyByIdQuery,
+  useGetCompaniesQuery,
   useGetCompanyProfileQuery,
   useUpdateCompanyProfileMutation,
 } = companyApi;

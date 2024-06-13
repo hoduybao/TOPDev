@@ -1,22 +1,22 @@
 import InformationSession from './InformationSession';
 import ContentSession from './ContentSession';
-import companyData from '../../../draft/company-new.json';
 import { useTranslation } from 'react-i18next';
+import { CompanyDetail } from '@/+core/redux/apis/common/company/company.api';
 
-const CompanyOverview = () => {
+const CompanyOverview = ({ data }: { data: CompanyDetail }) => {
   const { t } = useTranslation();
   return (
     <InformationSession header={t('company.contact')}>
       <div className='p-4'>
         <ContentSession header={t('company.industry')}>
-          <div>{companyData.fields.join(',')}</div>
+          <div>{data?.industry?.join(',')}</div>
         </ContentSession>
         <ContentSession header={t('company.size')}>
-          <div>{companyData.size}</div>
+          <div>{data?.companySize}</div>
         </ContentSession>
         <ContentSession header={t('company.nations')}>
           <div>
-            {companyData.nations.map((nation) => (
+            {data?.nationality?.map((nation: string) => (
               <span className='block' key={nation}>
                 {nation}
               </span>
@@ -25,7 +25,7 @@ const CompanyOverview = () => {
         </ContentSession>
         <ContentSession header={t('company.skills')}>
           <div className='flex gap-2'>
-            {companyData.skills.map((techSkill) => (
+            {data?.techStack?.map((techSkill) => (
               <span className='bg-blue-100 text-blue-400 px-2 py-1 rounded' key={techSkill}>
                 {techSkill}
               </span>
