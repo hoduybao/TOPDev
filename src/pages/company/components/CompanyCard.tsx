@@ -1,7 +1,7 @@
-import { Button } from 'antd';
-import { ICONS } from '@/config/icons';
-import { useTranslation } from 'react-i18next';
 import { CompanyDetail } from '@/+core/redux/apis/common/company/company.api';
+import { ICONS } from '@/config/icons';
+import { Button } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 const CustomButton = ({
   isOutlined,
@@ -40,7 +40,7 @@ const CompanyCardContent = ({
         <div className='flex-1'>
           <CustomButton isOutlined>
             <div className='flex justify-center'>
-              <img className='w-[20px] text-white-900' src={ICONS.bookmark} alt='bookmark' />
+              <img className='w-[20px] !text-white-900' src={ICONS.bookmark} alt='bookmark' />
               {isStickyCustom ? (
                 ''
               ) : (
@@ -62,7 +62,11 @@ const CompanyCardContent = ({
 const CompanyCard = ({ data }: { data: CompanyDetail }) => {
   return (
     <div className='w-full relative'>
-      <img src={data?.coverPhoto} alt='company logo' className='w-full h-[250px] rounded' />
+      <img
+        src={data?.coverPhoto}
+        alt='company logo'
+        className='w-full h-[250px] rounded object-cover'
+      />
       <div className='absolute top-[50%] w-full p-4'>
         <div className='bg-white-900 w-full rounded flex gap-4 p-4 '>
           <img

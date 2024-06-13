@@ -19,7 +19,7 @@ export const Companies = ({ data, limit, total, handleFilterChange }: CompaniesP
           <div key={index} className='mt-4 first:mt-0 w-full'>
             <div className='group flex max-w-[832px] cursor-pointer items-start gap-4 rounded border border-white-900 bg-white-900 p-4 transition-all hover:border-[#FFBCB0] hover:bg-[#FEEEEB] hover:shadow-md'>
               <div className='h-28 w-40 items-center justify-items-center'>
-                <a target='_blank' href='/companies/luxoft-vietnam-company-ltd-2-50940'>
+                <a target='_blank' href={`/companies/${company.id}`} rel='noreferrer'>
                   <img
                     alt={company.name}
                     loading='lazy'
@@ -33,7 +33,7 @@ export const Companies = ({ data, limit, total, handleFilterChange }: CompaniesP
                 </a>
               </div>
               <div className='flex-1'>
-                <a target='_blank' href='/companies/luxoft-vietnam-company-ltd-2-50940'>
+                <a target='_blank' href={`/companies/${company.id}`} rel='noreferrer'>
                   <h3 className='line-clamp-1 text-lg font-bold transition-all text-[#292929] hover:text-[#292929]'>
                     {company.name}
                   </h3>

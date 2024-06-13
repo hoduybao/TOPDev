@@ -161,7 +161,7 @@ export const JobHighlight = () => {
             </div>
             <div className='relative z-10 rounded p-4 pt-0 transition-all'>
               <div className=' relative mt-[-2rem] inline-block overflow-hidden rounded bg-white-900 shadow-md'>
-                <a href='/companies/cong-ty-co-phan-suntek-94578'>
+                <a href={`/companies/1`}>
                   <img
                     alt='CÔNG TY CỔ PHẦN SUNTEK'
                     loading='lazy'
