@@ -50,7 +50,7 @@ const CompanyDescription = ({ data }: { data: CompanyDetail }) => {
           <ProfileSession data={data} />
         </div>
         <div ref={productRef} className='bg-white-900 rounded mt-8'>
-          <ProductsSession />
+          <ProductsSession data={data} />
         </div>
       </div>
     </div>
