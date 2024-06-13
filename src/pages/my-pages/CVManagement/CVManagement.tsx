@@ -95,7 +95,10 @@ export const Columns = (): (ColumnGroupType<MyCv> | ColumnType<MyCv>)[] => {
             <EyeOutlined style={{ fontSize: '24px' }} />
           </a>
           <EditOutlined style={{ fontSize: '24px' }} />
-          <CloudDownloadOutlined style={{ fontSize: '24px' }} />
+          <a href={record?.link} download={record?.name}>
+            {' '}
+            <CloudDownloadOutlined style={{ fontSize: '24px' }} />
+          </a>
           <DeleteOutlined style={{ fontSize: '24px' }} />
         </div>
       ),
