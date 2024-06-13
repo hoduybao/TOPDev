@@ -15,7 +15,7 @@ const CompanyDescription = ({ data }: { data: CompanyDetail }) => {
 
   return (
     <div>
-      <CompanyCard />
+      <CompanyCard data={data} />
       <div>
         <div
           className='pb-4 sticky top-0 z-10 bg-mainBackground'
@@ -25,7 +25,7 @@ const CompanyDescription = ({ data }: { data: CompanyDetail }) => {
           ref={ref}
         >
           <div className={` bg-white-900 p-4`}>
-            <CompanyCardContent isStickyCustom />
+            <CompanyCardContent data={data} isStickyCustom />
           </div>
         </div>
 
