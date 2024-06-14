@@ -127,8 +127,8 @@ export enum ContractTypeEnum {
 }
 
 export const ContractTypeTranslation: Record<ContractTypeEnum, string> = {
-  [ContractTypeEnum.FULLTIME]: 'Fulltime',
-  [ContractTypeEnum.PARTTIME]: 'Parttime',
+  [ContractTypeEnum.FULLTIME]: 'Full time',
+  [ContractTypeEnum.PARTTIME]: 'Part time',
   [ContractTypeEnum.FREELANCE]: 'Freelance',
 };
 
@@ -152,4 +152,50 @@ export const LevelTranslation: Record<LevelEnum, string> = {
   [LevelEnum.SENIOR]: 'Senior',
   [LevelEnum.LEADER]: 'Leader',
   [LevelEnum.MANAGER]: 'Manager',
+};
+
+export enum SalaryTypeEnum {
+  TO = 'TO',
+  FROM = 'FROM',
+  RANGE = 'RANGE',
+  NEGOTIATE = 'NEGOTIATE',
+}
+
+export const SalaryTypeTranslation: Record<SalaryTypeEnum, string> = {
+  [SalaryTypeEnum.FROM]: 'From',
+  [SalaryTypeEnum.TO]: 'To',
+  [SalaryTypeEnum.RANGE]: 'Range',
+  [SalaryTypeEnum.NEGOTIATE]: 'Negotiate',
+};
+
+export enum ExperienceEnum {
+  UNDER_1_YEAR = 'UNDER_1_YEAR',
+  ONE_YEAR = '1_YEAR',
+  TWO_YEAR = '2_YEAR',
+  THREE_YEAR = '3_YEAR',
+  FOUR_YEAR = '4_YEAR',
+  FIVE_YEAR = '5_YEAR',
+  NONE = 'NONE',
+  OVER_5_YEAR = 'OVER_5_YEAR',
+}
+
+export const ExperienceTranslation: Record<ExperienceEnum, string> = {
+  [ExperienceEnum.NONE]: 'No experience',
+  [ExperienceEnum.UNDER_1_YEAR]: 'Under 1 year',
+  [ExperienceEnum.ONE_YEAR]: '1 year',
+  [ExperienceEnum.TWO_YEAR]: '2 years',
+  [ExperienceEnum.THREE_YEAR]: '3 years',
+  [ExperienceEnum.FOUR_YEAR]: '4 years',
+  [ExperienceEnum.FIVE_YEAR]: '5 years',
+  [ExperienceEnum.OVER_5_YEAR]: '5 years+',
+};
+
+export enum CurrencyEnum {
+  USD = 'USD',
+  VND = 'VND',
+}
+
+export const CurrencyTranslation: Record<CurrencyEnum, string> = {
+  [CurrencyEnum.USD]: '$',
+  [CurrencyEnum.VND]: 'VND',
 };
