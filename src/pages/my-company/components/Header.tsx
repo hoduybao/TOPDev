@@ -3,6 +3,7 @@ import { LanguageSelector } from '@/components/global/Header/UserHeader';
 import { EditOutlined } from '@ant-design/icons';
 import { Button, Dropdown, MenuProps } from 'antd';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +17,7 @@ const Header = ({ onCollapseNavigation, textHeader }: HeaderProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleCollapseNavigation = () => {
     onCollapseNavigation(!collapsed);
@@ -107,7 +109,7 @@ const Header = ({ onCollapseNavigation, textHeader }: HeaderProps) => {
                 />
               }
             >
-              Post job
+              {t('POST_JOB')}
             </Button>
             <LanguageSelector />
             <Dropdown
