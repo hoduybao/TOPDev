@@ -143,7 +143,7 @@ const CVList = ({
       },
     },
     {
-      title: 'Action',
+      title: <span>{t('status')}</span>,
       width: 100,
       render(record) {
         return (
