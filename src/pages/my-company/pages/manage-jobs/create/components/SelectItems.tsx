@@ -105,7 +105,7 @@ export const technicalItems = [
     label: 'HTML',
   },
   {
-    value: 'Front-End',
+    value: 'Front_End',
     label: 'Front-End',
   },
   {
@@ -117,7 +117,7 @@ export const technicalItems = [
     label: 'Unity',
   },
   {
-    value: 'Back-End',
+    value: 'Back_End',
     label: 'Back-End',
   },
   {

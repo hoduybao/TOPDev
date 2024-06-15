@@ -24,7 +24,11 @@ const UserSubmitButton = ({
         loading={isLoad}
         onClick={onClick}
         className={`
-        ${isFilled ? 'bg-orange-600 text-white-900' : 'text-orange-600 border border-orange-600'}
+        ${
+          isFilled
+            ? 'bg-orange-600 text-white-900 hover:!text-white-900'
+            : 'text-orange-600 border border-orange-600'
+        }
         ${isSmall ? 'px-2' : 'px-4'}
         w-full text-base font-bold rounded !h-12
         ${customClass}
