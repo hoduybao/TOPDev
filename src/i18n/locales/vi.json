@@ -279,7 +279,7 @@
   "notFoundApplications": "Không tìm thấy ứng viên nào",
   "application.pending": "Ứng tuyển thành công",
   "application.viewing": "Đã xem hồ sơ",
-  "application.accepted": "Đã chấp nhận",
+  "application.approved": "Đã chấp nhận",
   "application.rejected": "Đã từ chối",
   "NONE": "Không yêu cầu",
   "UNDER_1_YEAR": "Dưới 1 năm",

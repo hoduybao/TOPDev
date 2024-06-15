@@ -25,7 +25,7 @@ export const Columns = (): (ColumnGroupType<MyApplicationRES> | ColumnType<MyApp
       title: t('id'),
       dataIndex: 'id',
       key: 'id',
-      width: 150,
+      width: 160,
       render: (text: string) => (
         <span className='text-base font-semibold'>{text.toUpperCase()}</span>
       ),
@@ -34,6 +34,7 @@ export const Columns = (): (ColumnGroupType<MyApplicationRES> | ColumnType<MyApp
       title: t('jobTitle'),
       dataIndex: 'jobDetail',
       key: 'jobDetail',
+      width: 400,
       className: 'text-left',
       render: (jobDetail: JobDetailRES, record) => (
         <div className='flex flex-col gap-1'>
@@ -52,6 +53,7 @@ export const Columns = (): (ColumnGroupType<MyApplicationRES> | ColumnType<MyApp
       title: t('company'),
       dataIndex: 'jobDetail',
       key: 'jobDetail',
+      width: 240,
       className: 'text-left',
       render: (jobDetail: JobDetailRES) => (
         <div className='text-base font-bold text-[#000000D9]'>{jobDetail?.companyName}</div>
@@ -59,6 +61,7 @@ export const Columns = (): (ColumnGroupType<MyApplicationRES> | ColumnType<MyApp
     },
     {
       title: t('appliedAt'),
+      width: 200,
       dataIndex: 'createdAt',
       key: 'createdAt',
       render: (createdAt: string) => <span>{dayjs(createdAt).format('DD-MM-YYYY HH:mm:ss')}</span>,
@@ -67,7 +70,7 @@ export const Columns = (): (ColumnGroupType<MyApplicationRES> | ColumnType<MyApp
       title: t('latestStatus'),
       key: 'status',
       dataIndex: 'status',
-      width: 315,
+      width: 300,
       render: (status: string) => <ApplicationStatus status={status as ApplicationStatusEnum} />,
     },
   ];
@@ -92,6 +95,7 @@ export const AppliedJobs = () => {
         className={styles.headerTable}
         columns={Columns()}
         dataSource={data?.data || []}
+        scroll={{ x: 900 }}
         pagination={{
           current: Number(filter.page || initialPagingState.page),
           pageSize: Number(filter.limit) || initialPagingState.limit,

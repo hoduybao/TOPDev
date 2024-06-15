@@ -1,6 +1,7 @@
 import { Button, Table } from 'antd';
 import dayjs from 'dayjs';
 
+import { JobTypeEnum, JobTypeTranslation } from '@/+core/enums/job.enum';
 import { Application } from '@/+core/redux/apis/common/application/application.response';
 import Container from '@/components/global/Container/Container';
 import { EyeOutlined, FieldTimeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
@@ -44,13 +45,17 @@ const CVList = ({
     {
       title: t('applicationCode'),
       dataIndex: 'id',
+      render: (text: string) => <span>{text.toUpperCase()}</span>,
+      width: 150,
     },
     {
       title: <span className='capitalize'>{t('candidate')}</span>,
       dataIndex: 'fullName',
+      width: 150,
     },
     {
       title: t('job'),
+      width: 350,
       render(value: Application) {
         console.log(value);
 
@@ -58,9 +63,7 @@ const CVList = ({
           <div>
             <div>
               <div className='text-base font-semibold'>{value?.jobDetail?.title}</div>
-              <div>
-                {value?.jobDetail?.jobType} - {value?.jobDetail?.level}
-              </div>
+              <div>{JobTypeTranslation[value?.jobDetail?.jobType as JobTypeEnum]}</div>
             </div>
           </div>
         );
@@ -68,12 +71,14 @@ const CVList = ({
     },
     {
       title: t('contactInfo'),
+      width: 250,
+      ellipsis: true,
       render(record) {
         console.log(record);
 
         return (
           <div>
-            <div>
+            <div className=''>
               <MailOutlined className='m-2 text-orange-500' />
               <span>{record.email}</span>
             </div>
@@ -88,6 +93,7 @@ const CVList = ({
     },
     {
       title: t('submitedDate'),
+      width: 150,
       render(value) {
         return (
           <div>
@@ -102,6 +108,7 @@ const CVList = ({
     {
       title: <span className='capitalize'>{t('status')}</span>,
       dataIndex: 'status',
+      width: 150,
       render(value) {
         switch (value) {
           case 'PENDING': {
@@ -136,7 +143,8 @@ const CVList = ({
       },
     },
     {
-      title: '',
+      title: 'Action',
+      width: 100,
       render(record) {
         return (
           <Button
@@ -164,6 +172,7 @@ const CVList = ({
               changePage(page.toString());
             },
           }}
+          scroll={{ x: 900 }}
           columns={columns}
           dataSource={dataSource}
         />

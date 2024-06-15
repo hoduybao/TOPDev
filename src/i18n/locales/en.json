@@ -279,7 +279,7 @@
   "notFoundApplications": "No applications found",
   "application.pending": "Applied",
   "application.viewing": "Viewed",
-  "application.accepted": "Accepted",
+  "application.approved": "Accepted",
   "application.rejected": "Rejected",
   "NONE": "No require",
   "UNDER_1_YEAR": "Under 1 year",

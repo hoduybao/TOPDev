@@ -23,8 +23,8 @@ const ApplicationStatus = ({ status }: Props) => {
     for (const applicationStatus of listApplicationStatus) {
       if (
         status !== applicationStatus &&
-        status !== ApplicationStatusEnum.REJECTED &&
-        status !== ApplicationStatusEnum.APPROVED
+        applicationStatus !== ApplicationStatusEnum.REJECTED &&
+        applicationStatus !== ApplicationStatusEnum.APPROVED
       ) {
         result.push(ApplicationStatusTranslation(t)[applicationStatus]);
       }
