@@ -13,7 +13,9 @@ const CustomButton = ({
   return (
     <Button
       className={`${
-        isOutlined ? 'text-white-900 bg-orange-500' : 'text-orange-500 border-orange-500'
+        isOutlined
+          ? 'text-white-900 bg-orange-500 hover:!text-white-900'
+          : 'text-orange-500 border-orange-500'
       } rounded h-full w-full py-2`}
     >
       {children}
@@ -40,7 +42,22 @@ const CompanyCardContent = ({
         <div className='flex-1'>
           <CustomButton isOutlined>
             <div className='flex justify-center'>
-              <img className='w-[20px] !text-white-900' src={ICONS.bookmark} alt='bookmark' />
+              <svg
+                stroke='currentColor'
+                fill='none'
+                strokeWidth='1.5'
+                viewBox='0 0 24 24'
+                aria-hidden='true'
+                height='1.5em'
+                width='1.5em'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z'
+                ></path>
+              </svg>
               {isStickyCustom ? (
                 ''
               ) : (

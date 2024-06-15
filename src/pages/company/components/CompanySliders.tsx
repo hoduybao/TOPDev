@@ -50,7 +50,7 @@ export const SliderItem = ({
             <img
               src={company?.logo}
               alt={company?.logo}
-              className='w-[96px] h-[77px] object-contain shadow-md'
+              className='w-[96px] h-[77px] object-contain shadow-md bg-white-900'
             />
             <div className='hidden group-hover:block absolute w-[12rem] translate-x-[-50%] left-[50%] z-10 rounded p-2 text-center'>
               <div className='relative flex justify-center rounded bg-gray-400 p-2'>
@@ -72,7 +72,9 @@ export const SliderItem = ({
         </div>
         <div className='col-span-12 flex justify-between text-gray-400'>
           <p className='flex-1 truncate max-w-[70%]'>
-            {company?.addresses ? company?.addresses[0].addressDetail : 'Unknown'}
+            {company?.addresses && company?.addresses.length > 0
+              ? company?.addresses[0].addressDetail
+              : 'Unknown'}
           </p>
           <span className='flex items-center gap-1'>
             {company?.followedCount}

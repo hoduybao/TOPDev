@@ -8,7 +8,7 @@ export enum AddressSearchEnum {
 
 export function AddressTranslation(t: TFunction): Record<AddressSearchEnum, string> {
   return {
-    [AddressSearchEnum.ALL]: t('ALL'),
+    [AddressSearchEnum.ALL]: t('allLocations'),
     [AddressSearchEnum['Hồ Chí Minh']]: t('hcm'),
     [AddressSearchEnum['Hà Nội']]: t('hn'),
     [AddressSearchEnum['Đà Nẵng']]: t('dn'),

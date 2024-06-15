@@ -5,17 +5,19 @@ import FollowIcon from '../../../../public/assets/icons/follow';
 import { CompanyHome } from '@/+core/redux/apis/common/home/home.response';
 import { ICONS } from '@/config/icons';
 import { useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { EffectCoverflow, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, EffectCoverflow, Navigation, Pagination } from 'swiper/modules';
 type FeaturedCompanyProps = {
   data?: CompanyHome[];
 };
 
 export default function FeaturedCompany({ data }: FeaturedCompanyProps) {
   const sliderRef = useRef<any>(null);
+  const navigate = useNavigate();
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;
@@ -45,8 +47,10 @@ export default function FeaturedCompany({ data }: FeaturedCompanyProps) {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
       }}
-      modules={[EffectCoverflow, Pagination, Navigation]}
+      autoplay={{ delay: 2000 }}
+      modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
       className='swiper_container'
+      initialSlide={2}
     >
       {data?.map((item, index) => (
         <SwiperSlide key={index}>
@@ -57,7 +61,12 @@ export default function FeaturedCompany({ data }: FeaturedCompanyProps) {
                 <img srcSet={item?.logo} className='w-full h-full object-contain' />
               </div>
               <div className='flex flex-col items-start gap-1 pl-8 pr-4 truncate w-full'>
-                <div className='text-lg font-bold group-hover:text-primary-red w-full'>
+                <div
+                  className='text-lg font-bold group-hover:text-primary-red w-full'
+                  onClick={() => {
+                    navigate(`/companies/${item.id}`);
+                  }}
+                >
                   {item?.name}
                 </div>
                 <div className='text-lg text-main truncate w-full'>{item?.tagline}</div>

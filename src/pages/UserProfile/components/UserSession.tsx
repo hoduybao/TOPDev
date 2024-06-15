@@ -1,3 +1,4 @@
+import { getName } from '@/+core/services/local.service';
 import { DownloadOutlined, UploadOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
@@ -87,6 +88,7 @@ const UserInformation = ({
 };
 
 const UserSession = () => {
+  const name = getName();
   return (
     <div className='flex gap-8 rounded bg-white-900 p-8'>
       <div>
@@ -98,7 +100,7 @@ const UserSession = () => {
       </div>
       <div className='flex-1'>
         <UserInformation
-          fullName='Quang Hung Ngo'
+          fullName={name || 'Unknown'}
           role='Front-end Engineer'
           yoe={1}
           email='123@gmail.com'

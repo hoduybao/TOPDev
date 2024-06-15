@@ -417,9 +417,15 @@ export const JobItems = (): any => {
   };
 };
 
-const itCompany = {
-  title: 'Công ty IT',
-  onClick: () => {},
+export const ItCompany = (): any => {
+  const navigate = useNavigate();
+
+  return {
+    title: 'Công ty IT',
+    onClick: () => {
+      navigate('/companies');
+    },
+  };
 };
 
 const tools = {
@@ -638,7 +644,7 @@ const UserHeader = () => {
             }}
           />
           <HeaderMenuItem items={JobItems()} />
-          <HeaderMenuItem items={itCompany} />
+          <HeaderMenuItem items={ItCompany()} />
           <HeaderMenuItem items={tools} />
           <HeaderMenuItem items={itBlog} />
         </div>

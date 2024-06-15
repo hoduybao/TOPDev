@@ -33,7 +33,13 @@ export function HomePage() {
             <div className='mt-14 text-[36px] font-bold'>Nhà tuyển dụng nổi bật</div>
             <div className='mt-6 flex justify-center items-center gap-4 '>
               {data?.data?.featured?.slice(0, 6).map((item, index) => (
-                <div className='px-2 hover:shadow rounded' key={index}>
+                <div
+                  className='px-2 hover:shadow rounded'
+                  key={index}
+                  onClick={() => {
+                    navigate(`/companies/${item?.id}`);
+                  }}
+                >
                   <img
                     className='w-[160px] h-[112px] max-h-[112px] max-w-full object-contain'
                     loading='lazy'
