@@ -1,7 +1,7 @@
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { FetchBaseQueryArgs } from 'node_modules/@reduxjs/toolkit/dist/query/fetchBaseQuery';
-import { getLocalRefreshToken } from '../services/local.service';
+import { getEmail, getLocalRefreshToken, getName } from '../services/local.service';
 import { logOut, setCredentials } from './auth/authSlice';
 
 interface RefreshResponse {
@@ -38,15 +38,16 @@ export const baseQueryWithAuth: (
 
       if (response && response.data) {
         console.log('Fetch token success, retry the request');
-        const { access_token, refresh_token, email, firstName, lastName } =
-          response.data as RefreshResponse;
+        const { access_token, refresh_token } = response.data as RefreshResponse;
+        const email = getEmail();
+        const name = getName();
         api.dispatch(
           setCredentials({
             accessToken: access_token,
             refreshToken: refresh_token,
             isLoggin: true,
             email: email,
-            name: firstName + ' ' + lastName,
+            name: name,
           }),
         );
         const newResult = await fetchBaseQuery(option)(args, api, extraOptions);

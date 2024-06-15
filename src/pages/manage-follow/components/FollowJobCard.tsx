@@ -37,7 +37,7 @@ const FollowJobCard = (props: PropType) => {
       <div className='w-[100%] h-[180px] p-4 flex gap-5 border border-t-gray-700 border-x-gray-700'>
         <div className='w-[30%]'>
           <img
-            className='w-full'
+            className='w-full !h-[90px] !object-contain bg-white-900'
             src='https://firebasestorage.googleapis.com/v0/b/topdev-clone.appspot.com/o/company%2Fprofile%2F1718366007653-logo.png?alt=media&token=7d800506-d5f6-4efc-b98c-65805560b2c6'
             alt='company-logo'
           />
@@ -71,7 +71,7 @@ const FollowJobCard = (props: PropType) => {
                   <path d='M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8' />
                   <path d='M12 18V6' />
                 </svg>
-                {job.minSalary ? job.minSalary : 0} - {job?.maxSalary}
+                Thương lượng
               </p>
               <Button
                 className='border-none flex items-center justify-center'
