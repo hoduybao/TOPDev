@@ -4,6 +4,7 @@ import {
   setLocalAccessToken,
   setLocalRefreshToken,
   setName,
+  setRole,
 } from '@/+core/services/local.service';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
@@ -13,6 +14,7 @@ export interface AuthState {
   isLoggin: boolean;
   email: string | null;
   name: string | null;
+  role: string | null;
 }
 
 // Define the initial state using the AuthState type
@@ -22,6 +24,7 @@ const initialState: AuthState = {
   isLoggin: false,
   email: null,
   name: null,
+  role: null,
 };
 
 // Create the auth slice
@@ -30,18 +33,20 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action: PayloadAction<AuthState>) => {
-      const { accessToken, refreshToken, isLoggin, email, name } = action.payload;
+      const { accessToken, refreshToken, isLoggin, email, name, role } = action.payload;
 
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
       state.isLoggin = isLoggin;
       state.email = email;
       state.name = name;
+      state.role = role;
 
       setLocalAccessToken(accessToken || '');
       setLocalRefreshToken(refreshToken || '');
       setEmail(email || '');
       setName(name || '');
+      setRole(role || '');
       setIsLogin('true');
     },
 
@@ -51,11 +56,13 @@ const authSlice = createSlice({
       state.refreshToken = null;
       state.email = null;
       state.name = null;
+      state.role = null;
       setLocalAccessToken('');
       setLocalRefreshToken('');
       setIsLogin('false');
       setEmail('');
       setName('');
+      setRole('');
     },
     setLogin: (state, action: PayloadAction<boolean>) => {
       state.isLoggin = action.payload;

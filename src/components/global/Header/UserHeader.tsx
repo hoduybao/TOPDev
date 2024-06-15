@@ -537,7 +537,7 @@ const Show = ({
 const UserHeader = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [isLoggedIn] = useLoginState();
+  const [isLoggedIn] = useLoginState({});
   const name = getName();
 
   const dispatch = useDispatch();

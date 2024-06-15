@@ -30,6 +30,7 @@ type ReponseLogin = {
     email: string;
     firstName: string;
     lastName: string;
+    role: string;
   };
 };
 
@@ -39,6 +40,7 @@ type ParseResponseLogin = {
   userid: string;
   email: string;
   name: string;
+  role: string;
 };
 
 const authenticationApi = commonApi
@@ -58,6 +60,7 @@ const authenticationApi = commonApi
             userid: response.data.id,
             email: response.data.email,
             name: response?.data?.lastName + ' ' + response?.data?.firstName || '',
+            role: response?.data?.role || 'employer',
           };
         },
       }),
@@ -74,6 +77,7 @@ const authenticationApi = commonApi
             userid: '', // no need store userid, all needed data is store in token
             email: '', // no need store email
             name: '', // no need store name
+            role: response?.data?.role || 'admin',
           };
         },
       }),
@@ -90,6 +94,7 @@ const authenticationApi = commonApi
             userid: response.data.id,
             email: response.data.email,
             name: response?.data?.lastName + ' ' + response?.data?.firstName || '',
+            role: response?.data?.role || 'candidate',
           };
         },
       }),

@@ -47,7 +47,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    element: <PrivateRoute />,
+    element: <PrivateRoute checkRole='employer' />,
     children: [
       {
         path: '/company',
@@ -68,7 +68,11 @@ export const router = createBrowserRouter([
           { path: MY_ROUTE.RECRUITMENT_PROCESS, element: <ApplicationsPage /> },
         ],
       },
-
+    ],
+  },
+  {
+    element: <PrivateRoute checkRole='candidate' />,
+    children: [
       {
         path: '/',
         element: <UserLayout />,
@@ -79,6 +83,11 @@ export const router = createBrowserRouter([
           { path: MY_ROUTE.MY_PAGES, element: <MyPages /> },
         ],
       },
+    ],
+  },
+  {
+    element: <PrivateRoute checkRole='admin' />,
+    children: [
       {
         path: '/admin',
         element: <AdminLayout />,

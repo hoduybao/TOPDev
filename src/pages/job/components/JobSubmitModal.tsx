@@ -141,7 +141,7 @@ const ApplicationForm = ({ closeModal }: { closeModal: () => void }) => {
     const value = form.getFieldsValue();
     value.jobId = jobId;
 
-    console.log(value);
+    value.description = value?.description || '';
 
     try {
       const resp = await addNewApplication(value).unwrap();

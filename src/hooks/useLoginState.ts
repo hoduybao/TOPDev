@@ -4,11 +4,12 @@ import {
   getLocalAccessToken,
   getLocalRefreshToken,
   getName,
+  getRole,
 } from '@/+core/services/local.service';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const useLoginState = () => {
+export const useLoginState = ({ checkRole }: { checkRole?: string }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLogin);
 
@@ -16,9 +17,10 @@ export const useLoginState = () => {
   const refreshToken = getLocalRefreshToken();
   const email = getEmail();
   const name = getName();
+  const role = getRole();
 
   useEffect(() => {
-    if (accessToken && refreshToken) {
+    if (accessToken && refreshToken && (!checkRole || checkRole === role)) {
       dispatch(
         setCredentials({
           accessToken,
@@ -26,9 +28,13 @@ export const useLoginState = () => {
           isLoggin: true,
           email,
           name,
+          role,
         }),
       );
     }
   }, []);
-  return useMemo(() => [isLoggedIn], [isLoggedIn]);
+  return useMemo(
+    () => [isLoggedIn && (!checkRole || checkRole === role)],
+    [isLoggedIn, checkRole, role],
+  );
 };
