@@ -82,8 +82,8 @@ const ActiveJobsTab = (props: ActiveJobsTabProps) => {
       dataIndex: 'workingPlace',
       key: 'workingPlace',
       render: (_text, record) => {
-        const { district, city } = record;
-        return `${district}, ${city}`;
+        const { address } = record;
+        return `${address}`;
       },
     },
     {
