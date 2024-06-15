@@ -3,12 +3,12 @@ import { Pagination, Spin } from 'antd';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import FollowJobCard from './components/FollowJobCard';
 import {
   Paging,
   useGetListFollowQuery,
   useUnfollowJobMutation,
 } from '@/+core/redux/apis/common/job/job.api';
+import FollowJobCard from './components/FollowJobCard';
 
 const ManageFollowPage = () => {
   const [filter, setFilter] = useState<Paging>({
@@ -34,7 +34,7 @@ const ManageFollowPage = () => {
 
   return (
     <Spin spinning={isFetching}>
-      <div className='w-full flex flex-col items-center mb-8'>
+      <div className='w-full flex flex-col items-center mb-8 bg-white-900'>
         <div className='w-full'>
           <div className='flex flex-col gap-8'>
             <h3 className='text-xl font-bold text-primary-red'>{t('followJob')}</h3>
