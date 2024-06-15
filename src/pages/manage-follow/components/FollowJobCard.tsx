@@ -1,6 +1,6 @@
-import { useTranslation } from 'react-i18next';
 import { JobType } from '@/+core/utilities/types/recruitment.type';
 import { Button, notification } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 interface PropType {
   job: JobType;
@@ -36,7 +36,11 @@ const FollowJobCard = (props: PropType) => {
     <div>
       <div className='w-[100%] h-[180px] p-4 flex gap-5 border border-t-gray-700 border-x-gray-700'>
         <div className='w-[30%]'>
-          <img className='w-full' src={job?.company?.logo} alt='company-logo' />
+          <img
+            className='w-full'
+            src='https://firebasestorage.googleapis.com/v0/b/topdev-clone.appspot.com/o/company%2Fprofile%2F1718366007653-logo.png?alt=media&token=7d800506-d5f6-4efc-b98c-65805560b2c6'
+            alt='company-logo'
+          />
         </div>
         <div className='w-[70%] flex flex-col justify-between'>
           <h1 className='text-[18px] font-bold'>
