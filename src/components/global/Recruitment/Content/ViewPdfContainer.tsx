@@ -13,7 +13,7 @@ type ViewPdfContainerProps = {
 };
 
 const ViewPdfContainer = ({ fileUrl }: ViewPdfContainerProps) => {
-  const PDFJS_VERSION = '3.4.120';
+  const PDFJS_VERSION = '3.11.174';
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
   if (!fileUrl) return null;
