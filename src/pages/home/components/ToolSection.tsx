@@ -72,12 +72,12 @@ export default function ToolSection() {
       <div className='flex flex-col items-start gap-2 p-3 group hover:bg-[#F5F5F5] rounded-lg'>
         <div className='p-1 bg-[#F1F5F9] rounded-md group-hover:bg-white-900'>
           <img
-            srcSet='https://c.topdevvn.com/v4/_next/static/media/blog-it-icon.63d34c5a.svg'
+            srcSet='https://c.topdevvn.com/v4/_next/static/media/qna-for-interview.fc8ff427.svg'
             className='w-7 h-7'
           />
         </div>
-        <div className='text-lg font-semibold text-[#424242]'>Blog IT</div>
-        <div className='text-sm text-[#757575]'>Nâng cao kiến thức IT của bạn với Blog IT</div>
+        <div className='text-lg font-semibold text-[#424242]'>Câu hỏi phỏng vấn</div>
+        <div className='text-sm text-[#757575]'>Sẵn sàng cho buổi phỏng vấn của bạn</div>
         <div className='gap-2 items-center flex group-hover:visible invisible'>
           <div className='text-sm font-semibold text-primary-red underline'>Xem Thêm</div>
           <img
