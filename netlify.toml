@@ -1,6 +1,0 @@
-[[redirects]]
-  from = "/api/*"
-  to = "http://www.orichalcos.me"
-  status = 200
-  force = true
-  headers = {X-From = "Netlify"}
