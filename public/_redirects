@@ -1,2 +1,2 @@
-/api/*  http://www.orichalcos.me  200
+/api/*  http://www.orichalcos.me/:splat  200
 /*  /index.html 200
